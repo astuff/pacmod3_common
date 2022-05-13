@@ -79,9 +79,7 @@
 namespace pm_msgs = pacmod3_msgs;
 namespace cn_msgs = can_msgs;
 
-#endif  // ROS1
-
-#if ROS_VERSION==2
+#elif ROS_VERSION==2
 
 #include <rclcpp/rclcpp.hpp>
 
@@ -128,7 +126,7 @@ namespace cn_msgs = can_msgs;
 namespace pm_msgs = pacmod3_msgs::msg;
 namespace cn_msgs = can_msgs::msg;
 
-#endif  // ROS2
+#endif
 
 namespace pacmod3_common
 {
@@ -136,6 +134,8 @@ namespace pacmod3_common
 class DbcApi
 {
 public:
+  virtual ~DbcApi() = default;
+
   // Parsing functions take in a ROS CAN msg and return a pointer to a ROS pacmod msg
   virtual std::shared_ptr<void> ParseAccelAuxRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseAngVelRpt(const cn_msgs::Frame& can_msg) = 0;

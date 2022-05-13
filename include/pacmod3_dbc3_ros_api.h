@@ -35,6 +35,7 @@ class Dbc3Api : public DbcApi
 {
 public:
   Dbc3Api();
+  virtual ~Dbc3Api() = default;
 
   std::shared_ptr<void> ParseAccelAuxRpt(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseAngVelRpt(const cn_msgs::Frame& can_msg) override;
