@@ -25,6 +25,14 @@
 #include <string>
 #include <memory>
 
+#include <chrono>
+#include <algorithm>
+#include <numeric>
+
+#include <sstream>
+#include <fstream>
+
+#include <boost/core/null_deleter.hpp>
 
 namespace pacmod3_common
 {
@@ -32,6 +40,15 @@ namespace pacmod3_common
 Dbc3Api::Dbc3Api()
 {
   SetDbcVersion(3);
+  // database_ = std::make_unique<AS::CAN::DbcLoader::Database>("/home/ian/git/drivers/pacmod_dbc/as_pacmod.dbc");
+
+  std::ifstream t("/home/ian/git/drivers/pacmod_dbc/as_pacmod.dbc");
+  std::stringstream buffer;
+  buffer << t.rdbuf();
+  dbc_ = NewEagle::DbcBuilder().NewDbc(buffer.str());
+
+  gen_execution_times.reserve(10000);
+  dyn_execution_times.reserve(10000);
 }
 
 std::shared_ptr<void> Dbc3Api::ParseAccelAuxRpt(const cn_msgs::Frame& can_msg)
@@ -456,6 +473,8 @@ std::shared_ptr<void> Dbc3Api::ParseSystemRptFloat(const cn_msgs::Frame& can_msg
 {
   std::shared_ptr<pm_msgs::SystemRptFloat> new_msg( new pm_msgs::SystemRptFloat() );
 
+  std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+  // OPTION 1
   ACCEL_RPT_t parsed_rpt;
   Unpack_ACCEL_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
 
@@ -470,6 +489,83 @@ std::shared_ptr<void> Dbc3Api::ParseSystemRptFloat(const cn_msgs::Frame& can_msg
   new_msg->manual_input = parsed_rpt.MANUAL_INPUT_phys;
   new_msg->command = parsed_rpt.COMMANDED_VALUE_phys;
   new_msg->output = parsed_rpt.OUTPUT_VALUE_phys;
+  // END OPTION 1
+  std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+
+  int64_t execution_time =
+    std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
+  gen_execution_times.push_back(execution_time);
+
+
+  auto count = static_cast<double>(gen_execution_times.size());
+  double average =
+  static_cast<double>(std::accumulate(gen_execution_times.begin(), gen_execution_times.end(), 0)) / count;
+
+  const auto minmax = std::minmax_element(std::begin(gen_execution_times), std::end(gen_execution_times));
+
+  std::cout << "\nExecution time for generated code (nanoseconds)" << "\n";
+  std::cout << "min / avg / max = " << *minmax.first << " / " << average << " / " <<
+    *minmax.second << std::endl;
+
+
+
+  // TODO:::: compare parsed data, to make sure it's parsed properly
+
+
+
+
+  std::shared_ptr<pm_msgs::SystemRptFloat> new_msg2( new pm_msgs::SystemRptFloat() );
+
+  // copy data
+  can_msgs::Frame msg_frame = can_msg;
+  // const can_msgs::Frame::ConstPtr& msg_ptr = &can_msg;
+
+  // const boost::shared_ptr<can_msgs::Frame const> msg_ptr = &can_msg
+  can_msgs::Frame::ConstPtr msg_ptr(&msg_frame, boost::null_deleter());
+
+  std::chrono::steady_clock::time_point begin2 = std::chrono::steady_clock::now();
+  // OPTION2
+
+  NewEagle::DbcMessage* message = dbc_.GetMessageById(ACCEL_RPT_CANID);
+  // const can_msgs::Frame::ConstPtr& msg_ptr = &can_msg;
+  // const boost::shared_ptr< can_msgs::Frame const> msg_ptr(&can_msg);
+
+  // (const can_msgs::Frame::ConstPtr& msg)
+  message->SetFrame(msg_ptr);
+
+  new_msg2->enabled = message->GetSignal("ENABLED")->GetResult() ? true : false;
+  new_msg2->override_active = message->GetSignal("OVERRIDE_ACTIVE")->GetResult() ? true : false;
+  new_msg2->command_output_fault = message->GetSignal("COMMAND_OUTPUT_FAULT")->GetResult() ? true : false;
+  new_msg2->input_output_fault = message->GetSignal("INPUT_OUTPUT_FAULT")->GetResult() ? true : false;
+  new_msg2->output_reported_fault = message->GetSignal("OUTPUT_REPORTED_FAULT")->GetResult() ? true : false;
+  new_msg2->pacmod_fault = message->GetSignal("PACMOD_FAULT")->GetResult() ? true : false;
+  new_msg2->vehicle_fault = message->GetSignal("VEHICLE_FAULT")->GetResult() ? true : false;
+  new_msg2->command_timeout = 0;  // dbc3 doesn't have this field
+  new_msg2->manual_input = message->GetSignal("MANUAL_INPUT")->GetResult();
+  new_msg2->command = message->GetSignal("COMMANDED_VALUE")->GetResult();
+  new_msg2->output = message->GetSignal("OUTPUT_VALUE")->GetResult();
+
+  // END OPTION2
+  std::chrono::steady_clock::time_point end2 = std::chrono::steady_clock::now();
+
+  execution_time =
+    std::chrono::duration_cast<std::chrono::nanoseconds>(end2 - begin2).count();
+  dyn_execution_times.push_back(execution_time);
+
+
+  count = static_cast<double>(dyn_execution_times.size());
+  average =
+  static_cast<double>(std::accumulate(dyn_execution_times.begin(), dyn_execution_times.end(), 0)) / count;
+
+  const auto minmax2 = std::minmax_element(std::begin(dyn_execution_times), std::end(dyn_execution_times));
+
+  std::cout << "\nExecution time for dynamic code (nanoseconds)" << "\n";
+  std::cout << "min / avg / max = " << *minmax2.first << " / " << average << " / " <<
+    *minmax2.second << std::endl;
+
+
+  std::cout << "Comparison: " << new_msg->command << "|" << new_msg2->command << std::endl;
+
 
   return new_msg;
 }

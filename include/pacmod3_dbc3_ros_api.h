@@ -28,6 +28,12 @@
 #include <memory>
 #include <mutex>
 
+
+#include <can_dbc_parser/DbcMessage.h>
+#include <can_dbc_parser/DbcSignal.h>
+#include <can_dbc_parser/Dbc.h>
+#include <can_dbc_parser/DbcBuilder.h>
+
 namespace pacmod3_common
 {
 
@@ -73,6 +79,14 @@ public:
   cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdBool& msg) override;
   cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdFloat& msg) override;
   cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdInt& msg) override;
+
+  // std::unique_ptr<AS::CAN::DbcLoader::Database> database_;
+  NewEagle::Dbc dbc_;
+
+  std::vector<int64_t> gen_execution_times;
+
+  std::vector<int64_t> dyn_execution_times;
+
 };
 }  // namespace pacmod3_common
 
