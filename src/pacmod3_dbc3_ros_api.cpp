@@ -31,7 +31,7 @@ namespace pacmod3_common
 
 std::shared_ptr<void> Dbc3Api::ParseAccelAuxRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::AccelAuxRpt> new_msg( new pm_msgs::AccelAuxRpt() );
+  auto new_msg = std::make_shared<pm_msgs::AccelAuxRpt>();
 
   ACCEL_AUX_RPT_t parsed_rpt;
   Unpack_ACCEL_AUX_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -53,7 +53,7 @@ std::shared_ptr<void> Dbc3Api::ParseAccelAuxRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseAngVelRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::AngVelRpt> new_msg( new pm_msgs::AngVelRpt() );
+  auto new_msg = std::make_shared<pm_msgs::AngVelRpt>();
 
   PrintParseError("AngVelRpt");
 
@@ -62,7 +62,7 @@ std::shared_ptr<void> Dbc3Api::ParseAngVelRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseBrakeAuxRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::BrakeAuxRpt> new_msg( new pm_msgs::BrakeAuxRpt() );
+  auto new_msg = std::make_shared<pm_msgs::BrakeAuxRpt>();
 
   BRAKE_AUX_RPT_t parsed_rpt;
   Unpack_BRAKE_AUX_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -86,7 +86,7 @@ std::shared_ptr<void> Dbc3Api::ParseBrakeAuxRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseComponentRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::ComponentRpt> new_msg( new pm_msgs::ComponentRpt() );
+  auto new_msg = std::make_shared<pm_msgs::ComponentRpt>();
 
   COMPONENT_RPT_t parsed_rpt;
   Unpack_COMPONENT_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -135,7 +135,7 @@ std::shared_ptr<void> Dbc3Api::ParseComponentRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseDateTimeRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::DateTimeRpt> new_msg( new pm_msgs::DateTimeRpt() );
+  auto new_msg = std::make_shared<pm_msgs::DateTimeRpt>();
 
   DATE_TIME_RPT_t parsed_rpt;
   Unpack_DATE_TIME_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -153,7 +153,7 @@ std::shared_ptr<void> Dbc3Api::ParseDateTimeRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseDetectedObjectRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::DetectedObjectRpt> new_msg( new pm_msgs::DetectedObjectRpt() );
+  auto new_msg = std::make_shared<pm_msgs::DetectedObjectRpt>();
 
   DETECTED_OBJECT_RPT_t parsed_rpt;
   Unpack_DETECTED_OBJECT_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -166,7 +166,7 @@ std::shared_ptr<void> Dbc3Api::ParseDetectedObjectRpt(const cn_msgs::Frame& can_
 
 std::shared_ptr<void> Dbc3Api::ParseDoorRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::DoorRpt> new_msg( new pm_msgs::DoorRpt() );
+  auto new_msg = std::make_shared<pm_msgs::DoorRpt>();
 
   DOOR_RPT_t parsed_rpt;
   Unpack_DOOR_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -191,7 +191,7 @@ std::shared_ptr<void> Dbc3Api::ParseDoorRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseEngineRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::EngineRpt> new_msg( new pm_msgs::EngineRpt() );
+  auto new_msg = std::make_shared<pm_msgs::EngineRpt>();
 
   PrintParseError("EngineRpt");
 
@@ -200,7 +200,7 @@ std::shared_ptr<void> Dbc3Api::ParseEngineRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseGlobalRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::GlobalRpt> new_msg( new pm_msgs::GlobalRpt() );
+  auto new_msg = std::make_shared<pm_msgs::GlobalRpt>();
 
   GLOBAL_RPT_t parsed_rpt;
   Unpack_GLOBAL_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -222,7 +222,7 @@ std::shared_ptr<void> Dbc3Api::ParseGlobalRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseHeadlightAuxRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::HeadlightAuxRpt> new_msg( new pm_msgs::HeadlightAuxRpt() );
+  auto new_msg = std::make_shared<pm_msgs::HeadlightAuxRpt>();
 
   HEADLIGHT_AUX_RPT_t parsed_rpt;
   Unpack_HEADLIGHT_AUX_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -241,7 +241,7 @@ std::shared_ptr<void> Dbc3Api::ParseHeadlightAuxRpt(const cn_msgs::Frame& can_ms
 
 std::shared_ptr<void> Dbc3Api::ParseInteriorLightsRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::InteriorLightsRpt> new_msg( new pm_msgs::InteriorLightsRpt() );
+  auto new_msg = std::make_shared<pm_msgs::InteriorLightsRpt>();
 
   INTERIOR_LIGHTS_RPT_t parsed_rpt;
   Unpack_INTERIOR_LIGHTS_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -264,7 +264,7 @@ std::shared_ptr<void> Dbc3Api::ParseInteriorLightsRpt(const cn_msgs::Frame& can_
 
 std::shared_ptr<void> Dbc3Api::ParseLatLonHeadingRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::LatLonHeadingRpt> new_msg( new pm_msgs::LatLonHeadingRpt() );
+  auto new_msg = std::make_shared<pm_msgs::LatLonHeadingRpt>();
 
   LAT_LON_HEADING_RPT_t parsed_rpt;
   Unpack_LAT_LON_HEADING_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -282,7 +282,7 @@ std::shared_ptr<void> Dbc3Api::ParseLatLonHeadingRpt(const cn_msgs::Frame& can_m
 
 std::shared_ptr<void> Dbc3Api::ParseLinearAccelRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::LinearAccelRpt> new_msg( new pm_msgs::LinearAccelRpt() );
+  auto new_msg = std::make_shared<pm_msgs::LinearAccelRpt>();
 
   PrintParseError("LinearAccelRpt");
 
@@ -291,7 +291,7 @@ std::shared_ptr<void> Dbc3Api::ParseLinearAccelRpt(const cn_msgs::Frame& can_msg
 
 std::shared_ptr<void> Dbc3Api::ParseMotorRpt1(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::MotorRpt1> new_msg( new pm_msgs::MotorRpt1() );
+  auto new_msg = std::make_shared<pm_msgs::MotorRpt1>();
 
   BRAKE_MOTOR_RPT_1_t parsed_rpt;
   Unpack_BRAKE_MOTOR_RPT_1_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -304,7 +304,7 @@ std::shared_ptr<void> Dbc3Api::ParseMotorRpt1(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseMotorRpt2(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::MotorRpt2> new_msg( new pm_msgs::MotorRpt2() );
+  auto new_msg = std::make_shared<pm_msgs::MotorRpt2>();
 
   BRAKE_MOTOR_RPT_2_t parsed_rpt;
   Unpack_BRAKE_MOTOR_RPT_2_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -318,7 +318,7 @@ std::shared_ptr<void> Dbc3Api::ParseMotorRpt2(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseMotorRpt3(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::MotorRpt3> new_msg( new pm_msgs::MotorRpt3() );
+  auto new_msg = std::make_shared<pm_msgs::MotorRpt3>();
 
   BRAKE_MOTOR_RPT_3_t parsed_rpt;
   Unpack_BRAKE_MOTOR_RPT_3_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -331,7 +331,7 @@ std::shared_ptr<void> Dbc3Api::ParseMotorRpt3(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseOccupancyRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::OccupancyRpt> new_msg( new pm_msgs::OccupancyRpt() );
+  auto new_msg = std::make_shared<pm_msgs::OccupancyRpt>();
 
   OCCUPANCY_RPT_t parsed_rpt;
   Unpack_OCCUPANCY_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -362,7 +362,7 @@ std::shared_ptr<void> Dbc3Api::ParseOccupancyRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseRearLightsRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::RearLightsRpt> new_msg( new pm_msgs::RearLightsRpt() );
+  auto new_msg = std::make_shared<pm_msgs::RearLightsRpt>();
 
   REAR_LIGHTS_RPT_t parsed_rpt;
   Unpack_REAR_LIGHTS_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -377,7 +377,7 @@ std::shared_ptr<void> Dbc3Api::ParseRearLightsRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseShiftAuxRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::ShiftAuxRpt> new_msg( new pm_msgs::ShiftAuxRpt() );
+  auto new_msg = std::make_shared<pm_msgs::ShiftAuxRpt>();
 
   SHIFT_AUX_RPT_t parsed_rpt;
   Unpack_SHIFT_AUX_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -402,7 +402,7 @@ std::shared_ptr<void> Dbc3Api::ParseShiftAuxRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseSteeringAuxRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::SteeringAuxRpt> new_msg( new pm_msgs::SteeringAuxRpt() );
+  auto new_msg = std::make_shared<pm_msgs::SteeringAuxRpt>();
 
   STEERING_AUX_RPT_t parsed_rpt;
   Unpack_STEERING_AUX_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -427,7 +427,7 @@ std::shared_ptr<void> Dbc3Api::ParseSteeringAuxRpt(const cn_msgs::Frame& can_msg
 
 std::shared_ptr<void> Dbc3Api::ParseSystemRptBool(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::SystemRptBool> new_msg( new pm_msgs::SystemRptBool() );
+  auto new_msg = std::make_shared<pm_msgs::SystemRptBool>();
 
   HORN_RPT_t parsed_rpt;
   Unpack_HORN_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -449,7 +449,7 @@ std::shared_ptr<void> Dbc3Api::ParseSystemRptBool(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseSystemRptFloat(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::SystemRptFloat> new_msg( new pm_msgs::SystemRptFloat() );
+  auto new_msg = std::make_shared<pm_msgs::SystemRptFloat>();
 
   ACCEL_RPT_t parsed_rpt;
   Unpack_ACCEL_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -471,7 +471,7 @@ std::shared_ptr<void> Dbc3Api::ParseSystemRptFloat(const cn_msgs::Frame& can_msg
 
 std::shared_ptr<void> Dbc3Api::ParseSystemRptInt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::SystemRptInt> new_msg( new pm_msgs::SystemRptInt() );
+  auto new_msg = std::make_shared<pm_msgs::SystemRptInt>();
 
   SHIFT_RPT_t parsed_rpt;
   Unpack_SHIFT_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -493,7 +493,7 @@ std::shared_ptr<void> Dbc3Api::ParseSystemRptInt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseTurnAuxRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::TurnAuxRpt> new_msg( new pm_msgs::TurnAuxRpt() );
+  auto new_msg = std::make_shared<pm_msgs::TurnAuxRpt>();
 
   TURN_AUX_RPT_t parsed_rpt;
   Unpack_TURN_AUX_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -508,7 +508,7 @@ std::shared_ptr<void> Dbc3Api::ParseTurnAuxRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseVehicleDynamicsRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::VehicleDynamicsRpt> new_msg( new pm_msgs::VehicleDynamicsRpt() );
+  auto new_msg = std::make_shared<pm_msgs::VehicleDynamicsRpt>();
 
   VEH_DYNAMICS_RPT_t parsed_rpt;
   Unpack_VEH_DYNAMICS_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -520,7 +520,7 @@ std::shared_ptr<void> Dbc3Api::ParseVehicleDynamicsRpt(const cn_msgs::Frame& can
 
 std::shared_ptr<void> Dbc3Api::ParseVehicleSpeedRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::VehicleSpeedRpt> new_msg( new pm_msgs::VehicleSpeedRpt() );
+  auto new_msg = std::make_shared<pm_msgs::VehicleSpeedRpt>();
 
   VEHICLE_SPEED_RPT_t parsed_rpt;
   Unpack_VEHICLE_SPEED_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -533,7 +533,7 @@ std::shared_ptr<void> Dbc3Api::ParseVehicleSpeedRpt(const cn_msgs::Frame& can_ms
 
 std::shared_ptr<void> Dbc3Api::ParseVinRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::VinRpt> new_msg( new pm_msgs::VinRpt() );
+  auto new_msg = std::make_shared<pm_msgs::VinRpt>();
 
   VIN_RPT_t parsed_rpt;
   Unpack_VIN_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -551,7 +551,7 @@ std::shared_ptr<void> Dbc3Api::ParseVinRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseWheelSpeedRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::WheelSpeedRpt> new_msg( new pm_msgs::WheelSpeedRpt() );
+  auto new_msg = std::make_shared<pm_msgs::WheelSpeedRpt>();
 
   WHEEL_SPEED_RPT_t parsed_rpt;
   Unpack_WHEEL_SPEED_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -566,7 +566,7 @@ std::shared_ptr<void> Dbc3Api::ParseWheelSpeedRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseWiperAuxRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::WiperAuxRpt> new_msg( new pm_msgs::WiperAuxRpt() );
+  auto new_msg = std::make_shared<pm_msgs::WiperAuxRpt>();
 
   WIPER_AUX_RPT_t parsed_rpt;
   Unpack_WIPER_AUX_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -590,7 +590,7 @@ std::shared_ptr<void> Dbc3Api::ParseWiperAuxRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc3Api::ParseYawRateRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::YawRateRpt> new_msg( new pm_msgs::YawRateRpt() );
+  auto new_msg = std::make_shared<pm_msgs::YawRateRpt>();
 
   YAW_RATE_RPT_t parsed_rpt;
   Unpack_YAW_RATE_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));

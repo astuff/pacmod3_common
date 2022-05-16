@@ -31,7 +31,7 @@ namespace pacmod3_common
 
 std::shared_ptr<void> Dbc4Api::ParseAngVelRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::AngVelRpt> new_msg( new pm_msgs::AngVelRpt() );
+  auto new_msg = std::make_shared<pm_msgs::AngVelRpt>();
 
   ANG_VEL_RPT_t parsed_rpt;
   Unpack_ANG_VEL_RPT_pacmod4(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -53,7 +53,7 @@ std::shared_ptr<void> Dbc4Api::ParseAngVelRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc4Api::ParseComponentRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::ComponentRpt> new_msg( new pm_msgs::ComponentRpt() );
+  auto new_msg = std::make_shared<pm_msgs::ComponentRpt>();
 
   COMPONENT_RPT_00_t parsed_rpt;
   Unpack_COMPONENT_RPT_00_pacmod4(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -102,7 +102,7 @@ std::shared_ptr<void> Dbc4Api::ParseComponentRpt(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc4Api::ParseLinearAccelRpt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::LinearAccelRpt> new_msg( new pm_msgs::LinearAccelRpt() );
+  auto new_msg = std::make_shared<pm_msgs::LinearAccelRpt>();
 
   LINEAR_ACCEL_RPT_t parsed_rpt;
   Unpack_LINEAR_ACCEL_RPT_pacmod4(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -124,7 +124,7 @@ std::shared_ptr<void> Dbc4Api::ParseLinearAccelRpt(const cn_msgs::Frame& can_msg
 
 std::shared_ptr<void> Dbc4Api::ParseSystemRptBool(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::SystemRptBool> new_msg( new pm_msgs::SystemRptBool() );
+  auto new_msg = std::make_shared<pm_msgs::SystemRptBool>();
 
   HORN_RPT_t parsed_rpt;
   Unpack_HORN_RPT_pacmod4(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -146,7 +146,7 @@ std::shared_ptr<void> Dbc4Api::ParseSystemRptBool(const cn_msgs::Frame& can_msg)
 
 std::shared_ptr<void> Dbc4Api::ParseSystemRptFloat(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::SystemRptFloat> new_msg( new pm_msgs::SystemRptFloat() );
+  auto new_msg = std::make_shared<pm_msgs::SystemRptFloat>();
 
   ACCEL_RPT_t parsed_rpt;
   Unpack_ACCEL_RPT_pacmod4(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
@@ -168,7 +168,7 @@ std::shared_ptr<void> Dbc4Api::ParseSystemRptFloat(const cn_msgs::Frame& can_msg
 
 std::shared_ptr<void> Dbc4Api::ParseSystemRptInt(const cn_msgs::Frame& can_msg)
 {
-  std::shared_ptr<pm_msgs::SystemRptInt> new_msg( new pm_msgs::SystemRptInt() );
+  auto new_msg = std::make_shared<pm_msgs::SystemRptInt>();
 
   SHIFT_RPT_t parsed_rpt;
   Unpack_SHIFT_RPT_pacmod4(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));

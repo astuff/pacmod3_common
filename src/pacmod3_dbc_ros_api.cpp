@@ -36,9 +36,7 @@ void DbcApi::PrintParseError(const std::string& msg_type)
 
   #if ROS_VERSION==1
     ROS_WARN_STREAM(full_msg);
-  #endif
-
-  #if ROS_VERSION==2
+  #elif ROS_VERSION==2
 
   #endif
 }
@@ -49,9 +47,7 @@ void DbcApi::PrintEncodeError(const std::string& msg_type)
 
   #if ROS_VERSION==1
     ROS_WARN_STREAM(full_msg);
-  #endif
-
-  #if ROS_VERSION==2
+  #elif ROS_VERSION==2
 
   #endif
 }
