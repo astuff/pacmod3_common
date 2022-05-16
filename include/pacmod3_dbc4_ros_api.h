@@ -36,7 +36,7 @@ namespace pacmod3_common
 class Dbc4Api : public Dbc3Api
 {
 public:
-  Dbc4Api();
+  explicit Dbc4Api(uint32_t version = 4):Dbc3Api(version){};
   virtual ~Dbc4Api() = default;
 
   std::shared_ptr<void> ParseAngVelRpt(const cn_msgs::Frame& can_msg) override;

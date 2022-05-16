@@ -134,6 +134,7 @@ namespace pacmod3_common
 class DbcApi
 {
 public:
+  explicit DbcApi(uint32_t version = 0):dbc_major_version_(version){};
   virtual ~DbcApi() = default;
 
   // Parsing functions take in a ROS CAN msg and return a pointer to a ROS pacmod msg
@@ -176,7 +177,6 @@ public:
   virtual cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdFloat& msg) = 0;
   virtual cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdInt& msg) = 0;
 
-  void SetDbcVersion(uint32_t dbc_major_version);
   uint32_t GetDbcVersion();
   void PrintParseError(const std::string& msg_type);
   void PrintEncodeError(const std::string& msg_type);

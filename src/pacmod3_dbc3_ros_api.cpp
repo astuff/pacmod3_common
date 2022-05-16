@@ -29,11 +29,6 @@
 namespace pacmod3_common
 {
 
-Dbc3Api::Dbc3Api()
-{
-  SetDbcVersion(3);
-}
-
 std::shared_ptr<void> Dbc3Api::ParseAccelAuxRpt(const cn_msgs::Frame& can_msg)
 {
   std::shared_ptr<pm_msgs::AccelAuxRpt> new_msg( new pm_msgs::AccelAuxRpt() );

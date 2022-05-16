@@ -25,11 +25,6 @@
 namespace pacmod3_common
 {
 
-void DbcApi::SetDbcVersion(uint32_t dbc_major_version)
-{
-  dbc_major_version_ = dbc_major_version;
-}
-
 uint32_t DbcApi::GetDbcVersion()
 {
   return dbc_major_version_;

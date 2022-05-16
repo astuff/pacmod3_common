@@ -29,11 +29,6 @@
 namespace pacmod3_common
 {
 
-Dbc4Api::Dbc4Api()
-{
-  SetDbcVersion(4);
-}
-
 std::shared_ptr<void> Dbc4Api::ParseAngVelRpt(const cn_msgs::Frame& can_msg)
 {
   std::shared_ptr<pm_msgs::AngVelRpt> new_msg( new pm_msgs::AngVelRpt() );
