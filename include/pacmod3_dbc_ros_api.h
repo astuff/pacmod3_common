@@ -48,6 +48,7 @@
 #include <pacmod3_msgs/DetectedObjectRpt.h>
 #include <pacmod3_msgs/DoorRpt.h>
 #include <pacmod3_msgs/EngineRpt.h>
+#include <pacmod3_msgs/EStopRpt.h>
 #include <pacmod3_msgs/GlobalCmd.h>
 #include <pacmod3_msgs/GlobalRpt.h>
 #include <pacmod3_msgs/HeadlightAuxRpt.h>
@@ -96,6 +97,7 @@ namespace cn_msgs = can_msgs;
 #include <pacmod3_msgs/msg/detected_object_rpt.hpp>
 #include <pacmod3_msgs/msg/door_rpt.hpp>
 #include <pacmod3_msgs/msg/engine_rpt.hpp>
+#include <pacmod3_msgs/msg/estop_rpt.hpp>
 #include <pacmod3_msgs/msg/global_cmd.hpp>
 #include <pacmod3_msgs/msg/global_rpt.hpp>
 #include <pacmod3_msgs/msg/headlight_aux_rpt.hpp>
@@ -148,6 +150,7 @@ public:
   virtual std::shared_ptr<void> ParseDateTimeRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseDetectedObjectRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseDoorRpt(const cn_msgs::Frame& can_msg) = 0;
+  virtual std::shared_ptr<void> ParseEStopRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseEngineRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseGlobalRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseHeadlightAuxRpt(const cn_msgs::Frame& can_msg) = 0;

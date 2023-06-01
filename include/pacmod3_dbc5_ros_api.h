@@ -40,6 +40,7 @@ public:
   virtual ~Dbc5Api() = default;
 
   std::shared_ptr<void> ParseComponentRpt(const cn_msgs::Frame& can_msg) override;
+  std::shared_ptr<void> ParseEStopRpt(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseShiftAuxRpt(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseWheelSpeedRpt(const cn_msgs::Frame& can_msg) override;
 };

@@ -189,6 +189,15 @@ std::shared_ptr<void> Dbc3Api::ParseDoorRpt(const cn_msgs::Frame& can_msg)
   return new_msg;
 }
 
+std::shared_ptr<void> Dbc3Api::ParseEStopRpt(const cn_msgs::Frame& can_msg)
+{
+  auto new_msg = std::make_shared<pm_msgs::EStopRpt>();
+
+  PrintParseError("EStopRpt");
+
+  return new_msg;
+}
+
 std::shared_ptr<void> Dbc3Api::ParseEngineRpt(const cn_msgs::Frame& can_msg)
 {
   auto new_msg = std::make_shared<pm_msgs::EngineRpt>();

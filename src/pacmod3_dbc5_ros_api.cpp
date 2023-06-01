@@ -78,6 +78,19 @@ std::shared_ptr<void> Dbc5Api::ParseComponentRpt(const cn_msgs::Frame& can_msg)
   return new_msg;
 }
 
+std::shared_ptr<void> Dbc5Api::ParseEStopRpt(const cn_msgs::Frame& can_msg)
+{
+  auto new_msg = std::make_shared<pm_msgs::EStopRpt>();
+
+  ESTOP_RPT_t parsed_rpt;
+  Unpack_ESTOP_RPT_pacmod5(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
+
+  new_msg->estop_status = parsed_rpt.ESTOP;
+  new_msg->estop_fault = parsed_rpt.ESTOP_FAULT;
+
+  return new_msg;
+}
+
 std::shared_ptr<void> Dbc5Api::ParseShiftAuxRpt(const cn_msgs::Frame& can_msg)
 {
   auto new_msg = std::make_shared<pm_msgs::ShiftAuxRpt>();
@@ -89,10 +102,10 @@ std::shared_ptr<void> Dbc5Api::ParseShiftAuxRpt(const cn_msgs::Frame& can_msg)
   new_msg->stay_in_neutral_mode = parsed_rpt.STAY_IN_NEUTRAL_MODE;
   new_msg->brake_interlock_active = parsed_rpt.BRAKE_INTERLOCK_ACTIVE;
   new_msg->speed_interlock_active = parsed_rpt.SPEED_INTERLOCK_ACTIVE;
-  new_msg->between_gears_avail = parsed_rpt.BETWEEN_GEARS_IS_VALID;
-  new_msg->stay_in_neutral_mode_avail = parsed_rpt.STAY_IN_NEUTRAL_MODE_IS_VALID;
-  new_msg->brake_interlock_active_avail = parsed_rpt.BRAKE_INTERLOCK_ACTIVE_IS_VALID;
-  new_msg->speed_interlock_active_avail = parsed_rpt.SPEED_INTERLOCK_ACTIVE_IS_VALID;
+  new_msg->between_gears_avail = parsed_rpt.BETWEEN_GEARS_AVAIL;
+  new_msg->stay_in_neutral_mode_avail = parsed_rpt.STAY_IN_NEUTRAL_MODE_AVAIL;
+  new_msg->brake_interlock_active_avail = parsed_rpt.BRAKE_INTERLOCK_ACTIVE_AVAIL;
+  new_msg->speed_interlock_active_avail = parsed_rpt.SPEED_INTERLOCK_ACTIVE_AVAIL;
   new_msg->write_to_config = parsed_rpt.WRITE_TO_CONFIG;
 
   // Following fields not present in dbc5
