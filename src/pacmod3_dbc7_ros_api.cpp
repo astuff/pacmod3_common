@@ -34,7 +34,7 @@ std::shared_ptr<void> Dbc7Api::ParseComponentRpt(const cn_msgs::Frame& can_msg)
   auto new_msg = std::make_shared<pm_msgs::ComponentRpt>();
 
   COMPONENT_RPT_00_t parsed_rpt;
-  Unpack_COMPONENT_RPT_00_pacmod5(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
+  Unpack_COMPONENT_RPT_00_pacmod7(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
 
   new_msg->component_type = parsed_rpt.COMPONENT_TYPE;
   new_msg->accel = parsed_rpt.ACCEL;
