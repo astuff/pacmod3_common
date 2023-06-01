@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef PACMOD3_DBC12_ROS_API_H
-#define PACMOD3_DBC12_ROS_API_H
+#ifndef PACMOD3_DBC4_ROS_API_H
+#define PACMOD3_DBC4_ROS_API_H
 
 #include "pacmod3_dbc3_ros_api.h"
 
@@ -54,4 +54,4 @@ public:
 };
 }  // namespace pacmod3_common
 
-#endif  // PACMOD3_DBC12_ROS_API_H
+#endif  // PACMOD3_DBC4_ROS_API_H

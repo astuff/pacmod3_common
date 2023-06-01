@@ -38,6 +38,7 @@
 
 #include <can_msgs/Frame.h>
 
+// Only include the msgs that are currently supported by pacmod3_common
 #include <pacmod3_msgs/AccelAuxRpt.h>
 #include <pacmod3_msgs/AllSystemStatuses.h>
 #include <pacmod3_msgs/AngVelRpt.h>
@@ -85,6 +86,7 @@ namespace cn_msgs = can_msgs;
 
 #include <can_msgs/msg/frame.hpp>
 
+// Only include the msgs that are currently supported by pacmod3_common
 #include <pacmod3_msgs/msg/accel_aux_rpt.hpp>
 #include <pacmod3_msgs/msg/all_system_statuses.hpp>
 #include <pacmod3_msgs/msg/ang_vel_rpt.hpp>
@@ -138,6 +140,7 @@ public:
   virtual ~DbcApi() = default;
 
   // Parsing functions take in a ROS CAN msg and return a pointer to a ROS pacmod msg
+  // These virtual functions represent all the currently-supported pacmod reports across all DBC versions
   virtual std::shared_ptr<void> ParseAccelAuxRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseAngVelRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseBrakeAuxRpt(const cn_msgs::Frame& can_msg) = 0;
@@ -170,6 +173,7 @@ public:
   virtual std::shared_ptr<void> ParseYawRateRpt(const cn_msgs::Frame& can_msg) = 0;
 
   // Encoding functions take in a ROS pacmod msg and return and ROS CAN frame msg.
+  // These virtual functions represent all the currently-supported pacmod commands across all DBC versions
   virtual cn_msgs::Frame EncodeCmd(const pm_msgs::GlobalCmd& msg) = 0;
   virtual cn_msgs::Frame EncodeCmd(const pm_msgs::NotificationCmd& msg) = 0;
   virtual cn_msgs::Frame EncodeCmd(const pm_msgs::SteeringCmd& msg) = 0;

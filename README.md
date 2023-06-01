@@ -6,3 +6,13 @@ The rest of the code is manually written and is used for packing and unpacking R
 The pacmod3_common library can be compiled under both ROS1 and ROS2 in order to reduce duplication and code maintenance efforts.
 
 Each major version of the [pacmod DBC](https://github.com/astuff/pacmod_dbc) is supported by this pacmod3_common library.
+
+## Version Support
+
+Below is a table of supported DBC versions.
+
+|Major Version|Full DBC Version|
+|-|-|
+|3|3.4.1|
+|4|4.1.0|
+|5|5.0.0|
