@@ -18,10 +18,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef PACMOD3_DBC5_ROS_API_H
-#define PACMOD3_DBC5_ROS_API_H
+#ifndef PACMOD3_DBC6_ROS_API_H
+#define PACMOD3_DBC6_ROS_API_H
 
-#include "pacmod3_dbc4_ros_api.h"
+#include "pacmod3_dbc5_ros_api.h"
 
 #include <string>
 #include <vector>
@@ -33,17 +33,14 @@ namespace pacmod3_common
 
 // Derived from previous DBC API version
 // The only overridden functions that exist here are due to changes to those msg types relative to the previous DBC version.
-class Dbc5Api : public Dbc4Api
+class Dbc6Api : public Dbc5Api
 {
 public:
-  explicit Dbc5Api(uint32_t version = 4):Dbc4Api(version){};
-  virtual ~Dbc5Api() = default;
+  explicit Dbc6Api(uint32_t version = 4):Dbc5Api(version){};
+  virtual ~Dbc6Api() = default;
 
-  std::shared_ptr<void> ParseComponentRpt(const cn_msgs::Frame& can_msg) override;
-  std::shared_ptr<void> ParseEStopRpt(const cn_msgs::Frame& can_msg) override;
-  std::shared_ptr<void> ParseShiftAuxRpt(const cn_msgs::Frame& can_msg) override;
-  std::shared_ptr<void> ParseWheelSpeedRpt(const cn_msgs::Frame& can_msg) override;
+  // No functional difference between DBC5 and DBC6
 };
 }  // namespace pacmod3_common
 
-#endif  // PACMOD3_DBC5_ROS_API_H
+#endif  // PACMOD3_DBC6_ROS_API_H
