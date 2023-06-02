@@ -18,10 +18,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef PACMOD3_DBC7_ROS_API_H
-#define PACMOD3_DBC7_ROS_API_H
+#ifndef PACMOD3_DBC10_ROS_API_H
+#define PACMOD3_DBC10_ROS_API_H
 
-#include "pacmod3_dbc6_ros_api.h"
+#include "pacmod3_dbc9_ros_api.h"
 
 #include <string>
 #include <vector>
@@ -33,18 +33,17 @@ namespace pacmod3_common
 
 // Derived from previous DBC API version
 // The only overridden functions that exist here are due to changes to those msg types relative to the previous DBC version.
-class Dbc7Api : public Dbc6Api
+class Dbc10Api : public Dbc9Api
 {
 public:
-  explicit Dbc7Api(uint32_t version = 7):Dbc6Api(version){};
-  virtual ~Dbc7Api() = default;
+  explicit Dbc10Api(uint32_t version = 10):Dbc9Api(version){};
+  virtual ~Dbc10Api() = default;
 
+  std::shared_ptr<void> ParseAccelAuxRpt(const cn_msgs::Frame& can_msg) override;
+  std::shared_ptr<void> ParseBrakeAuxRpt(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseComponentRpt(const cn_msgs::Frame& can_msg) override;
-  std::shared_ptr<void> ParseGlobalRpt(const cn_msgs::Frame& can_msg) override;
-  std::shared_ptr<void> ParseInteriorLightsRpt(const cn_msgs::Frame& can_msg) override;
-  std::shared_ptr<void> ParseShiftAuxRpt(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseSteeringAuxRpt(const cn_msgs::Frame& can_msg) override;
 };
 }  // namespace pacmod3_common
 
-#endif  // PACMOD3_DBC7_ROS_API_H
+#endif  // PACMOD3_DBC10_ROS_API_H

@@ -18,33 +18,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef PACMOD3_DBC7_ROS_API_H
-#define PACMOD3_DBC7_ROS_API_H
-
 #include "pacmod3_dbc6_ros_api.h"
+#include "autogen/pacmod6.h"
 
-#include <string>
 #include <vector>
+#include <string>
 #include <memory>
-#include <mutex>
+
 
 namespace pacmod3_common
 {
 
-// Derived from previous DBC API version
-// The only overridden functions that exist here are due to changes to those msg types relative to the previous DBC version.
-class Dbc7Api : public Dbc6Api
-{
-public:
-  explicit Dbc7Api(uint32_t version = 7):Dbc6Api(version){};
-  virtual ~Dbc7Api() = default;
+  // No functional difference between DBC5 and DBC6
 
-  std::shared_ptr<void> ParseComponentRpt(const cn_msgs::Frame& can_msg) override;
-  std::shared_ptr<void> ParseGlobalRpt(const cn_msgs::Frame& can_msg) override;
-  std::shared_ptr<void> ParseInteriorLightsRpt(const cn_msgs::Frame& can_msg) override;
-  std::shared_ptr<void> ParseShiftAuxRpt(const cn_msgs::Frame& can_msg) override;
-  std::shared_ptr<void> ParseSteeringAuxRpt(const cn_msgs::Frame& can_msg) override;
-};
 }  // namespace pacmod3_common
-
-#endif  // PACMOD3_DBC7_ROS_API_H
