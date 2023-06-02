@@ -38,6 +38,7 @@
 
 #include <can_msgs/Frame.h>
 
+// Only include the msgs that are currently supported by pacmod3_common
 #include <pacmod3_msgs/AccelAuxRpt.h>
 #include <pacmod3_msgs/AllSystemStatuses.h>
 #include <pacmod3_msgs/AngVelRpt.h>
@@ -47,6 +48,7 @@
 #include <pacmod3_msgs/DetectedObjectRpt.h>
 #include <pacmod3_msgs/DoorRpt.h>
 #include <pacmod3_msgs/EngineRpt.h>
+#include <pacmod3_msgs/EStopRpt.h>
 #include <pacmod3_msgs/GlobalCmd.h>
 #include <pacmod3_msgs/GlobalRpt.h>
 #include <pacmod3_msgs/HeadlightAuxRpt.h>
@@ -85,6 +87,7 @@ namespace cn_msgs = can_msgs;
 
 #include <can_msgs/msg/frame.hpp>
 
+// Only include the msgs that are currently supported by pacmod3_common
 #include <pacmod3_msgs/msg/accel_aux_rpt.hpp>
 #include <pacmod3_msgs/msg/all_system_statuses.hpp>
 #include <pacmod3_msgs/msg/ang_vel_rpt.hpp>
@@ -94,6 +97,7 @@ namespace cn_msgs = can_msgs;
 #include <pacmod3_msgs/msg/detected_object_rpt.hpp>
 #include <pacmod3_msgs/msg/door_rpt.hpp>
 #include <pacmod3_msgs/msg/engine_rpt.hpp>
+#include <pacmod3_msgs/msg/estop_rpt.hpp>
 #include <pacmod3_msgs/msg/global_cmd.hpp>
 #include <pacmod3_msgs/msg/global_rpt.hpp>
 #include <pacmod3_msgs/msg/headlight_aux_rpt.hpp>
@@ -138,6 +142,7 @@ public:
   virtual ~DbcApi() = default;
 
   // Parsing functions take in a ROS CAN msg and return a pointer to a ROS pacmod msg
+  // These virtual functions represent all the currently-supported pacmod reports across all DBC versions
   virtual std::shared_ptr<void> ParseAccelAuxRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseAngVelRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseBrakeAuxRpt(const cn_msgs::Frame& can_msg) = 0;
@@ -145,6 +150,7 @@ public:
   virtual std::shared_ptr<void> ParseDateTimeRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseDetectedObjectRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseDoorRpt(const cn_msgs::Frame& can_msg) = 0;
+  virtual std::shared_ptr<void> ParseEStopRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseEngineRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseGlobalRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseHeadlightAuxRpt(const cn_msgs::Frame& can_msg) = 0;
@@ -170,6 +176,7 @@ public:
   virtual std::shared_ptr<void> ParseYawRateRpt(const cn_msgs::Frame& can_msg) = 0;
 
   // Encoding functions take in a ROS pacmod msg and return and ROS CAN frame msg.
+  // These virtual functions represent all the currently-supported pacmod commands across all DBC versions
   virtual cn_msgs::Frame EncodeCmd(const pm_msgs::GlobalCmd& msg) = 0;
   virtual cn_msgs::Frame EncodeCmd(const pm_msgs::NotificationCmd& msg) = 0;
   virtual cn_msgs::Frame EncodeCmd(const pm_msgs::SteeringCmd& msg) = 0;

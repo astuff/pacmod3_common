@@ -44,6 +44,7 @@ public:
   std::shared_ptr<void> ParseDateTimeRpt(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseDetectedObjectRpt(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseDoorRpt(const cn_msgs::Frame& can_msg) override;
+  std::shared_ptr<void> ParseEStopRpt(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseEngineRpt(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseGlobalRpt(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseHeadlightAuxRpt(const cn_msgs::Frame& can_msg) override;

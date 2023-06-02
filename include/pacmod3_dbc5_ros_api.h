@@ -18,10 +18,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef PACMOD3_DBC4_ROS_API_H
-#define PACMOD3_DBC4_ROS_API_H
+#ifndef PACMOD3_DBC12_ROS_API_H
+#define PACMOD3_DBC12_ROS_API_H
 
-#include "pacmod3_dbc3_ros_api.h"
+#include "pacmod3_dbc4_ros_api.h"
 
 #include <string>
 #include <vector>
@@ -33,25 +33,17 @@ namespace pacmod3_common
 
 // Derived from previous DBC API version
 // The only overridden functions that exist here are due to changes to those msg types relative to the previous DBC version.
-class Dbc4Api : public Dbc3Api
+class Dbc5Api : public Dbc4Api
 {
 public:
-  explicit Dbc4Api(uint32_t version = 4):Dbc3Api(version){};
-  virtual ~Dbc4Api() = default;
+  explicit Dbc5Api(uint32_t version = 4):Dbc4Api(version){};
+  virtual ~Dbc5Api() = default;
 
-  std::shared_ptr<void> ParseAngVelRpt(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseComponentRpt(const cn_msgs::Frame& can_msg) override;
-  std::shared_ptr<void> ParseLinearAccelRpt(const cn_msgs::Frame& can_msg) override;
-  std::shared_ptr<void> ParseSystemRptBool(const cn_msgs::Frame& can_msg) override;
-  std::shared_ptr<void> ParseSystemRptFloat(const cn_msgs::Frame& can_msg) override;
-  std::shared_ptr<void> ParseSystemRptInt(const cn_msgs::Frame& can_msg) override;
-
-  cn_msgs::Frame EncodeCmd(const pm_msgs::GlobalCmd& msg) override;
-  cn_msgs::Frame EncodeCmd(const pm_msgs::NotificationCmd& msg) override;
-  cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdBool& msg) override;
-  cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdFloat& msg) override;
-  cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdInt& msg) override;
+  std::shared_ptr<void> ParseEStopRpt(const cn_msgs::Frame& can_msg) override;
+  std::shared_ptr<void> ParseShiftAuxRpt(const cn_msgs::Frame& can_msg) override;
+  std::shared_ptr<void> ParseWheelSpeedRpt(const cn_msgs::Frame& can_msg) override;
 };
 }  // namespace pacmod3_common
 
-#endif  // PACMOD3_DBC4_ROS_API_H
+#endif  // PACMOD3_DBC12_ROS_API_H

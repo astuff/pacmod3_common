@@ -34,12 +34,10 @@ typedef struct
 
   //  0 : "Control Disabled"
   //  1 : "Control Enabled"
-  // 
   uint8_t PACMOD_SYSTEM_ENABLED : 1;           //      Bits= 1
 
   //  0 : "Not Overridden"
   //  1 : "Overridden"
-  // 
   uint8_t PACMOD_SYSTEM_OVERRIDE_ACTIVE : 1;   //      Bits= 1
 
   uint8_t USR_CAN_TIMEOUT : 1;                 //      Bits= 1
@@ -48,7 +46,6 @@ typedef struct
 
   //  0 : "No Active CAN Timeout"
   //  1 : "Active CAN Timeout"
-  // 
   uint8_t BRK_CAN_TIMEOUT : 1;                 //      Bits= 1
 
   uint8_t PACMOD_SUBSYSTEM_TIMEOUT : 1;        //      Bits= 1
@@ -65,12 +62,10 @@ typedef struct
 
   //  0 : "Control Disabled"
   //  1 : "Control Enabled"
-  // 
   uint8_t PACMOD_SYSTEM_ENABLED;               //      Bits= 1
 
   //  0 : "Not Overridden"
   //  1 : "Overridden"
-  // 
   uint8_t PACMOD_SYSTEM_OVERRIDE_ACTIVE;       //      Bits= 1
 
   uint8_t USR_CAN_TIMEOUT;                     //      Bits= 1
@@ -79,7 +74,6 @@ typedef struct
 
   //  0 : "No Active CAN Timeout"
   //  1 : "Active CAN Timeout"
-  // 
   uint8_t BRK_CAN_TIMEOUT;                     //      Bits= 1
 
   uint8_t PACMOD_SUBSYSTEM_TIMEOUT;            //      Bits= 1
@@ -114,82 +108,66 @@ typedef struct
   //  0 : "PACMod"
   //  1 : "PACMini"
   //  2 : "PACMicro"
-  // 
   uint8_t COMPONENT_TYPE : 4;                //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS : 1;        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT : 1;            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT : 1;           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS : 1;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT : 1;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN : 1;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS : 1;                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE : 1;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING : 1;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN : 1;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG : 1;                      //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
@@ -200,17 +178,14 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT : 1;             //      Bits= 1
 
   //  0 : "RELEASED"
   //  1 : "PRESSED"
-  // 
   uint8_t ESTOP : 1;                         //      Bits= 1
 
 #else
@@ -218,82 +193,66 @@ typedef struct
   //  0 : "PACMod"
   //  1 : "PACMini"
   //  2 : "PACMicro"
-  // 
   uint8_t COMPONENT_TYPE;                    //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS;            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT;                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT;               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN;                              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS;                    //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN;                              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG;                          //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
@@ -304,17 +263,14 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT;                 //      Bits= 1
 
   //  0 : "RELEASED"
   //  1 : "PRESSED"
-  // 
   uint8_t ESTOP;                             //      Bits= 1
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -339,82 +295,66 @@ typedef struct
   //  0 : "PACMod"
   //  1 : "PACMini"
   //  2 : "PACMicro"
-  // 
   uint8_t COMPONENT_TYPE : 4;                //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS : 1;        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT : 1;            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT : 1;           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS : 1;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT : 1;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN : 1;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS : 1;                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE : 1;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING : 1;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN : 1;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG : 1;                      //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
@@ -425,17 +365,14 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT : 1;             //      Bits= 1
 
   //  0 : "RELEASED"
   //  1 : "PRESSED"
-  // 
   uint8_t ESTOP : 1;                         //      Bits= 1
 
 #else
@@ -443,82 +380,66 @@ typedef struct
   //  0 : "PACMod"
   //  1 : "PACMini"
   //  2 : "PACMicro"
-  // 
   uint8_t COMPONENT_TYPE;                    //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS;            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT;                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT;               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN;                              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS;                    //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN;                              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG;                          //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
@@ -529,17 +450,14 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT;                 //      Bits= 1
 
   //  0 : "RELEASED"
   //  1 : "PRESSED"
-  // 
   uint8_t ESTOP;                             //      Bits= 1
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -564,82 +482,66 @@ typedef struct
   //  0 : "PACMod"
   //  1 : "PACMini"
   //  2 : "PACMicro"
-  // 
   uint8_t COMPONENT_TYPE : 4;                //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS : 1;        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT : 1;            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT : 1;           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS : 1;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT : 1;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN : 1;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS : 1;                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE : 1;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING : 1;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN : 1;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG : 1;                      //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
@@ -650,17 +552,14 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT : 1;             //      Bits= 1
 
   //  0 : "RELEASED"
   //  1 : "PRESSED"
-  // 
   uint8_t ESTOP : 1;                         //      Bits= 1
 
 #else
@@ -668,82 +567,66 @@ typedef struct
   //  0 : "PACMod"
   //  1 : "PACMini"
   //  2 : "PACMicro"
-  // 
   uint8_t COMPONENT_TYPE;                    //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS;            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT;                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT;               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN;                              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS;                    //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN;                              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG;                          //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
@@ -754,17 +637,14 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT;                 //      Bits= 1
 
   //  0 : "RELEASED"
   //  1 : "PRESSED"
-  // 
   uint8_t ESTOP;                             //      Bits= 1
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -789,82 +669,66 @@ typedef struct
   //  0 : "PACMod"
   //  1 : "PACMini"
   //  2 : "PACMicro"
-  // 
   uint8_t COMPONENT_TYPE : 4;                //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS : 1;        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT : 1;            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT : 1;           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS : 1;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT : 1;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN : 1;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS : 1;                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE : 1;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING : 1;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN : 1;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG : 1;                      //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
@@ -875,17 +739,14 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT : 1;             //      Bits= 1
 
   //  0 : "RELEASED"
   //  1 : "PRESSED"
-  // 
   uint8_t ESTOP : 1;                         //      Bits= 1
 
 #else
@@ -893,82 +754,66 @@ typedef struct
   //  0 : "PACMod"
   //  1 : "PACMini"
   //  2 : "PACMicro"
-  // 
   uint8_t COMPONENT_TYPE;                    //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS;            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT;                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT;               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN;                              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS;                    //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN;                              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG;                          //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
@@ -979,17 +824,14 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT;                 //      Bits= 1
 
   //  0 : "RELEASED"
   //  1 : "PRESSED"
-  // 
   uint8_t ESTOP;                             //      Bits= 1
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -1147,7 +989,6 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t CRUISE_CONTROL_BUTTON;             //      Bits= 8
 
 #else
@@ -1165,7 +1006,6 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t CRUISE_CONTROL_BUTTON;             //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -1199,7 +1039,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t DASH_CONTROLS_BUTTON;              //      Bits= 8
 
 #else
@@ -1216,7 +1055,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t DASH_CONTROLS_BUTTON;              //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -1250,7 +1088,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t DASH_CONTROLS_BUTTON;              //      Bits= 8
 
 #else
@@ -1267,7 +1104,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t DASH_CONTROLS_BUTTON;              //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -1335,7 +1171,6 @@ typedef struct
   //  2 : "High Beams"
   //  1 : "Low Beams"
   //  0 : "Headlights Off"
-  // 
   uint8_t HEADLIGHT_CMD;                     //      Bits= 8
 
 #else
@@ -1349,7 +1184,6 @@ typedef struct
   //  2 : "High Beams"
   //  1 : "Low Beams"
   //  0 : "Headlights Off"
-  // 
   uint8_t HEADLIGHT_CMD;                     //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -1379,7 +1213,6 @@ typedef struct
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t HORN_CMD : 1;                      //      Bits= 1
 
 #else
@@ -1392,7 +1225,6 @@ typedef struct
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t HORN_CMD;                          //      Bits= 1
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -1427,7 +1259,6 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t MEDIA_CONTROLS_CMD;                //      Bits= 8
 
 #else
@@ -1445,7 +1276,6 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t MEDIA_CONTROLS_CMD;                //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -1517,7 +1347,6 @@ typedef struct
   //  3 : "FORWARD/HIGH"
   //  4 : "LOW"
   //  7 : "NONE"
-  // 
   uint8_t SHIFT_CMD;                         //      Bits= 8
 
 #else
@@ -1535,7 +1364,6 @@ typedef struct
   //  3 : "FORWARD/HIGH"
   //  4 : "LOW"
   //  7 : "NONE"
-  // 
   uint8_t SHIFT_CMD;                         //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -1632,7 +1460,6 @@ typedef struct
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t TURN_SIGNAL_CMD;                   //      Bits= 8
 
 #else
@@ -1647,7 +1474,6 @@ typedef struct
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t TURN_SIGNAL_CMD;                   //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -1683,7 +1509,6 @@ typedef struct
   //  2 : "Intermittent 2"
   //  1 : "Intermittent 1"
   //  0 : "Wipers Off"
-  // 
   uint8_t WIPER_CMD;                         //      Bits= 8
 
 #else
@@ -1702,7 +1527,6 @@ typedef struct
   //  2 : "Intermittent 2"
   //  1 : "Intermittent 1"
   //  0 : "Wipers Off"
-  // 
   uint8_t WIPER_CMD;                         //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -1752,7 +1576,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   uint16_t MANUAL_INPUT_ro;                  //      Bits=16 Factor= 0.001000       
@@ -1791,7 +1614,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   uint16_t MANUAL_INPUT_ro;                  //      Bits=16 Factor= 0.001000       
@@ -1859,7 +1681,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   uint16_t MANUAL_INPUT_ro;                  //      Bits=16 Factor= 0.001000       
@@ -1898,7 +1719,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   uint16_t MANUAL_INPUT_ro;                  //      Bits=16 Factor= 0.001000       
@@ -1954,7 +1774,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  6 : "CRUISE_CONTROL_ON_OFF"
@@ -1964,7 +1783,6 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  6 : "CRUISE_CONTROL_ON_OFF"
@@ -1974,7 +1792,6 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  6 : "CRUISE_CONTROL_ON_OFF"
@@ -1984,7 +1801,6 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
@@ -2005,7 +1821,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  6 : "CRUISE_CONTROL_ON_OFF"
@@ -2015,7 +1830,6 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  6 : "CRUISE_CONTROL_ON_OFF"
@@ -2025,7 +1839,6 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  6 : "CRUISE_CONTROL_ON_OFF"
@@ -2035,7 +1848,6 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -2073,7 +1885,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -2082,7 +1893,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -2091,7 +1901,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -2100,7 +1909,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
@@ -2121,7 +1929,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -2130,7 +1937,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -2139,7 +1945,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -2148,7 +1953,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -2186,7 +1990,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -2195,7 +1998,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -2204,7 +2006,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -2213,7 +2014,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
@@ -2234,7 +2034,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -2243,7 +2042,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -2252,7 +2050,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -2261,7 +2058,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -2299,7 +2095,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   uint8_t MANUAL_INPUT : 1;                  //      Bits= 1
@@ -2326,7 +2121,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   uint8_t MANUAL_INPUT;                      //      Bits= 1
@@ -2370,25 +2164,21 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  2 : "High Beams"
   //  1 : "Low Beams"
   //  0 : "Headlights Off"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  2 : "High Beams"
   //  1 : "Low Beams"
   //  0 : "Headlights Off"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  2 : "High Beams"
   //  1 : "Low Beams"
   //  0 : "Headlights Off"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
@@ -2409,25 +2199,21 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  2 : "High Beams"
   //  1 : "Low Beams"
   //  0 : "Headlights Off"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  2 : "High Beams"
   //  1 : "Low Beams"
   //  0 : "Headlights Off"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  2 : "High Beams"
   //  1 : "Low Beams"
   //  0 : "Headlights Off"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -2465,22 +2251,18 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
@@ -2501,22 +2283,18 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -2554,7 +2332,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  6 : "MEDIA_CONTROL_VOL_DOWN"
@@ -2564,7 +2341,6 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  6 : "MEDIA_CONTROL_VOL_DOWN"
@@ -2574,7 +2350,6 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  6 : "MEDIA_CONTROL_VOL_DOWN"
@@ -2584,7 +2359,6 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
@@ -2605,7 +2379,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  6 : "MEDIA_CONTROL_VOL_DOWN"
@@ -2615,7 +2388,6 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  6 : "MEDIA_CONTROL_VOL_DOWN"
@@ -2625,7 +2397,6 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  6 : "MEDIA_CONTROL_VOL_DOWN"
@@ -2635,7 +2406,6 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -2673,7 +2443,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   uint8_t MANUAL_INPUT : 1;                  //      Bits= 1
@@ -2700,7 +2469,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   uint8_t MANUAL_INPUT;                      //      Bits= 1
@@ -2744,7 +2512,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "PARK"
@@ -2755,7 +2522,6 @@ typedef struct
   //  5 : "BETWEEN_GEARS"
   //  6 : "ERROR"
   //  7 : "NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "PARK"
@@ -2764,7 +2530,6 @@ typedef struct
   //  3 : "FORWARD/HIGH"
   //  4 : "LOW"
   //  7 : "NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "PARK"
@@ -2775,7 +2540,6 @@ typedef struct
   //  5 : "BETWEEN_GEARS"
   //  6 : "ERROR"
   //  7 : "NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
@@ -2796,7 +2560,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  0 : "PARK"
@@ -2807,7 +2570,6 @@ typedef struct
   //  5 : "BETWEEN_GEARS"
   //  6 : "ERROR"
   //  7 : "NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "PARK"
@@ -2816,7 +2578,6 @@ typedef struct
   //  3 : "FORWARD/HIGH"
   //  4 : "LOW"
   //  7 : "NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "PARK"
@@ -2827,7 +2588,6 @@ typedef struct
   //  5 : "BETWEEN_GEARS"
   //  6 : "ERROR"
   //  7 : "NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -2877,7 +2637,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   int16_t MANUAL_INPUT_ro;                   //  [-] Bits=16 Factor= 0.001000        Unit:'rad'
@@ -2916,7 +2675,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   int16_t MANUAL_INPUT_ro;                   //  [-] Bits=16 Factor= 0.001000        Unit:'rad'
@@ -2972,28 +2730,24 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "RIGHT"
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "RIGHT"
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "RIGHT"
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
@@ -3014,28 +2768,24 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  0 : "RIGHT"
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "RIGHT"
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "RIGHT"
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -3073,7 +2823,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  7 : "High"
@@ -3084,7 +2833,6 @@ typedef struct
   //  2 : "Intermittent 2"
   //  1 : "Intermittent 1"
   //  0 : "Wipers Off"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  7 : "High"
@@ -3095,7 +2843,6 @@ typedef struct
   //  2 : "Intermittent 2"
   //  1 : "Intermittent 1"
   //  0 : "Wipers Off"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  7 : "High"
@@ -3106,7 +2853,6 @@ typedef struct
   //  2 : "Intermittent 2"
   //  1 : "Intermittent 1"
   //  0 : "Wipers Off"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
@@ -3127,7 +2873,6 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  7 : "High"
@@ -3138,7 +2883,6 @@ typedef struct
   //  2 : "Intermittent 2"
   //  1 : "Intermittent 1"
   //  0 : "Wipers Off"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  7 : "High"
@@ -3149,7 +2893,6 @@ typedef struct
   //  2 : "Intermittent 2"
   //  1 : "Intermittent 1"
   //  0 : "Wipers Off"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  7 : "High"
@@ -3160,7 +2903,6 @@ typedef struct
   //  2 : "Intermittent 2"
   //  1 : "Intermittent 1"
   //  0 : "Wipers Off"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -3322,7 +3064,6 @@ typedef struct
   //  2 : "Headlights On - Manual Mode"
   //  1 : "Parking Lights Only"
   //  0 : "Headlights Off"
-  // 
   uint8_t HEADLIGHTS_MODE;                     //      Bits= 8
 
   uint8_t HEADLIGHTS_ON_IS_VALID : 1;          //      Bits= 1
@@ -3345,7 +3086,6 @@ typedef struct
   //  2 : "Headlights On - Manual Mode"
   //  1 : "Parking Lights Only"
   //  0 : "Headlights Off"
-  // 
   uint8_t HEADLIGHTS_MODE;                     //      Bits= 8
 
   uint8_t HEADLIGHTS_ON_IS_VALID;              //      Bits= 1
@@ -3635,7 +3375,6 @@ typedef struct
 
   //  0 : "INVALID"
   //  1 : "VALID"
-  // 
   uint8_t VEHICLE_SPEED_VALID : 1;           //      Bits= 1
 
 #else
@@ -3648,7 +3387,6 @@ typedef struct
 
   //  0 : "INVALID"
   //  1 : "VALID"
-  // 
   uint8_t VEHICLE_SPEED_VALID;               //      Bits= 1
 
 #endif // PACMOD4_USE_BITS_SIGNAL
@@ -4152,34 +3890,34 @@ typedef struct
 #define DATE_TIME_RPT_CANID (0x40f)
 // signal: @DATE_YEAR_ro
 #define PACMOD4_DATE_YEAR_ro_CovFactor (1)
-#define PACMOD4_DATE_YEAR_ro_toS(x) ( (uint16_t) ((x) - (2000)) )
+#define PACMOD4_DATE_YEAR_ro_toS(x) ( (uint8_t) ((x) - (2000)) )
 #define PACMOD4_DATE_YEAR_ro_fromS(x) ( ((x) + (2000)) )
 // signal: @DATE_MONTH_ro
 #define PACMOD4_DATE_MONTH_ro_CovFactor (1)
-#define PACMOD4_DATE_MONTH_ro_toS(x) ( (uint16_t) ((x) - (1)) )
+#define PACMOD4_DATE_MONTH_ro_toS(x) ( (uint8_t) ((x) - (1)) )
 #define PACMOD4_DATE_MONTH_ro_fromS(x) ( ((x) + (1)) )
 // signal: @DATE_DAY_ro
 #define PACMOD4_DATE_DAY_ro_CovFactor (1)
-#define PACMOD4_DATE_DAY_ro_toS(x) ( (uint16_t) ((x) - (1)) )
+#define PACMOD4_DATE_DAY_ro_toS(x) ( (uint8_t) ((x) - (1)) )
 #define PACMOD4_DATE_DAY_ro_fromS(x) ( ((x) + (1)) )
 
 typedef struct
 {
 #ifdef PACMOD4_USE_BITS_SIGNAL
 
-  uint16_t DATE_YEAR_ro;                     //      Bits= 8 Offset= 2000               Unit:'yr'
+  uint8_t DATE_YEAR_ro;                      //      Bits= 8 Offset= 2000               Unit:'yr'
 
 #ifdef PACMOD4_USE_SIGFLOAT
   uint16_t DATE_YEAR_phys;
 #endif // PACMOD4_USE_SIGFLOAT
 
-  uint16_t DATE_MONTH_ro;                    //      Bits= 8 Offset= 1                  Unit:'mon'
+  uint8_t DATE_MONTH_ro;                     //      Bits= 8 Offset= 1                  Unit:'mon'
 
 #ifdef PACMOD4_USE_SIGFLOAT
   uint16_t DATE_MONTH_phys;
 #endif // PACMOD4_USE_SIGFLOAT
 
-  uint16_t DATE_DAY_ro;                      //      Bits= 8 Offset= 1                  Unit:'dy'
+  uint8_t DATE_DAY_ro;                       //      Bits= 8 Offset= 1                  Unit:'dy'
 
 #ifdef PACMOD4_USE_SIGFLOAT
   uint16_t DATE_DAY_phys;
@@ -4193,19 +3931,19 @@ typedef struct
 
 #else
 
-  uint16_t DATE_YEAR_ro;                     //      Bits= 8 Offset= 2000               Unit:'yr'
+  uint8_t DATE_YEAR_ro;                      //      Bits= 8 Offset= 2000               Unit:'yr'
 
 #ifdef PACMOD4_USE_SIGFLOAT
   uint16_t DATE_YEAR_phys;
 #endif // PACMOD4_USE_SIGFLOAT
 
-  uint16_t DATE_MONTH_ro;                    //      Bits= 8 Offset= 1                  Unit:'mon'
+  uint8_t DATE_MONTH_ro;                     //      Bits= 8 Offset= 1                  Unit:'mon'
 
 #ifdef PACMOD4_USE_SIGFLOAT
   uint16_t DATE_MONTH_phys;
 #endif // PACMOD4_USE_SIGFLOAT
 
-  uint16_t DATE_DAY_ro;                      //      Bits= 8 Offset= 1                  Unit:'dy'
+  uint8_t DATE_DAY_ro;                       //      Bits= 8 Offset= 1                  Unit:'dy'
 
 #ifdef PACMOD4_USE_SIGFLOAT
   uint16_t DATE_DAY_phys;
@@ -4476,7 +4214,6 @@ typedef struct
   //  2 : "DIM_LEVEL_2"
   //  1 : "DIM_LEVEL_1"
   //  0 : "DIM_LEVEL_MIN"
-  // 
   uint8_t DIM_LEVEL;                           //      Bits= 8
 
   uint8_t FRONT_DOME_LIGHTS_ON_IS_VALID : 1;   //      Bits= 1
@@ -4508,7 +4245,6 @@ typedef struct
   //  2 : "DIM_LEVEL_2"
   //  1 : "DIM_LEVEL_1"
   //  0 : "DIM_LEVEL_MIN"
-  // 
   uint8_t DIM_LEVEL;                           //      Bits= 8
 
   uint8_t FRONT_DOME_LIGHTS_ON_IS_VALID;       //      Bits= 1
@@ -4666,32 +4402,26 @@ typedef struct
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t LATERAL_NEW_DATA_RX : 1;           //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t LONGITUDNAL_NEW_DATA_RX : 1;       //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t VERTICAL_NEW_DATA_RX : 1;          //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t LATERAL_VALID : 1;                 //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t LONGITUDNAL_VALID : 1;             //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t VERTICAL_VALID : 1;                //      Bits= 1
 
   int16_t LATERAL_ACCEL_ro;                  //  [-] Bits=16 Factor= 0.010000        Unit:'m/s^2'
@@ -4716,32 +4446,26 @@ typedef struct
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t LATERAL_NEW_DATA_RX;               //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t LONGITUDNAL_NEW_DATA_RX;           //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t VERTICAL_NEW_DATA_RX;              //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t LATERAL_VALID;                     //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t LONGITUDNAL_VALID;                 //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t VERTICAL_VALID;                    //      Bits= 1
 
   int16_t LATERAL_ACCEL_ro;                  //  [-] Bits=16 Factor= 0.010000        Unit:'m/s^2'
@@ -4795,32 +4519,26 @@ typedef struct
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t PITCH_NEW_DATA_RX : 1;             //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t ROLL_NEW_DATA_RX : 1;              //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t YAW_NEW_DATA_RX : 1;               //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t PITCH_VALID : 1;                   //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t ROLL_VALID : 1;                    //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t YAW_VALID : 1;                     //      Bits= 1
 
   int16_t PITCH_VEL_ro;                      //  [-] Bits=16 Factor= 0.001000        Unit:'rad/s'
@@ -4845,32 +4563,26 @@ typedef struct
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t PITCH_NEW_DATA_RX;                 //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t ROLL_NEW_DATA_RX;                  //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t YAW_NEW_DATA_RX;                   //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t PITCH_VALID;                       //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t ROLL_VALID;                        //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t YAW_VALID;                         //      Bits= 1
 
   int16_t PITCH_VEL_ro;                      //  [-] Bits=16 Factor= 0.001000        Unit:'rad/s'
@@ -4913,24 +4625,20 @@ typedef struct
 
   //  0 : "NOT_MUTED"
   //  1 : "MUTED"
-  // 
   uint8_t BUZZER_MUTE : 1;                   //      Bits= 1
 
   //  0 : "NO_ACTION"
   //  1 : "WHITE"
-  // 
   uint8_t UNDERDASH_LIGHTS_WHITE : 1;        //      Bits= 1
 
 #else
 
   //  0 : "NOT_MUTED"
   //  1 : "MUTED"
-  // 
   uint8_t BUZZER_MUTE;                       //      Bits= 1
 
   //  0 : "NO_ACTION"
   //  1 : "WHITE"
-  // 
   uint8_t UNDERDASH_LIGHTS_WHITE;            //      Bits= 1
 
 #endif // PACMOD4_USE_BITS_SIGNAL
