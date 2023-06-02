@@ -36,7 +36,7 @@ namespace pacmod3_common
 class Dbc6Api : public Dbc5Api
 {
 public:
-  explicit Dbc6Api(uint32_t version = 4):Dbc5Api(version){};
+  explicit Dbc6Api(uint32_t version = 6):Dbc5Api(version){};
   virtual ~Dbc6Api() = default;
 
   // No functional difference between DBC5 and DBC6

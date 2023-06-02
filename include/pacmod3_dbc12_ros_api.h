@@ -36,7 +36,7 @@ namespace pacmod3_common
 class Dbc12Api : public Dbc11Api
 {
 public:
-  explicit Dbc12Api(uint32_t version = 4):Dbc11Api(version){};
+  explicit Dbc12Api(uint32_t version = 12):Dbc11Api(version){};
   virtual ~Dbc12Api() = default;
 
   // No functional difference between DBC12 and DBC11

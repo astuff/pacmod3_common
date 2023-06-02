@@ -36,7 +36,7 @@ namespace pacmod3_common
 class Dbc11Api : public Dbc10Api
 {
 public:
-  explicit Dbc11Api(uint32_t version = 4):Dbc10Api(version){};
+  explicit Dbc11Api(uint32_t version = 11):Dbc10Api(version){};
   virtual ~Dbc11Api() = default;
 
   std::shared_ptr<void> ParseAccelAuxRpt(const cn_msgs::Frame& can_msg) override;

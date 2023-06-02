@@ -36,7 +36,7 @@ namespace pacmod3_common
 class Dbc7Api : public Dbc6Api
 {
 public:
-  explicit Dbc7Api(uint32_t version = 4):Dbc6Api(version){};
+  explicit Dbc7Api(uint32_t version = 7):Dbc6Api(version){};
   virtual ~Dbc7Api() = default;
 
   std::shared_ptr<void> ParseComponentRpt(const cn_msgs::Frame& can_msg) override;
