@@ -51,6 +51,7 @@
 #include <pacmod3_msgs/EStopRpt.h>
 #include <pacmod3_msgs/GlobalCmd.h>
 #include <pacmod3_msgs/GlobalRpt.h>
+#include <pacmod3_msgs/GlobalRpt2.h>
 #include <pacmod3_msgs/HeadlightAuxRpt.h>
 #include <pacmod3_msgs/InteriorLightsRpt.h>
 #include <pacmod3_msgs/LatLonHeadingRpt.h>
@@ -100,6 +101,7 @@ namespace cn_msgs = can_msgs;
 #include <pacmod3_msgs/msg/estop_rpt.hpp>
 #include <pacmod3_msgs/msg/global_cmd.hpp>
 #include <pacmod3_msgs/msg/global_rpt.hpp>
+#include <pacmod3_msgs/msg/global_rpt2.hpp>
 #include <pacmod3_msgs/msg/headlight_aux_rpt.hpp>
 #include <pacmod3_msgs/msg/interior_lights_rpt.hpp>
 #include <pacmod3_msgs/msg/lat_lon_heading_rpt.hpp>
@@ -153,6 +155,7 @@ public:
   virtual std::shared_ptr<void> ParseEStopRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseEngineRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseGlobalRpt(const cn_msgs::Frame& can_msg) = 0;
+  virtual std::shared_ptr<void> ParseGlobalRpt2(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseHeadlightAuxRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseInteriorLightsRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseLatLonHeadingRpt(const cn_msgs::Frame& can_msg) = 0;
