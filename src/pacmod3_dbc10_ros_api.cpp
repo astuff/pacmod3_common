@@ -60,16 +60,16 @@ std::shared_ptr<void> Dbc10Api::ParseBrakeAuxRpt(const cn_msgs::Frame& can_msg)
   BRAKE_AUX_RPT_t parsed_rpt;
   Unpack_BRAKE_AUX_RPT_pacmod10(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
 
-  new_msg->brake_pressure = parsed_rpt.RAW_BRAKE_PRESSURE;
-  new_msg->operator_interaction = parsed_rpt.USER_INTERACTION;
+  new_msg->brake_pressure = parsed_rpt.BRAKE_PRESSURE_phys;
+  new_msg->operator_interaction = parsed_rpt.OPERATOR_INTERACTION;
   new_msg->brake_on_off = parsed_rpt.BRAKE_ON_OFF;
   new_msg->brake_limiting_active = parsed_rpt.BRAKE_LIMITING_ACTIVE;
 
   // Following fields not present in dbc10
   new_msg->brake_reduced_assist = 0;
 
-  new_msg->brake_pressure_avail = parsed_rpt.RAW_BRAKE_PRESSURE_AVAIL;
-  new_msg->operator_interaction_avail = parsed_rpt.USER_INTERACTION_AVAIL;
+  new_msg->brake_pressure_avail = parsed_rpt.BRAKE_PRESSURE_AVAIL;
+  new_msg->operator_interaction_avail = parsed_rpt.OPERATOR_INTERACTION_AVAIL;
   new_msg->brake_on_off_avail = parsed_rpt.BRAKE_ON_OFF_AVAIL;
   new_msg->brake_limiting_active_avail = parsed_rpt.BRAKE_LIMITING_ACTIVE_AVAIL;
 
