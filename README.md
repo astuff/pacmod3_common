@@ -20,3 +20,6 @@ Below is a table of supported DBC versions.
 |7|7.2.0|
 |8|8.0.1|
 |9|9.1.0|
+|10|10.3.0|
+|11|11.6.0|
+|12|12.3.0|

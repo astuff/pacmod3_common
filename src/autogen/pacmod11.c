@@ -1,12 +1,12 @@
-#include "pacmod12.h"
+#include "pacmod11.h"
 
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
 // Function prototypes to be called each time CAN frame is unpacked
 // FMon function may detect RC, CRC or DLC violation
-#include "pacmod12-fmon.h"
+#include "pacmod11-fmon.h"
 
-#endif // PACMOD12_USE_DIAG_MONITORS
+#endif // PACMOD11_USE_DIAG_MONITORS
 
 
 // To compile this function you need to typedef 'bitext_t' and 'ubitext_t'
@@ -19,7 +19,7 @@ static bitext_t __ext_sig__( ubitext_t val, uint8_t bits )
   return (val ^ m) - m;
 }
 
-uint32_t Unpack_GLOBAL_RPT_pacmod12(GLOBAL_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_GLOBAL_RPT_pacmod11(GLOBAL_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->PACMOD_SYSTEM_ENABLED = (_d[0] & (0x01U));
@@ -34,20 +34,20 @@ uint32_t Unpack_GLOBAL_RPT_pacmod12(GLOBAL_RPT_t* _m, const uint8_t* _d, uint8_t
   _m->CONFIG_FAULT_ACTIVE = ((_d[1] >> 7) & (0x01U));
   _m->USR_CAN_READ_ERRORS = ((_d[6] & (0xFFU)) << 8) | (_d[7] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < GLOBAL_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_GLOBAL_RPT_pacmod12(&_m->mon1, GLOBAL_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_GLOBAL_RPT_pacmod11(&_m->mon1, GLOBAL_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return GLOBAL_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_GLOBAL_RPT_pacmod12(GLOBAL_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_GLOBAL_RPT_pacmod11(GLOBAL_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < GLOBAL_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -64,7 +64,7 @@ uint32_t Pack_GLOBAL_RPT_pacmod12(GLOBAL_RPT_t* _m, __CoderDbcCanFrame_t__* cfra
 
 #else
 
-uint32_t Pack_GLOBAL_RPT_pacmod12(GLOBAL_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_GLOBAL_RPT_pacmod11(GLOBAL_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < GLOBAL_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -78,9 +78,9 @@ uint32_t Pack_GLOBAL_RPT_pacmod12(GLOBAL_RPT_t* _m, uint8_t* _d, uint8_t* _len, 
   return GLOBAL_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_GLOBAL_RPT_2_pacmod12(GLOBAL_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_GLOBAL_RPT_2_pacmod11(GLOBAL_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->SYSTEM_ENABLED = (_d[0] & (0x01U));
@@ -89,26 +89,25 @@ uint32_t Unpack_GLOBAL_RPT_2_pacmod12(GLOBAL_RPT_2_t* _m, const uint8_t* _d, uin
   _m->SUPERVISORY_ENABLE_REQUIRED = ((_d[0] >> 3) & (0x01U));
   _m->DISABLE_ALL_SYSTEMS = ((_d[0] >> 4) & (0x01U));
   _m->SYSTEM_READY = ((_d[0] >> 5) & (0x01U));
-  _m->ENABLE_METHOD = ((_d[0] >> 6) & (0x03U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < GLOBAL_RPT_2_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_GLOBAL_RPT_2_pacmod12(&_m->mon1, GLOBAL_RPT_2_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_GLOBAL_RPT_2_pacmod11(&_m->mon1, GLOBAL_RPT_2_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return GLOBAL_RPT_2_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_GLOBAL_RPT_2_pacmod12(GLOBAL_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_GLOBAL_RPT_2_pacmod11(GLOBAL_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < GLOBAL_RPT_2_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-  cframe->Data[0] |= (_m->SYSTEM_ENABLED & (0x01U)) | ((_m->SYSTEM_OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->SYSTEM_FAULT_ACTIVE & (0x01U)) << 2) | ((_m->SUPERVISORY_ENABLE_REQUIRED & (0x01U)) << 3) | ((_m->DISABLE_ALL_SYSTEMS & (0x01U)) << 4) | ((_m->SYSTEM_READY & (0x01U)) << 5) | ((_m->ENABLE_METHOD & (0x03U)) << 6);
+  cframe->Data[0] |= (_m->SYSTEM_ENABLED & (0x01U)) | ((_m->SYSTEM_OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->SYSTEM_FAULT_ACTIVE & (0x01U)) << 2) | ((_m->SUPERVISORY_ENABLE_REQUIRED & (0x01U)) << 3) | ((_m->DISABLE_ALL_SYSTEMS & (0x01U)) << 4) | ((_m->SYSTEM_READY & (0x01U)) << 5);
 
   cframe->MsgId = GLOBAL_RPT_2_CANID;
   cframe->DLC = GLOBAL_RPT_2_DLC;
@@ -118,20 +117,20 @@ uint32_t Pack_GLOBAL_RPT_2_pacmod12(GLOBAL_RPT_2_t* _m, __CoderDbcCanFrame_t__* 
 
 #else
 
-uint32_t Pack_GLOBAL_RPT_2_pacmod12(GLOBAL_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_GLOBAL_RPT_2_pacmod11(GLOBAL_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < GLOBAL_RPT_2_DLC) && (i < 8); _d[i++] = 0);
 
-  _d[0] |= (_m->SYSTEM_ENABLED & (0x01U)) | ((_m->SYSTEM_OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->SYSTEM_FAULT_ACTIVE & (0x01U)) << 2) | ((_m->SUPERVISORY_ENABLE_REQUIRED & (0x01U)) << 3) | ((_m->DISABLE_ALL_SYSTEMS & (0x01U)) << 4) | ((_m->SYSTEM_READY & (0x01U)) << 5) | ((_m->ENABLE_METHOD & (0x03U)) << 6);
+  _d[0] |= (_m->SYSTEM_ENABLED & (0x01U)) | ((_m->SYSTEM_OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->SYSTEM_FAULT_ACTIVE & (0x01U)) << 2) | ((_m->SUPERVISORY_ENABLE_REQUIRED & (0x01U)) << 3) | ((_m->DISABLE_ALL_SYSTEMS & (0x01U)) << 4) | ((_m->SYSTEM_READY & (0x01U)) << 5);
 
   *_len = GLOBAL_RPT_2_DLC;
   *_ide = GLOBAL_RPT_2_IDE;
   return GLOBAL_RPT_2_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_COMPONENT_RPT_00_pacmod12(COMPONENT_RPT_00_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_COMPONENT_RPT_00_pacmod11(COMPONENT_RPT_00_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->COMPONENT_TYPE = (_d[0] & (0x0FU));
@@ -159,10 +158,6 @@ uint32_t Unpack_COMPONENT_RPT_00_pacmod12(COMPONENT_RPT_00_t* _m, const uint8_t*
   _m->CABIN_FAN_SPEED = ((_d[3] >> 1) & (0x01U));
   _m->CABIN_TEMP = ((_d[3] >> 2) & (0x01U));
   _m->EXHAUST_BRAKE = ((_d[3] >> 3) & (0x01U));
-  _m->POWER_TAKE_OFF = ((_d[3] >> 4) & (0x01U));
-  _m->TIPPER_BODY_00 = ((_d[3] >> 5) & (0x01U));
-  _m->TRAILER_AIR_SUPPLY = ((_d[3] >> 6) & (0x01U));
-  _m->TRAILER_BRAKE = ((_d[3] >> 7) & (0x01U));
   _m->COUNTER = (_d[4] & (0x0FU));
   _m->COMPLEMENT = ((_d[4] >> 4) & (0x0FU));
   _m->CONFIG_FAULT = (_d[5] & (0x01U));
@@ -173,34 +168,30 @@ uint32_t Unpack_COMPONENT_RPT_00_pacmod12(COMPONENT_RPT_00_t* _m, const uint8_t*
   _m->WATCHDOG_SANITY_FAULT = ((_d[5] >> 5) & (0x01U));
   _m->WATCHDOG_SYSTEM_PRESENT_FAULT = ((_d[5] >> 6) & (0x01U));
   _m->COMPONENT_READY = ((_d[5] >> 7) & (0x01U));
-  _m->ENGINE = (_d[6] & (0x01U));
-  _m->TIPPER_BODY_01 = ((_d[6] >> 1) & (0x01U));
-  _m->TIPPER_BODY_02 = ((_d[6] >> 2) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < COMPONENT_RPT_00_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_COMPONENT_RPT_00_pacmod12(&_m->mon1, COMPONENT_RPT_00_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_COMPONENT_RPT_00_pacmod11(&_m->mon1, COMPONENT_RPT_00_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return COMPONENT_RPT_00_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_COMPONENT_RPT_00_pacmod12(COMPONENT_RPT_00_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_COMPONENT_RPT_00_pacmod11(COMPONENT_RPT_00_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < COMPONENT_RPT_00_DLC) && (i < 8); cframe->Data[i++] = 0);
 
   cframe->Data[0] |= (_m->COMPONENT_TYPE & (0x0FU)) | ((_m->ACCEL & (0x01U)) << 4) | ((_m->BRAKE & (0x01U)) << 5) | ((_m->CRUISE_CONTROL_BUTTONS & (0x01U)) << 6) | ((_m->DASH_CONTROLS_LEFT & (0x01U)) << 7);
   cframe->Data[1] |= (_m->DASH_CONTROLS_RIGHT & (0x01U)) | ((_m->HAZARD_LIGHTS & (0x01U)) << 1) | ((_m->HEADLIGHT & (0x01U)) << 2) | ((_m->HORN & (0x01U)) << 3) | ((_m->MEDIA_CONTROLS & (0x01U)) << 4) | ((_m->PARKING_BRAKE & (0x01U)) << 5) | ((_m->SHIFT & (0x01U)) << 6) | ((_m->SPRAYER & (0x01U)) << 7);
   cframe->Data[2] |= (_m->STEERING & (0x01U)) | ((_m->TURN & (0x01U)) << 1) | ((_m->WIPER & (0x01U)) << 2) | ((_m->WATCHDOG & (0x01U)) << 3) | ((_m->BRAKE_DECEL & (0x01U)) << 4) | ((_m->REAR_PASS_DOOR & (0x01U)) << 5) | ((_m->ENGINE_BRAKE & (0x01U)) << 6) | ((_m->MARKER_LAMP & (0x01U)) << 7);
-  cframe->Data[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3) | ((_m->POWER_TAKE_OFF & (0x01U)) << 4) | ((_m->TIPPER_BODY_00 & (0x01U)) << 5) | ((_m->TRAILER_AIR_SUPPLY & (0x01U)) << 6) | ((_m->TRAILER_BRAKE & (0x01U)) << 7);
+  cframe->Data[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3);
   cframe->Data[4] |= (_m->COUNTER & (0x0FU)) | ((_m->COMPLEMENT & (0x0FU)) << 4);
   cframe->Data[5] |= (_m->CONFIG_FAULT & (0x01U)) | ((_m->CAN_TIMEOUT_FAULT & (0x01U)) << 1) | ((_m->INTERNAL_SUPPLY_VOLTAGE_FAULT & (0x01U)) << 2) | ((_m->SUPERVISORY_TIMEOUT & (0x01U)) << 3) | ((_m->SUPERVISORY_SANITY_FAULT & (0x01U)) << 4) | ((_m->WATCHDOG_SANITY_FAULT & (0x01U)) << 5) | ((_m->WATCHDOG_SYSTEM_PRESENT_FAULT & (0x01U)) << 6) | ((_m->COMPONENT_READY & (0x01U)) << 7);
-  cframe->Data[6] |= (_m->ENGINE & (0x01U)) | ((_m->TIPPER_BODY_01 & (0x01U)) << 1) | ((_m->TIPPER_BODY_02 & (0x01U)) << 2);
 
   cframe->MsgId = COMPONENT_RPT_00_CANID;
   cframe->DLC = COMPONENT_RPT_00_DLC;
@@ -210,26 +201,25 @@ uint32_t Pack_COMPONENT_RPT_00_pacmod12(COMPONENT_RPT_00_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_COMPONENT_RPT_00_pacmod12(COMPONENT_RPT_00_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_COMPONENT_RPT_00_pacmod11(COMPONENT_RPT_00_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < COMPONENT_RPT_00_DLC) && (i < 8); _d[i++] = 0);
 
   _d[0] |= (_m->COMPONENT_TYPE & (0x0FU)) | ((_m->ACCEL & (0x01U)) << 4) | ((_m->BRAKE & (0x01U)) << 5) | ((_m->CRUISE_CONTROL_BUTTONS & (0x01U)) << 6) | ((_m->DASH_CONTROLS_LEFT & (0x01U)) << 7);
   _d[1] |= (_m->DASH_CONTROLS_RIGHT & (0x01U)) | ((_m->HAZARD_LIGHTS & (0x01U)) << 1) | ((_m->HEADLIGHT & (0x01U)) << 2) | ((_m->HORN & (0x01U)) << 3) | ((_m->MEDIA_CONTROLS & (0x01U)) << 4) | ((_m->PARKING_BRAKE & (0x01U)) << 5) | ((_m->SHIFT & (0x01U)) << 6) | ((_m->SPRAYER & (0x01U)) << 7);
   _d[2] |= (_m->STEERING & (0x01U)) | ((_m->TURN & (0x01U)) << 1) | ((_m->WIPER & (0x01U)) << 2) | ((_m->WATCHDOG & (0x01U)) << 3) | ((_m->BRAKE_DECEL & (0x01U)) << 4) | ((_m->REAR_PASS_DOOR & (0x01U)) << 5) | ((_m->ENGINE_BRAKE & (0x01U)) << 6) | ((_m->MARKER_LAMP & (0x01U)) << 7);
-  _d[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3) | ((_m->POWER_TAKE_OFF & (0x01U)) << 4) | ((_m->TIPPER_BODY_00 & (0x01U)) << 5) | ((_m->TRAILER_AIR_SUPPLY & (0x01U)) << 6) | ((_m->TRAILER_BRAKE & (0x01U)) << 7);
+  _d[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3);
   _d[4] |= (_m->COUNTER & (0x0FU)) | ((_m->COMPLEMENT & (0x0FU)) << 4);
   _d[5] |= (_m->CONFIG_FAULT & (0x01U)) | ((_m->CAN_TIMEOUT_FAULT & (0x01U)) << 1) | ((_m->INTERNAL_SUPPLY_VOLTAGE_FAULT & (0x01U)) << 2) | ((_m->SUPERVISORY_TIMEOUT & (0x01U)) << 3) | ((_m->SUPERVISORY_SANITY_FAULT & (0x01U)) << 4) | ((_m->WATCHDOG_SANITY_FAULT & (0x01U)) << 5) | ((_m->WATCHDOG_SYSTEM_PRESENT_FAULT & (0x01U)) << 6) | ((_m->COMPONENT_READY & (0x01U)) << 7);
-  _d[6] |= (_m->ENGINE & (0x01U)) | ((_m->TIPPER_BODY_01 & (0x01U)) << 1) | ((_m->TIPPER_BODY_02 & (0x01U)) << 2);
 
   *_len = COMPONENT_RPT_00_DLC;
   *_ide = COMPONENT_RPT_00_IDE;
   return COMPONENT_RPT_00_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_COMPONENT_RPT_01_pacmod12(COMPONENT_RPT_01_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_COMPONENT_RPT_01_pacmod11(COMPONENT_RPT_01_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->COMPONENT_TYPE = (_d[0] & (0x0FU));
@@ -257,10 +247,6 @@ uint32_t Unpack_COMPONENT_RPT_01_pacmod12(COMPONENT_RPT_01_t* _m, const uint8_t*
   _m->CABIN_FAN_SPEED = ((_d[3] >> 1) & (0x01U));
   _m->CABIN_TEMP = ((_d[3] >> 2) & (0x01U));
   _m->EXHAUST_BRAKE = ((_d[3] >> 3) & (0x01U));
-  _m->POWER_TAKE_OFF = ((_d[3] >> 4) & (0x01U));
-  _m->TIPPER_BODY_00 = ((_d[3] >> 5) & (0x01U));
-  _m->TRAILER_AIR_SUPPLY = ((_d[3] >> 6) & (0x01U));
-  _m->TRAILER_BRAKE = ((_d[3] >> 7) & (0x01U));
   _m->COUNTER = (_d[4] & (0x0FU));
   _m->COMPLEMENT = ((_d[4] >> 4) & (0x0FU));
   _m->CONFIG_FAULT = (_d[5] & (0x01U));
@@ -271,34 +257,30 @@ uint32_t Unpack_COMPONENT_RPT_01_pacmod12(COMPONENT_RPT_01_t* _m, const uint8_t*
   _m->WATCHDOG_SANITY_FAULT = ((_d[5] >> 5) & (0x01U));
   _m->WATCHDOG_SYSTEM_PRESENT_FAULT = ((_d[5] >> 6) & (0x01U));
   _m->COMPONENT_READY = ((_d[5] >> 7) & (0x01U));
-  _m->ENGINE = (_d[6] & (0x01U));
-  _m->TIPPER_BODY_01 = ((_d[6] >> 1) & (0x01U));
-  _m->TIPPER_BODY_02 = ((_d[6] >> 2) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < COMPONENT_RPT_01_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_COMPONENT_RPT_01_pacmod12(&_m->mon1, COMPONENT_RPT_01_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_COMPONENT_RPT_01_pacmod11(&_m->mon1, COMPONENT_RPT_01_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return COMPONENT_RPT_01_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_COMPONENT_RPT_01_pacmod12(COMPONENT_RPT_01_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_COMPONENT_RPT_01_pacmod11(COMPONENT_RPT_01_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < COMPONENT_RPT_01_DLC) && (i < 8); cframe->Data[i++] = 0);
 
   cframe->Data[0] |= (_m->COMPONENT_TYPE & (0x0FU)) | ((_m->ACCEL & (0x01U)) << 4) | ((_m->BRAKE & (0x01U)) << 5) | ((_m->CRUISE_CONTROL_BUTTONS & (0x01U)) << 6) | ((_m->DASH_CONTROLS_LEFT & (0x01U)) << 7);
   cframe->Data[1] |= (_m->DASH_CONTROLS_RIGHT & (0x01U)) | ((_m->HAZARD_LIGHTS & (0x01U)) << 1) | ((_m->HEADLIGHT & (0x01U)) << 2) | ((_m->HORN & (0x01U)) << 3) | ((_m->MEDIA_CONTROLS & (0x01U)) << 4) | ((_m->PARKING_BRAKE & (0x01U)) << 5) | ((_m->SHIFT & (0x01U)) << 6) | ((_m->SPRAYER & (0x01U)) << 7);
   cframe->Data[2] |= (_m->STEERING & (0x01U)) | ((_m->TURN & (0x01U)) << 1) | ((_m->WIPER & (0x01U)) << 2) | ((_m->WATCHDOG & (0x01U)) << 3) | ((_m->BRAKE_DECEL & (0x01U)) << 4) | ((_m->REAR_PASS_DOOR & (0x01U)) << 5) | ((_m->ENGINE_BRAKE & (0x01U)) << 6) | ((_m->MARKER_LAMP & (0x01U)) << 7);
-  cframe->Data[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3) | ((_m->POWER_TAKE_OFF & (0x01U)) << 4) | ((_m->TIPPER_BODY_00 & (0x01U)) << 5) | ((_m->TRAILER_AIR_SUPPLY & (0x01U)) << 6) | ((_m->TRAILER_BRAKE & (0x01U)) << 7);
+  cframe->Data[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3);
   cframe->Data[4] |= (_m->COUNTER & (0x0FU)) | ((_m->COMPLEMENT & (0x0FU)) << 4);
   cframe->Data[5] |= (_m->CONFIG_FAULT & (0x01U)) | ((_m->CAN_TIMEOUT_FAULT & (0x01U)) << 1) | ((_m->INTERNAL_SUPPLY_VOLTAGE_FAULT & (0x01U)) << 2) | ((_m->SUPERVISORY_TIMEOUT & (0x01U)) << 3) | ((_m->SUPERVISORY_SANITY_FAULT & (0x01U)) << 4) | ((_m->WATCHDOG_SANITY_FAULT & (0x01U)) << 5) | ((_m->WATCHDOG_SYSTEM_PRESENT_FAULT & (0x01U)) << 6) | ((_m->COMPONENT_READY & (0x01U)) << 7);
-  cframe->Data[6] |= (_m->ENGINE & (0x01U)) | ((_m->TIPPER_BODY_01 & (0x01U)) << 1) | ((_m->TIPPER_BODY_02 & (0x01U)) << 2);
 
   cframe->MsgId = COMPONENT_RPT_01_CANID;
   cframe->DLC = COMPONENT_RPT_01_DLC;
@@ -308,26 +290,25 @@ uint32_t Pack_COMPONENT_RPT_01_pacmod12(COMPONENT_RPT_01_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_COMPONENT_RPT_01_pacmod12(COMPONENT_RPT_01_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_COMPONENT_RPT_01_pacmod11(COMPONENT_RPT_01_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < COMPONENT_RPT_01_DLC) && (i < 8); _d[i++] = 0);
 
   _d[0] |= (_m->COMPONENT_TYPE & (0x0FU)) | ((_m->ACCEL & (0x01U)) << 4) | ((_m->BRAKE & (0x01U)) << 5) | ((_m->CRUISE_CONTROL_BUTTONS & (0x01U)) << 6) | ((_m->DASH_CONTROLS_LEFT & (0x01U)) << 7);
   _d[1] |= (_m->DASH_CONTROLS_RIGHT & (0x01U)) | ((_m->HAZARD_LIGHTS & (0x01U)) << 1) | ((_m->HEADLIGHT & (0x01U)) << 2) | ((_m->HORN & (0x01U)) << 3) | ((_m->MEDIA_CONTROLS & (0x01U)) << 4) | ((_m->PARKING_BRAKE & (0x01U)) << 5) | ((_m->SHIFT & (0x01U)) << 6) | ((_m->SPRAYER & (0x01U)) << 7);
   _d[2] |= (_m->STEERING & (0x01U)) | ((_m->TURN & (0x01U)) << 1) | ((_m->WIPER & (0x01U)) << 2) | ((_m->WATCHDOG & (0x01U)) << 3) | ((_m->BRAKE_DECEL & (0x01U)) << 4) | ((_m->REAR_PASS_DOOR & (0x01U)) << 5) | ((_m->ENGINE_BRAKE & (0x01U)) << 6) | ((_m->MARKER_LAMP & (0x01U)) << 7);
-  _d[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3) | ((_m->POWER_TAKE_OFF & (0x01U)) << 4) | ((_m->TIPPER_BODY_00 & (0x01U)) << 5) | ((_m->TRAILER_AIR_SUPPLY & (0x01U)) << 6) | ((_m->TRAILER_BRAKE & (0x01U)) << 7);
+  _d[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3);
   _d[4] |= (_m->COUNTER & (0x0FU)) | ((_m->COMPLEMENT & (0x0FU)) << 4);
   _d[5] |= (_m->CONFIG_FAULT & (0x01U)) | ((_m->CAN_TIMEOUT_FAULT & (0x01U)) << 1) | ((_m->INTERNAL_SUPPLY_VOLTAGE_FAULT & (0x01U)) << 2) | ((_m->SUPERVISORY_TIMEOUT & (0x01U)) << 3) | ((_m->SUPERVISORY_SANITY_FAULT & (0x01U)) << 4) | ((_m->WATCHDOG_SANITY_FAULT & (0x01U)) << 5) | ((_m->WATCHDOG_SYSTEM_PRESENT_FAULT & (0x01U)) << 6) | ((_m->COMPONENT_READY & (0x01U)) << 7);
-  _d[6] |= (_m->ENGINE & (0x01U)) | ((_m->TIPPER_BODY_01 & (0x01U)) << 1) | ((_m->TIPPER_BODY_02 & (0x01U)) << 2);
 
   *_len = COMPONENT_RPT_01_DLC;
   *_ide = COMPONENT_RPT_01_IDE;
   return COMPONENT_RPT_01_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_COMPONENT_RPT_02_pacmod12(COMPONENT_RPT_02_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_COMPONENT_RPT_02_pacmod11(COMPONENT_RPT_02_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->COMPONENT_TYPE = (_d[0] & (0x0FU));
@@ -355,10 +336,6 @@ uint32_t Unpack_COMPONENT_RPT_02_pacmod12(COMPONENT_RPT_02_t* _m, const uint8_t*
   _m->CABIN_FAN_SPEED = ((_d[3] >> 1) & (0x01U));
   _m->CABIN_TEMP = ((_d[3] >> 2) & (0x01U));
   _m->EXHAUST_BRAKE = ((_d[3] >> 3) & (0x01U));
-  _m->POWER_TAKE_OFF = ((_d[3] >> 4) & (0x01U));
-  _m->TIPPER_BODY_00 = ((_d[3] >> 5) & (0x01U));
-  _m->TRAILER_AIR_SUPPLY = ((_d[3] >> 6) & (0x01U));
-  _m->TRAILER_BRAKE = ((_d[3] >> 7) & (0x01U));
   _m->COUNTER = (_d[4] & (0x0FU));
   _m->COMPLEMENT = ((_d[4] >> 4) & (0x0FU));
   _m->CONFIG_FAULT = (_d[5] & (0x01U));
@@ -369,34 +346,30 @@ uint32_t Unpack_COMPONENT_RPT_02_pacmod12(COMPONENT_RPT_02_t* _m, const uint8_t*
   _m->WATCHDOG_SANITY_FAULT = ((_d[5] >> 5) & (0x01U));
   _m->WATCHDOG_SYSTEM_PRESENT_FAULT = ((_d[5] >> 6) & (0x01U));
   _m->COMPONENT_READY = ((_d[5] >> 7) & (0x01U));
-  _m->ENGINE = (_d[6] & (0x01U));
-  _m->TIPPER_BODY_01 = ((_d[6] >> 1) & (0x01U));
-  _m->TIPPER_BODY_02 = ((_d[6] >> 2) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < COMPONENT_RPT_02_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_COMPONENT_RPT_02_pacmod12(&_m->mon1, COMPONENT_RPT_02_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_COMPONENT_RPT_02_pacmod11(&_m->mon1, COMPONENT_RPT_02_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return COMPONENT_RPT_02_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_COMPONENT_RPT_02_pacmod12(COMPONENT_RPT_02_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_COMPONENT_RPT_02_pacmod11(COMPONENT_RPT_02_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < COMPONENT_RPT_02_DLC) && (i < 8); cframe->Data[i++] = 0);
 
   cframe->Data[0] |= (_m->COMPONENT_TYPE & (0x0FU)) | ((_m->ACCEL & (0x01U)) << 4) | ((_m->BRAKE & (0x01U)) << 5) | ((_m->CRUISE_CONTROL_BUTTONS & (0x01U)) << 6) | ((_m->DASH_CONTROLS_LEFT & (0x01U)) << 7);
   cframe->Data[1] |= (_m->DASH_CONTROLS_RIGHT & (0x01U)) | ((_m->HAZARD_LIGHTS & (0x01U)) << 1) | ((_m->HEADLIGHT & (0x01U)) << 2) | ((_m->HORN & (0x01U)) << 3) | ((_m->MEDIA_CONTROLS & (0x01U)) << 4) | ((_m->PARKING_BRAKE & (0x01U)) << 5) | ((_m->SHIFT & (0x01U)) << 6) | ((_m->SPRAYER & (0x01U)) << 7);
   cframe->Data[2] |= (_m->STEERING & (0x01U)) | ((_m->TURN & (0x01U)) << 1) | ((_m->WIPER & (0x01U)) << 2) | ((_m->WATCHDOG & (0x01U)) << 3) | ((_m->BRAKE_DECEL & (0x01U)) << 4) | ((_m->REAR_PASS_DOOR & (0x01U)) << 5) | ((_m->ENGINE_BRAKE & (0x01U)) << 6) | ((_m->MARKER_LAMP & (0x01U)) << 7);
-  cframe->Data[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3) | ((_m->POWER_TAKE_OFF & (0x01U)) << 4) | ((_m->TIPPER_BODY_00 & (0x01U)) << 5) | ((_m->TRAILER_AIR_SUPPLY & (0x01U)) << 6) | ((_m->TRAILER_BRAKE & (0x01U)) << 7);
+  cframe->Data[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3);
   cframe->Data[4] |= (_m->COUNTER & (0x0FU)) | ((_m->COMPLEMENT & (0x0FU)) << 4);
   cframe->Data[5] |= (_m->CONFIG_FAULT & (0x01U)) | ((_m->CAN_TIMEOUT_FAULT & (0x01U)) << 1) | ((_m->INTERNAL_SUPPLY_VOLTAGE_FAULT & (0x01U)) << 2) | ((_m->SUPERVISORY_TIMEOUT & (0x01U)) << 3) | ((_m->SUPERVISORY_SANITY_FAULT & (0x01U)) << 4) | ((_m->WATCHDOG_SANITY_FAULT & (0x01U)) << 5) | ((_m->WATCHDOG_SYSTEM_PRESENT_FAULT & (0x01U)) << 6) | ((_m->COMPONENT_READY & (0x01U)) << 7);
-  cframe->Data[6] |= (_m->ENGINE & (0x01U)) | ((_m->TIPPER_BODY_01 & (0x01U)) << 1) | ((_m->TIPPER_BODY_02 & (0x01U)) << 2);
 
   cframe->MsgId = COMPONENT_RPT_02_CANID;
   cframe->DLC = COMPONENT_RPT_02_DLC;
@@ -406,26 +379,25 @@ uint32_t Pack_COMPONENT_RPT_02_pacmod12(COMPONENT_RPT_02_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_COMPONENT_RPT_02_pacmod12(COMPONENT_RPT_02_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_COMPONENT_RPT_02_pacmod11(COMPONENT_RPT_02_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < COMPONENT_RPT_02_DLC) && (i < 8); _d[i++] = 0);
 
   _d[0] |= (_m->COMPONENT_TYPE & (0x0FU)) | ((_m->ACCEL & (0x01U)) << 4) | ((_m->BRAKE & (0x01U)) << 5) | ((_m->CRUISE_CONTROL_BUTTONS & (0x01U)) << 6) | ((_m->DASH_CONTROLS_LEFT & (0x01U)) << 7);
   _d[1] |= (_m->DASH_CONTROLS_RIGHT & (0x01U)) | ((_m->HAZARD_LIGHTS & (0x01U)) << 1) | ((_m->HEADLIGHT & (0x01U)) << 2) | ((_m->HORN & (0x01U)) << 3) | ((_m->MEDIA_CONTROLS & (0x01U)) << 4) | ((_m->PARKING_BRAKE & (0x01U)) << 5) | ((_m->SHIFT & (0x01U)) << 6) | ((_m->SPRAYER & (0x01U)) << 7);
   _d[2] |= (_m->STEERING & (0x01U)) | ((_m->TURN & (0x01U)) << 1) | ((_m->WIPER & (0x01U)) << 2) | ((_m->WATCHDOG & (0x01U)) << 3) | ((_m->BRAKE_DECEL & (0x01U)) << 4) | ((_m->REAR_PASS_DOOR & (0x01U)) << 5) | ((_m->ENGINE_BRAKE & (0x01U)) << 6) | ((_m->MARKER_LAMP & (0x01U)) << 7);
-  _d[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3) | ((_m->POWER_TAKE_OFF & (0x01U)) << 4) | ((_m->TIPPER_BODY_00 & (0x01U)) << 5) | ((_m->TRAILER_AIR_SUPPLY & (0x01U)) << 6) | ((_m->TRAILER_BRAKE & (0x01U)) << 7);
+  _d[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3);
   _d[4] |= (_m->COUNTER & (0x0FU)) | ((_m->COMPLEMENT & (0x0FU)) << 4);
   _d[5] |= (_m->CONFIG_FAULT & (0x01U)) | ((_m->CAN_TIMEOUT_FAULT & (0x01U)) << 1) | ((_m->INTERNAL_SUPPLY_VOLTAGE_FAULT & (0x01U)) << 2) | ((_m->SUPERVISORY_TIMEOUT & (0x01U)) << 3) | ((_m->SUPERVISORY_SANITY_FAULT & (0x01U)) << 4) | ((_m->WATCHDOG_SANITY_FAULT & (0x01U)) << 5) | ((_m->WATCHDOG_SYSTEM_PRESENT_FAULT & (0x01U)) << 6) | ((_m->COMPONENT_READY & (0x01U)) << 7);
-  _d[6] |= (_m->ENGINE & (0x01U)) | ((_m->TIPPER_BODY_01 & (0x01U)) << 1) | ((_m->TIPPER_BODY_02 & (0x01U)) << 2);
 
   *_len = COMPONENT_RPT_02_DLC;
   *_ide = COMPONENT_RPT_02_IDE;
   return COMPONENT_RPT_02_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_COMPONENT_RPT_03_pacmod12(COMPONENT_RPT_03_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_COMPONENT_RPT_03_pacmod11(COMPONENT_RPT_03_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->COMPONENT_TYPE = (_d[0] & (0x0FU));
@@ -453,10 +425,6 @@ uint32_t Unpack_COMPONENT_RPT_03_pacmod12(COMPONENT_RPT_03_t* _m, const uint8_t*
   _m->CABIN_FAN_SPEED = ((_d[3] >> 1) & (0x01U));
   _m->CABIN_TEMP = ((_d[3] >> 2) & (0x01U));
   _m->EXHAUST_BRAKE = ((_d[3] >> 3) & (0x01U));
-  _m->POWER_TAKE_OFF = ((_d[3] >> 4) & (0x01U));
-  _m->TIPPER_BODY_00 = ((_d[3] >> 5) & (0x01U));
-  _m->TRAILER_AIR_SUPPLY = ((_d[3] >> 6) & (0x01U));
-  _m->TRAILER_BRAKE = ((_d[3] >> 7) & (0x01U));
   _m->COUNTER = (_d[4] & (0x0FU));
   _m->COMPLEMENT = ((_d[4] >> 4) & (0x0FU));
   _m->CONFIG_FAULT = (_d[5] & (0x01U));
@@ -467,34 +435,30 @@ uint32_t Unpack_COMPONENT_RPT_03_pacmod12(COMPONENT_RPT_03_t* _m, const uint8_t*
   _m->WATCHDOG_SANITY_FAULT = ((_d[5] >> 5) & (0x01U));
   _m->WATCHDOG_SYSTEM_PRESENT_FAULT = ((_d[5] >> 6) & (0x01U));
   _m->COMPONENT_READY = ((_d[5] >> 7) & (0x01U));
-  _m->ENGINE = (_d[6] & (0x01U));
-  _m->TIPPER_BODY_01 = ((_d[6] >> 1) & (0x01U));
-  _m->TIPPER_BODY_02 = ((_d[6] >> 2) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < COMPONENT_RPT_03_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_COMPONENT_RPT_03_pacmod12(&_m->mon1, COMPONENT_RPT_03_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_COMPONENT_RPT_03_pacmod11(&_m->mon1, COMPONENT_RPT_03_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return COMPONENT_RPT_03_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_COMPONENT_RPT_03_pacmod12(COMPONENT_RPT_03_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_COMPONENT_RPT_03_pacmod11(COMPONENT_RPT_03_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < COMPONENT_RPT_03_DLC) && (i < 8); cframe->Data[i++] = 0);
 
   cframe->Data[0] |= (_m->COMPONENT_TYPE & (0x0FU)) | ((_m->ACCEL & (0x01U)) << 4) | ((_m->BRAKE & (0x01U)) << 5) | ((_m->CRUISE_CONTROL_BUTTONS & (0x01U)) << 6) | ((_m->DASH_CONTROLS_LEFT & (0x01U)) << 7);
   cframe->Data[1] |= (_m->DASH_CONTROLS_RIGHT & (0x01U)) | ((_m->HAZARD_LIGHTS & (0x01U)) << 1) | ((_m->HEADLIGHT & (0x01U)) << 2) | ((_m->HORN & (0x01U)) << 3) | ((_m->MEDIA_CONTROLS & (0x01U)) << 4) | ((_m->PARKING_BRAKE & (0x01U)) << 5) | ((_m->SHIFT & (0x01U)) << 6) | ((_m->SPRAYER & (0x01U)) << 7);
   cframe->Data[2] |= (_m->STEERING & (0x01U)) | ((_m->TURN & (0x01U)) << 1) | ((_m->WIPER & (0x01U)) << 2) | ((_m->WATCHDOG & (0x01U)) << 3) | ((_m->BRAKE_DECEL & (0x01U)) << 4) | ((_m->REAR_PASS_DOOR & (0x01U)) << 5) | ((_m->ENGINE_BRAKE & (0x01U)) << 6) | ((_m->MARKER_LAMP & (0x01U)) << 7);
-  cframe->Data[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3) | ((_m->POWER_TAKE_OFF & (0x01U)) << 4) | ((_m->TIPPER_BODY_00 & (0x01U)) << 5) | ((_m->TRAILER_AIR_SUPPLY & (0x01U)) << 6) | ((_m->TRAILER_BRAKE & (0x01U)) << 7);
+  cframe->Data[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3);
   cframe->Data[4] |= (_m->COUNTER & (0x0FU)) | ((_m->COMPLEMENT & (0x0FU)) << 4);
   cframe->Data[5] |= (_m->CONFIG_FAULT & (0x01U)) | ((_m->CAN_TIMEOUT_FAULT & (0x01U)) << 1) | ((_m->INTERNAL_SUPPLY_VOLTAGE_FAULT & (0x01U)) << 2) | ((_m->SUPERVISORY_TIMEOUT & (0x01U)) << 3) | ((_m->SUPERVISORY_SANITY_FAULT & (0x01U)) << 4) | ((_m->WATCHDOG_SANITY_FAULT & (0x01U)) << 5) | ((_m->WATCHDOG_SYSTEM_PRESENT_FAULT & (0x01U)) << 6) | ((_m->COMPONENT_READY & (0x01U)) << 7);
-  cframe->Data[6] |= (_m->ENGINE & (0x01U)) | ((_m->TIPPER_BODY_01 & (0x01U)) << 1) | ((_m->TIPPER_BODY_02 & (0x01U)) << 2);
 
   cframe->MsgId = COMPONENT_RPT_03_CANID;
   cframe->DLC = COMPONENT_RPT_03_DLC;
@@ -504,26 +468,25 @@ uint32_t Pack_COMPONENT_RPT_03_pacmod12(COMPONENT_RPT_03_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_COMPONENT_RPT_03_pacmod12(COMPONENT_RPT_03_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_COMPONENT_RPT_03_pacmod11(COMPONENT_RPT_03_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < COMPONENT_RPT_03_DLC) && (i < 8); _d[i++] = 0);
 
   _d[0] |= (_m->COMPONENT_TYPE & (0x0FU)) | ((_m->ACCEL & (0x01U)) << 4) | ((_m->BRAKE & (0x01U)) << 5) | ((_m->CRUISE_CONTROL_BUTTONS & (0x01U)) << 6) | ((_m->DASH_CONTROLS_LEFT & (0x01U)) << 7);
   _d[1] |= (_m->DASH_CONTROLS_RIGHT & (0x01U)) | ((_m->HAZARD_LIGHTS & (0x01U)) << 1) | ((_m->HEADLIGHT & (0x01U)) << 2) | ((_m->HORN & (0x01U)) << 3) | ((_m->MEDIA_CONTROLS & (0x01U)) << 4) | ((_m->PARKING_BRAKE & (0x01U)) << 5) | ((_m->SHIFT & (0x01U)) << 6) | ((_m->SPRAYER & (0x01U)) << 7);
   _d[2] |= (_m->STEERING & (0x01U)) | ((_m->TURN & (0x01U)) << 1) | ((_m->WIPER & (0x01U)) << 2) | ((_m->WATCHDOG & (0x01U)) << 3) | ((_m->BRAKE_DECEL & (0x01U)) << 4) | ((_m->REAR_PASS_DOOR & (0x01U)) << 5) | ((_m->ENGINE_BRAKE & (0x01U)) << 6) | ((_m->MARKER_LAMP & (0x01U)) << 7);
-  _d[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3) | ((_m->POWER_TAKE_OFF & (0x01U)) << 4) | ((_m->TIPPER_BODY_00 & (0x01U)) << 5) | ((_m->TRAILER_AIR_SUPPLY & (0x01U)) << 6) | ((_m->TRAILER_BRAKE & (0x01U)) << 7);
+  _d[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3);
   _d[4] |= (_m->COUNTER & (0x0FU)) | ((_m->COMPLEMENT & (0x0FU)) << 4);
   _d[5] |= (_m->CONFIG_FAULT & (0x01U)) | ((_m->CAN_TIMEOUT_FAULT & (0x01U)) << 1) | ((_m->INTERNAL_SUPPLY_VOLTAGE_FAULT & (0x01U)) << 2) | ((_m->SUPERVISORY_TIMEOUT & (0x01U)) << 3) | ((_m->SUPERVISORY_SANITY_FAULT & (0x01U)) << 4) | ((_m->WATCHDOG_SANITY_FAULT & (0x01U)) << 5) | ((_m->WATCHDOG_SYSTEM_PRESENT_FAULT & (0x01U)) << 6) | ((_m->COMPONENT_READY & (0x01U)) << 7);
-  _d[6] |= (_m->ENGINE & (0x01U)) | ((_m->TIPPER_BODY_01 & (0x01U)) << 1) | ((_m->TIPPER_BODY_02 & (0x01U)) << 2);
 
   *_len = COMPONENT_RPT_03_DLC;
   *_ide = COMPONENT_RPT_03_IDE;
   return COMPONENT_RPT_03_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_COMPONENT_RPT_04_pacmod12(COMPONENT_RPT_04_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_COMPONENT_RPT_04_pacmod11(COMPONENT_RPT_04_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->COMPONENT_TYPE = (_d[0] & (0x0FU));
@@ -551,10 +514,6 @@ uint32_t Unpack_COMPONENT_RPT_04_pacmod12(COMPONENT_RPT_04_t* _m, const uint8_t*
   _m->CABIN_FAN_SPEED = ((_d[3] >> 1) & (0x01U));
   _m->CABIN_TEMP = ((_d[3] >> 2) & (0x01U));
   _m->EXHAUST_BRAKE = ((_d[3] >> 3) & (0x01U));
-  _m->POWER_TAKE_OFF = ((_d[3] >> 4) & (0x01U));
-  _m->TIPPER_BODY_00 = ((_d[3] >> 5) & (0x01U));
-  _m->TRAILER_AIR_SUPPLY = ((_d[3] >> 6) & (0x01U));
-  _m->TRAILER_BRAKE = ((_d[3] >> 7) & (0x01U));
   _m->COUNTER = (_d[4] & (0x0FU));
   _m->COMPLEMENT = ((_d[4] >> 4) & (0x0FU));
   _m->CONFIG_FAULT = (_d[5] & (0x01U));
@@ -565,34 +524,30 @@ uint32_t Unpack_COMPONENT_RPT_04_pacmod12(COMPONENT_RPT_04_t* _m, const uint8_t*
   _m->WATCHDOG_SANITY_FAULT = ((_d[5] >> 5) & (0x01U));
   _m->WATCHDOG_SYSTEM_PRESENT_FAULT = ((_d[5] >> 6) & (0x01U));
   _m->COMPONENT_READY = ((_d[5] >> 7) & (0x01U));
-  _m->ENGINE = (_d[6] & (0x01U));
-  _m->TIPPER_BODY_01 = ((_d[6] >> 1) & (0x01U));
-  _m->TIPPER_BODY_02 = ((_d[6] >> 2) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < COMPONENT_RPT_04_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_COMPONENT_RPT_04_pacmod12(&_m->mon1, COMPONENT_RPT_04_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_COMPONENT_RPT_04_pacmod11(&_m->mon1, COMPONENT_RPT_04_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return COMPONENT_RPT_04_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_COMPONENT_RPT_04_pacmod12(COMPONENT_RPT_04_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_COMPONENT_RPT_04_pacmod11(COMPONENT_RPT_04_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < COMPONENT_RPT_04_DLC) && (i < 8); cframe->Data[i++] = 0);
 
   cframe->Data[0] |= (_m->COMPONENT_TYPE & (0x0FU)) | ((_m->ACCEL & (0x01U)) << 4) | ((_m->BRAKE & (0x01U)) << 5) | ((_m->CRUISE_CONTROL_BUTTONS & (0x01U)) << 6) | ((_m->DASH_CONTROLS_LEFT & (0x01U)) << 7);
   cframe->Data[1] |= (_m->DASH_CONTROLS_RIGHT & (0x01U)) | ((_m->HAZARD_LIGHTS & (0x01U)) << 1) | ((_m->HEADLIGHT & (0x01U)) << 2) | ((_m->HORN & (0x01U)) << 3) | ((_m->MEDIA_CONTROLS & (0x01U)) << 4) | ((_m->PARKING_BRAKE & (0x01U)) << 5) | ((_m->SHIFT & (0x01U)) << 6) | ((_m->SPRAYER & (0x01U)) << 7);
   cframe->Data[2] |= (_m->STEERING & (0x01U)) | ((_m->TURN & (0x01U)) << 1) | ((_m->WIPER & (0x01U)) << 2) | ((_m->WATCHDOG & (0x01U)) << 3) | ((_m->BRAKE_DECEL & (0x01U)) << 4) | ((_m->REAR_PASS_DOOR & (0x01U)) << 5) | ((_m->ENGINE_BRAKE & (0x01U)) << 6) | ((_m->MARKER_LAMP & (0x01U)) << 7);
-  cframe->Data[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3) | ((_m->POWER_TAKE_OFF & (0x01U)) << 4) | ((_m->TIPPER_BODY_00 & (0x01U)) << 5) | ((_m->TRAILER_AIR_SUPPLY & (0x01U)) << 6) | ((_m->TRAILER_BRAKE & (0x01U)) << 7);
+  cframe->Data[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3);
   cframe->Data[4] |= (_m->COUNTER & (0x0FU)) | ((_m->COMPLEMENT & (0x0FU)) << 4);
   cframe->Data[5] |= (_m->CONFIG_FAULT & (0x01U)) | ((_m->CAN_TIMEOUT_FAULT & (0x01U)) << 1) | ((_m->INTERNAL_SUPPLY_VOLTAGE_FAULT & (0x01U)) << 2) | ((_m->SUPERVISORY_TIMEOUT & (0x01U)) << 3) | ((_m->SUPERVISORY_SANITY_FAULT & (0x01U)) << 4) | ((_m->WATCHDOG_SANITY_FAULT & (0x01U)) << 5) | ((_m->WATCHDOG_SYSTEM_PRESENT_FAULT & (0x01U)) << 6) | ((_m->COMPONENT_READY & (0x01U)) << 7);
-  cframe->Data[6] |= (_m->ENGINE & (0x01U)) | ((_m->TIPPER_BODY_01 & (0x01U)) << 1) | ((_m->TIPPER_BODY_02 & (0x01U)) << 2);
 
   cframe->MsgId = COMPONENT_RPT_04_CANID;
   cframe->DLC = COMPONENT_RPT_04_DLC;
@@ -602,31 +557,30 @@ uint32_t Pack_COMPONENT_RPT_04_pacmod12(COMPONENT_RPT_04_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_COMPONENT_RPT_04_pacmod12(COMPONENT_RPT_04_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_COMPONENT_RPT_04_pacmod11(COMPONENT_RPT_04_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < COMPONENT_RPT_04_DLC) && (i < 8); _d[i++] = 0);
 
   _d[0] |= (_m->COMPONENT_TYPE & (0x0FU)) | ((_m->ACCEL & (0x01U)) << 4) | ((_m->BRAKE & (0x01U)) << 5) | ((_m->CRUISE_CONTROL_BUTTONS & (0x01U)) << 6) | ((_m->DASH_CONTROLS_LEFT & (0x01U)) << 7);
   _d[1] |= (_m->DASH_CONTROLS_RIGHT & (0x01U)) | ((_m->HAZARD_LIGHTS & (0x01U)) << 1) | ((_m->HEADLIGHT & (0x01U)) << 2) | ((_m->HORN & (0x01U)) << 3) | ((_m->MEDIA_CONTROLS & (0x01U)) << 4) | ((_m->PARKING_BRAKE & (0x01U)) << 5) | ((_m->SHIFT & (0x01U)) << 6) | ((_m->SPRAYER & (0x01U)) << 7);
   _d[2] |= (_m->STEERING & (0x01U)) | ((_m->TURN & (0x01U)) << 1) | ((_m->WIPER & (0x01U)) << 2) | ((_m->WATCHDOG & (0x01U)) << 3) | ((_m->BRAKE_DECEL & (0x01U)) << 4) | ((_m->REAR_PASS_DOOR & (0x01U)) << 5) | ((_m->ENGINE_BRAKE & (0x01U)) << 6) | ((_m->MARKER_LAMP & (0x01U)) << 7);
-  _d[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3) | ((_m->POWER_TAKE_OFF & (0x01U)) << 4) | ((_m->TIPPER_BODY_00 & (0x01U)) << 5) | ((_m->TRAILER_AIR_SUPPLY & (0x01U)) << 6) | ((_m->TRAILER_BRAKE & (0x01U)) << 7);
+  _d[3] |= (_m->CABIN_CLIMATE & (0x01U)) | ((_m->CABIN_FAN_SPEED & (0x01U)) << 1) | ((_m->CABIN_TEMP & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE & (0x01U)) << 3);
   _d[4] |= (_m->COUNTER & (0x0FU)) | ((_m->COMPLEMENT & (0x0FU)) << 4);
   _d[5] |= (_m->CONFIG_FAULT & (0x01U)) | ((_m->CAN_TIMEOUT_FAULT & (0x01U)) << 1) | ((_m->INTERNAL_SUPPLY_VOLTAGE_FAULT & (0x01U)) << 2) | ((_m->SUPERVISORY_TIMEOUT & (0x01U)) << 3) | ((_m->SUPERVISORY_SANITY_FAULT & (0x01U)) << 4) | ((_m->WATCHDOG_SANITY_FAULT & (0x01U)) << 5) | ((_m->WATCHDOG_SYSTEM_PRESENT_FAULT & (0x01U)) << 6) | ((_m->COMPONENT_READY & (0x01U)) << 7);
-  _d[6] |= (_m->ENGINE & (0x01U)) | ((_m->TIPPER_BODY_01 & (0x01U)) << 1) | ((_m->TIPPER_BODY_02 & (0x01U)) << 2);
 
   *_len = COMPONENT_RPT_04_DLC;
   *_ide = COMPONENT_RPT_04_IDE;
   return COMPONENT_RPT_04_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SAFETY_FUNC_RPT_pacmod12(SAFETY_FUNC_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SAFETY_FUNC_RPT_pacmod11(SAFETY_FUNC_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->COMMANDED_VALUE = (_d[0] & (0x0FU));
   _m->STATE = ((_d[0] >> 4) & (0x0FU));
-  _m->AUTOMS_MAN_OPCTRL = (_d[1] & (0x03U));
+  _m->AUTOMSMAN_OPCTRL = (_d[1] & (0x03U));
   _m->CABIN_SAFETY_BRAKE_OPCTRL = ((_d[1] >> 2) & (0x03U));
   _m->REMOTE_STOP_STATUS = ((_d[1] >> 4) & (0x03U));
   _m->ENGINE_STATUS = ((_d[1] >> 6) & (0x01U));
@@ -640,25 +594,25 @@ uint32_t Unpack_SAFETY_FUNC_RPT_pacmod12(SAFETY_FUNC_RPT_t* _m, const uint8_t* _
   _m->CRITICAL_STOP1_STATE_OBTAINABLE = ((_d[3] >> 4) & (0x01U));
   _m->CRITICAL_STOP2_STATE_OBTAINABLE = ((_d[3] >> 5) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SAFETY_FUNC_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SAFETY_FUNC_RPT_pacmod12(&_m->mon1, SAFETY_FUNC_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SAFETY_FUNC_RPT_pacmod11(&_m->mon1, SAFETY_FUNC_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SAFETY_FUNC_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SAFETY_FUNC_RPT_pacmod12(SAFETY_FUNC_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SAFETY_FUNC_RPT_pacmod11(SAFETY_FUNC_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SAFETY_FUNC_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
   cframe->Data[0] |= (_m->COMMANDED_VALUE & (0x0FU)) | ((_m->STATE & (0x0FU)) << 4);
-  cframe->Data[1] |= (_m->AUTOMS_MAN_OPCTRL & (0x03U)) | ((_m->CABIN_SAFETY_BRAKE_OPCTRL & (0x03U)) << 2) | ((_m->REMOTE_STOP_STATUS & (0x03U)) << 4) | ((_m->ENGINE_STATUS & (0x01U)) << 6) | ((_m->PACMOD_SYSTEM_STATUS & (0x01U)) << 7);
+  cframe->Data[1] |= (_m->AUTOMSMAN_OPCTRL & (0x03U)) | ((_m->CABIN_SAFETY_BRAKE_OPCTRL & (0x03U)) << 2) | ((_m->REMOTE_STOP_STATUS & (0x03U)) << 4) | ((_m->ENGINE_STATUS & (0x01U)) << 6) | ((_m->PACMOD_SYSTEM_STATUS & (0x01U)) << 7);
   cframe->Data[2] |= (_m->USER_PC_FAULT & (0x03U)) | ((_m->PACMOD_SYSTEM_FAULT & (0x03U)) << 2);
   cframe->Data[3] |= (_m->MANUAL_STATE_OBTAINABLE & (0x01U)) | ((_m->AUTOMS_READY_STATE_OBTAINABLE & (0x01U)) << 1) | ((_m->AUTOMS_STATE_OBTAINABLE & (0x01U)) << 2) | ((_m->MANUAL_READY_STATE_OBTAINABLE & (0x01U)) << 3) | ((_m->CRITICAL_STOP1_STATE_OBTAINABLE & (0x01U)) << 4) | ((_m->CRITICAL_STOP2_STATE_OBTAINABLE & (0x01U)) << 5);
 
@@ -670,12 +624,12 @@ uint32_t Pack_SAFETY_FUNC_RPT_pacmod12(SAFETY_FUNC_RPT_t* _m, __CoderDbcCanFrame
 
 #else
 
-uint32_t Pack_SAFETY_FUNC_RPT_pacmod12(SAFETY_FUNC_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SAFETY_FUNC_RPT_pacmod11(SAFETY_FUNC_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SAFETY_FUNC_RPT_DLC) && (i < 8); _d[i++] = 0);
 
   _d[0] |= (_m->COMMANDED_VALUE & (0x0FU)) | ((_m->STATE & (0x0FU)) << 4);
-  _d[1] |= (_m->AUTOMS_MAN_OPCTRL & (0x03U)) | ((_m->CABIN_SAFETY_BRAKE_OPCTRL & (0x03U)) << 2) | ((_m->REMOTE_STOP_STATUS & (0x03U)) << 4) | ((_m->ENGINE_STATUS & (0x01U)) << 6) | ((_m->PACMOD_SYSTEM_STATUS & (0x01U)) << 7);
+  _d[1] |= (_m->AUTOMSMAN_OPCTRL & (0x03U)) | ((_m->CABIN_SAFETY_BRAKE_OPCTRL & (0x03U)) << 2) | ((_m->REMOTE_STOP_STATUS & (0x03U)) << 4) | ((_m->ENGINE_STATUS & (0x01U)) << 6) | ((_m->PACMOD_SYSTEM_STATUS & (0x01U)) << 7);
   _d[2] |= (_m->USER_PC_FAULT & (0x03U)) | ((_m->PACMOD_SYSTEM_FAULT & (0x03U)) << 2);
   _d[3] |= (_m->MANUAL_STATE_OBTAINABLE & (0x01U)) | ((_m->AUTOMS_READY_STATE_OBTAINABLE & (0x01U)) << 1) | ((_m->AUTOMS_STATE_OBTAINABLE & (0x01U)) << 2) | ((_m->MANUAL_READY_STATE_OBTAINABLE & (0x01U)) << 3) | ((_m->CRITICAL_STOP1_STATE_OBTAINABLE & (0x01U)) << 4) | ((_m->CRITICAL_STOP2_STATE_OBTAINABLE & (0x01U)) << 5);
 
@@ -684,9 +638,9 @@ uint32_t Pack_SAFETY_FUNC_RPT_pacmod12(SAFETY_FUNC_RPT_t* _m, uint8_t* _d, uint8
   return SAFETY_FUNC_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SAFETY_BRAKE_RPT_pacmod12(SAFETY_BRAKE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SAFETY_BRAKE_RPT_pacmod11(SAFETY_BRAKE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->COMMANDED_VALUE = (_d[0] & (0x01U));
@@ -696,20 +650,20 @@ uint32_t Unpack_SAFETY_BRAKE_RPT_pacmod12(SAFETY_BRAKE_RPT_t* _m, const uint8_t*
   _m->COMMAND_PERMITTED = ((_d[0] >> 5) & (0x01U));
   _m->REPORTED_FAULT = ((_d[0] >> 6) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SAFETY_BRAKE_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SAFETY_BRAKE_RPT_pacmod12(&_m->mon1, SAFETY_BRAKE_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SAFETY_BRAKE_RPT_pacmod11(&_m->mon1, SAFETY_BRAKE_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SAFETY_BRAKE_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SAFETY_BRAKE_RPT_pacmod12(SAFETY_BRAKE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SAFETY_BRAKE_RPT_pacmod11(SAFETY_BRAKE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SAFETY_BRAKE_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -723,7 +677,7 @@ uint32_t Pack_SAFETY_BRAKE_RPT_pacmod12(SAFETY_BRAKE_RPT_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_SAFETY_BRAKE_RPT_pacmod12(SAFETY_BRAKE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SAFETY_BRAKE_RPT_pacmod11(SAFETY_BRAKE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SAFETY_BRAKE_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -734,9 +688,9 @@ uint32_t Pack_SAFETY_BRAKE_RPT_pacmod12(SAFETY_BRAKE_RPT_t* _m, uint8_t* _d, uin
   return SAFETY_BRAKE_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_VEHICLE_FAULT_RPT_pacmod12(VEHICLE_FAULT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_VEHICLE_FAULT_RPT_pacmod11(VEHICLE_FAULT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENGINE_CHECK_LIGHT = (_d[0] & (0x01U));
@@ -770,20 +724,20 @@ uint32_t Unpack_VEHICLE_FAULT_RPT_pacmod12(VEHICLE_FAULT_RPT_t* _m, const uint8_
   _m->CHARGING_SYSTEM_FAULT = ((_d[3] >> 4) & (0x01U));
   _m->CHARGING_SYSTEM_FAULT_AVAIL = ((_d[3] >> 5) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < VEHICLE_FAULT_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_VEHICLE_FAULT_RPT_pacmod12(&_m->mon1, VEHICLE_FAULT_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_VEHICLE_FAULT_RPT_pacmod11(&_m->mon1, VEHICLE_FAULT_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return VEHICLE_FAULT_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_VEHICLE_FAULT_RPT_pacmod12(VEHICLE_FAULT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_VEHICLE_FAULT_RPT_pacmod11(VEHICLE_FAULT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < VEHICLE_FAULT_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -800,7 +754,7 @@ uint32_t Pack_VEHICLE_FAULT_RPT_pacmod12(VEHICLE_FAULT_RPT_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_VEHICLE_FAULT_RPT_pacmod12(VEHICLE_FAULT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_VEHICLE_FAULT_RPT_pacmod11(VEHICLE_FAULT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < VEHICLE_FAULT_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -814,87 +768,34 @@ uint32_t Pack_VEHICLE_FAULT_RPT_pacmod12(VEHICLE_FAULT_RPT_t* _m, uint8_t* _d, u
   return VEHICLE_FAULT_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SAFETY_FUNC_RPT_2_pacmod12(SAFETY_FUNC_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->COMMANDED_STATE = (_d[0] & (0x0FU));
-  _m->STATE = ((_d[0] >> 4) & (0x0FU));
-  _m->MANUAL_STATE_OBTAINABLE = (_d[1] & (0x01U));
-  _m->AUTOMS_READY_STATE_OBTAINABLE = ((_d[1] >> 1) & (0x01U));
-  _m->AUTOMS_STATE_OBTAINABLE = ((_d[1] >> 2) & (0x01U));
-  _m->MANUAL_READY_STATE_OBTAINABLE = ((_d[1] >> 3) & (0x01U));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < SAFETY_FUNC_RPT_2_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_SAFETY_FUNC_RPT_2_pacmod12(&_m->mon1, SAFETY_FUNC_RPT_2_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return SAFETY_FUNC_RPT_2_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_SAFETY_FUNC_RPT_2_pacmod12(SAFETY_FUNC_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < SAFETY_FUNC_RPT_2_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->COMMANDED_STATE & (0x0FU)) | ((_m->STATE & (0x0FU)) << 4);
-  cframe->Data[1] |= (_m->MANUAL_STATE_OBTAINABLE & (0x01U)) | ((_m->AUTOMS_READY_STATE_OBTAINABLE & (0x01U)) << 1) | ((_m->AUTOMS_STATE_OBTAINABLE & (0x01U)) << 2) | ((_m->MANUAL_READY_STATE_OBTAINABLE & (0x01U)) << 3);
-
-  cframe->MsgId = SAFETY_FUNC_RPT_2_CANID;
-  cframe->DLC = SAFETY_FUNC_RPT_2_DLC;
-  cframe->IDE = SAFETY_FUNC_RPT_2_IDE;
-  return SAFETY_FUNC_RPT_2_CANID;
-}
-
-#else
-
-uint32_t Pack_SAFETY_FUNC_RPT_2_pacmod12(SAFETY_FUNC_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < SAFETY_FUNC_RPT_2_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->COMMANDED_STATE & (0x0FU)) | ((_m->STATE & (0x0FU)) << 4);
-  _d[1] |= (_m->MANUAL_STATE_OBTAINABLE & (0x01U)) | ((_m->AUTOMS_READY_STATE_OBTAINABLE & (0x01U)) << 1) | ((_m->AUTOMS_STATE_OBTAINABLE & (0x01U)) << 2) | ((_m->MANUAL_READY_STATE_OBTAINABLE & (0x01U)) << 3);
-
-  *_len = SAFETY_FUNC_RPT_2_DLC;
-  *_ide = SAFETY_FUNC_RPT_2_IDE;
-  return SAFETY_FUNC_RPT_2_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_GLOBAL_CMD_pacmod12(GLOBAL_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_GLOBAL_CMD_pacmod11(GLOBAL_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->CLEAR_FAULTS = (_d[0] & (0x01U));
   _m->SANITY_CHECK_REQUIRED = ((_d[0] >> 1) & (0x01U));
-  _m->CLEAR_OVERRIDES = ((_d[0] >> 2) & (0x01U));
   _m->COUNTER = (_d[1] & (0x0FU));
   _m->COMPLEMENT = ((_d[1] >> 4) & (0x0FU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < GLOBAL_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_GLOBAL_CMD_pacmod12(&_m->mon1, GLOBAL_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_GLOBAL_CMD_pacmod11(&_m->mon1, GLOBAL_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return GLOBAL_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_GLOBAL_CMD_pacmod12(GLOBAL_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_GLOBAL_CMD_pacmod11(GLOBAL_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < GLOBAL_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-  cframe->Data[0] |= (_m->CLEAR_FAULTS & (0x01U)) | ((_m->SANITY_CHECK_REQUIRED & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDES & (0x01U)) << 2);
+  cframe->Data[0] |= (_m->CLEAR_FAULTS & (0x01U)) | ((_m->SANITY_CHECK_REQUIRED & (0x01U)) << 1);
   cframe->Data[1] |= (_m->COUNTER & (0x0FU)) | ((_m->COMPLEMENT & (0x0FU)) << 4);
 
   cframe->MsgId = GLOBAL_CMD_CANID;
@@ -905,11 +806,11 @@ uint32_t Pack_GLOBAL_CMD_pacmod12(GLOBAL_CMD_t* _m, __CoderDbcCanFrame_t__* cfra
 
 #else
 
-uint32_t Pack_GLOBAL_CMD_pacmod12(GLOBAL_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_GLOBAL_CMD_pacmod11(GLOBAL_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < GLOBAL_CMD_DLC) && (i < 8); _d[i++] = 0);
 
-  _d[0] |= (_m->CLEAR_FAULTS & (0x01U)) | ((_m->SANITY_CHECK_REQUIRED & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDES & (0x01U)) << 2);
+  _d[0] |= (_m->CLEAR_FAULTS & (0x01U)) | ((_m->SANITY_CHECK_REQUIRED & (0x01U)) << 1);
   _d[1] |= (_m->COUNTER & (0x0FU)) | ((_m->COMPLEMENT & (0x0FU)) << 4);
 
   *_len = GLOBAL_CMD_DLC;
@@ -917,29 +818,29 @@ uint32_t Pack_GLOBAL_CMD_pacmod12(GLOBAL_CMD_t* _m, uint8_t* _d, uint8_t* _len, 
   return GLOBAL_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SUPERVISORY_CTRL_pacmod12(SUPERVISORY_CTRL_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SUPERVISORY_CTRL_pacmod11(SUPERVISORY_CTRL_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
   _m->COUNTER = (_d[1] & (0x0FU));
   _m->COMPLEMENT = ((_d[1] >> 4) & (0x0FU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SUPERVISORY_CTRL_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SUPERVISORY_CTRL_pacmod12(&_m->mon1, SUPERVISORY_CTRL_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SUPERVISORY_CTRL_pacmod11(&_m->mon1, SUPERVISORY_CTRL_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SUPERVISORY_CTRL_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SUPERVISORY_CTRL_pacmod12(SUPERVISORY_CTRL_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SUPERVISORY_CTRL_pacmod11(SUPERVISORY_CTRL_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SUPERVISORY_CTRL_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -954,7 +855,7 @@ uint32_t Pack_SUPERVISORY_CTRL_pacmod12(SUPERVISORY_CTRL_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_SUPERVISORY_CTRL_pacmod12(SUPERVISORY_CTRL_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SUPERVISORY_CTRL_pacmod11(SUPERVISORY_CTRL_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SUPERVISORY_CTRL_DLC) && (i < 8); _d[i++] = 0);
 
@@ -966,27 +867,27 @@ uint32_t Pack_SUPERVISORY_CTRL_pacmod12(SUPERVISORY_CTRL_t* _m, uint8_t* _d, uin
   return SUPERVISORY_CTRL_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SAFETY_FUNC_CMD_pacmod12(SAFETY_FUNC_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SAFETY_FUNC_CMD_pacmod11(SAFETY_FUNC_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->COMMAND = (_d[0] & (0x0FU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SAFETY_FUNC_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SAFETY_FUNC_CMD_pacmod12(&_m->mon1, SAFETY_FUNC_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SAFETY_FUNC_CMD_pacmod11(&_m->mon1, SAFETY_FUNC_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SAFETY_FUNC_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SAFETY_FUNC_CMD_pacmod12(SAFETY_FUNC_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SAFETY_FUNC_CMD_pacmod11(SAFETY_FUNC_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SAFETY_FUNC_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1000,7 +901,7 @@ uint32_t Pack_SAFETY_FUNC_CMD_pacmod12(SAFETY_FUNC_CMD_t* _m, __CoderDbcCanFrame
 
 #else
 
-uint32_t Pack_SAFETY_FUNC_CMD_pacmod12(SAFETY_FUNC_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SAFETY_FUNC_CMD_pacmod11(SAFETY_FUNC_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SAFETY_FUNC_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1011,27 +912,27 @@ uint32_t Pack_SAFETY_FUNC_CMD_pacmod12(SAFETY_FUNC_CMD_t* _m, uint8_t* _d, uint8
   return SAFETY_FUNC_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SAFETY_BRAKE_CMD_pacmod12(SAFETY_BRAKE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SAFETY_BRAKE_CMD_pacmod11(SAFETY_BRAKE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->SAFETY_BRAKE_CMD = (_d[0] & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SAFETY_BRAKE_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SAFETY_BRAKE_CMD_pacmod12(&_m->mon1, SAFETY_BRAKE_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SAFETY_BRAKE_CMD_pacmod11(&_m->mon1, SAFETY_BRAKE_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SAFETY_BRAKE_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SAFETY_BRAKE_CMD_pacmod12(SAFETY_BRAKE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SAFETY_BRAKE_CMD_pacmod11(SAFETY_BRAKE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SAFETY_BRAKE_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1045,7 +946,7 @@ uint32_t Pack_SAFETY_BRAKE_CMD_pacmod12(SAFETY_BRAKE_CMD_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_SAFETY_BRAKE_CMD_pacmod12(SAFETY_BRAKE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SAFETY_BRAKE_CMD_pacmod11(SAFETY_BRAKE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SAFETY_BRAKE_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1056,39 +957,39 @@ uint32_t Pack_SAFETY_BRAKE_CMD_pacmod12(SAFETY_BRAKE_CMD_t* _m, uint8_t* _d, uin
   return SAFETY_BRAKE_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_ACCEL_CMD_pacmod12(ACCEL_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_ACCEL_CMD_pacmod11(ACCEL_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
   _m->IGNORE_OVERRIDES = ((_d[0] >> 1) & (0x01U));
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->ACCEL_CMD_ro = ((_d[1] & (0xFFU)) << 8) | (_d[2] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ACCEL_CMD_phys = (sigfloat_t)(PACMOD12_ACCEL_CMD_ro_fromS(_m->ACCEL_CMD_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ACCEL_CMD_phys = (sigfloat_t)(PACMOD11_ACCEL_CMD_ro_fromS(_m->ACCEL_CMD_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < ACCEL_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_ACCEL_CMD_pacmod12(&_m->mon1, ACCEL_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_ACCEL_CMD_pacmod11(&_m->mon1, ACCEL_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return ACCEL_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_ACCEL_CMD_pacmod12(ACCEL_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_ACCEL_CMD_pacmod11(ACCEL_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < ACCEL_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ACCEL_CMD_ro = PACMOD12_ACCEL_CMD_ro_toS(_m->ACCEL_CMD_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ACCEL_CMD_ro = PACMOD11_ACCEL_CMD_ro_toS(_m->ACCEL_CMD_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
   cframe->Data[1] |= ((_m->ACCEL_CMD_ro >> 8) & (0xFFU));
@@ -1102,13 +1003,13 @@ uint32_t Pack_ACCEL_CMD_pacmod12(ACCEL_CMD_t* _m, __CoderDbcCanFrame_t__* cframe
 
 #else
 
-uint32_t Pack_ACCEL_CMD_pacmod12(ACCEL_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_ACCEL_CMD_pacmod11(ACCEL_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < ACCEL_CMD_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ACCEL_CMD_ro = PACMOD12_ACCEL_CMD_ro_toS(_m->ACCEL_CMD_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ACCEL_CMD_ro = PACMOD11_ACCEL_CMD_ro_toS(_m->ACCEL_CMD_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
   _d[1] |= ((_m->ACCEL_CMD_ro >> 8) & (0xFFU));
@@ -1119,39 +1020,39 @@ uint32_t Pack_ACCEL_CMD_pacmod12(ACCEL_CMD_t* _m, uint8_t* _d, uint8_t* _len, ui
   return ACCEL_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_BRAKE_CMD_pacmod12(BRAKE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_BRAKE_CMD_pacmod11(BRAKE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
   _m->IGNORE_OVERRIDES = ((_d[0] >> 1) & (0x01U));
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->BRAKE_CMD_ro = ((_d[1] & (0xFFU)) << 8) | (_d[2] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->BRAKE_CMD_phys = (sigfloat_t)(PACMOD12_BRAKE_CMD_ro_fromS(_m->BRAKE_CMD_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->BRAKE_CMD_phys = (sigfloat_t)(PACMOD11_BRAKE_CMD_ro_fromS(_m->BRAKE_CMD_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < BRAKE_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_BRAKE_CMD_pacmod12(&_m->mon1, BRAKE_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_BRAKE_CMD_pacmod11(&_m->mon1, BRAKE_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return BRAKE_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_BRAKE_CMD_pacmod12(BRAKE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_BRAKE_CMD_pacmod11(BRAKE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < BRAKE_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->BRAKE_CMD_ro = PACMOD12_BRAKE_CMD_ro_toS(_m->BRAKE_CMD_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->BRAKE_CMD_ro = PACMOD11_BRAKE_CMD_ro_toS(_m->BRAKE_CMD_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
   cframe->Data[1] |= ((_m->BRAKE_CMD_ro >> 8) & (0xFFU));
@@ -1165,13 +1066,13 @@ uint32_t Pack_BRAKE_CMD_pacmod12(BRAKE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe
 
 #else
 
-uint32_t Pack_BRAKE_CMD_pacmod12(BRAKE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_BRAKE_CMD_pacmod11(BRAKE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < BRAKE_CMD_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->BRAKE_CMD_ro = PACMOD12_BRAKE_CMD_ro_toS(_m->BRAKE_CMD_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->BRAKE_CMD_ro = PACMOD11_BRAKE_CMD_ro_toS(_m->BRAKE_CMD_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
   _d[1] |= ((_m->BRAKE_CMD_ro >> 8) & (0xFFU));
@@ -1182,9 +1083,9 @@ uint32_t Pack_BRAKE_CMD_pacmod12(BRAKE_CMD_t* _m, uint8_t* _d, uint8_t* _len, ui
   return BRAKE_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_CRUISE_CONTROL_BUTTONS_CMD_pacmod12(CRUISE_CONTROL_BUTTONS_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_CRUISE_CONTROL_BUTTONS_CMD_pacmod11(CRUISE_CONTROL_BUTTONS_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -1192,20 +1093,20 @@ uint32_t Unpack_CRUISE_CONTROL_BUTTONS_CMD_pacmod12(CRUISE_CONTROL_BUTTONS_CMD_t
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->CRUISE_CONTROL_BUTTON = (_d[1] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < CRUISE_CONTROL_BUTTONS_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_CRUISE_CONTROL_BUTTONS_CMD_pacmod12(&_m->mon1, CRUISE_CONTROL_BUTTONS_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_CRUISE_CONTROL_BUTTONS_CMD_pacmod11(&_m->mon1, CRUISE_CONTROL_BUTTONS_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return CRUISE_CONTROL_BUTTONS_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_CRUISE_CONTROL_BUTTONS_CMD_pacmod12(CRUISE_CONTROL_BUTTONS_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_CRUISE_CONTROL_BUTTONS_CMD_pacmod11(CRUISE_CONTROL_BUTTONS_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < CRUISE_CONTROL_BUTTONS_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1220,7 +1121,7 @@ uint32_t Pack_CRUISE_CONTROL_BUTTONS_CMD_pacmod12(CRUISE_CONTROL_BUTTONS_CMD_t* 
 
 #else
 
-uint32_t Pack_CRUISE_CONTROL_BUTTONS_CMD_pacmod12(CRUISE_CONTROL_BUTTONS_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_CRUISE_CONTROL_BUTTONS_CMD_pacmod11(CRUISE_CONTROL_BUTTONS_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < CRUISE_CONTROL_BUTTONS_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1232,9 +1133,9 @@ uint32_t Pack_CRUISE_CONTROL_BUTTONS_CMD_pacmod12(CRUISE_CONTROL_BUTTONS_CMD_t* 
   return CRUISE_CONTROL_BUTTONS_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_DASH_CONTROLS_LEFT_CMD_pacmod12(DASH_CONTROLS_LEFT_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_DASH_CONTROLS_LEFT_CMD_pacmod11(DASH_CONTROLS_LEFT_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -1242,20 +1143,20 @@ uint32_t Unpack_DASH_CONTROLS_LEFT_CMD_pacmod12(DASH_CONTROLS_LEFT_CMD_t* _m, co
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->DASH_CONTROLS_BUTTON = (_d[1] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < DASH_CONTROLS_LEFT_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_DASH_CONTROLS_LEFT_CMD_pacmod12(&_m->mon1, DASH_CONTROLS_LEFT_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_DASH_CONTROLS_LEFT_CMD_pacmod11(&_m->mon1, DASH_CONTROLS_LEFT_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return DASH_CONTROLS_LEFT_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_DASH_CONTROLS_LEFT_CMD_pacmod12(DASH_CONTROLS_LEFT_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_DASH_CONTROLS_LEFT_CMD_pacmod11(DASH_CONTROLS_LEFT_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < DASH_CONTROLS_LEFT_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1270,7 +1171,7 @@ uint32_t Pack_DASH_CONTROLS_LEFT_CMD_pacmod12(DASH_CONTROLS_LEFT_CMD_t* _m, __Co
 
 #else
 
-uint32_t Pack_DASH_CONTROLS_LEFT_CMD_pacmod12(DASH_CONTROLS_LEFT_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_DASH_CONTROLS_LEFT_CMD_pacmod11(DASH_CONTROLS_LEFT_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < DASH_CONTROLS_LEFT_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1282,9 +1183,9 @@ uint32_t Pack_DASH_CONTROLS_LEFT_CMD_pacmod12(DASH_CONTROLS_LEFT_CMD_t* _m, uint
   return DASH_CONTROLS_LEFT_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_DASH_CONTROLS_RIGHT_CMD_pacmod12(DASH_CONTROLS_RIGHT_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_DASH_CONTROLS_RIGHT_CMD_pacmod11(DASH_CONTROLS_RIGHT_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -1292,20 +1193,20 @@ uint32_t Unpack_DASH_CONTROLS_RIGHT_CMD_pacmod12(DASH_CONTROLS_RIGHT_CMD_t* _m, 
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->DASH_CONTROLS_BUTTON = (_d[1] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < DASH_CONTROLS_RIGHT_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_DASH_CONTROLS_RIGHT_CMD_pacmod12(&_m->mon1, DASH_CONTROLS_RIGHT_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_DASH_CONTROLS_RIGHT_CMD_pacmod11(&_m->mon1, DASH_CONTROLS_RIGHT_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return DASH_CONTROLS_RIGHT_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_DASH_CONTROLS_RIGHT_CMD_pacmod12(DASH_CONTROLS_RIGHT_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_DASH_CONTROLS_RIGHT_CMD_pacmod11(DASH_CONTROLS_RIGHT_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < DASH_CONTROLS_RIGHT_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1320,7 +1221,7 @@ uint32_t Pack_DASH_CONTROLS_RIGHT_CMD_pacmod12(DASH_CONTROLS_RIGHT_CMD_t* _m, __
 
 #else
 
-uint32_t Pack_DASH_CONTROLS_RIGHT_CMD_pacmod12(DASH_CONTROLS_RIGHT_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_DASH_CONTROLS_RIGHT_CMD_pacmod11(DASH_CONTROLS_RIGHT_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < DASH_CONTROLS_RIGHT_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1332,9 +1233,9 @@ uint32_t Pack_DASH_CONTROLS_RIGHT_CMD_pacmod12(DASH_CONTROLS_RIGHT_CMD_t* _m, ui
   return DASH_CONTROLS_RIGHT_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_HAZARD_LIGHTS_CMD_pacmod12(HAZARD_LIGHTS_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_HAZARD_LIGHTS_CMD_pacmod11(HAZARD_LIGHTS_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -1342,20 +1243,20 @@ uint32_t Unpack_HAZARD_LIGHTS_CMD_pacmod12(HAZARD_LIGHTS_CMD_t* _m, const uint8_
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->HAZARD_LIGHTS_CMD = (_d[1] & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < HAZARD_LIGHTS_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_HAZARD_LIGHTS_CMD_pacmod12(&_m->mon1, HAZARD_LIGHTS_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_HAZARD_LIGHTS_CMD_pacmod11(&_m->mon1, HAZARD_LIGHTS_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return HAZARD_LIGHTS_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_HAZARD_LIGHTS_CMD_pacmod12(HAZARD_LIGHTS_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_HAZARD_LIGHTS_CMD_pacmod11(HAZARD_LIGHTS_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < HAZARD_LIGHTS_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1370,7 +1271,7 @@ uint32_t Pack_HAZARD_LIGHTS_CMD_pacmod12(HAZARD_LIGHTS_CMD_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_HAZARD_LIGHTS_CMD_pacmod12(HAZARD_LIGHTS_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_HAZARD_LIGHTS_CMD_pacmod11(HAZARD_LIGHTS_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < HAZARD_LIGHTS_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1382,9 +1283,9 @@ uint32_t Pack_HAZARD_LIGHTS_CMD_pacmod12(HAZARD_LIGHTS_CMD_t* _m, uint8_t* _d, u
   return HAZARD_LIGHTS_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_HEADLIGHT_CMD_pacmod12(HEADLIGHT_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_HEADLIGHT_CMD_pacmod11(HEADLIGHT_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -1392,20 +1293,20 @@ uint32_t Unpack_HEADLIGHT_CMD_pacmod12(HEADLIGHT_CMD_t* _m, const uint8_t* _d, u
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->HEADLIGHT_CMD = (_d[1] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < HEADLIGHT_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_HEADLIGHT_CMD_pacmod12(&_m->mon1, HEADLIGHT_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_HEADLIGHT_CMD_pacmod11(&_m->mon1, HEADLIGHT_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return HEADLIGHT_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_HEADLIGHT_CMD_pacmod12(HEADLIGHT_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_HEADLIGHT_CMD_pacmod11(HEADLIGHT_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < HEADLIGHT_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1420,7 +1321,7 @@ uint32_t Pack_HEADLIGHT_CMD_pacmod12(HEADLIGHT_CMD_t* _m, __CoderDbcCanFrame_t__
 
 #else
 
-uint32_t Pack_HEADLIGHT_CMD_pacmod12(HEADLIGHT_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_HEADLIGHT_CMD_pacmod11(HEADLIGHT_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < HEADLIGHT_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1432,9 +1333,9 @@ uint32_t Pack_HEADLIGHT_CMD_pacmod12(HEADLIGHT_CMD_t* _m, uint8_t* _d, uint8_t* 
   return HEADLIGHT_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_HORN_CMD_pacmod12(HORN_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_HORN_CMD_pacmod11(HORN_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -1442,20 +1343,20 @@ uint32_t Unpack_HORN_CMD_pacmod12(HORN_CMD_t* _m, const uint8_t* _d, uint8_t dlc
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->HORN_CMD = (_d[1] & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < HORN_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_HORN_CMD_pacmod12(&_m->mon1, HORN_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_HORN_CMD_pacmod11(&_m->mon1, HORN_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return HORN_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_HORN_CMD_pacmod12(HORN_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_HORN_CMD_pacmod11(HORN_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < HORN_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1470,7 +1371,7 @@ uint32_t Pack_HORN_CMD_pacmod12(HORN_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 
 #else
 
-uint32_t Pack_HORN_CMD_pacmod12(HORN_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_HORN_CMD_pacmod11(HORN_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < HORN_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1482,9 +1383,9 @@ uint32_t Pack_HORN_CMD_pacmod12(HORN_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint
   return HORN_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_MEDIA_CONTROLS_CMD_pacmod12(MEDIA_CONTROLS_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_MEDIA_CONTROLS_CMD_pacmod11(MEDIA_CONTROLS_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -1492,20 +1393,20 @@ uint32_t Unpack_MEDIA_CONTROLS_CMD_pacmod12(MEDIA_CONTROLS_CMD_t* _m, const uint
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->MEDIA_CONTROLS_CMD = (_d[1] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < MEDIA_CONTROLS_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_MEDIA_CONTROLS_CMD_pacmod12(&_m->mon1, MEDIA_CONTROLS_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_MEDIA_CONTROLS_CMD_pacmod11(&_m->mon1, MEDIA_CONTROLS_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return MEDIA_CONTROLS_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_MEDIA_CONTROLS_CMD_pacmod12(MEDIA_CONTROLS_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_MEDIA_CONTROLS_CMD_pacmod11(MEDIA_CONTROLS_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < MEDIA_CONTROLS_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1520,7 +1421,7 @@ uint32_t Pack_MEDIA_CONTROLS_CMD_pacmod12(MEDIA_CONTROLS_CMD_t* _m, __CoderDbcCa
 
 #else
 
-uint32_t Pack_MEDIA_CONTROLS_CMD_pacmod12(MEDIA_CONTROLS_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_MEDIA_CONTROLS_CMD_pacmod11(MEDIA_CONTROLS_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < MEDIA_CONTROLS_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1532,9 +1433,9 @@ uint32_t Pack_MEDIA_CONTROLS_CMD_pacmod12(MEDIA_CONTROLS_CMD_t* _m, uint8_t* _d,
   return MEDIA_CONTROLS_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_PARKING_BRAKE_CMD_pacmod12(PARKING_BRAKE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_PARKING_BRAKE_CMD_pacmod11(PARKING_BRAKE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -1542,20 +1443,20 @@ uint32_t Unpack_PARKING_BRAKE_CMD_pacmod12(PARKING_BRAKE_CMD_t* _m, const uint8_
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->PARKING_BRAKE_CMD = (_d[1] & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < PARKING_BRAKE_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_PARKING_BRAKE_CMD_pacmod12(&_m->mon1, PARKING_BRAKE_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_PARKING_BRAKE_CMD_pacmod11(&_m->mon1, PARKING_BRAKE_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return PARKING_BRAKE_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_PARKING_BRAKE_CMD_pacmod12(PARKING_BRAKE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_PARKING_BRAKE_CMD_pacmod11(PARKING_BRAKE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < PARKING_BRAKE_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1570,7 +1471,7 @@ uint32_t Pack_PARKING_BRAKE_CMD_pacmod12(PARKING_BRAKE_CMD_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_PARKING_BRAKE_CMD_pacmod12(PARKING_BRAKE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_PARKING_BRAKE_CMD_pacmod11(PARKING_BRAKE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < PARKING_BRAKE_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1582,9 +1483,9 @@ uint32_t Pack_PARKING_BRAKE_CMD_pacmod12(PARKING_BRAKE_CMD_t* _m, uint8_t* _d, u
   return PARKING_BRAKE_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SHIFT_CMD_pacmod12(SHIFT_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SHIFT_CMD_pacmod11(SHIFT_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -1592,20 +1493,20 @@ uint32_t Unpack_SHIFT_CMD_pacmod12(SHIFT_CMD_t* _m, const uint8_t* _d, uint8_t d
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->SHIFT_CMD = (_d[1] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SHIFT_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SHIFT_CMD_pacmod12(&_m->mon1, SHIFT_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SHIFT_CMD_pacmod11(&_m->mon1, SHIFT_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SHIFT_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SHIFT_CMD_pacmod12(SHIFT_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SHIFT_CMD_pacmod11(SHIFT_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SHIFT_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1620,7 +1521,7 @@ uint32_t Pack_SHIFT_CMD_pacmod12(SHIFT_CMD_t* _m, __CoderDbcCanFrame_t__* cframe
 
 #else
 
-uint32_t Pack_SHIFT_CMD_pacmod12(SHIFT_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SHIFT_CMD_pacmod11(SHIFT_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SHIFT_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1632,45 +1533,45 @@ uint32_t Pack_SHIFT_CMD_pacmod12(SHIFT_CMD_t* _m, uint8_t* _d, uint8_t* _len, ui
   return SHIFT_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_STEERING_CMD_pacmod12(STEERING_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_STEERING_CMD_pacmod11(STEERING_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
   _m->IGNORE_OVERRIDES = ((_d[0] >> 1) & (0x01U));
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->POSITION_ro = __ext_sig__(( ((_d[1] & (0xFFU)) << 8) | (_d[2] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->POSITION_phys = (sigfloat_t)(PACMOD12_POSITION_ro_fromS(_m->POSITION_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->POSITION_phys = (sigfloat_t)(PACMOD11_POSITION_ro_fromS(_m->POSITION_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->ROTATION_RATE_ro = ((_d[3] & (0xFFU)) << 8) | (_d[4] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ROTATION_RATE_phys = (sigfloat_t)(PACMOD12_ROTATION_RATE_ro_fromS(_m->ROTATION_RATE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ROTATION_RATE_phys = (sigfloat_t)(PACMOD11_ROTATION_RATE_ro_fromS(_m->ROTATION_RATE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < STEERING_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_STEERING_CMD_pacmod12(&_m->mon1, STEERING_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_STEERING_CMD_pacmod11(&_m->mon1, STEERING_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return STEERING_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_STEERING_CMD_pacmod12(STEERING_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_STEERING_CMD_pacmod11(STEERING_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < STEERING_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->POSITION_ro = PACMOD12_POSITION_ro_toS(_m->POSITION_phys);
-  _m->ROTATION_RATE_ro = PACMOD12_ROTATION_RATE_ro_toS(_m->ROTATION_RATE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->POSITION_ro = PACMOD11_POSITION_ro_toS(_m->POSITION_phys);
+  _m->ROTATION_RATE_ro = PACMOD11_ROTATION_RATE_ro_toS(_m->ROTATION_RATE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
   cframe->Data[1] |= ((_m->POSITION_ro >> 8) & (0xFFU));
@@ -1686,14 +1587,14 @@ uint32_t Pack_STEERING_CMD_pacmod12(STEERING_CMD_t* _m, __CoderDbcCanFrame_t__* 
 
 #else
 
-uint32_t Pack_STEERING_CMD_pacmod12(STEERING_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_STEERING_CMD_pacmod11(STEERING_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < STEERING_CMD_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->POSITION_ro = PACMOD12_POSITION_ro_toS(_m->POSITION_phys);
-  _m->ROTATION_RATE_ro = PACMOD12_ROTATION_RATE_ro_toS(_m->ROTATION_RATE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->POSITION_ro = PACMOD11_POSITION_ro_toS(_m->POSITION_phys);
+  _m->ROTATION_RATE_ro = PACMOD11_ROTATION_RATE_ro_toS(_m->ROTATION_RATE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
   _d[1] |= ((_m->POSITION_ro >> 8) & (0xFFU));
@@ -1706,9 +1607,9 @@ uint32_t Pack_STEERING_CMD_pacmod12(STEERING_CMD_t* _m, uint8_t* _d, uint8_t* _l
   return STEERING_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_TURN_CMD_pacmod12(TURN_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_TURN_CMD_pacmod11(TURN_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -1716,20 +1617,20 @@ uint32_t Unpack_TURN_CMD_pacmod12(TURN_CMD_t* _m, const uint8_t* _d, uint8_t dlc
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->TURN_SIGNAL_CMD = (_d[1] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < TURN_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_TURN_CMD_pacmod12(&_m->mon1, TURN_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_TURN_CMD_pacmod11(&_m->mon1, TURN_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return TURN_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_TURN_CMD_pacmod12(TURN_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_TURN_CMD_pacmod11(TURN_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < TURN_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1744,7 +1645,7 @@ uint32_t Pack_TURN_CMD_pacmod12(TURN_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 
 #else
 
-uint32_t Pack_TURN_CMD_pacmod12(TURN_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_TURN_CMD_pacmod11(TURN_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < TURN_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1756,9 +1657,9 @@ uint32_t Pack_TURN_CMD_pacmod12(TURN_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint
   return TURN_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_WIPER_CMD_pacmod12(WIPER_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_WIPER_CMD_pacmod11(WIPER_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -1766,20 +1667,20 @@ uint32_t Unpack_WIPER_CMD_pacmod12(WIPER_CMD_t* _m, const uint8_t* _d, uint8_t d
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->WIPER_CMD = (_d[1] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < WIPER_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_WIPER_CMD_pacmod12(&_m->mon1, WIPER_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_WIPER_CMD_pacmod11(&_m->mon1, WIPER_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return WIPER_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_WIPER_CMD_pacmod12(WIPER_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_WIPER_CMD_pacmod11(WIPER_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < WIPER_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1794,7 +1695,7 @@ uint32_t Pack_WIPER_CMD_pacmod12(WIPER_CMD_t* _m, __CoderDbcCanFrame_t__* cframe
 
 #else
 
-uint32_t Pack_WIPER_CMD_pacmod12(WIPER_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_WIPER_CMD_pacmod11(WIPER_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < WIPER_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1806,9 +1707,9 @@ uint32_t Pack_WIPER_CMD_pacmod12(WIPER_CMD_t* _m, uint8_t* _d, uint8_t* _len, ui
   return WIPER_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SPRAYER_CMD_pacmod12(SPRAYER_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SPRAYER_CMD_pacmod11(SPRAYER_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -1816,20 +1717,20 @@ uint32_t Unpack_SPRAYER_CMD_pacmod12(SPRAYER_CMD_t* _m, const uint8_t* _d, uint8
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->SPRAYER_CMD = (_d[1] & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SPRAYER_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SPRAYER_CMD_pacmod12(&_m->mon1, SPRAYER_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SPRAYER_CMD_pacmod11(&_m->mon1, SPRAYER_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SPRAYER_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SPRAYER_CMD_pacmod12(SPRAYER_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SPRAYER_CMD_pacmod11(SPRAYER_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SPRAYER_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1844,7 +1745,7 @@ uint32_t Pack_SPRAYER_CMD_pacmod12(SPRAYER_CMD_t* _m, __CoderDbcCanFrame_t__* cf
 
 #else
 
-uint32_t Pack_SPRAYER_CMD_pacmod12(SPRAYER_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SPRAYER_CMD_pacmod11(SPRAYER_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SPRAYER_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1856,43 +1757,43 @@ uint32_t Pack_SPRAYER_CMD_pacmod12(SPRAYER_CMD_t* _m, uint8_t* _d, uint8_t* _len
   return SPRAYER_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_BRAKE_DECEL_CMD_pacmod12(BRAKE_DECEL_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_BRAKE_DECEL_CMD_pacmod11(BRAKE_DECEL_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
   _m->IGNORE_OVERRIDES = ((_d[0] >> 1) & (0x01U));
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->BRAKE_DECEL_CMD_ro = ((_d[1] & (0xFFU)) << 8) | (_d[2] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->BRAKE_DECEL_CMD_phys = (sigfloat_t)(PACMOD12_BRAKE_DECEL_CMD_ro_fromS(_m->BRAKE_DECEL_CMD_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->BRAKE_DECEL_CMD_phys = (sigfloat_t)(PACMOD11_BRAKE_DECEL_CMD_ro_fromS(_m->BRAKE_DECEL_CMD_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->XBR_EBI_MODE = (_d[3] & (0x03U));
   _m->XBR_PRIORITY = ((_d[3] >> 2) & (0x03U));
   _m->XBR_CONTROL_MODE = ((_d[3] >> 4) & (0x03U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < BRAKE_DECEL_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_BRAKE_DECEL_CMD_pacmod12(&_m->mon1, BRAKE_DECEL_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_BRAKE_DECEL_CMD_pacmod11(&_m->mon1, BRAKE_DECEL_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return BRAKE_DECEL_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_BRAKE_DECEL_CMD_pacmod12(BRAKE_DECEL_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_BRAKE_DECEL_CMD_pacmod11(BRAKE_DECEL_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < BRAKE_DECEL_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->BRAKE_DECEL_CMD_ro = PACMOD12_BRAKE_DECEL_CMD_ro_toS(_m->BRAKE_DECEL_CMD_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->BRAKE_DECEL_CMD_ro = PACMOD11_BRAKE_DECEL_CMD_ro_toS(_m->BRAKE_DECEL_CMD_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
   cframe->Data[1] |= ((_m->BRAKE_DECEL_CMD_ro >> 8) & (0xFFU));
@@ -1907,13 +1808,13 @@ uint32_t Pack_BRAKE_DECEL_CMD_pacmod12(BRAKE_DECEL_CMD_t* _m, __CoderDbcCanFrame
 
 #else
 
-uint32_t Pack_BRAKE_DECEL_CMD_pacmod12(BRAKE_DECEL_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_BRAKE_DECEL_CMD_pacmod11(BRAKE_DECEL_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < BRAKE_DECEL_CMD_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->BRAKE_DECEL_CMD_ro = PACMOD12_BRAKE_DECEL_CMD_ro_toS(_m->BRAKE_DECEL_CMD_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->BRAKE_DECEL_CMD_ro = PACMOD11_BRAKE_DECEL_CMD_ro_toS(_m->BRAKE_DECEL_CMD_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
   _d[1] |= ((_m->BRAKE_DECEL_CMD_ro >> 8) & (0xFFU));
@@ -1925,9 +1826,9 @@ uint32_t Pack_BRAKE_DECEL_CMD_pacmod12(BRAKE_DECEL_CMD_t* _m, uint8_t* _d, uint8
   return BRAKE_DECEL_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_REAR_PASS_DOOR_CMD_pacmod12(REAR_PASS_DOOR_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_REAR_PASS_DOOR_CMD_pacmod11(REAR_PASS_DOOR_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -1935,20 +1836,20 @@ uint32_t Unpack_REAR_PASS_DOOR_CMD_pacmod12(REAR_PASS_DOOR_CMD_t* _m, const uint
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->REAR_PASS_DOOR_CMD = (_d[1] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < REAR_PASS_DOOR_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_REAR_PASS_DOOR_CMD_pacmod12(&_m->mon1, REAR_PASS_DOOR_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_REAR_PASS_DOOR_CMD_pacmod11(&_m->mon1, REAR_PASS_DOOR_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return REAR_PASS_DOOR_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_REAR_PASS_DOOR_CMD_pacmod12(REAR_PASS_DOOR_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_REAR_PASS_DOOR_CMD_pacmod11(REAR_PASS_DOOR_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < REAR_PASS_DOOR_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -1963,7 +1864,7 @@ uint32_t Pack_REAR_PASS_DOOR_CMD_pacmod12(REAR_PASS_DOOR_CMD_t* _m, __CoderDbcCa
 
 #else
 
-uint32_t Pack_REAR_PASS_DOOR_CMD_pacmod12(REAR_PASS_DOOR_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_REAR_PASS_DOOR_CMD_pacmod11(REAR_PASS_DOOR_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < REAR_PASS_DOOR_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -1975,37 +1876,35 @@ uint32_t Pack_REAR_PASS_DOOR_CMD_pacmod12(REAR_PASS_DOOR_CMD_t* _m, uint8_t* _d,
   return REAR_PASS_DOOR_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_ENGINE_BRAKE_CMD_pacmod12(ENGINE_BRAKE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_ENGINE_BRAKE_CMD_pacmod11(ENGINE_BRAKE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
   _m->IGNORE_OVERRIDES = ((_d[0] >> 1) & (0x01U));
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->ENGINE_BRAKE_CMD = (_d[1] & (0xFFU));
-  _m->AUTO_CMD = (_d[2] & (0x03U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < ENGINE_BRAKE_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_ENGINE_BRAKE_CMD_pacmod12(&_m->mon1, ENGINE_BRAKE_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_ENGINE_BRAKE_CMD_pacmod11(&_m->mon1, ENGINE_BRAKE_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return ENGINE_BRAKE_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_ENGINE_BRAKE_CMD_pacmod12(ENGINE_BRAKE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_ENGINE_BRAKE_CMD_pacmod11(ENGINE_BRAKE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < ENGINE_BRAKE_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
   cframe->Data[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
   cframe->Data[1] |= (_m->ENGINE_BRAKE_CMD & (0xFFU));
-  cframe->Data[2] |= (_m->AUTO_CMD & (0x03U));
 
   cframe->MsgId = ENGINE_BRAKE_CMD_CANID;
   cframe->DLC = ENGINE_BRAKE_CMD_DLC;
@@ -2015,22 +1914,21 @@ uint32_t Pack_ENGINE_BRAKE_CMD_pacmod12(ENGINE_BRAKE_CMD_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_ENGINE_BRAKE_CMD_pacmod12(ENGINE_BRAKE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_ENGINE_BRAKE_CMD_pacmod11(ENGINE_BRAKE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < ENGINE_BRAKE_CMD_DLC) && (i < 8); _d[i++] = 0);
 
   _d[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
   _d[1] |= (_m->ENGINE_BRAKE_CMD & (0xFFU));
-  _d[2] |= (_m->AUTO_CMD & (0x03U));
 
   *_len = ENGINE_BRAKE_CMD_DLC;
   *_ide = ENGINE_BRAKE_CMD_IDE;
   return ENGINE_BRAKE_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_EXHAUST_BRAKE_CMD_pacmod12(EXHAUST_BRAKE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_EXHAUST_BRAKE_CMD_pacmod11(EXHAUST_BRAKE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -2038,20 +1936,20 @@ uint32_t Unpack_EXHAUST_BRAKE_CMD_pacmod12(EXHAUST_BRAKE_CMD_t* _m, const uint8_
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->EXHAUST_BRAKE_CMD = (_d[1] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < EXHAUST_BRAKE_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_EXHAUST_BRAKE_CMD_pacmod12(&_m->mon1, EXHAUST_BRAKE_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_EXHAUST_BRAKE_CMD_pacmod11(&_m->mon1, EXHAUST_BRAKE_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return EXHAUST_BRAKE_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_EXHAUST_BRAKE_CMD_pacmod12(EXHAUST_BRAKE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_EXHAUST_BRAKE_CMD_pacmod11(EXHAUST_BRAKE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < EXHAUST_BRAKE_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -2066,7 +1964,7 @@ uint32_t Pack_EXHAUST_BRAKE_CMD_pacmod12(EXHAUST_BRAKE_CMD_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_EXHAUST_BRAKE_CMD_pacmod12(EXHAUST_BRAKE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_EXHAUST_BRAKE_CMD_pacmod11(EXHAUST_BRAKE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < EXHAUST_BRAKE_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -2078,9 +1976,9 @@ uint32_t Pack_EXHAUST_BRAKE_CMD_pacmod12(EXHAUST_BRAKE_CMD_t* _m, uint8_t* _d, u
   return EXHAUST_BRAKE_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_MARKER_LAMP_CMD_pacmod12(MARKER_LAMP_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_MARKER_LAMP_CMD_pacmod11(MARKER_LAMP_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -2088,20 +1986,20 @@ uint32_t Unpack_MARKER_LAMP_CMD_pacmod12(MARKER_LAMP_CMD_t* _m, const uint8_t* _
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->MARKER_LAMP_CMD = (_d[1] & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < MARKER_LAMP_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_MARKER_LAMP_CMD_pacmod12(&_m->mon1, MARKER_LAMP_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_MARKER_LAMP_CMD_pacmod11(&_m->mon1, MARKER_LAMP_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return MARKER_LAMP_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_MARKER_LAMP_CMD_pacmod12(MARKER_LAMP_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_MARKER_LAMP_CMD_pacmod11(MARKER_LAMP_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < MARKER_LAMP_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -2116,7 +2014,7 @@ uint32_t Pack_MARKER_LAMP_CMD_pacmod12(MARKER_LAMP_CMD_t* _m, __CoderDbcCanFrame
 
 #else
 
-uint32_t Pack_MARKER_LAMP_CMD_pacmod12(MARKER_LAMP_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_MARKER_LAMP_CMD_pacmod11(MARKER_LAMP_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < MARKER_LAMP_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -2128,39 +2026,39 @@ uint32_t Pack_MARKER_LAMP_CMD_pacmod12(MARKER_LAMP_CMD_t* _m, uint8_t* _d, uint8
   return MARKER_LAMP_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_CABIN_TEMP_CMD_pacmod12(CABIN_TEMP_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_CABIN_TEMP_CMD_pacmod11(CABIN_TEMP_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
   _m->IGNORE_OVERRIDES = ((_d[0] >> 1) & (0x01U));
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->CABIN_TEMP_CMD_ro = (_d[1] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->CABIN_TEMP_CMD_phys = (sigfloat_t)(PACMOD12_CABIN_TEMP_CMD_ro_fromS(_m->CABIN_TEMP_CMD_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->CABIN_TEMP_CMD_phys = (sigfloat_t)(PACMOD11_CABIN_TEMP_CMD_ro_fromS(_m->CABIN_TEMP_CMD_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < CABIN_TEMP_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_CABIN_TEMP_CMD_pacmod12(&_m->mon1, CABIN_TEMP_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_CABIN_TEMP_CMD_pacmod11(&_m->mon1, CABIN_TEMP_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return CABIN_TEMP_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_CABIN_TEMP_CMD_pacmod12(CABIN_TEMP_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_CABIN_TEMP_CMD_pacmod11(CABIN_TEMP_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < CABIN_TEMP_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->CABIN_TEMP_CMD_ro = PACMOD12_CABIN_TEMP_CMD_ro_toS(_m->CABIN_TEMP_CMD_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->CABIN_TEMP_CMD_ro = PACMOD11_CABIN_TEMP_CMD_ro_toS(_m->CABIN_TEMP_CMD_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
   cframe->Data[1] |= (_m->CABIN_TEMP_CMD_ro & (0xFFU));
@@ -2173,13 +2071,13 @@ uint32_t Pack_CABIN_TEMP_CMD_pacmod12(CABIN_TEMP_CMD_t* _m, __CoderDbcCanFrame_t
 
 #else
 
-uint32_t Pack_CABIN_TEMP_CMD_pacmod12(CABIN_TEMP_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_CABIN_TEMP_CMD_pacmod11(CABIN_TEMP_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < CABIN_TEMP_CMD_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->CABIN_TEMP_CMD_ro = PACMOD12_CABIN_TEMP_CMD_ro_toS(_m->CABIN_TEMP_CMD_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->CABIN_TEMP_CMD_ro = PACMOD11_CABIN_TEMP_CMD_ro_toS(_m->CABIN_TEMP_CMD_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
   _d[1] |= (_m->CABIN_TEMP_CMD_ro & (0xFFU));
@@ -2189,9 +2087,9 @@ uint32_t Pack_CABIN_TEMP_CMD_pacmod12(CABIN_TEMP_CMD_t* _m, uint8_t* _d, uint8_t
   return CABIN_TEMP_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_CABIN_FAN_SPEED_CMD_pacmod12(CABIN_FAN_SPEED_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_CABIN_FAN_SPEED_CMD_pacmod11(CABIN_FAN_SPEED_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -2199,20 +2097,20 @@ uint32_t Unpack_CABIN_FAN_SPEED_CMD_pacmod12(CABIN_FAN_SPEED_CMD_t* _m, const ui
   _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
   _m->CABIN_FAN_SPEED_CMD = (_d[1] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < CABIN_FAN_SPEED_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_CABIN_FAN_SPEED_CMD_pacmod12(&_m->mon1, CABIN_FAN_SPEED_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_CABIN_FAN_SPEED_CMD_pacmod11(&_m->mon1, CABIN_FAN_SPEED_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return CABIN_FAN_SPEED_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_CABIN_FAN_SPEED_CMD_pacmod12(CABIN_FAN_SPEED_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_CABIN_FAN_SPEED_CMD_pacmod11(CABIN_FAN_SPEED_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < CABIN_FAN_SPEED_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -2227,7 +2125,7 @@ uint32_t Pack_CABIN_FAN_SPEED_CMD_pacmod12(CABIN_FAN_SPEED_CMD_t* _m, __CoderDbc
 
 #else
 
-uint32_t Pack_CABIN_FAN_SPEED_CMD_pacmod12(CABIN_FAN_SPEED_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_CABIN_FAN_SPEED_CMD_pacmod11(CABIN_FAN_SPEED_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < CABIN_FAN_SPEED_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -2239,9 +2137,9 @@ uint32_t Pack_CABIN_FAN_SPEED_CMD_pacmod12(CABIN_FAN_SPEED_CMD_t* _m, uint8_t* _
   return CABIN_FAN_SPEED_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_CABIN_CLIMATE_CMD_pacmod12(CABIN_CLIMATE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_CABIN_CLIMATE_CMD_pacmod11(CABIN_CLIMATE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLE = (_d[0] & (0x01U));
@@ -2254,20 +2152,20 @@ uint32_t Unpack_CABIN_CLIMATE_CMD_pacmod12(CABIN_CLIMATE_CMD_t* _m, const uint8_
   _m->CMD_DIR_UP_OFF_ON = (_d[2] & (0x03U));
   _m->CMD_DIR_DOWN_OFF_ON = ((_d[2] >> 2) & (0x03U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < CABIN_CLIMATE_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_CABIN_CLIMATE_CMD_pacmod12(&_m->mon1, CABIN_CLIMATE_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_CABIN_CLIMATE_CMD_pacmod11(&_m->mon1, CABIN_CLIMATE_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return CABIN_CLIMATE_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_CABIN_CLIMATE_CMD_pacmod12(CABIN_CLIMATE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_CABIN_CLIMATE_CMD_pacmod11(CABIN_CLIMATE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < CABIN_CLIMATE_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -2283,7 +2181,7 @@ uint32_t Pack_CABIN_CLIMATE_CMD_pacmod12(CABIN_CLIMATE_CMD_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_CABIN_CLIMATE_CMD_pacmod12(CABIN_CLIMATE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_CABIN_CLIMATE_CMD_pacmod11(CABIN_CLIMATE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < CABIN_CLIMATE_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -2296,372 +2194,9 @@ uint32_t Pack_CABIN_CLIMATE_CMD_pacmod12(CABIN_CLIMATE_CMD_t* _m, uint8_t* _d, u
   return CABIN_CLIMATE_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_TIPPER_BODY_CMD_00_pacmod12(TIPPER_BODY_CMD_00_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->ENABLE = (_d[0] & (0x01U));
-  _m->IGNORE_OVERRIDES = ((_d[0] >> 1) & (0x01U));
-  _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
-  _m->TIPPER_CONTROL_CMD = (_d[1] & (0xFFU));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < TIPPER_BODY_CMD_00_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_TIPPER_BODY_CMD_00_pacmod12(&_m->mon1, TIPPER_BODY_CMD_00_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return TIPPER_BODY_CMD_00_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_TIPPER_BODY_CMD_00_pacmod12(TIPPER_BODY_CMD_00_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < TIPPER_BODY_CMD_00_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
-  cframe->Data[1] |= (_m->TIPPER_CONTROL_CMD & (0xFFU));
-
-  cframe->MsgId = TIPPER_BODY_CMD_00_CANID;
-  cframe->DLC = TIPPER_BODY_CMD_00_DLC;
-  cframe->IDE = TIPPER_BODY_CMD_00_IDE;
-  return TIPPER_BODY_CMD_00_CANID;
-}
-
-#else
-
-uint32_t Pack_TIPPER_BODY_CMD_00_pacmod12(TIPPER_BODY_CMD_00_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < TIPPER_BODY_CMD_00_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
-  _d[1] |= (_m->TIPPER_CONTROL_CMD & (0xFFU));
-
-  *_len = TIPPER_BODY_CMD_00_DLC;
-  *_ide = TIPPER_BODY_CMD_00_IDE;
-  return TIPPER_BODY_CMD_00_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_POWER_TAKE_OFF_CMD_pacmod12(POWER_TAKE_OFF_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->ENABLE = (_d[0] & (0x01U));
-  _m->IGNORE_OVERRIDES = ((_d[0] >> 1) & (0x01U));
-  _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
-  _m->POWER_TAKE_OFF_CMD = (_d[1] & (0xFFU));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < POWER_TAKE_OFF_CMD_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_POWER_TAKE_OFF_CMD_pacmod12(&_m->mon1, POWER_TAKE_OFF_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return POWER_TAKE_OFF_CMD_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_POWER_TAKE_OFF_CMD_pacmod12(POWER_TAKE_OFF_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < POWER_TAKE_OFF_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
-  cframe->Data[1] |= (_m->POWER_TAKE_OFF_CMD & (0xFFU));
-
-  cframe->MsgId = POWER_TAKE_OFF_CMD_CANID;
-  cframe->DLC = POWER_TAKE_OFF_CMD_DLC;
-  cframe->IDE = POWER_TAKE_OFF_CMD_IDE;
-  return POWER_TAKE_OFF_CMD_CANID;
-}
-
-#else
-
-uint32_t Pack_POWER_TAKE_OFF_CMD_pacmod12(POWER_TAKE_OFF_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < POWER_TAKE_OFF_CMD_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
-  _d[1] |= (_m->POWER_TAKE_OFF_CMD & (0xFFU));
-
-  *_len = POWER_TAKE_OFF_CMD_DLC;
-  *_ide = POWER_TAKE_OFF_CMD_IDE;
-  return POWER_TAKE_OFF_CMD_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_TRAILER_BRAKE_CMD_pacmod12(TRAILER_BRAKE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->ENABLE = (_d[0] & (0x01U));
-  _m->IGNORE_OVERRIDES = ((_d[0] >> 1) & (0x01U));
-  _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
-  _m->TRAILER_BRAKE_CMD_ro = ((_d[1] & (0xFFU)) << 8) | (_d[2] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TRAILER_BRAKE_CMD_phys = (sigfloat_t)(PACMOD12_TRAILER_BRAKE_CMD_ro_fromS(_m->TRAILER_BRAKE_CMD_ro));
-#endif // PACMOD12_USE_SIGFLOAT
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < TRAILER_BRAKE_CMD_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_TRAILER_BRAKE_CMD_pacmod12(&_m->mon1, TRAILER_BRAKE_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return TRAILER_BRAKE_CMD_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_TRAILER_BRAKE_CMD_pacmod12(TRAILER_BRAKE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < TRAILER_BRAKE_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TRAILER_BRAKE_CMD_ro = PACMOD12_TRAILER_BRAKE_CMD_ro_toS(_m->TRAILER_BRAKE_CMD_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  cframe->Data[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
-  cframe->Data[1] |= ((_m->TRAILER_BRAKE_CMD_ro >> 8) & (0xFFU));
-  cframe->Data[2] |= (_m->TRAILER_BRAKE_CMD_ro & (0xFFU));
-
-  cframe->MsgId = TRAILER_BRAKE_CMD_CANID;
-  cframe->DLC = TRAILER_BRAKE_CMD_DLC;
-  cframe->IDE = TRAILER_BRAKE_CMD_IDE;
-  return TRAILER_BRAKE_CMD_CANID;
-}
-
-#else
-
-uint32_t Pack_TRAILER_BRAKE_CMD_pacmod12(TRAILER_BRAKE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < TRAILER_BRAKE_CMD_DLC) && (i < 8); _d[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TRAILER_BRAKE_CMD_ro = PACMOD12_TRAILER_BRAKE_CMD_ro_toS(_m->TRAILER_BRAKE_CMD_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _d[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
-  _d[1] |= ((_m->TRAILER_BRAKE_CMD_ro >> 8) & (0xFFU));
-  _d[2] |= (_m->TRAILER_BRAKE_CMD_ro & (0xFFU));
-
-  *_len = TRAILER_BRAKE_CMD_DLC;
-  *_ide = TRAILER_BRAKE_CMD_IDE;
-  return TRAILER_BRAKE_CMD_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_TRAILER_AIR_SUPPLY_CMD_pacmod12(TRAILER_AIR_SUPPLY_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->ENABLE = (_d[0] & (0x01U));
-  _m->IGNORE_OVERRIDES = ((_d[0] >> 1) & (0x01U));
-  _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
-  _m->TRAILER_AIR_SUPPLY_CMD = (_d[1] & (0x01U));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < TRAILER_AIR_SUPPLY_CMD_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_TRAILER_AIR_SUPPLY_CMD_pacmod12(&_m->mon1, TRAILER_AIR_SUPPLY_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return TRAILER_AIR_SUPPLY_CMD_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_TRAILER_AIR_SUPPLY_CMD_pacmod12(TRAILER_AIR_SUPPLY_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < TRAILER_AIR_SUPPLY_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
-  cframe->Data[1] |= (_m->TRAILER_AIR_SUPPLY_CMD & (0x01U));
-
-  cframe->MsgId = TRAILER_AIR_SUPPLY_CMD_CANID;
-  cframe->DLC = TRAILER_AIR_SUPPLY_CMD_DLC;
-  cframe->IDE = TRAILER_AIR_SUPPLY_CMD_IDE;
-  return TRAILER_AIR_SUPPLY_CMD_CANID;
-}
-
-#else
-
-uint32_t Pack_TRAILER_AIR_SUPPLY_CMD_pacmod12(TRAILER_AIR_SUPPLY_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < TRAILER_AIR_SUPPLY_CMD_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
-  _d[1] |= (_m->TRAILER_AIR_SUPPLY_CMD & (0x01U));
-
-  *_len = TRAILER_AIR_SUPPLY_CMD_DLC;
-  *_ide = TRAILER_AIR_SUPPLY_CMD_IDE;
-  return TRAILER_AIR_SUPPLY_CMD_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_ENGINE_CMD_pacmod12(ENGINE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->ENABLE = (_d[0] & (0x01U));
-  _m->IGNORE_OVERRIDES = ((_d[0] >> 1) & (0x01U));
-  _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
-  _m->ENGINE_CMD = (_d[1] & (0xFFU));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < ENGINE_CMD_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_ENGINE_CMD_pacmod12(&_m->mon1, ENGINE_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return ENGINE_CMD_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_ENGINE_CMD_pacmod12(ENGINE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < ENGINE_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
-  cframe->Data[1] |= (_m->ENGINE_CMD & (0xFFU));
-
-  cframe->MsgId = ENGINE_CMD_CANID;
-  cframe->DLC = ENGINE_CMD_DLC;
-  cframe->IDE = ENGINE_CMD_IDE;
-  return ENGINE_CMD_CANID;
-}
-
-#else
-
-uint32_t Pack_ENGINE_CMD_pacmod12(ENGINE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < ENGINE_CMD_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
-  _d[1] |= (_m->ENGINE_CMD & (0xFFU));
-
-  *_len = ENGINE_CMD_DLC;
-  *_ide = ENGINE_CMD_IDE;
-  return ENGINE_CMD_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_TIPPER_BODY_CMD_01_pacmod12(TIPPER_BODY_CMD_01_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->ENABLE = (_d[0] & (0x01U));
-  _m->IGNORE_OVERRIDES = ((_d[0] >> 1) & (0x01U));
-  _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
-  _m->TIPPER_CONTROL_CMD = (_d[1] & (0xFFU));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < TIPPER_BODY_CMD_01_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_TIPPER_BODY_CMD_01_pacmod12(&_m->mon1, TIPPER_BODY_CMD_01_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return TIPPER_BODY_CMD_01_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_TIPPER_BODY_CMD_01_pacmod12(TIPPER_BODY_CMD_01_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < TIPPER_BODY_CMD_01_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
-  cframe->Data[1] |= (_m->TIPPER_CONTROL_CMD & (0xFFU));
-
-  cframe->MsgId = TIPPER_BODY_CMD_01_CANID;
-  cframe->DLC = TIPPER_BODY_CMD_01_DLC;
-  cframe->IDE = TIPPER_BODY_CMD_01_IDE;
-  return TIPPER_BODY_CMD_01_CANID;
-}
-
-#else
-
-uint32_t Pack_TIPPER_BODY_CMD_01_pacmod12(TIPPER_BODY_CMD_01_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < TIPPER_BODY_CMD_01_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
-  _d[1] |= (_m->TIPPER_CONTROL_CMD & (0xFFU));
-
-  *_len = TIPPER_BODY_CMD_01_DLC;
-  *_ide = TIPPER_BODY_CMD_01_IDE;
-  return TIPPER_BODY_CMD_01_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_TIPPER_BODY_CMD_02_pacmod12(TIPPER_BODY_CMD_02_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->ENABLE = (_d[0] & (0x01U));
-  _m->IGNORE_OVERRIDES = ((_d[0] >> 1) & (0x01U));
-  _m->CLEAR_OVERRIDE = ((_d[0] >> 2) & (0x01U));
-  _m->TIPPER_CONTROL_CMD = (_d[1] & (0xFFU));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < TIPPER_BODY_CMD_02_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_TIPPER_BODY_CMD_02_pacmod12(&_m->mon1, TIPPER_BODY_CMD_02_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return TIPPER_BODY_CMD_02_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_TIPPER_BODY_CMD_02_pacmod12(TIPPER_BODY_CMD_02_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < TIPPER_BODY_CMD_02_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
-  cframe->Data[1] |= (_m->TIPPER_CONTROL_CMD & (0xFFU));
-
-  cframe->MsgId = TIPPER_BODY_CMD_02_CANID;
-  cframe->DLC = TIPPER_BODY_CMD_02_DLC;
-  cframe->IDE = TIPPER_BODY_CMD_02_IDE;
-  return TIPPER_BODY_CMD_02_CANID;
-}
-
-#else
-
-uint32_t Pack_TIPPER_BODY_CMD_02_pacmod12(TIPPER_BODY_CMD_02_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < TIPPER_BODY_CMD_02_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->ENABLE & (0x01U)) | ((_m->IGNORE_OVERRIDES & (0x01U)) << 1) | ((_m->CLEAR_OVERRIDE & (0x01U)) << 2);
-  _d[1] |= (_m->TIPPER_CONTROL_CMD & (0xFFU));
-
-  *_len = TIPPER_BODY_CMD_02_DLC;
-  *_ide = TIPPER_BODY_CMD_02_IDE;
-  return TIPPER_BODY_CMD_02_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_ACCEL_RPT_pacmod12(ACCEL_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_ACCEL_RPT_pacmod11(ACCEL_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -2673,42 +2208,42 @@ uint32_t Unpack_ACCEL_RPT_pacmod12(ACCEL_RPT_t* _m, const uint8_t* _d, uint8_t d
   _m->VEHICLE_FAULT = ((_d[0] >> 6) & (0x01U));
   _m->COMMAND_TIMEOUT = ((_d[0] >> 7) & (0x01U));
   _m->MANUAL_INPUT_ro = ((_d[1] & (0xFFU)) << 8) | (_d[2] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_phys = (sigfloat_t)(PACMOD12_MANUAL_INPUT_ro_fromS(_m->MANUAL_INPUT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_phys = (sigfloat_t)(PACMOD11_MANUAL_INPUT_ro_fromS(_m->MANUAL_INPUT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->COMMANDED_VALUE_ro = ((_d[3] & (0xFFU)) << 8) | (_d[4] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->COMMANDED_VALUE_phys = (sigfloat_t)(PACMOD12_COMMANDED_VALUE_ro_fromS(_m->COMMANDED_VALUE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->COMMANDED_VALUE_phys = (sigfloat_t)(PACMOD11_COMMANDED_VALUE_ro_fromS(_m->COMMANDED_VALUE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->OUTPUT_VALUE_ro = ((_d[5] & (0xFFU)) << 8) | (_d[6] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->OUTPUT_VALUE_phys = (sigfloat_t)(PACMOD12_OUTPUT_VALUE_ro_fromS(_m->OUTPUT_VALUE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->OUTPUT_VALUE_phys = (sigfloat_t)(PACMOD11_OUTPUT_VALUE_ro_fromS(_m->OUTPUT_VALUE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < ACCEL_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_ACCEL_RPT_pacmod12(&_m->mon1, ACCEL_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_ACCEL_RPT_pacmod11(&_m->mon1, ACCEL_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return ACCEL_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_ACCEL_RPT_pacmod12(ACCEL_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_ACCEL_RPT_pacmod11(ACCEL_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < ACCEL_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_ro = PACMOD12_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
-  _m->COMMANDED_VALUE_ro = PACMOD12_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
-  _m->OUTPUT_VALUE_ro = PACMOD12_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_ro = PACMOD11_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
+  _m->COMMANDED_VALUE_ro = PACMOD11_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
+  _m->OUTPUT_VALUE_ro = PACMOD11_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
   cframe->Data[1] |= ((_m->MANUAL_INPUT_ro >> 8) & (0xFFU));
@@ -2726,15 +2261,15 @@ uint32_t Pack_ACCEL_RPT_pacmod12(ACCEL_RPT_t* _m, __CoderDbcCanFrame_t__* cframe
 
 #else
 
-uint32_t Pack_ACCEL_RPT_pacmod12(ACCEL_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_ACCEL_RPT_pacmod11(ACCEL_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < ACCEL_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_ro = PACMOD12_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
-  _m->COMMANDED_VALUE_ro = PACMOD12_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
-  _m->OUTPUT_VALUE_ro = PACMOD12_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_ro = PACMOD11_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
+  _m->COMMANDED_VALUE_ro = PACMOD11_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
+  _m->OUTPUT_VALUE_ro = PACMOD11_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
   _d[1] |= ((_m->MANUAL_INPUT_ro >> 8) & (0xFFU));
@@ -2749,42 +2284,42 @@ uint32_t Pack_ACCEL_RPT_pacmod12(ACCEL_RPT_t* _m, uint8_t* _d, uint8_t* _len, ui
   return ACCEL_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_ACCEL_CMD_LIMIT_RPT_pacmod12(ACCEL_CMD_LIMIT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_ACCEL_CMD_LIMIT_RPT_pacmod11(ACCEL_CMD_LIMIT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ACCEL_CMD_LIMIT_ro = ((_d[0] & (0xFFU)) << 8) | (_d[1] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ACCEL_CMD_LIMIT_phys = (sigfloat_t)(PACMOD12_ACCEL_CMD_LIMIT_ro_fromS(_m->ACCEL_CMD_LIMIT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ACCEL_CMD_LIMIT_phys = (sigfloat_t)(PACMOD11_ACCEL_CMD_LIMIT_ro_fromS(_m->ACCEL_CMD_LIMIT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->LIMITED_ACCEL_CMD_ro = ((_d[2] & (0xFFU)) << 8) | (_d[3] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->LIMITED_ACCEL_CMD_phys = (sigfloat_t)(PACMOD12_LIMITED_ACCEL_CMD_ro_fromS(_m->LIMITED_ACCEL_CMD_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->LIMITED_ACCEL_CMD_phys = (sigfloat_t)(PACMOD11_LIMITED_ACCEL_CMD_ro_fromS(_m->LIMITED_ACCEL_CMD_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < ACCEL_CMD_LIMIT_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_ACCEL_CMD_LIMIT_RPT_pacmod12(&_m->mon1, ACCEL_CMD_LIMIT_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_ACCEL_CMD_LIMIT_RPT_pacmod11(&_m->mon1, ACCEL_CMD_LIMIT_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return ACCEL_CMD_LIMIT_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_ACCEL_CMD_LIMIT_RPT_pacmod12(ACCEL_CMD_LIMIT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_ACCEL_CMD_LIMIT_RPT_pacmod11(ACCEL_CMD_LIMIT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < ACCEL_CMD_LIMIT_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ACCEL_CMD_LIMIT_ro = PACMOD12_ACCEL_CMD_LIMIT_ro_toS(_m->ACCEL_CMD_LIMIT_phys);
-  _m->LIMITED_ACCEL_CMD_ro = PACMOD12_LIMITED_ACCEL_CMD_ro_toS(_m->LIMITED_ACCEL_CMD_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ACCEL_CMD_LIMIT_ro = PACMOD11_ACCEL_CMD_LIMIT_ro_toS(_m->ACCEL_CMD_LIMIT_phys);
+  _m->LIMITED_ACCEL_CMD_ro = PACMOD11_LIMITED_ACCEL_CMD_ro_toS(_m->LIMITED_ACCEL_CMD_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= ((_m->ACCEL_CMD_LIMIT_ro >> 8) & (0xFFU));
   cframe->Data[1] |= (_m->ACCEL_CMD_LIMIT_ro & (0xFFU));
@@ -2799,14 +2334,14 @@ uint32_t Pack_ACCEL_CMD_LIMIT_RPT_pacmod12(ACCEL_CMD_LIMIT_RPT_t* _m, __CoderDbc
 
 #else
 
-uint32_t Pack_ACCEL_CMD_LIMIT_RPT_pacmod12(ACCEL_CMD_LIMIT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_ACCEL_CMD_LIMIT_RPT_pacmod11(ACCEL_CMD_LIMIT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < ACCEL_CMD_LIMIT_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ACCEL_CMD_LIMIT_ro = PACMOD12_ACCEL_CMD_LIMIT_ro_toS(_m->ACCEL_CMD_LIMIT_phys);
-  _m->LIMITED_ACCEL_CMD_ro = PACMOD12_LIMITED_ACCEL_CMD_ro_toS(_m->LIMITED_ACCEL_CMD_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ACCEL_CMD_LIMIT_ro = PACMOD11_ACCEL_CMD_LIMIT_ro_toS(_m->ACCEL_CMD_LIMIT_phys);
+  _m->LIMITED_ACCEL_CMD_ro = PACMOD11_LIMITED_ACCEL_CMD_ro_toS(_m->LIMITED_ACCEL_CMD_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= ((_m->ACCEL_CMD_LIMIT_ro >> 8) & (0xFFU));
   _d[1] |= (_m->ACCEL_CMD_LIMIT_ro & (0xFFU));
@@ -2818,9 +2353,9 @@ uint32_t Pack_ACCEL_CMD_LIMIT_RPT_pacmod12(ACCEL_CMD_LIMIT_RPT_t* _m, uint8_t* _
   return ACCEL_CMD_LIMIT_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_BRAKE_RPT_pacmod12(BRAKE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_BRAKE_RPT_pacmod11(BRAKE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -2832,42 +2367,42 @@ uint32_t Unpack_BRAKE_RPT_pacmod12(BRAKE_RPT_t* _m, const uint8_t* _d, uint8_t d
   _m->VEHICLE_FAULT = ((_d[0] >> 6) & (0x01U));
   _m->COMMAND_TIMEOUT = ((_d[0] >> 7) & (0x01U));
   _m->MANUAL_INPUT_ro = ((_d[1] & (0xFFU)) << 8) | (_d[2] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_phys = (sigfloat_t)(PACMOD12_MANUAL_INPUT_ro_fromS(_m->MANUAL_INPUT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_phys = (sigfloat_t)(PACMOD11_MANUAL_INPUT_ro_fromS(_m->MANUAL_INPUT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->COMMANDED_VALUE_ro = ((_d[3] & (0xFFU)) << 8) | (_d[4] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->COMMANDED_VALUE_phys = (sigfloat_t)(PACMOD12_COMMANDED_VALUE_ro_fromS(_m->COMMANDED_VALUE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->COMMANDED_VALUE_phys = (sigfloat_t)(PACMOD11_COMMANDED_VALUE_ro_fromS(_m->COMMANDED_VALUE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->OUTPUT_VALUE_ro = ((_d[5] & (0xFFU)) << 8) | (_d[6] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->OUTPUT_VALUE_phys = (sigfloat_t)(PACMOD12_OUTPUT_VALUE_ro_fromS(_m->OUTPUT_VALUE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->OUTPUT_VALUE_phys = (sigfloat_t)(PACMOD11_OUTPUT_VALUE_ro_fromS(_m->OUTPUT_VALUE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < BRAKE_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_BRAKE_RPT_pacmod12(&_m->mon1, BRAKE_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_BRAKE_RPT_pacmod11(&_m->mon1, BRAKE_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return BRAKE_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_BRAKE_RPT_pacmod12(BRAKE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_BRAKE_RPT_pacmod11(BRAKE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < BRAKE_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_ro = PACMOD12_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
-  _m->COMMANDED_VALUE_ro = PACMOD12_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
-  _m->OUTPUT_VALUE_ro = PACMOD12_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_ro = PACMOD11_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
+  _m->COMMANDED_VALUE_ro = PACMOD11_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
+  _m->OUTPUT_VALUE_ro = PACMOD11_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
   cframe->Data[1] |= ((_m->MANUAL_INPUT_ro >> 8) & (0xFFU));
@@ -2885,15 +2420,15 @@ uint32_t Pack_BRAKE_RPT_pacmod12(BRAKE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe
 
 #else
 
-uint32_t Pack_BRAKE_RPT_pacmod12(BRAKE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_BRAKE_RPT_pacmod11(BRAKE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < BRAKE_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_ro = PACMOD12_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
-  _m->COMMANDED_VALUE_ro = PACMOD12_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
-  _m->OUTPUT_VALUE_ro = PACMOD12_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_ro = PACMOD11_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
+  _m->COMMANDED_VALUE_ro = PACMOD11_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
+  _m->OUTPUT_VALUE_ro = PACMOD11_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
   _d[1] |= ((_m->MANUAL_INPUT_ro >> 8) & (0xFFU));
@@ -2908,42 +2443,42 @@ uint32_t Pack_BRAKE_RPT_pacmod12(BRAKE_RPT_t* _m, uint8_t* _d, uint8_t* _len, ui
   return BRAKE_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_BRAKE_CMD_LIMIT_RPT_pacmod12(BRAKE_CMD_LIMIT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_BRAKE_CMD_LIMIT_RPT_pacmod11(BRAKE_CMD_LIMIT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->BRAKE_CMD_LIMIT_ro = ((_d[0] & (0xFFU)) << 8) | (_d[1] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->BRAKE_CMD_LIMIT_phys = (sigfloat_t)(PACMOD12_BRAKE_CMD_LIMIT_ro_fromS(_m->BRAKE_CMD_LIMIT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->BRAKE_CMD_LIMIT_phys = (sigfloat_t)(PACMOD11_BRAKE_CMD_LIMIT_ro_fromS(_m->BRAKE_CMD_LIMIT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->LIMITED_BRAKE_CMD_ro = ((_d[2] & (0xFFU)) << 8) | (_d[3] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->LIMITED_BRAKE_CMD_phys = (sigfloat_t)(PACMOD12_LIMITED_BRAKE_CMD_ro_fromS(_m->LIMITED_BRAKE_CMD_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->LIMITED_BRAKE_CMD_phys = (sigfloat_t)(PACMOD11_LIMITED_BRAKE_CMD_ro_fromS(_m->LIMITED_BRAKE_CMD_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < BRAKE_CMD_LIMIT_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_BRAKE_CMD_LIMIT_RPT_pacmod12(&_m->mon1, BRAKE_CMD_LIMIT_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_BRAKE_CMD_LIMIT_RPT_pacmod11(&_m->mon1, BRAKE_CMD_LIMIT_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return BRAKE_CMD_LIMIT_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_BRAKE_CMD_LIMIT_RPT_pacmod12(BRAKE_CMD_LIMIT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_BRAKE_CMD_LIMIT_RPT_pacmod11(BRAKE_CMD_LIMIT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < BRAKE_CMD_LIMIT_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->BRAKE_CMD_LIMIT_ro = PACMOD12_BRAKE_CMD_LIMIT_ro_toS(_m->BRAKE_CMD_LIMIT_phys);
-  _m->LIMITED_BRAKE_CMD_ro = PACMOD12_LIMITED_BRAKE_CMD_ro_toS(_m->LIMITED_BRAKE_CMD_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->BRAKE_CMD_LIMIT_ro = PACMOD11_BRAKE_CMD_LIMIT_ro_toS(_m->BRAKE_CMD_LIMIT_phys);
+  _m->LIMITED_BRAKE_CMD_ro = PACMOD11_LIMITED_BRAKE_CMD_ro_toS(_m->LIMITED_BRAKE_CMD_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= ((_m->BRAKE_CMD_LIMIT_ro >> 8) & (0xFFU));
   cframe->Data[1] |= (_m->BRAKE_CMD_LIMIT_ro & (0xFFU));
@@ -2958,14 +2493,14 @@ uint32_t Pack_BRAKE_CMD_LIMIT_RPT_pacmod12(BRAKE_CMD_LIMIT_RPT_t* _m, __CoderDbc
 
 #else
 
-uint32_t Pack_BRAKE_CMD_LIMIT_RPT_pacmod12(BRAKE_CMD_LIMIT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_BRAKE_CMD_LIMIT_RPT_pacmod11(BRAKE_CMD_LIMIT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < BRAKE_CMD_LIMIT_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->BRAKE_CMD_LIMIT_ro = PACMOD12_BRAKE_CMD_LIMIT_ro_toS(_m->BRAKE_CMD_LIMIT_phys);
-  _m->LIMITED_BRAKE_CMD_ro = PACMOD12_LIMITED_BRAKE_CMD_ro_toS(_m->LIMITED_BRAKE_CMD_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->BRAKE_CMD_LIMIT_ro = PACMOD11_BRAKE_CMD_LIMIT_ro_toS(_m->BRAKE_CMD_LIMIT_phys);
+  _m->LIMITED_BRAKE_CMD_ro = PACMOD11_LIMITED_BRAKE_CMD_ro_toS(_m->LIMITED_BRAKE_CMD_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= ((_m->BRAKE_CMD_LIMIT_ro >> 8) & (0xFFU));
   _d[1] |= (_m->BRAKE_CMD_LIMIT_ro & (0xFFU));
@@ -2977,9 +2512,9 @@ uint32_t Pack_BRAKE_CMD_LIMIT_RPT_pacmod12(BRAKE_CMD_LIMIT_RPT_t* _m, uint8_t* _
   return BRAKE_CMD_LIMIT_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_CRUISE_CONTROL_BUTTONS_RPT_pacmod12(CRUISE_CONTROL_BUTTONS_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_CRUISE_CONTROL_BUTTONS_RPT_pacmod11(CRUISE_CONTROL_BUTTONS_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -2994,20 +2529,20 @@ uint32_t Unpack_CRUISE_CONTROL_BUTTONS_RPT_pacmod12(CRUISE_CONTROL_BUTTONS_RPT_t
   _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
   _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < CRUISE_CONTROL_BUTTONS_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_CRUISE_CONTROL_BUTTONS_RPT_pacmod12(&_m->mon1, CRUISE_CONTROL_BUTTONS_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_CRUISE_CONTROL_BUTTONS_RPT_pacmod11(&_m->mon1, CRUISE_CONTROL_BUTTONS_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return CRUISE_CONTROL_BUTTONS_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_CRUISE_CONTROL_BUTTONS_RPT_pacmod12(CRUISE_CONTROL_BUTTONS_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_CRUISE_CONTROL_BUTTONS_RPT_pacmod11(CRUISE_CONTROL_BUTTONS_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < CRUISE_CONTROL_BUTTONS_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -3024,7 +2559,7 @@ uint32_t Pack_CRUISE_CONTROL_BUTTONS_RPT_pacmod12(CRUISE_CONTROL_BUTTONS_RPT_t* 
 
 #else
 
-uint32_t Pack_CRUISE_CONTROL_BUTTONS_RPT_pacmod12(CRUISE_CONTROL_BUTTONS_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_CRUISE_CONTROL_BUTTONS_RPT_pacmod11(CRUISE_CONTROL_BUTTONS_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < CRUISE_CONTROL_BUTTONS_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -3038,9 +2573,9 @@ uint32_t Pack_CRUISE_CONTROL_BUTTONS_RPT_pacmod12(CRUISE_CONTROL_BUTTONS_RPT_t* 
   return CRUISE_CONTROL_BUTTONS_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_DASH_CONTROLS_LEFT_RPT_pacmod12(DASH_CONTROLS_LEFT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_DASH_CONTROLS_LEFT_RPT_pacmod11(DASH_CONTROLS_LEFT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -3055,20 +2590,20 @@ uint32_t Unpack_DASH_CONTROLS_LEFT_RPT_pacmod12(DASH_CONTROLS_LEFT_RPT_t* _m, co
   _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
   _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < DASH_CONTROLS_LEFT_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_DASH_CONTROLS_LEFT_RPT_pacmod12(&_m->mon1, DASH_CONTROLS_LEFT_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_DASH_CONTROLS_LEFT_RPT_pacmod11(&_m->mon1, DASH_CONTROLS_LEFT_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return DASH_CONTROLS_LEFT_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_DASH_CONTROLS_LEFT_RPT_pacmod12(DASH_CONTROLS_LEFT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_DASH_CONTROLS_LEFT_RPT_pacmod11(DASH_CONTROLS_LEFT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < DASH_CONTROLS_LEFT_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -3085,7 +2620,7 @@ uint32_t Pack_DASH_CONTROLS_LEFT_RPT_pacmod12(DASH_CONTROLS_LEFT_RPT_t* _m, __Co
 
 #else
 
-uint32_t Pack_DASH_CONTROLS_LEFT_RPT_pacmod12(DASH_CONTROLS_LEFT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_DASH_CONTROLS_LEFT_RPT_pacmod11(DASH_CONTROLS_LEFT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < DASH_CONTROLS_LEFT_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -3099,9 +2634,9 @@ uint32_t Pack_DASH_CONTROLS_LEFT_RPT_pacmod12(DASH_CONTROLS_LEFT_RPT_t* _m, uint
   return DASH_CONTROLS_LEFT_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_DASH_CONTROLS_RIGHT_RPT_pacmod12(DASH_CONTROLS_RIGHT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_DASH_CONTROLS_RIGHT_RPT_pacmod11(DASH_CONTROLS_RIGHT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -3116,20 +2651,20 @@ uint32_t Unpack_DASH_CONTROLS_RIGHT_RPT_pacmod12(DASH_CONTROLS_RIGHT_RPT_t* _m, 
   _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
   _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < DASH_CONTROLS_RIGHT_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_DASH_CONTROLS_RIGHT_RPT_pacmod12(&_m->mon1, DASH_CONTROLS_RIGHT_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_DASH_CONTROLS_RIGHT_RPT_pacmod11(&_m->mon1, DASH_CONTROLS_RIGHT_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return DASH_CONTROLS_RIGHT_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_DASH_CONTROLS_RIGHT_RPT_pacmod12(DASH_CONTROLS_RIGHT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_DASH_CONTROLS_RIGHT_RPT_pacmod11(DASH_CONTROLS_RIGHT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < DASH_CONTROLS_RIGHT_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -3146,7 +2681,7 @@ uint32_t Pack_DASH_CONTROLS_RIGHT_RPT_pacmod12(DASH_CONTROLS_RIGHT_RPT_t* _m, __
 
 #else
 
-uint32_t Pack_DASH_CONTROLS_RIGHT_RPT_pacmod12(DASH_CONTROLS_RIGHT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_DASH_CONTROLS_RIGHT_RPT_pacmod11(DASH_CONTROLS_RIGHT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < DASH_CONTROLS_RIGHT_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -3160,9 +2695,9 @@ uint32_t Pack_DASH_CONTROLS_RIGHT_RPT_pacmod12(DASH_CONTROLS_RIGHT_RPT_t* _m, ui
   return DASH_CONTROLS_RIGHT_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_HAZARD_LIGHTS_RPT_pacmod12(HAZARD_LIGHTS_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_HAZARD_LIGHTS_RPT_pacmod11(HAZARD_LIGHTS_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -3177,20 +2712,20 @@ uint32_t Unpack_HAZARD_LIGHTS_RPT_pacmod12(HAZARD_LIGHTS_RPT_t* _m, const uint8_
   _m->COMMANDED_VALUE = (_d[2] & (0x01U));
   _m->OUTPUT_VALUE = (_d[3] & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < HAZARD_LIGHTS_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_HAZARD_LIGHTS_RPT_pacmod12(&_m->mon1, HAZARD_LIGHTS_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_HAZARD_LIGHTS_RPT_pacmod11(&_m->mon1, HAZARD_LIGHTS_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return HAZARD_LIGHTS_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_HAZARD_LIGHTS_RPT_pacmod12(HAZARD_LIGHTS_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_HAZARD_LIGHTS_RPT_pacmod11(HAZARD_LIGHTS_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < HAZARD_LIGHTS_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -3207,7 +2742,7 @@ uint32_t Pack_HAZARD_LIGHTS_RPT_pacmod12(HAZARD_LIGHTS_RPT_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_HAZARD_LIGHTS_RPT_pacmod12(HAZARD_LIGHTS_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_HAZARD_LIGHTS_RPT_pacmod11(HAZARD_LIGHTS_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < HAZARD_LIGHTS_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -3221,9 +2756,9 @@ uint32_t Pack_HAZARD_LIGHTS_RPT_pacmod12(HAZARD_LIGHTS_RPT_t* _m, uint8_t* _d, u
   return HAZARD_LIGHTS_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_HEADLIGHT_RPT_pacmod12(HEADLIGHT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_HEADLIGHT_RPT_pacmod11(HEADLIGHT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -3238,20 +2773,20 @@ uint32_t Unpack_HEADLIGHT_RPT_pacmod12(HEADLIGHT_RPT_t* _m, const uint8_t* _d, u
   _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
   _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < HEADLIGHT_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_HEADLIGHT_RPT_pacmod12(&_m->mon1, HEADLIGHT_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_HEADLIGHT_RPT_pacmod11(&_m->mon1, HEADLIGHT_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return HEADLIGHT_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_HEADLIGHT_RPT_pacmod12(HEADLIGHT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_HEADLIGHT_RPT_pacmod11(HEADLIGHT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < HEADLIGHT_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -3268,7 +2803,7 @@ uint32_t Pack_HEADLIGHT_RPT_pacmod12(HEADLIGHT_RPT_t* _m, __CoderDbcCanFrame_t__
 
 #else
 
-uint32_t Pack_HEADLIGHT_RPT_pacmod12(HEADLIGHT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_HEADLIGHT_RPT_pacmod11(HEADLIGHT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < HEADLIGHT_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -3282,9 +2817,9 @@ uint32_t Pack_HEADLIGHT_RPT_pacmod12(HEADLIGHT_RPT_t* _m, uint8_t* _d, uint8_t* 
   return HEADLIGHT_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_HORN_RPT_pacmod12(HORN_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_HORN_RPT_pacmod11(HORN_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -3299,20 +2834,20 @@ uint32_t Unpack_HORN_RPT_pacmod12(HORN_RPT_t* _m, const uint8_t* _d, uint8_t dlc
   _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
   _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < HORN_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_HORN_RPT_pacmod12(&_m->mon1, HORN_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_HORN_RPT_pacmod11(&_m->mon1, HORN_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return HORN_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_HORN_RPT_pacmod12(HORN_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_HORN_RPT_pacmod11(HORN_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < HORN_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -3329,7 +2864,7 @@ uint32_t Pack_HORN_RPT_pacmod12(HORN_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 
 #else
 
-uint32_t Pack_HORN_RPT_pacmod12(HORN_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_HORN_RPT_pacmod11(HORN_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < HORN_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -3343,9 +2878,9 @@ uint32_t Pack_HORN_RPT_pacmod12(HORN_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint
   return HORN_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_MEDIA_CONTROLS_RPT_pacmod12(MEDIA_CONTROLS_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_MEDIA_CONTROLS_RPT_pacmod11(MEDIA_CONTROLS_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -3360,20 +2895,20 @@ uint32_t Unpack_MEDIA_CONTROLS_RPT_pacmod12(MEDIA_CONTROLS_RPT_t* _m, const uint
   _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
   _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < MEDIA_CONTROLS_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_MEDIA_CONTROLS_RPT_pacmod12(&_m->mon1, MEDIA_CONTROLS_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_MEDIA_CONTROLS_RPT_pacmod11(&_m->mon1, MEDIA_CONTROLS_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return MEDIA_CONTROLS_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_MEDIA_CONTROLS_RPT_pacmod12(MEDIA_CONTROLS_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_MEDIA_CONTROLS_RPT_pacmod11(MEDIA_CONTROLS_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < MEDIA_CONTROLS_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -3390,7 +2925,7 @@ uint32_t Pack_MEDIA_CONTROLS_RPT_pacmod12(MEDIA_CONTROLS_RPT_t* _m, __CoderDbcCa
 
 #else
 
-uint32_t Pack_MEDIA_CONTROLS_RPT_pacmod12(MEDIA_CONTROLS_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_MEDIA_CONTROLS_RPT_pacmod11(MEDIA_CONTROLS_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < MEDIA_CONTROLS_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -3404,9 +2939,9 @@ uint32_t Pack_MEDIA_CONTROLS_RPT_pacmod12(MEDIA_CONTROLS_RPT_t* _m, uint8_t* _d,
   return MEDIA_CONTROLS_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_PARKING_BRAKE_RPT_pacmod12(PARKING_BRAKE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_PARKING_BRAKE_RPT_pacmod11(PARKING_BRAKE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -3421,20 +2956,20 @@ uint32_t Unpack_PARKING_BRAKE_RPT_pacmod12(PARKING_BRAKE_RPT_t* _m, const uint8_
   _m->COMMANDED_VALUE = (_d[2] & (0x01U));
   _m->OUTPUT_VALUE = (_d[3] & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < PARKING_BRAKE_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_PARKING_BRAKE_RPT_pacmod12(&_m->mon1, PARKING_BRAKE_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_PARKING_BRAKE_RPT_pacmod11(&_m->mon1, PARKING_BRAKE_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return PARKING_BRAKE_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_PARKING_BRAKE_RPT_pacmod12(PARKING_BRAKE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_PARKING_BRAKE_RPT_pacmod11(PARKING_BRAKE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < PARKING_BRAKE_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -3451,7 +2986,7 @@ uint32_t Pack_PARKING_BRAKE_RPT_pacmod12(PARKING_BRAKE_RPT_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_PARKING_BRAKE_RPT_pacmod12(PARKING_BRAKE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_PARKING_BRAKE_RPT_pacmod11(PARKING_BRAKE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < PARKING_BRAKE_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -3465,9 +3000,9 @@ uint32_t Pack_PARKING_BRAKE_RPT_pacmod12(PARKING_BRAKE_RPT_t* _m, uint8_t* _d, u
   return PARKING_BRAKE_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SHIFT_RPT_pacmod12(SHIFT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SHIFT_RPT_pacmod11(SHIFT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -3482,20 +3017,20 @@ uint32_t Unpack_SHIFT_RPT_pacmod12(SHIFT_RPT_t* _m, const uint8_t* _d, uint8_t d
   _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
   _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SHIFT_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SHIFT_RPT_pacmod12(&_m->mon1, SHIFT_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SHIFT_RPT_pacmod11(&_m->mon1, SHIFT_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SHIFT_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SHIFT_RPT_pacmod12(SHIFT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SHIFT_RPT_pacmod11(SHIFT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SHIFT_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -3512,7 +3047,7 @@ uint32_t Pack_SHIFT_RPT_pacmod12(SHIFT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe
 
 #else
 
-uint32_t Pack_SHIFT_RPT_pacmod12(SHIFT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SHIFT_RPT_pacmod11(SHIFT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SHIFT_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -3526,9 +3061,9 @@ uint32_t Pack_SHIFT_RPT_pacmod12(SHIFT_RPT_t* _m, uint8_t* _d, uint8_t* _len, ui
   return SHIFT_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_STEERING_RPT_pacmod12(STEERING_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_STEERING_RPT_pacmod11(STEERING_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -3540,42 +3075,42 @@ uint32_t Unpack_STEERING_RPT_pacmod12(STEERING_RPT_t* _m, const uint8_t* _d, uin
   _m->VEHICLE_FAULT = ((_d[0] >> 6) & (0x01U));
   _m->COMMAND_TIMEOUT = ((_d[0] >> 7) & (0x01U));
   _m->MANUAL_INPUT_ro = __ext_sig__(( ((_d[1] & (0xFFU)) << 8) | (_d[2] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_phys = (sigfloat_t)(PACMOD12_MANUAL_INPUT_ro_fromS(_m->MANUAL_INPUT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_phys = (sigfloat_t)(PACMOD11_MANUAL_INPUT_ro_fromS(_m->MANUAL_INPUT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->COMMANDED_VALUE_ro = __ext_sig__(( ((_d[3] & (0xFFU)) << 8) | (_d[4] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->COMMANDED_VALUE_phys = (sigfloat_t)(PACMOD12_COMMANDED_VALUE_ro_fromS(_m->COMMANDED_VALUE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->COMMANDED_VALUE_phys = (sigfloat_t)(PACMOD11_COMMANDED_VALUE_ro_fromS(_m->COMMANDED_VALUE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->OUTPUT_VALUE_ro = __ext_sig__(( ((_d[5] & (0xFFU)) << 8) | (_d[6] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->OUTPUT_VALUE_phys = (sigfloat_t)(PACMOD12_OUTPUT_VALUE_ro_fromS(_m->OUTPUT_VALUE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->OUTPUT_VALUE_phys = (sigfloat_t)(PACMOD11_OUTPUT_VALUE_ro_fromS(_m->OUTPUT_VALUE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < STEERING_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_STEERING_RPT_pacmod12(&_m->mon1, STEERING_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_STEERING_RPT_pacmod11(&_m->mon1, STEERING_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return STEERING_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_STEERING_RPT_pacmod12(STEERING_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_STEERING_RPT_pacmod11(STEERING_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < STEERING_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_ro = PACMOD12_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
-  _m->COMMANDED_VALUE_ro = PACMOD12_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
-  _m->OUTPUT_VALUE_ro = PACMOD12_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_ro = PACMOD11_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
+  _m->COMMANDED_VALUE_ro = PACMOD11_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
+  _m->OUTPUT_VALUE_ro = PACMOD11_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
   cframe->Data[1] |= ((_m->MANUAL_INPUT_ro >> 8) & (0xFFU));
@@ -3593,15 +3128,15 @@ uint32_t Pack_STEERING_RPT_pacmod12(STEERING_RPT_t* _m, __CoderDbcCanFrame_t__* 
 
 #else
 
-uint32_t Pack_STEERING_RPT_pacmod12(STEERING_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_STEERING_RPT_pacmod11(STEERING_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < STEERING_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_ro = PACMOD12_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
-  _m->COMMANDED_VALUE_ro = PACMOD12_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
-  _m->OUTPUT_VALUE_ro = PACMOD12_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_ro = PACMOD11_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
+  _m->COMMANDED_VALUE_ro = PACMOD11_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
+  _m->OUTPUT_VALUE_ro = PACMOD11_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
   _d[1] |= ((_m->MANUAL_INPUT_ro >> 8) & (0xFFU));
@@ -3616,54 +3151,54 @@ uint32_t Pack_STEERING_RPT_pacmod12(STEERING_RPT_t* _m, uint8_t* _d, uint8_t* _l
   return STEERING_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_STEERING_CMD_LIMIT_RPT_pacmod12(STEERING_CMD_LIMIT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_STEERING_CMD_LIMIT_RPT_pacmod11(STEERING_CMD_LIMIT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->POSITION_CMD_LIMIT_ro = __ext_sig__(( ((_d[0] & (0xFFU)) << 8) | (_d[1] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->POSITION_CMD_LIMIT_phys = (sigfloat_t)(PACMOD12_POSITION_CMD_LIMIT_ro_fromS(_m->POSITION_CMD_LIMIT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->POSITION_CMD_LIMIT_phys = (sigfloat_t)(PACMOD11_POSITION_CMD_LIMIT_ro_fromS(_m->POSITION_CMD_LIMIT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->LIMITED_POSITION_CMD_ro = __ext_sig__(( ((_d[2] & (0xFFU)) << 8) | (_d[3] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->LIMITED_POSITION_CMD_phys = (sigfloat_t)(PACMOD12_LIMITED_POSITION_CMD_ro_fromS(_m->LIMITED_POSITION_CMD_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->LIMITED_POSITION_CMD_phys = (sigfloat_t)(PACMOD11_LIMITED_POSITION_CMD_ro_fromS(_m->LIMITED_POSITION_CMD_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->ROTATION_RATE_CMD_LIMIT_ro = ((_d[4] & (0xFFU)) << 8) | (_d[5] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ROTATION_RATE_CMD_LIMIT_phys = (sigfloat_t)(PACMOD12_ROTATION_RATE_CMD_LIMIT_ro_fromS(_m->ROTATION_RATE_CMD_LIMIT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ROTATION_RATE_CMD_LIMIT_phys = (sigfloat_t)(PACMOD11_ROTATION_RATE_CMD_LIMIT_ro_fromS(_m->ROTATION_RATE_CMD_LIMIT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->LIMITED_ROTATION_RATE_ro = ((_d[6] & (0xFFU)) << 8) | (_d[7] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->LIMITED_ROTATION_RATE_phys = (sigfloat_t)(PACMOD12_LIMITED_ROTATION_RATE_ro_fromS(_m->LIMITED_ROTATION_RATE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->LIMITED_ROTATION_RATE_phys = (sigfloat_t)(PACMOD11_LIMITED_ROTATION_RATE_ro_fromS(_m->LIMITED_ROTATION_RATE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < STEERING_CMD_LIMIT_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_STEERING_CMD_LIMIT_RPT_pacmod12(&_m->mon1, STEERING_CMD_LIMIT_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_STEERING_CMD_LIMIT_RPT_pacmod11(&_m->mon1, STEERING_CMD_LIMIT_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return STEERING_CMD_LIMIT_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_STEERING_CMD_LIMIT_RPT_pacmod12(STEERING_CMD_LIMIT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_STEERING_CMD_LIMIT_RPT_pacmod11(STEERING_CMD_LIMIT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < STEERING_CMD_LIMIT_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->POSITION_CMD_LIMIT_ro = PACMOD12_POSITION_CMD_LIMIT_ro_toS(_m->POSITION_CMD_LIMIT_phys);
-  _m->LIMITED_POSITION_CMD_ro = PACMOD12_LIMITED_POSITION_CMD_ro_toS(_m->LIMITED_POSITION_CMD_phys);
-  _m->ROTATION_RATE_CMD_LIMIT_ro = PACMOD12_ROTATION_RATE_CMD_LIMIT_ro_toS(_m->ROTATION_RATE_CMD_LIMIT_phys);
-  _m->LIMITED_ROTATION_RATE_ro = PACMOD12_LIMITED_ROTATION_RATE_ro_toS(_m->LIMITED_ROTATION_RATE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->POSITION_CMD_LIMIT_ro = PACMOD11_POSITION_CMD_LIMIT_ro_toS(_m->POSITION_CMD_LIMIT_phys);
+  _m->LIMITED_POSITION_CMD_ro = PACMOD11_LIMITED_POSITION_CMD_ro_toS(_m->LIMITED_POSITION_CMD_phys);
+  _m->ROTATION_RATE_CMD_LIMIT_ro = PACMOD11_ROTATION_RATE_CMD_LIMIT_ro_toS(_m->ROTATION_RATE_CMD_LIMIT_phys);
+  _m->LIMITED_ROTATION_RATE_ro = PACMOD11_LIMITED_ROTATION_RATE_ro_toS(_m->LIMITED_ROTATION_RATE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= ((_m->POSITION_CMD_LIMIT_ro >> 8) & (0xFFU));
   cframe->Data[1] |= (_m->POSITION_CMD_LIMIT_ro & (0xFFU));
@@ -3682,16 +3217,16 @@ uint32_t Pack_STEERING_CMD_LIMIT_RPT_pacmod12(STEERING_CMD_LIMIT_RPT_t* _m, __Co
 
 #else
 
-uint32_t Pack_STEERING_CMD_LIMIT_RPT_pacmod12(STEERING_CMD_LIMIT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_STEERING_CMD_LIMIT_RPT_pacmod11(STEERING_CMD_LIMIT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < STEERING_CMD_LIMIT_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->POSITION_CMD_LIMIT_ro = PACMOD12_POSITION_CMD_LIMIT_ro_toS(_m->POSITION_CMD_LIMIT_phys);
-  _m->LIMITED_POSITION_CMD_ro = PACMOD12_LIMITED_POSITION_CMD_ro_toS(_m->LIMITED_POSITION_CMD_phys);
-  _m->ROTATION_RATE_CMD_LIMIT_ro = PACMOD12_ROTATION_RATE_CMD_LIMIT_ro_toS(_m->ROTATION_RATE_CMD_LIMIT_phys);
-  _m->LIMITED_ROTATION_RATE_ro = PACMOD12_LIMITED_ROTATION_RATE_ro_toS(_m->LIMITED_ROTATION_RATE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->POSITION_CMD_LIMIT_ro = PACMOD11_POSITION_CMD_LIMIT_ro_toS(_m->POSITION_CMD_LIMIT_phys);
+  _m->LIMITED_POSITION_CMD_ro = PACMOD11_LIMITED_POSITION_CMD_ro_toS(_m->LIMITED_POSITION_CMD_phys);
+  _m->ROTATION_RATE_CMD_LIMIT_ro = PACMOD11_ROTATION_RATE_CMD_LIMIT_ro_toS(_m->ROTATION_RATE_CMD_LIMIT_phys);
+  _m->LIMITED_ROTATION_RATE_ro = PACMOD11_LIMITED_ROTATION_RATE_ro_toS(_m->LIMITED_ROTATION_RATE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= ((_m->POSITION_CMD_LIMIT_ro >> 8) & (0xFFU));
   _d[1] |= (_m->POSITION_CMD_LIMIT_ro & (0xFFU));
@@ -3707,9 +3242,9 @@ uint32_t Pack_STEERING_CMD_LIMIT_RPT_pacmod12(STEERING_CMD_LIMIT_RPT_t* _m, uint
   return STEERING_CMD_LIMIT_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_TURN_RPT_pacmod12(TURN_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_TURN_RPT_pacmod11(TURN_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -3724,20 +3259,20 @@ uint32_t Unpack_TURN_RPT_pacmod12(TURN_RPT_t* _m, const uint8_t* _d, uint8_t dlc
   _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
   _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < TURN_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_TURN_RPT_pacmod12(&_m->mon1, TURN_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_TURN_RPT_pacmod11(&_m->mon1, TURN_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return TURN_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_TURN_RPT_pacmod12(TURN_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_TURN_RPT_pacmod11(TURN_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < TURN_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -3754,7 +3289,7 @@ uint32_t Pack_TURN_RPT_pacmod12(TURN_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 
 #else
 
-uint32_t Pack_TURN_RPT_pacmod12(TURN_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_TURN_RPT_pacmod11(TURN_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < TURN_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -3768,9 +3303,9 @@ uint32_t Pack_TURN_RPT_pacmod12(TURN_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint
   return TURN_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_WIPER_RPT_pacmod12(WIPER_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_WIPER_RPT_pacmod11(WIPER_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -3785,20 +3320,20 @@ uint32_t Unpack_WIPER_RPT_pacmod12(WIPER_RPT_t* _m, const uint8_t* _d, uint8_t d
   _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
   _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < WIPER_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_WIPER_RPT_pacmod12(&_m->mon1, WIPER_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_WIPER_RPT_pacmod11(&_m->mon1, WIPER_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return WIPER_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_WIPER_RPT_pacmod12(WIPER_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_WIPER_RPT_pacmod11(WIPER_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < WIPER_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -3815,7 +3350,7 @@ uint32_t Pack_WIPER_RPT_pacmod12(WIPER_RPT_t* _m, __CoderDbcCanFrame_t__* cframe
 
 #else
 
-uint32_t Pack_WIPER_RPT_pacmod12(WIPER_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_WIPER_RPT_pacmod11(WIPER_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < WIPER_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -3829,9 +3364,9 @@ uint32_t Pack_WIPER_RPT_pacmod12(WIPER_RPT_t* _m, uint8_t* _d, uint8_t* _len, ui
   return WIPER_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SPRAYER_RPT_pacmod12(SPRAYER_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SPRAYER_RPT_pacmod11(SPRAYER_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -3846,20 +3381,20 @@ uint32_t Unpack_SPRAYER_RPT_pacmod12(SPRAYER_RPT_t* _m, const uint8_t* _d, uint8
   _m->COMMANDED_VALUE = (_d[2] & (0x01U));
   _m->OUTPUT_VALUE = (_d[3] & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SPRAYER_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SPRAYER_RPT_pacmod12(&_m->mon1, SPRAYER_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SPRAYER_RPT_pacmod11(&_m->mon1, SPRAYER_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SPRAYER_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SPRAYER_RPT_pacmod12(SPRAYER_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SPRAYER_RPT_pacmod11(SPRAYER_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SPRAYER_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -3876,7 +3411,7 @@ uint32_t Pack_SPRAYER_RPT_pacmod12(SPRAYER_RPT_t* _m, __CoderDbcCanFrame_t__* cf
 
 #else
 
-uint32_t Pack_SPRAYER_RPT_pacmod12(SPRAYER_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SPRAYER_RPT_pacmod11(SPRAYER_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SPRAYER_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -3890,9 +3425,9 @@ uint32_t Pack_SPRAYER_RPT_pacmod12(SPRAYER_RPT_t* _m, uint8_t* _d, uint8_t* _len
   return SPRAYER_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_BRAKE_DECEL_RPT_pacmod12(BRAKE_DECEL_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_BRAKE_DECEL_RPT_pacmod11(BRAKE_DECEL_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -3904,42 +3439,42 @@ uint32_t Unpack_BRAKE_DECEL_RPT_pacmod12(BRAKE_DECEL_RPT_t* _m, const uint8_t* _
   _m->VEHICLE_FAULT = ((_d[0] >> 6) & (0x01U));
   _m->COMMAND_TIMEOUT = ((_d[0] >> 7) & (0x01U));
   _m->MANUAL_INPUT_ro = ((_d[1] & (0xFFU)) << 8) | (_d[2] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_phys = (sigfloat_t)(PACMOD12_MANUAL_INPUT_ro_fromS(_m->MANUAL_INPUT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_phys = (sigfloat_t)(PACMOD11_MANUAL_INPUT_ro_fromS(_m->MANUAL_INPUT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->COMMANDED_VALUE_ro = ((_d[3] & (0xFFU)) << 8) | (_d[4] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->COMMANDED_VALUE_phys = (sigfloat_t)(PACMOD12_COMMANDED_VALUE_ro_fromS(_m->COMMANDED_VALUE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->COMMANDED_VALUE_phys = (sigfloat_t)(PACMOD11_COMMANDED_VALUE_ro_fromS(_m->COMMANDED_VALUE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->OUTPUT_VALUE_ro = ((_d[5] & (0xFFU)) << 8) | (_d[6] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->OUTPUT_VALUE_phys = (sigfloat_t)(PACMOD12_OUTPUT_VALUE_ro_fromS(_m->OUTPUT_VALUE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->OUTPUT_VALUE_phys = (sigfloat_t)(PACMOD11_OUTPUT_VALUE_ro_fromS(_m->OUTPUT_VALUE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < BRAKE_DECEL_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_BRAKE_DECEL_RPT_pacmod12(&_m->mon1, BRAKE_DECEL_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_BRAKE_DECEL_RPT_pacmod11(&_m->mon1, BRAKE_DECEL_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return BRAKE_DECEL_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_BRAKE_DECEL_RPT_pacmod12(BRAKE_DECEL_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_BRAKE_DECEL_RPT_pacmod11(BRAKE_DECEL_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < BRAKE_DECEL_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_ro = PACMOD12_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
-  _m->COMMANDED_VALUE_ro = PACMOD12_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
-  _m->OUTPUT_VALUE_ro = PACMOD12_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_ro = PACMOD11_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
+  _m->COMMANDED_VALUE_ro = PACMOD11_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
+  _m->OUTPUT_VALUE_ro = PACMOD11_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
   cframe->Data[1] |= ((_m->MANUAL_INPUT_ro >> 8) & (0xFFU));
@@ -3957,15 +3492,15 @@ uint32_t Pack_BRAKE_DECEL_RPT_pacmod12(BRAKE_DECEL_RPT_t* _m, __CoderDbcCanFrame
 
 #else
 
-uint32_t Pack_BRAKE_DECEL_RPT_pacmod12(BRAKE_DECEL_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_BRAKE_DECEL_RPT_pacmod11(BRAKE_DECEL_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < BRAKE_DECEL_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_ro = PACMOD12_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
-  _m->COMMANDED_VALUE_ro = PACMOD12_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
-  _m->OUTPUT_VALUE_ro = PACMOD12_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_ro = PACMOD11_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
+  _m->COMMANDED_VALUE_ro = PACMOD11_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
+  _m->OUTPUT_VALUE_ro = PACMOD11_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
   _d[1] |= ((_m->MANUAL_INPUT_ro >> 8) & (0xFFU));
@@ -3980,9 +3515,9 @@ uint32_t Pack_BRAKE_DECEL_RPT_pacmod12(BRAKE_DECEL_RPT_t* _m, uint8_t* _d, uint8
   return BRAKE_DECEL_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_REAR_PASS_DOOR_RPT_pacmod12(REAR_PASS_DOOR_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_REAR_PASS_DOOR_RPT_pacmod11(REAR_PASS_DOOR_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -3997,20 +3532,20 @@ uint32_t Unpack_REAR_PASS_DOOR_RPT_pacmod12(REAR_PASS_DOOR_RPT_t* _m, const uint
   _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
   _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < REAR_PASS_DOOR_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_REAR_PASS_DOOR_RPT_pacmod12(&_m->mon1, REAR_PASS_DOOR_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_REAR_PASS_DOOR_RPT_pacmod11(&_m->mon1, REAR_PASS_DOOR_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return REAR_PASS_DOOR_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_REAR_PASS_DOOR_RPT_pacmod12(REAR_PASS_DOOR_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_REAR_PASS_DOOR_RPT_pacmod11(REAR_PASS_DOOR_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < REAR_PASS_DOOR_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -4027,7 +3562,7 @@ uint32_t Pack_REAR_PASS_DOOR_RPT_pacmod12(REAR_PASS_DOOR_RPT_t* _m, __CoderDbcCa
 
 #else
 
-uint32_t Pack_REAR_PASS_DOOR_RPT_pacmod12(REAR_PASS_DOOR_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_REAR_PASS_DOOR_RPT_pacmod11(REAR_PASS_DOOR_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < REAR_PASS_DOOR_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -4041,9 +3576,9 @@ uint32_t Pack_REAR_PASS_DOOR_RPT_pacmod12(REAR_PASS_DOOR_RPT_t* _m, uint8_t* _d,
   return REAR_PASS_DOOR_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_ENGINE_BRAKE_RPT_pacmod12(ENGINE_BRAKE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_ENGINE_BRAKE_RPT_pacmod11(ENGINE_BRAKE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -4057,24 +3592,21 @@ uint32_t Unpack_ENGINE_BRAKE_RPT_pacmod12(ENGINE_BRAKE_RPT_t* _m, const uint8_t*
   _m->MANUAL_INPUT = (_d[1] & (0xFFU));
   _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
   _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
-  _m->MAN_AUTO = (_d[4] & (0x03U));
-  _m->CMD_AUTO = ((_d[4] >> 2) & (0x03U));
-  _m->OUT_AUTO = ((_d[4] >> 4) & (0x03U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < ENGINE_BRAKE_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_ENGINE_BRAKE_RPT_pacmod12(&_m->mon1, ENGINE_BRAKE_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_ENGINE_BRAKE_RPT_pacmod11(&_m->mon1, ENGINE_BRAKE_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return ENGINE_BRAKE_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_ENGINE_BRAKE_RPT_pacmod12(ENGINE_BRAKE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_ENGINE_BRAKE_RPT_pacmod11(ENGINE_BRAKE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < ENGINE_BRAKE_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -4082,7 +3614,6 @@ uint32_t Pack_ENGINE_BRAKE_RPT_pacmod12(ENGINE_BRAKE_RPT_t* _m, __CoderDbcCanFra
   cframe->Data[1] |= (_m->MANUAL_INPUT & (0xFFU));
   cframe->Data[2] |= (_m->COMMANDED_VALUE & (0xFFU));
   cframe->Data[3] |= (_m->OUTPUT_VALUE & (0xFFU));
-  cframe->Data[4] |= (_m->MAN_AUTO & (0x03U)) | ((_m->CMD_AUTO & (0x03U)) << 2) | ((_m->OUT_AUTO & (0x03U)) << 4);
 
   cframe->MsgId = ENGINE_BRAKE_RPT_CANID;
   cframe->DLC = ENGINE_BRAKE_RPT_DLC;
@@ -4092,7 +3623,7 @@ uint32_t Pack_ENGINE_BRAKE_RPT_pacmod12(ENGINE_BRAKE_RPT_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_ENGINE_BRAKE_RPT_pacmod12(ENGINE_BRAKE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_ENGINE_BRAKE_RPT_pacmod11(ENGINE_BRAKE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < ENGINE_BRAKE_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -4100,16 +3631,15 @@ uint32_t Pack_ENGINE_BRAKE_RPT_pacmod12(ENGINE_BRAKE_RPT_t* _m, uint8_t* _d, uin
   _d[1] |= (_m->MANUAL_INPUT & (0xFFU));
   _d[2] |= (_m->COMMANDED_VALUE & (0xFFU));
   _d[3] |= (_m->OUTPUT_VALUE & (0xFFU));
-  _d[4] |= (_m->MAN_AUTO & (0x03U)) | ((_m->CMD_AUTO & (0x03U)) << 2) | ((_m->OUT_AUTO & (0x03U)) << 4);
 
   *_len = ENGINE_BRAKE_RPT_DLC;
   *_ide = ENGINE_BRAKE_RPT_IDE;
   return ENGINE_BRAKE_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_EXHAUST_BRAKE_RPT_pacmod12(EXHAUST_BRAKE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_EXHAUST_BRAKE_RPT_pacmod11(EXHAUST_BRAKE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -4124,20 +3654,20 @@ uint32_t Unpack_EXHAUST_BRAKE_RPT_pacmod12(EXHAUST_BRAKE_RPT_t* _m, const uint8_
   _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
   _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < EXHAUST_BRAKE_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_EXHAUST_BRAKE_RPT_pacmod12(&_m->mon1, EXHAUST_BRAKE_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_EXHAUST_BRAKE_RPT_pacmod11(&_m->mon1, EXHAUST_BRAKE_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return EXHAUST_BRAKE_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_EXHAUST_BRAKE_RPT_pacmod12(EXHAUST_BRAKE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_EXHAUST_BRAKE_RPT_pacmod11(EXHAUST_BRAKE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < EXHAUST_BRAKE_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -4154,7 +3684,7 @@ uint32_t Pack_EXHAUST_BRAKE_RPT_pacmod12(EXHAUST_BRAKE_RPT_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_EXHAUST_BRAKE_RPT_pacmod12(EXHAUST_BRAKE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_EXHAUST_BRAKE_RPT_pacmod11(EXHAUST_BRAKE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < EXHAUST_BRAKE_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -4168,9 +3698,9 @@ uint32_t Pack_EXHAUST_BRAKE_RPT_pacmod12(EXHAUST_BRAKE_RPT_t* _m, uint8_t* _d, u
   return EXHAUST_BRAKE_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_MARKER_LAMP_RPT_pacmod12(MARKER_LAMP_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_MARKER_LAMP_RPT_pacmod11(MARKER_LAMP_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -4185,20 +3715,20 @@ uint32_t Unpack_MARKER_LAMP_RPT_pacmod12(MARKER_LAMP_RPT_t* _m, const uint8_t* _
   _m->COMMANDED_VALUE = (_d[2] & (0x01U));
   _m->OUTPUT_VALUE = (_d[3] & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < MARKER_LAMP_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_MARKER_LAMP_RPT_pacmod12(&_m->mon1, MARKER_LAMP_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_MARKER_LAMP_RPT_pacmod11(&_m->mon1, MARKER_LAMP_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return MARKER_LAMP_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_MARKER_LAMP_RPT_pacmod12(MARKER_LAMP_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_MARKER_LAMP_RPT_pacmod11(MARKER_LAMP_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < MARKER_LAMP_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -4215,7 +3745,7 @@ uint32_t Pack_MARKER_LAMP_RPT_pacmod12(MARKER_LAMP_RPT_t* _m, __CoderDbcCanFrame
 
 #else
 
-uint32_t Pack_MARKER_LAMP_RPT_pacmod12(MARKER_LAMP_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_MARKER_LAMP_RPT_pacmod11(MARKER_LAMP_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < MARKER_LAMP_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -4229,9 +3759,9 @@ uint32_t Pack_MARKER_LAMP_RPT_pacmod12(MARKER_LAMP_RPT_t* _m, uint8_t* _d, uint8
   return MARKER_LAMP_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_CABIN_TEMP_RPT_pacmod12(CABIN_TEMP_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_CABIN_TEMP_RPT_pacmod11(CABIN_TEMP_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -4243,42 +3773,42 @@ uint32_t Unpack_CABIN_TEMP_RPT_pacmod12(CABIN_TEMP_RPT_t* _m, const uint8_t* _d,
   _m->VEHICLE_FAULT = ((_d[0] >> 6) & (0x01U));
   _m->COMMAND_TIMEOUT = ((_d[0] >> 7) & (0x01U));
   _m->MANUAL_INPUT_ro = (_d[1] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_phys = (sigfloat_t)(PACMOD12_MANUAL_INPUT_ro_fromS(_m->MANUAL_INPUT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_phys = (sigfloat_t)(PACMOD11_MANUAL_INPUT_ro_fromS(_m->MANUAL_INPUT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->COMMANDED_VALUE_ro = (_d[2] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->COMMANDED_VALUE_phys = (sigfloat_t)(PACMOD12_COMMANDED_VALUE_ro_fromS(_m->COMMANDED_VALUE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->COMMANDED_VALUE_phys = (sigfloat_t)(PACMOD11_COMMANDED_VALUE_ro_fromS(_m->COMMANDED_VALUE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->OUTPUT_VALUE_ro = (_d[3] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->OUTPUT_VALUE_phys = (sigfloat_t)(PACMOD12_OUTPUT_VALUE_ro_fromS(_m->OUTPUT_VALUE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->OUTPUT_VALUE_phys = (sigfloat_t)(PACMOD11_OUTPUT_VALUE_ro_fromS(_m->OUTPUT_VALUE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < CABIN_TEMP_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_CABIN_TEMP_RPT_pacmod12(&_m->mon1, CABIN_TEMP_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_CABIN_TEMP_RPT_pacmod11(&_m->mon1, CABIN_TEMP_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return CABIN_TEMP_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_CABIN_TEMP_RPT_pacmod12(CABIN_TEMP_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_CABIN_TEMP_RPT_pacmod11(CABIN_TEMP_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < CABIN_TEMP_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_ro = PACMOD12_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
-  _m->COMMANDED_VALUE_ro = PACMOD12_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
-  _m->OUTPUT_VALUE_ro = PACMOD12_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_ro = PACMOD11_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
+  _m->COMMANDED_VALUE_ro = PACMOD11_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
+  _m->OUTPUT_VALUE_ro = PACMOD11_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
   cframe->Data[1] |= (_m->MANUAL_INPUT_ro & (0xFFU));
@@ -4293,15 +3823,15 @@ uint32_t Pack_CABIN_TEMP_RPT_pacmod12(CABIN_TEMP_RPT_t* _m, __CoderDbcCanFrame_t
 
 #else
 
-uint32_t Pack_CABIN_TEMP_RPT_pacmod12(CABIN_TEMP_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_CABIN_TEMP_RPT_pacmod11(CABIN_TEMP_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < CABIN_TEMP_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_ro = PACMOD12_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
-  _m->COMMANDED_VALUE_ro = PACMOD12_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
-  _m->OUTPUT_VALUE_ro = PACMOD12_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MANUAL_INPUT_ro = PACMOD11_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
+  _m->COMMANDED_VALUE_ro = PACMOD11_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
+  _m->OUTPUT_VALUE_ro = PACMOD11_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
   _d[1] |= (_m->MANUAL_INPUT_ro & (0xFFU));
@@ -4313,9 +3843,9 @@ uint32_t Pack_CABIN_TEMP_RPT_pacmod12(CABIN_TEMP_RPT_t* _m, uint8_t* _d, uint8_t
   return CABIN_TEMP_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_CABIN_FAN_SPEED_RPT_pacmod12(CABIN_FAN_SPEED_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_CABIN_FAN_SPEED_RPT_pacmod11(CABIN_FAN_SPEED_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -4330,20 +3860,20 @@ uint32_t Unpack_CABIN_FAN_SPEED_RPT_pacmod12(CABIN_FAN_SPEED_RPT_t* _m, const ui
   _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
   _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < CABIN_FAN_SPEED_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_CABIN_FAN_SPEED_RPT_pacmod12(&_m->mon1, CABIN_FAN_SPEED_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_CABIN_FAN_SPEED_RPT_pacmod11(&_m->mon1, CABIN_FAN_SPEED_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return CABIN_FAN_SPEED_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_CABIN_FAN_SPEED_RPT_pacmod12(CABIN_FAN_SPEED_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_CABIN_FAN_SPEED_RPT_pacmod11(CABIN_FAN_SPEED_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < CABIN_FAN_SPEED_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -4360,7 +3890,7 @@ uint32_t Pack_CABIN_FAN_SPEED_RPT_pacmod12(CABIN_FAN_SPEED_RPT_t* _m, __CoderDbc
 
 #else
 
-uint32_t Pack_CABIN_FAN_SPEED_RPT_pacmod12(CABIN_FAN_SPEED_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_CABIN_FAN_SPEED_RPT_pacmod11(CABIN_FAN_SPEED_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < CABIN_FAN_SPEED_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -4374,9 +3904,9 @@ uint32_t Pack_CABIN_FAN_SPEED_RPT_pacmod12(CABIN_FAN_SPEED_RPT_t* _m, uint8_t* _
   return CABIN_FAN_SPEED_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_CABIN_CLIMATE_RPT_pacmod12(CABIN_CLIMATE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_CABIN_CLIMATE_RPT_pacmod11(CABIN_CLIMATE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENABLED = (_d[0] & (0x01U));
@@ -4406,20 +3936,20 @@ uint32_t Unpack_CABIN_CLIMATE_RPT_pacmod12(CABIN_CLIMATE_RPT_t* _m, const uint8_
   _m->OUT_DIR_UP_OFF_ON = (_d[6] & (0x03U));
   _m->OUT_DIR_DOWN_OFF_ON = ((_d[6] >> 2) & (0x03U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < CABIN_CLIMATE_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_CABIN_CLIMATE_RPT_pacmod12(&_m->mon1, CABIN_CLIMATE_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_CABIN_CLIMATE_RPT_pacmod11(&_m->mon1, CABIN_CLIMATE_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return CABIN_CLIMATE_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_CABIN_CLIMATE_RPT_pacmod12(CABIN_CLIMATE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_CABIN_CLIMATE_RPT_pacmod11(CABIN_CLIMATE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < CABIN_CLIMATE_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -4439,7 +3969,7 @@ uint32_t Pack_CABIN_CLIMATE_RPT_pacmod12(CABIN_CLIMATE_RPT_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_CABIN_CLIMATE_RPT_pacmod12(CABIN_CLIMATE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_CABIN_CLIMATE_RPT_pacmod11(CABIN_CLIMATE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < CABIN_CLIMATE_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -4456,465 +3986,9 @@ uint32_t Pack_CABIN_CLIMATE_RPT_pacmod12(CABIN_CLIMATE_RPT_t* _m, uint8_t* _d, u
   return CABIN_CLIMATE_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_TIPPER_BODY_RPT_00_pacmod12(TIPPER_BODY_RPT_00_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->ENABLED = (_d[0] & (0x01U));
-  _m->OVERRIDE_ACTIVE = ((_d[0] >> 1) & (0x01U));
-  _m->COMMAND_OUTPUT_FAULT = ((_d[0] >> 2) & (0x01U));
-  _m->INPUT_OUTPUT_FAULT = ((_d[0] >> 3) & (0x01U));
-  _m->OUTPUT_REPORTED_FAULT = ((_d[0] >> 4) & (0x01U));
-  _m->PACMOD_FAULT = ((_d[0] >> 5) & (0x01U));
-  _m->VEHICLE_FAULT = ((_d[0] >> 6) & (0x01U));
-  _m->COMMAND_TIMEOUT = ((_d[0] >> 7) & (0x01U));
-  _m->MANUAL_INPUT = (_d[1] & (0xFFU));
-  _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
-  _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < TIPPER_BODY_RPT_00_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_TIPPER_BODY_RPT_00_pacmod12(&_m->mon1, TIPPER_BODY_RPT_00_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return TIPPER_BODY_RPT_00_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_TIPPER_BODY_RPT_00_pacmod12(TIPPER_BODY_RPT_00_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < TIPPER_BODY_RPT_00_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
-  cframe->Data[1] |= (_m->MANUAL_INPUT & (0xFFU));
-  cframe->Data[2] |= (_m->COMMANDED_VALUE & (0xFFU));
-  cframe->Data[3] |= (_m->OUTPUT_VALUE & (0xFFU));
-
-  cframe->MsgId = TIPPER_BODY_RPT_00_CANID;
-  cframe->DLC = TIPPER_BODY_RPT_00_DLC;
-  cframe->IDE = TIPPER_BODY_RPT_00_IDE;
-  return TIPPER_BODY_RPT_00_CANID;
-}
-
-#else
-
-uint32_t Pack_TIPPER_BODY_RPT_00_pacmod12(TIPPER_BODY_RPT_00_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < TIPPER_BODY_RPT_00_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
-  _d[1] |= (_m->MANUAL_INPUT & (0xFFU));
-  _d[2] |= (_m->COMMANDED_VALUE & (0xFFU));
-  _d[3] |= (_m->OUTPUT_VALUE & (0xFFU));
-
-  *_len = TIPPER_BODY_RPT_00_DLC;
-  *_ide = TIPPER_BODY_RPT_00_IDE;
-  return TIPPER_BODY_RPT_00_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_POWER_TAKE_OFF_RPT_pacmod12(POWER_TAKE_OFF_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->ENABLED = (_d[0] & (0x01U));
-  _m->OVERRIDE_ACTIVE = ((_d[0] >> 1) & (0x01U));
-  _m->COMMAND_OUTPUT_FAULT = ((_d[0] >> 2) & (0x01U));
-  _m->INPUT_OUTPUT_FAULT = ((_d[0] >> 3) & (0x01U));
-  _m->OUTPUT_REPORTED_FAULT = ((_d[0] >> 4) & (0x01U));
-  _m->PACMOD_FAULT = ((_d[0] >> 5) & (0x01U));
-  _m->VEHICLE_FAULT = ((_d[0] >> 6) & (0x01U));
-  _m->COMMAND_TIMEOUT = ((_d[0] >> 7) & (0x01U));
-  _m->MANUAL_INPUT = (_d[1] & (0xFFU));
-  _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
-  _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < POWER_TAKE_OFF_RPT_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_POWER_TAKE_OFF_RPT_pacmod12(&_m->mon1, POWER_TAKE_OFF_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return POWER_TAKE_OFF_RPT_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_POWER_TAKE_OFF_RPT_pacmod12(POWER_TAKE_OFF_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < POWER_TAKE_OFF_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
-  cframe->Data[1] |= (_m->MANUAL_INPUT & (0xFFU));
-  cframe->Data[2] |= (_m->COMMANDED_VALUE & (0xFFU));
-  cframe->Data[3] |= (_m->OUTPUT_VALUE & (0xFFU));
-
-  cframe->MsgId = POWER_TAKE_OFF_RPT_CANID;
-  cframe->DLC = POWER_TAKE_OFF_RPT_DLC;
-  cframe->IDE = POWER_TAKE_OFF_RPT_IDE;
-  return POWER_TAKE_OFF_RPT_CANID;
-}
-
-#else
-
-uint32_t Pack_POWER_TAKE_OFF_RPT_pacmod12(POWER_TAKE_OFF_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < POWER_TAKE_OFF_RPT_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
-  _d[1] |= (_m->MANUAL_INPUT & (0xFFU));
-  _d[2] |= (_m->COMMANDED_VALUE & (0xFFU));
-  _d[3] |= (_m->OUTPUT_VALUE & (0xFFU));
-
-  *_len = POWER_TAKE_OFF_RPT_DLC;
-  *_ide = POWER_TAKE_OFF_RPT_IDE;
-  return POWER_TAKE_OFF_RPT_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_TRAILER_BRAKE_RPT_pacmod12(TRAILER_BRAKE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->ENABLED = (_d[0] & (0x01U));
-  _m->OVERRIDE_ACTIVE = ((_d[0] >> 1) & (0x01U));
-  _m->COMMAND_OUTPUT_FAULT = ((_d[0] >> 2) & (0x01U));
-  _m->INPUT_OUTPUT_FAULT = ((_d[0] >> 3) & (0x01U));
-  _m->OUTPUT_REPORTED_FAULT = ((_d[0] >> 4) & (0x01U));
-  _m->PACMOD_FAULT = ((_d[0] >> 5) & (0x01U));
-  _m->VEHICLE_FAULT = ((_d[0] >> 6) & (0x01U));
-  _m->COMMAND_TIMEOUT = ((_d[0] >> 7) & (0x01U));
-  _m->MANUAL_INPUT_ro = ((_d[1] & (0xFFU)) << 8) | (_d[2] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_phys = (sigfloat_t)(PACMOD12_MANUAL_INPUT_ro_fromS(_m->MANUAL_INPUT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->COMMANDED_VALUE_ro = ((_d[3] & (0xFFU)) << 8) | (_d[4] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->COMMANDED_VALUE_phys = (sigfloat_t)(PACMOD12_COMMANDED_VALUE_ro_fromS(_m->COMMANDED_VALUE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->OUTPUT_VALUE_ro = ((_d[5] & (0xFFU)) << 8) | (_d[6] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->OUTPUT_VALUE_phys = (sigfloat_t)(PACMOD12_OUTPUT_VALUE_ro_fromS(_m->OUTPUT_VALUE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < TRAILER_BRAKE_RPT_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_TRAILER_BRAKE_RPT_pacmod12(&_m->mon1, TRAILER_BRAKE_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return TRAILER_BRAKE_RPT_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_TRAILER_BRAKE_RPT_pacmod12(TRAILER_BRAKE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < TRAILER_BRAKE_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_ro = PACMOD12_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
-  _m->COMMANDED_VALUE_ro = PACMOD12_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
-  _m->OUTPUT_VALUE_ro = PACMOD12_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  cframe->Data[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
-  cframe->Data[1] |= ((_m->MANUAL_INPUT_ro >> 8) & (0xFFU));
-  cframe->Data[2] |= (_m->MANUAL_INPUT_ro & (0xFFU));
-  cframe->Data[3] |= ((_m->COMMANDED_VALUE_ro >> 8) & (0xFFU));
-  cframe->Data[4] |= (_m->COMMANDED_VALUE_ro & (0xFFU));
-  cframe->Data[5] |= ((_m->OUTPUT_VALUE_ro >> 8) & (0xFFU));
-  cframe->Data[6] |= (_m->OUTPUT_VALUE_ro & (0xFFU));
-
-  cframe->MsgId = TRAILER_BRAKE_RPT_CANID;
-  cframe->DLC = TRAILER_BRAKE_RPT_DLC;
-  cframe->IDE = TRAILER_BRAKE_RPT_IDE;
-  return TRAILER_BRAKE_RPT_CANID;
-}
-
-#else
-
-uint32_t Pack_TRAILER_BRAKE_RPT_pacmod12(TRAILER_BRAKE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < TRAILER_BRAKE_RPT_DLC) && (i < 8); _d[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MANUAL_INPUT_ro = PACMOD12_MANUAL_INPUT_ro_toS(_m->MANUAL_INPUT_phys);
-  _m->COMMANDED_VALUE_ro = PACMOD12_COMMANDED_VALUE_ro_toS(_m->COMMANDED_VALUE_phys);
-  _m->OUTPUT_VALUE_ro = PACMOD12_OUTPUT_VALUE_ro_toS(_m->OUTPUT_VALUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _d[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
-  _d[1] |= ((_m->MANUAL_INPUT_ro >> 8) & (0xFFU));
-  _d[2] |= (_m->MANUAL_INPUT_ro & (0xFFU));
-  _d[3] |= ((_m->COMMANDED_VALUE_ro >> 8) & (0xFFU));
-  _d[4] |= (_m->COMMANDED_VALUE_ro & (0xFFU));
-  _d[5] |= ((_m->OUTPUT_VALUE_ro >> 8) & (0xFFU));
-  _d[6] |= (_m->OUTPUT_VALUE_ro & (0xFFU));
-
-  *_len = TRAILER_BRAKE_RPT_DLC;
-  *_ide = TRAILER_BRAKE_RPT_IDE;
-  return TRAILER_BRAKE_RPT_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_TRAILER_AIR_SUPPLY_RPT_pacmod12(TRAILER_AIR_SUPPLY_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->ENABLED = (_d[0] & (0x01U));
-  _m->OVERRIDE_ACTIVE = ((_d[0] >> 1) & (0x01U));
-  _m->COMMAND_OUTPUT_FAULT = ((_d[0] >> 2) & (0x01U));
-  _m->INPUT_OUTPUT_FAULT = ((_d[0] >> 3) & (0x01U));
-  _m->OUTPUT_REPORTED_FAULT = ((_d[0] >> 4) & (0x01U));
-  _m->PACMOD_FAULT = ((_d[0] >> 5) & (0x01U));
-  _m->VEHICLE_FAULT = ((_d[0] >> 6) & (0x01U));
-  _m->COMMAND_TIMEOUT = ((_d[0] >> 7) & (0x01U));
-  _m->MANUAL_INPUT = (_d[1] & (0x01U));
-  _m->COMMANDED_VALUE = (_d[2] & (0x01U));
-  _m->OUTPUT_VALUE = (_d[3] & (0x01U));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < TRAILER_AIR_SUPPLY_RPT_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_TRAILER_AIR_SUPPLY_RPT_pacmod12(&_m->mon1, TRAILER_AIR_SUPPLY_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return TRAILER_AIR_SUPPLY_RPT_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_TRAILER_AIR_SUPPLY_RPT_pacmod12(TRAILER_AIR_SUPPLY_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < TRAILER_AIR_SUPPLY_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
-  cframe->Data[1] |= (_m->MANUAL_INPUT & (0x01U));
-  cframe->Data[2] |= (_m->COMMANDED_VALUE & (0x01U));
-  cframe->Data[3] |= (_m->OUTPUT_VALUE & (0x01U));
-
-  cframe->MsgId = TRAILER_AIR_SUPPLY_RPT_CANID;
-  cframe->DLC = TRAILER_AIR_SUPPLY_RPT_DLC;
-  cframe->IDE = TRAILER_AIR_SUPPLY_RPT_IDE;
-  return TRAILER_AIR_SUPPLY_RPT_CANID;
-}
-
-#else
-
-uint32_t Pack_TRAILER_AIR_SUPPLY_RPT_pacmod12(TRAILER_AIR_SUPPLY_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < TRAILER_AIR_SUPPLY_RPT_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
-  _d[1] |= (_m->MANUAL_INPUT & (0x01U));
-  _d[2] |= (_m->COMMANDED_VALUE & (0x01U));
-  _d[3] |= (_m->OUTPUT_VALUE & (0x01U));
-
-  *_len = TRAILER_AIR_SUPPLY_RPT_DLC;
-  *_ide = TRAILER_AIR_SUPPLY_RPT_IDE;
-  return TRAILER_AIR_SUPPLY_RPT_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_ENGINE_RPT_pacmod12(ENGINE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->ENABLED = (_d[0] & (0x01U));
-  _m->OVERRIDE_ACTIVE = ((_d[0] >> 1) & (0x01U));
-  _m->COMMAND_OUTPUT_FAULT = ((_d[0] >> 2) & (0x01U));
-  _m->INPUT_OUTPUT_FAULT = ((_d[0] >> 3) & (0x01U));
-  _m->OUTPUT_REPORTED_FAULT = ((_d[0] >> 4) & (0x01U));
-  _m->PACMOD_FAULT = ((_d[0] >> 5) & (0x01U));
-  _m->VEHICLE_FAULT = ((_d[0] >> 6) & (0x01U));
-  _m->COMMAND_TIMEOUT = ((_d[0] >> 7) & (0x01U));
-  _m->MANUAL_INPUT = (_d[1] & (0xFFU));
-  _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
-  _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < ENGINE_RPT_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_ENGINE_RPT_pacmod12(&_m->mon1, ENGINE_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return ENGINE_RPT_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_ENGINE_RPT_pacmod12(ENGINE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < ENGINE_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
-  cframe->Data[1] |= (_m->MANUAL_INPUT & (0xFFU));
-  cframe->Data[2] |= (_m->COMMANDED_VALUE & (0xFFU));
-  cframe->Data[3] |= (_m->OUTPUT_VALUE & (0xFFU));
-
-  cframe->MsgId = ENGINE_RPT_CANID;
-  cframe->DLC = ENGINE_RPT_DLC;
-  cframe->IDE = ENGINE_RPT_IDE;
-  return ENGINE_RPT_CANID;
-}
-
-#else
-
-uint32_t Pack_ENGINE_RPT_pacmod12(ENGINE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < ENGINE_RPT_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
-  _d[1] |= (_m->MANUAL_INPUT & (0xFFU));
-  _d[2] |= (_m->COMMANDED_VALUE & (0xFFU));
-  _d[3] |= (_m->OUTPUT_VALUE & (0xFFU));
-
-  *_len = ENGINE_RPT_DLC;
-  *_ide = ENGINE_RPT_IDE;
-  return ENGINE_RPT_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_TIPPER_BODY_RPT_01_pacmod12(TIPPER_BODY_RPT_01_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->ENABLED = (_d[0] & (0x01U));
-  _m->OVERRIDE_ACTIVE = ((_d[0] >> 1) & (0x01U));
-  _m->COMMAND_OUTPUT_FAULT = ((_d[0] >> 2) & (0x01U));
-  _m->INPUT_OUTPUT_FAULT = ((_d[0] >> 3) & (0x01U));
-  _m->OUTPUT_REPORTED_FAULT = ((_d[0] >> 4) & (0x01U));
-  _m->PACMOD_FAULT = ((_d[0] >> 5) & (0x01U));
-  _m->VEHICLE_FAULT = ((_d[0] >> 6) & (0x01U));
-  _m->COMMAND_TIMEOUT = ((_d[0] >> 7) & (0x01U));
-  _m->MANUAL_INPUT = (_d[1] & (0xFFU));
-  _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
-  _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < TIPPER_BODY_RPT_01_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_TIPPER_BODY_RPT_01_pacmod12(&_m->mon1, TIPPER_BODY_RPT_01_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return TIPPER_BODY_RPT_01_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_TIPPER_BODY_RPT_01_pacmod12(TIPPER_BODY_RPT_01_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < TIPPER_BODY_RPT_01_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
-  cframe->Data[1] |= (_m->MANUAL_INPUT & (0xFFU));
-  cframe->Data[2] |= (_m->COMMANDED_VALUE & (0xFFU));
-  cframe->Data[3] |= (_m->OUTPUT_VALUE & (0xFFU));
-
-  cframe->MsgId = TIPPER_BODY_RPT_01_CANID;
-  cframe->DLC = TIPPER_BODY_RPT_01_DLC;
-  cframe->IDE = TIPPER_BODY_RPT_01_IDE;
-  return TIPPER_BODY_RPT_01_CANID;
-}
-
-#else
-
-uint32_t Pack_TIPPER_BODY_RPT_01_pacmod12(TIPPER_BODY_RPT_01_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < TIPPER_BODY_RPT_01_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
-  _d[1] |= (_m->MANUAL_INPUT & (0xFFU));
-  _d[2] |= (_m->COMMANDED_VALUE & (0xFFU));
-  _d[3] |= (_m->OUTPUT_VALUE & (0xFFU));
-
-  *_len = TIPPER_BODY_RPT_01_DLC;
-  *_ide = TIPPER_BODY_RPT_01_IDE;
-  return TIPPER_BODY_RPT_01_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_TIPPER_BODY_RPT_02_pacmod12(TIPPER_BODY_RPT_02_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->ENABLED = (_d[0] & (0x01U));
-  _m->OVERRIDE_ACTIVE = ((_d[0] >> 1) & (0x01U));
-  _m->COMMAND_OUTPUT_FAULT = ((_d[0] >> 2) & (0x01U));
-  _m->INPUT_OUTPUT_FAULT = ((_d[0] >> 3) & (0x01U));
-  _m->OUTPUT_REPORTED_FAULT = ((_d[0] >> 4) & (0x01U));
-  _m->PACMOD_FAULT = ((_d[0] >> 5) & (0x01U));
-  _m->VEHICLE_FAULT = ((_d[0] >> 6) & (0x01U));
-  _m->COMMAND_TIMEOUT = ((_d[0] >> 7) & (0x01U));
-  _m->MANUAL_INPUT = (_d[1] & (0xFFU));
-  _m->COMMANDED_VALUE = (_d[2] & (0xFFU));
-  _m->OUTPUT_VALUE = (_d[3] & (0xFFU));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < TIPPER_BODY_RPT_02_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_TIPPER_BODY_RPT_02_pacmod12(&_m->mon1, TIPPER_BODY_RPT_02_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return TIPPER_BODY_RPT_02_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_TIPPER_BODY_RPT_02_pacmod12(TIPPER_BODY_RPT_02_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < TIPPER_BODY_RPT_02_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
-  cframe->Data[1] |= (_m->MANUAL_INPUT & (0xFFU));
-  cframe->Data[2] |= (_m->COMMANDED_VALUE & (0xFFU));
-  cframe->Data[3] |= (_m->OUTPUT_VALUE & (0xFFU));
-
-  cframe->MsgId = TIPPER_BODY_RPT_02_CANID;
-  cframe->DLC = TIPPER_BODY_RPT_02_DLC;
-  cframe->IDE = TIPPER_BODY_RPT_02_IDE;
-  return TIPPER_BODY_RPT_02_CANID;
-}
-
-#else
-
-uint32_t Pack_TIPPER_BODY_RPT_02_pacmod12(TIPPER_BODY_RPT_02_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < TIPPER_BODY_RPT_02_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->ENABLED & (0x01U)) | ((_m->OVERRIDE_ACTIVE & (0x01U)) << 1) | ((_m->COMMAND_OUTPUT_FAULT & (0x01U)) << 2) | ((_m->INPUT_OUTPUT_FAULT & (0x01U)) << 3) | ((_m->OUTPUT_REPORTED_FAULT & (0x01U)) << 4) | ((_m->PACMOD_FAULT & (0x01U)) << 5) | ((_m->VEHICLE_FAULT & (0x01U)) << 6) | ((_m->COMMAND_TIMEOUT & (0x01U)) << 7);
-  _d[1] |= (_m->MANUAL_INPUT & (0xFFU));
-  _d[2] |= (_m->COMMANDED_VALUE & (0xFFU));
-  _d[3] |= (_m->OUTPUT_VALUE & (0xFFU));
-
-  *_len = TIPPER_BODY_RPT_02_DLC;
-  *_ide = TIPPER_BODY_RPT_02_IDE;
-  return TIPPER_BODY_RPT_02_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_ACCEL_AUX_RPT_pacmod12(ACCEL_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_ACCEL_AUX_RPT_pacmod11(ACCEL_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->OPERATOR_INTERACTION = (_d[4] & (0x01U));
@@ -4927,20 +4001,20 @@ uint32_t Unpack_ACCEL_AUX_RPT_pacmod12(ACCEL_AUX_RPT_t* _m, const uint8_t* _d, u
   _m->PRK_BRK_INTERLOCK_ACTIVE_AVAIL = ((_d[5] >> 4) & (0x01U));
   _m->BRAKE_INTERLOCK_ACTIVE_AVAIL = ((_d[5] >> 5) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < ACCEL_AUX_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_ACCEL_AUX_RPT_pacmod12(&_m->mon1, ACCEL_AUX_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_ACCEL_AUX_RPT_pacmod11(&_m->mon1, ACCEL_AUX_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return ACCEL_AUX_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_ACCEL_AUX_RPT_pacmod12(ACCEL_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_ACCEL_AUX_RPT_pacmod11(ACCEL_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < ACCEL_AUX_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -4955,7 +4029,7 @@ uint32_t Pack_ACCEL_AUX_RPT_pacmod12(ACCEL_AUX_RPT_t* _m, __CoderDbcCanFrame_t__
 
 #else
 
-uint32_t Pack_ACCEL_AUX_RPT_pacmod12(ACCEL_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_ACCEL_AUX_RPT_pacmod11(ACCEL_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < ACCEL_AUX_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -4967,15 +4041,15 @@ uint32_t Pack_ACCEL_AUX_RPT_pacmod12(ACCEL_AUX_RPT_t* _m, uint8_t* _d, uint8_t* 
   return ACCEL_AUX_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_BRAKE_AUX_RPT_pacmod12(BRAKE_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_BRAKE_AUX_RPT_pacmod11(BRAKE_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->BRAKE_PRESSURE_ro = ((_d[4] & (0xFFU)) << 8) | (_d[5] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->BRAKE_PRESSURE_phys = (sigfloat_t)(PACMOD12_BRAKE_PRESSURE_ro_fromS(_m->BRAKE_PRESSURE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->BRAKE_PRESSURE_phys = (sigfloat_t)(PACMOD11_BRAKE_PRESSURE_ro_fromS(_m->BRAKE_PRESSURE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->OPERATOR_INTERACTION = (_d[6] & (0x01U));
   _m->BRAKE_ON_OFF = ((_d[6] >> 1) & (0x01U));
@@ -4988,26 +4062,26 @@ uint32_t Unpack_BRAKE_AUX_RPT_pacmod12(BRAKE_AUX_RPT_t* _m, const uint8_t* _d, u
   _m->BRAKE_LIMITING_ACTIVE_AVAIL = ((_d[7] >> 5) & (0x01U));
   _m->BRAKE_REDUCED_ASSIST_AVAIL = ((_d[7] >> 6) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < BRAKE_AUX_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_BRAKE_AUX_RPT_pacmod12(&_m->mon1, BRAKE_AUX_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_BRAKE_AUX_RPT_pacmod11(&_m->mon1, BRAKE_AUX_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return BRAKE_AUX_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_BRAKE_AUX_RPT_pacmod12(BRAKE_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_BRAKE_AUX_RPT_pacmod11(BRAKE_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < BRAKE_AUX_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->BRAKE_PRESSURE_ro = PACMOD12_BRAKE_PRESSURE_ro_toS(_m->BRAKE_PRESSURE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->BRAKE_PRESSURE_ro = PACMOD11_BRAKE_PRESSURE_ro_toS(_m->BRAKE_PRESSURE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[4] |= ((_m->BRAKE_PRESSURE_ro >> 8) & (0xFFU));
   cframe->Data[5] |= (_m->BRAKE_PRESSURE_ro & (0xFFU));
@@ -5022,13 +4096,13 @@ uint32_t Pack_BRAKE_AUX_RPT_pacmod12(BRAKE_AUX_RPT_t* _m, __CoderDbcCanFrame_t__
 
 #else
 
-uint32_t Pack_BRAKE_AUX_RPT_pacmod12(BRAKE_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_BRAKE_AUX_RPT_pacmod11(BRAKE_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < BRAKE_AUX_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->BRAKE_PRESSURE_ro = PACMOD12_BRAKE_PRESSURE_ro_toS(_m->BRAKE_PRESSURE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->BRAKE_PRESSURE_ro = PACMOD11_BRAKE_PRESSURE_ro_toS(_m->BRAKE_PRESSURE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[4] |= ((_m->BRAKE_PRESSURE_ro >> 8) & (0xFFU));
   _d[5] |= (_m->BRAKE_PRESSURE_ro & (0xFFU));
@@ -5040,9 +4114,9 @@ uint32_t Pack_BRAKE_AUX_RPT_pacmod12(BRAKE_AUX_RPT_t* _m, uint8_t* _d, uint8_t* 
   return BRAKE_AUX_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_HEADLIGHT_AUX_RPT_pacmod12(HEADLIGHT_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_HEADLIGHT_AUX_RPT_pacmod11(HEADLIGHT_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->HEADLIGHTS_ON = (_d[0] & (0x01U));
@@ -5054,20 +4128,20 @@ uint32_t Unpack_HEADLIGHT_AUX_RPT_pacmod12(HEADLIGHT_AUX_RPT_t* _m, const uint8_
   _m->FOG_LIGHTS_ON_AVAIL = ((_d[2] >> 2) & (0x01U));
   _m->HEADLIGHTS_MODE_AVAIL = ((_d[2] >> 3) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < HEADLIGHT_AUX_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_HEADLIGHT_AUX_RPT_pacmod12(&_m->mon1, HEADLIGHT_AUX_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_HEADLIGHT_AUX_RPT_pacmod11(&_m->mon1, HEADLIGHT_AUX_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return HEADLIGHT_AUX_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_HEADLIGHT_AUX_RPT_pacmod12(HEADLIGHT_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_HEADLIGHT_AUX_RPT_pacmod11(HEADLIGHT_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < HEADLIGHT_AUX_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -5083,7 +4157,7 @@ uint32_t Pack_HEADLIGHT_AUX_RPT_pacmod12(HEADLIGHT_AUX_RPT_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_HEADLIGHT_AUX_RPT_pacmod12(HEADLIGHT_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_HEADLIGHT_AUX_RPT_pacmod11(HEADLIGHT_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < HEADLIGHT_AUX_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -5096,28 +4170,28 @@ uint32_t Pack_HEADLIGHT_AUX_RPT_pacmod12(HEADLIGHT_AUX_RPT_t* _m, uint8_t* _d, u
   return HEADLIGHT_AUX_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_PARKING_BRAKE_AUX_RPT_pacmod12(PARKING_BRAKE_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_PARKING_BRAKE_AUX_RPT_pacmod11(PARKING_BRAKE_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->PARKING_BRAKE_STATUS = (_d[0] & (0x03U));
   _m->PARKING_BRAKE_STATUS_AVAIL = (_d[1] & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < PARKING_BRAKE_AUX_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_PARKING_BRAKE_AUX_RPT_pacmod12(&_m->mon1, PARKING_BRAKE_AUX_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_PARKING_BRAKE_AUX_RPT_pacmod11(&_m->mon1, PARKING_BRAKE_AUX_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return PARKING_BRAKE_AUX_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_PARKING_BRAKE_AUX_RPT_pacmod12(PARKING_BRAKE_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_PARKING_BRAKE_AUX_RPT_pacmod11(PARKING_BRAKE_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < PARKING_BRAKE_AUX_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -5132,7 +4206,7 @@ uint32_t Pack_PARKING_BRAKE_AUX_RPT_pacmod12(PARKING_BRAKE_AUX_RPT_t* _m, __Code
 
 #else
 
-uint32_t Pack_PARKING_BRAKE_AUX_RPT_pacmod12(PARKING_BRAKE_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_PARKING_BRAKE_AUX_RPT_pacmod11(PARKING_BRAKE_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < PARKING_BRAKE_AUX_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -5144,9 +4218,9 @@ uint32_t Pack_PARKING_BRAKE_AUX_RPT_pacmod12(PARKING_BRAKE_AUX_RPT_t* _m, uint8_
   return PARKING_BRAKE_AUX_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SHIFT_AUX_RPT_pacmod12(SHIFT_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SHIFT_AUX_RPT_pacmod11(SHIFT_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->BETWEEN_GEARS = (_d[0] & (0x01U));
@@ -5161,48 +4235,30 @@ uint32_t Unpack_SHIFT_AUX_RPT_pacmod12(SHIFT_AUX_RPT_t* _m, const uint8_t* _d, u
   _m->SPEED_INTERLOCK_ACTIVE_AVAIL = ((_d[1] >> 3) & (0x01U));
   _m->WRITE_TO_CONFIG_IS_VALID = ((_d[1] >> 4) & (0x01U));
   _m->GEAR_NUMBER_AVAIL = ((_d[1] >> 5) & (0x01U));
-  _m->SHIFT_MODE_AVAIL = ((_d[1] >> 6) & (0x01U));
-  _m->SHIFT_IN_PROGRESS_AVAIL = ((_d[1] >> 7) & (0x01U));
+  _m->SHIFT_MODE_AVIAL = ((_d[1] >> 6) & (0x01U));
   _m->GEAR_NUMBER = __ext_sig__(( (_d[2] & (0x3FU)) ), 6);
   _m->SHIFT_MODE = ((_d[2] >> 6) & (0x03U));
-  _m->SHIFT_IN_PROGRESS = (_d[3] & (0x03U));
-  _m->DRIVELINE_ENGAGED = ((_d[3] >> 2) & (0x03U));
-  _m->ACTUAL_GEAR_RATIO_ro = ((_d[4] & (0xFFU)) << 8) | (_d[5] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ACTUAL_GEAR_RATIO_phys = (sigfloat_t)(PACMOD12_ACTUAL_GEAR_RATIO_ro_fromS(_m->ACTUAL_GEAR_RATIO_ro));
-#endif // PACMOD12_USE_SIGFLOAT
 
-  _m->DRIVELINE_ENGAGED_AVAIL = (_d[6] & (0x01U));
-  _m->ACTUAL_GEAR_RATIO_AVAIL = ((_d[6] >> 1) & (0x01U));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SHIFT_AUX_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SHIFT_AUX_RPT_pacmod12(&_m->mon1, SHIFT_AUX_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SHIFT_AUX_RPT_pacmod11(&_m->mon1, SHIFT_AUX_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SHIFT_AUX_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SHIFT_AUX_RPT_pacmod12(SHIFT_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SHIFT_AUX_RPT_pacmod11(SHIFT_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SHIFT_AUX_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ACTUAL_GEAR_RATIO_ro = PACMOD12_ACTUAL_GEAR_RATIO_ro_toS(_m->ACTUAL_GEAR_RATIO_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
   cframe->Data[0] |= (_m->BETWEEN_GEARS & (0x01U)) | ((_m->STAY_IN_NEUTRAL_MODE & (0x01U)) << 1) | ((_m->BRAKE_INTERLOCK_ACTIVE & (0x01U)) << 2) | ((_m->SPEED_INTERLOCK_ACTIVE & (0x01U)) << 3) | ((_m->WRITE_TO_CONFIG & (0x01U)) << 4) | ((_m->CALIBRATION_STATUS & (0x07U)) << 5);
-  cframe->Data[1] |= (_m->BETWEEN_GEARS_AVAIL & (0x01U)) | ((_m->STAY_IN_NEUTRAL_MODE_AVAIL & (0x01U)) << 1) | ((_m->BRAKE_INTERLOCK_ACTIVE_AVAIL & (0x01U)) << 2) | ((_m->SPEED_INTERLOCK_ACTIVE_AVAIL & (0x01U)) << 3) | ((_m->WRITE_TO_CONFIG_IS_VALID & (0x01U)) << 4) | ((_m->GEAR_NUMBER_AVAIL & (0x01U)) << 5) | ((_m->SHIFT_MODE_AVAIL & (0x01U)) << 6) | ((_m->SHIFT_IN_PROGRESS_AVAIL & (0x01U)) << 7);
+  cframe->Data[1] |= (_m->BETWEEN_GEARS_AVAIL & (0x01U)) | ((_m->STAY_IN_NEUTRAL_MODE_AVAIL & (0x01U)) << 1) | ((_m->BRAKE_INTERLOCK_ACTIVE_AVAIL & (0x01U)) << 2) | ((_m->SPEED_INTERLOCK_ACTIVE_AVAIL & (0x01U)) << 3) | ((_m->WRITE_TO_CONFIG_IS_VALID & (0x01U)) << 4) | ((_m->GEAR_NUMBER_AVAIL & (0x01U)) << 5) | ((_m->SHIFT_MODE_AVIAL & (0x01U)) << 6);
   cframe->Data[2] |= (_m->GEAR_NUMBER & (0x3FU)) | ((_m->SHIFT_MODE & (0x03U)) << 6);
-  cframe->Data[3] |= (_m->SHIFT_IN_PROGRESS & (0x03U)) | ((_m->DRIVELINE_ENGAGED & (0x03U)) << 2);
-  cframe->Data[4] |= ((_m->ACTUAL_GEAR_RATIO_ro >> 8) & (0xFFU));
-  cframe->Data[5] |= (_m->ACTUAL_GEAR_RATIO_ro & (0xFFU));
-  cframe->Data[6] |= (_m->DRIVELINE_ENGAGED_AVAIL & (0x01U)) | ((_m->ACTUAL_GEAR_RATIO_AVAIL & (0x01U)) << 1);
 
   cframe->MsgId = SHIFT_AUX_RPT_CANID;
   cframe->DLC = SHIFT_AUX_RPT_DLC;
@@ -5212,41 +4268,33 @@ uint32_t Pack_SHIFT_AUX_RPT_pacmod12(SHIFT_AUX_RPT_t* _m, __CoderDbcCanFrame_t__
 
 #else
 
-uint32_t Pack_SHIFT_AUX_RPT_pacmod12(SHIFT_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SHIFT_AUX_RPT_pacmod11(SHIFT_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SHIFT_AUX_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ACTUAL_GEAR_RATIO_ro = PACMOD12_ACTUAL_GEAR_RATIO_ro_toS(_m->ACTUAL_GEAR_RATIO_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
   _d[0] |= (_m->BETWEEN_GEARS & (0x01U)) | ((_m->STAY_IN_NEUTRAL_MODE & (0x01U)) << 1) | ((_m->BRAKE_INTERLOCK_ACTIVE & (0x01U)) << 2) | ((_m->SPEED_INTERLOCK_ACTIVE & (0x01U)) << 3) | ((_m->WRITE_TO_CONFIG & (0x01U)) << 4) | ((_m->CALIBRATION_STATUS & (0x07U)) << 5);
-  _d[1] |= (_m->BETWEEN_GEARS_AVAIL & (0x01U)) | ((_m->STAY_IN_NEUTRAL_MODE_AVAIL & (0x01U)) << 1) | ((_m->BRAKE_INTERLOCK_ACTIVE_AVAIL & (0x01U)) << 2) | ((_m->SPEED_INTERLOCK_ACTIVE_AVAIL & (0x01U)) << 3) | ((_m->WRITE_TO_CONFIG_IS_VALID & (0x01U)) << 4) | ((_m->GEAR_NUMBER_AVAIL & (0x01U)) << 5) | ((_m->SHIFT_MODE_AVAIL & (0x01U)) << 6) | ((_m->SHIFT_IN_PROGRESS_AVAIL & (0x01U)) << 7);
+  _d[1] |= (_m->BETWEEN_GEARS_AVAIL & (0x01U)) | ((_m->STAY_IN_NEUTRAL_MODE_AVAIL & (0x01U)) << 1) | ((_m->BRAKE_INTERLOCK_ACTIVE_AVAIL & (0x01U)) << 2) | ((_m->SPEED_INTERLOCK_ACTIVE_AVAIL & (0x01U)) << 3) | ((_m->WRITE_TO_CONFIG_IS_VALID & (0x01U)) << 4) | ((_m->GEAR_NUMBER_AVAIL & (0x01U)) << 5) | ((_m->SHIFT_MODE_AVIAL & (0x01U)) << 6);
   _d[2] |= (_m->GEAR_NUMBER & (0x3FU)) | ((_m->SHIFT_MODE & (0x03U)) << 6);
-  _d[3] |= (_m->SHIFT_IN_PROGRESS & (0x03U)) | ((_m->DRIVELINE_ENGAGED & (0x03U)) << 2);
-  _d[4] |= ((_m->ACTUAL_GEAR_RATIO_ro >> 8) & (0xFFU));
-  _d[5] |= (_m->ACTUAL_GEAR_RATIO_ro & (0xFFU));
-  _d[6] |= (_m->DRIVELINE_ENGAGED_AVAIL & (0x01U)) | ((_m->ACTUAL_GEAR_RATIO_AVAIL & (0x01U)) << 1);
 
   *_len = SHIFT_AUX_RPT_DLC;
   *_ide = SHIFT_AUX_RPT_IDE;
   return SHIFT_AUX_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_STEERING_AUX_RPT_pacmod12(STEERING_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_STEERING_AUX_RPT_pacmod11(STEERING_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->STEERING_TORQUE_ro = __ext_sig__(( ((_d[2] & (0xFFU)) << 8) | (_d[3] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->STEERING_TORQUE_phys = (sigfloat_t)(PACMOD12_STEERING_TORQUE_ro_fromS(_m->STEERING_TORQUE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->STEERING_TORQUE_phys = (sigfloat_t)(PACMOD11_STEERING_TORQUE_ro_fromS(_m->STEERING_TORQUE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->ROTATION_RATE_ro = ((_d[4] & (0xFFU)) << 8) | (_d[5] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ROTATION_RATE_phys = (sigfloat_t)(PACMOD12_ROTATION_RATE_ro_fromS(_m->ROTATION_RATE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ROTATION_RATE_phys = (sigfloat_t)(PACMOD11_ROTATION_RATE_ro_fromS(_m->ROTATION_RATE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->OPERATOR_INTERACTION = (_d[6] & (0x01U));
   _m->ROTATION_RATE_SIGN = ((_d[6] >> 1) & (0x01U));
@@ -5260,27 +4308,27 @@ uint32_t Unpack_STEERING_AUX_RPT_pacmod12(STEERING_AUX_RPT_t* _m, const uint8_t*
   _m->VEHICLE_ANGLE_CALIB_STATUS_AVAIL = ((_d[7] >> 5) & (0x01U));
   _m->STEERING_LIMITING_ACTIVE_AVAIL = ((_d[7] >> 6) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < STEERING_AUX_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_STEERING_AUX_RPT_pacmod12(&_m->mon1, STEERING_AUX_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_STEERING_AUX_RPT_pacmod11(&_m->mon1, STEERING_AUX_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return STEERING_AUX_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_STEERING_AUX_RPT_pacmod12(STEERING_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_STEERING_AUX_RPT_pacmod11(STEERING_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < STEERING_AUX_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->STEERING_TORQUE_ro = PACMOD12_STEERING_TORQUE_ro_toS(_m->STEERING_TORQUE_phys);
-  _m->ROTATION_RATE_ro = PACMOD12_ROTATION_RATE_ro_toS(_m->ROTATION_RATE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->STEERING_TORQUE_ro = PACMOD11_STEERING_TORQUE_ro_toS(_m->STEERING_TORQUE_phys);
+  _m->ROTATION_RATE_ro = PACMOD11_ROTATION_RATE_ro_toS(_m->ROTATION_RATE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[2] |= ((_m->STEERING_TORQUE_ro >> 8) & (0xFFU));
   cframe->Data[3] |= (_m->STEERING_TORQUE_ro & (0xFFU));
@@ -5297,14 +4345,14 @@ uint32_t Pack_STEERING_AUX_RPT_pacmod12(STEERING_AUX_RPT_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_STEERING_AUX_RPT_pacmod12(STEERING_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_STEERING_AUX_RPT_pacmod11(STEERING_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < STEERING_AUX_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->STEERING_TORQUE_ro = PACMOD12_STEERING_TORQUE_ro_toS(_m->STEERING_TORQUE_phys);
-  _m->ROTATION_RATE_ro = PACMOD12_ROTATION_RATE_ro_toS(_m->ROTATION_RATE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->STEERING_TORQUE_ro = PACMOD11_STEERING_TORQUE_ro_toS(_m->STEERING_TORQUE_phys);
+  _m->ROTATION_RATE_ro = PACMOD11_ROTATION_RATE_ro_toS(_m->ROTATION_RATE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[2] |= ((_m->STEERING_TORQUE_ro >> 8) & (0xFFU));
   _d[3] |= (_m->STEERING_TORQUE_ro & (0xFFU));
@@ -5318,9 +4366,9 @@ uint32_t Pack_STEERING_AUX_RPT_pacmod12(STEERING_AUX_RPT_t* _m, uint8_t* _d, uin
   return STEERING_AUX_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_TURN_AUX_RPT_pacmod12(TURN_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_TURN_AUX_RPT_pacmod11(TURN_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->DRIVER_BLINKER_BULB_ON = (_d[0] & (0x01U));
@@ -5328,20 +4376,20 @@ uint32_t Unpack_TURN_AUX_RPT_pacmod12(TURN_AUX_RPT_t* _m, const uint8_t* _d, uin
   _m->DRIVER_BLINKER_BULB_ON_AVAIL = (_d[1] & (0x01U));
   _m->PASS_BLINKER_BULB_ON_AVAIL = ((_d[1] >> 1) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < TURN_AUX_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_TURN_AUX_RPT_pacmod12(&_m->mon1, TURN_AUX_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_TURN_AUX_RPT_pacmod11(&_m->mon1, TURN_AUX_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return TURN_AUX_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_TURN_AUX_RPT_pacmod12(TURN_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_TURN_AUX_RPT_pacmod11(TURN_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < TURN_AUX_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -5356,7 +4404,7 @@ uint32_t Pack_TURN_AUX_RPT_pacmod12(TURN_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* 
 
 #else
 
-uint32_t Pack_TURN_AUX_RPT_pacmod12(TURN_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_TURN_AUX_RPT_pacmod11(TURN_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < TURN_AUX_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -5368,9 +4416,9 @@ uint32_t Pack_TURN_AUX_RPT_pacmod12(TURN_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _l
   return TURN_AUX_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_WIPER_AUX_RPT_pacmod12(WIPER_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_WIPER_AUX_RPT_pacmod11(WIPER_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->FRONT_WIPING = (_d[0] & (0x01U));
@@ -5386,20 +4434,20 @@ uint32_t Unpack_WIPER_AUX_RPT_pacmod12(WIPER_AUX_RPT_t* _m, const uint8_t* _d, u
   _m->SPRAY_NEAR_EMPTY_AVAIL = ((_d[1] >> 4) & (0x01U));
   _m->SPRAY_EMPTY_AVAIL = ((_d[1] >> 5) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < WIPER_AUX_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_WIPER_AUX_RPT_pacmod12(&_m->mon1, WIPER_AUX_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_WIPER_AUX_RPT_pacmod11(&_m->mon1, WIPER_AUX_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return WIPER_AUX_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_WIPER_AUX_RPT_pacmod12(WIPER_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_WIPER_AUX_RPT_pacmod11(WIPER_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < WIPER_AUX_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -5414,7 +4462,7 @@ uint32_t Pack_WIPER_AUX_RPT_pacmod12(WIPER_AUX_RPT_t* _m, __CoderDbcCanFrame_t__
 
 #else
 
-uint32_t Pack_WIPER_AUX_RPT_pacmod12(WIPER_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_WIPER_AUX_RPT_pacmod11(WIPER_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < WIPER_AUX_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -5426,9 +4474,9 @@ uint32_t Pack_WIPER_AUX_RPT_pacmod12(WIPER_AUX_RPT_t* _m, uint8_t* _d, uint8_t* 
   return WIPER_AUX_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_BRAKE_DECEL_AUX_RPT_pacmod12(BRAKE_DECEL_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_BRAKE_DECEL_AUX_RPT_pacmod11(BRAKE_DECEL_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->XBR_ACTIVE_CONTROL_MODE = (_d[0] & (0x0FU));
@@ -5440,20 +4488,20 @@ uint32_t Unpack_BRAKE_DECEL_AUX_RPT_pacmod12(BRAKE_DECEL_AUX_RPT_t* _m, const ui
   _m->FOUNDATION_BRAKE_USE_AVAIL = ((_d[2] >> 2) & (0x01U));
   _m->HILL_HOLDER_MODE_AVAIL = ((_d[2] >> 3) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < BRAKE_DECEL_AUX_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_BRAKE_DECEL_AUX_RPT_pacmod12(&_m->mon1, BRAKE_DECEL_AUX_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_BRAKE_DECEL_AUX_RPT_pacmod11(&_m->mon1, BRAKE_DECEL_AUX_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return BRAKE_DECEL_AUX_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_BRAKE_DECEL_AUX_RPT_pacmod12(BRAKE_DECEL_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_BRAKE_DECEL_AUX_RPT_pacmod11(BRAKE_DECEL_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < BRAKE_DECEL_AUX_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -5469,7 +4517,7 @@ uint32_t Pack_BRAKE_DECEL_AUX_RPT_pacmod12(BRAKE_DECEL_AUX_RPT_t* _m, __CoderDbc
 
 #else
 
-uint32_t Pack_BRAKE_DECEL_AUX_RPT_pacmod12(BRAKE_DECEL_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_BRAKE_DECEL_AUX_RPT_pacmod11(BRAKE_DECEL_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < BRAKE_DECEL_AUX_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -5482,47 +4530,47 @@ uint32_t Pack_BRAKE_DECEL_AUX_RPT_pacmod12(BRAKE_DECEL_AUX_RPT_t* _m, uint8_t* _
   return BRAKE_DECEL_AUX_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_ENGINE_BRAKE_AUX_RPT_pacmod12(ENGINE_BRAKE_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_ENGINE_BRAKE_AUX_RPT_pacmod11(ENGINE_BRAKE_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENGINE_BRAKE_STATUS = (_d[0] & (0x03U));
   _m->ACTUAL_ENGINE_BRK_TORQUE_ro = __ext_sig__(( (_d[1] & (0xFFU)) ), 8);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ACTUAL_ENGINE_BRK_TORQUE_phys = PACMOD12_ACTUAL_ENGINE_BRK_TORQUE_ro_fromS(_m->ACTUAL_ENGINE_BRK_TORQUE_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ACTUAL_ENGINE_BRK_TORQUE_phys = PACMOD11_ACTUAL_ENGINE_BRK_TORQUE_ro_fromS(_m->ACTUAL_ENGINE_BRK_TORQUE_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->INTENDED_ENGINE_BRK_TORQUE_ro = __ext_sig__(( (_d[2] & (0xFFU)) ), 8);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->INTENDED_ENGINE_BRK_TORQUE_phys = PACMOD12_INTENDED_ENGINE_BRK_TORQUE_ro_fromS(_m->INTENDED_ENGINE_BRK_TORQUE_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->INTENDED_ENGINE_BRK_TORQUE_phys = PACMOD11_INTENDED_ENGINE_BRK_TORQUE_ro_fromS(_m->INTENDED_ENGINE_BRK_TORQUE_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->ENGINE_BRAKE_STATUS_AVAIL = (_d[3] & (0x01U));
   _m->ACTUAL_ENGINE_BRK_TORQUE_AVAIL = ((_d[3] >> 1) & (0x01U));
   _m->INTENDED_ENGINE_BRK_TORQUE_AVAIL = ((_d[3] >> 2) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < ENGINE_BRAKE_AUX_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_ENGINE_BRAKE_AUX_RPT_pacmod12(&_m->mon1, ENGINE_BRAKE_AUX_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_ENGINE_BRAKE_AUX_RPT_pacmod11(&_m->mon1, ENGINE_BRAKE_AUX_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return ENGINE_BRAKE_AUX_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_ENGINE_BRAKE_AUX_RPT_pacmod12(ENGINE_BRAKE_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_ENGINE_BRAKE_AUX_RPT_pacmod11(ENGINE_BRAKE_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < ENGINE_BRAKE_AUX_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ACTUAL_ENGINE_BRK_TORQUE_ro = PACMOD12_ACTUAL_ENGINE_BRK_TORQUE_ro_toS(_m->ACTUAL_ENGINE_BRK_TORQUE_phys);
-  _m->INTENDED_ENGINE_BRK_TORQUE_ro = PACMOD12_INTENDED_ENGINE_BRK_TORQUE_ro_toS(_m->INTENDED_ENGINE_BRK_TORQUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ACTUAL_ENGINE_BRK_TORQUE_ro = PACMOD11_ACTUAL_ENGINE_BRK_TORQUE_ro_toS(_m->ACTUAL_ENGINE_BRK_TORQUE_phys);
+  _m->INTENDED_ENGINE_BRK_TORQUE_ro = PACMOD11_INTENDED_ENGINE_BRK_TORQUE_ro_toS(_m->INTENDED_ENGINE_BRK_TORQUE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->ENGINE_BRAKE_STATUS & (0x03U));
   cframe->Data[1] |= (_m->ACTUAL_ENGINE_BRK_TORQUE_ro & (0xFFU));
@@ -5537,14 +4585,14 @@ uint32_t Pack_ENGINE_BRAKE_AUX_RPT_pacmod12(ENGINE_BRAKE_AUX_RPT_t* _m, __CoderD
 
 #else
 
-uint32_t Pack_ENGINE_BRAKE_AUX_RPT_pacmod12(ENGINE_BRAKE_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_ENGINE_BRAKE_AUX_RPT_pacmod11(ENGINE_BRAKE_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < ENGINE_BRAKE_AUX_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ACTUAL_ENGINE_BRK_TORQUE_ro = PACMOD12_ACTUAL_ENGINE_BRK_TORQUE_ro_toS(_m->ACTUAL_ENGINE_BRK_TORQUE_phys);
-  _m->INTENDED_ENGINE_BRK_TORQUE_ro = PACMOD12_INTENDED_ENGINE_BRK_TORQUE_ro_toS(_m->INTENDED_ENGINE_BRK_TORQUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ACTUAL_ENGINE_BRK_TORQUE_ro = PACMOD11_ACTUAL_ENGINE_BRK_TORQUE_ro_toS(_m->ACTUAL_ENGINE_BRK_TORQUE_phys);
+  _m->INTENDED_ENGINE_BRK_TORQUE_ro = PACMOD11_INTENDED_ENGINE_BRK_TORQUE_ro_toS(_m->INTENDED_ENGINE_BRK_TORQUE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->ENGINE_BRAKE_STATUS & (0x03U));
   _d[1] |= (_m->ACTUAL_ENGINE_BRK_TORQUE_ro & (0xFFU));
@@ -5556,38 +4604,38 @@ uint32_t Pack_ENGINE_BRAKE_AUX_RPT_pacmod12(ENGINE_BRAKE_AUX_RPT_t* _m, uint8_t*
   return ENGINE_BRAKE_AUX_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_VEHICLE_SPEED_RPT_pacmod12(VEHICLE_SPEED_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_VEHICLE_SPEED_RPT_pacmod11(VEHICLE_SPEED_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->VEHICLE_SPEED_ro = __ext_sig__(( ((_d[0] & (0xFFU)) << 8) | (_d[1] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->VEHICLE_SPEED_phys = (sigfloat_t)(PACMOD12_VEHICLE_SPEED_ro_fromS(_m->VEHICLE_SPEED_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->VEHICLE_SPEED_phys = (sigfloat_t)(PACMOD11_VEHICLE_SPEED_ro_fromS(_m->VEHICLE_SPEED_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->VEHICLE_SPEED_VALID = (_d[2] & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < VEHICLE_SPEED_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_VEHICLE_SPEED_RPT_pacmod12(&_m->mon1, VEHICLE_SPEED_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_VEHICLE_SPEED_RPT_pacmod11(&_m->mon1, VEHICLE_SPEED_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return VEHICLE_SPEED_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_VEHICLE_SPEED_RPT_pacmod12(VEHICLE_SPEED_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_VEHICLE_SPEED_RPT_pacmod11(VEHICLE_SPEED_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < VEHICLE_SPEED_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->VEHICLE_SPEED_ro = PACMOD12_VEHICLE_SPEED_ro_toS(_m->VEHICLE_SPEED_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->VEHICLE_SPEED_ro = PACMOD11_VEHICLE_SPEED_ro_toS(_m->VEHICLE_SPEED_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= ((_m->VEHICLE_SPEED_ro >> 8) & (0xFFU));
   cframe->Data[1] |= (_m->VEHICLE_SPEED_ro & (0xFFU));
@@ -5601,13 +4649,13 @@ uint32_t Pack_VEHICLE_SPEED_RPT_pacmod12(VEHICLE_SPEED_RPT_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_VEHICLE_SPEED_RPT_pacmod12(VEHICLE_SPEED_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_VEHICLE_SPEED_RPT_pacmod11(VEHICLE_SPEED_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < VEHICLE_SPEED_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->VEHICLE_SPEED_ro = PACMOD12_VEHICLE_SPEED_ro_toS(_m->VEHICLE_SPEED_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->VEHICLE_SPEED_ro = PACMOD11_VEHICLE_SPEED_ro_toS(_m->VEHICLE_SPEED_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= ((_m->VEHICLE_SPEED_ro >> 8) & (0xFFU));
   _d[1] |= (_m->VEHICLE_SPEED_ro & (0xFFU));
@@ -5618,42 +4666,42 @@ uint32_t Pack_VEHICLE_SPEED_RPT_pacmod12(VEHICLE_SPEED_RPT_t* _m, uint8_t* _d, u
   return VEHICLE_SPEED_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_BRAKE_MOTOR_RPT_1_pacmod12(BRAKE_MOTOR_RPT_1_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_BRAKE_MOTOR_RPT_1_pacmod11(BRAKE_MOTOR_RPT_1_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->MOTOR_CURRENT_ro = __ext_sig__(( ((_d[0] & (0xFFU)) << 24) | ((_d[1] & (0xFFU)) << 16) | ((_d[2] & (0xFFU)) << 8) | (_d[3] & (0xFFU)) ), 32);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MOTOR_CURRENT_phys = (sigfloat_t)(PACMOD12_MOTOR_CURRENT_ro_fromS(_m->MOTOR_CURRENT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MOTOR_CURRENT_phys = (sigfloat_t)(PACMOD11_MOTOR_CURRENT_ro_fromS(_m->MOTOR_CURRENT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->SHAFT_POSITION_ro = __ext_sig__(( ((_d[4] & (0xFFU)) << 24) | ((_d[5] & (0xFFU)) << 16) | ((_d[6] & (0xFFU)) << 8) | (_d[7] & (0xFFU)) ), 32);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->SHAFT_POSITION_phys = (sigfloat_t)(PACMOD12_SHAFT_POSITION_ro_fromS(_m->SHAFT_POSITION_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->SHAFT_POSITION_phys = (sigfloat_t)(PACMOD11_SHAFT_POSITION_ro_fromS(_m->SHAFT_POSITION_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < BRAKE_MOTOR_RPT_1_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_BRAKE_MOTOR_RPT_1_pacmod12(&_m->mon1, BRAKE_MOTOR_RPT_1_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_BRAKE_MOTOR_RPT_1_pacmod11(&_m->mon1, BRAKE_MOTOR_RPT_1_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return BRAKE_MOTOR_RPT_1_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_BRAKE_MOTOR_RPT_1_pacmod12(BRAKE_MOTOR_RPT_1_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_BRAKE_MOTOR_RPT_1_pacmod11(BRAKE_MOTOR_RPT_1_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < BRAKE_MOTOR_RPT_1_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MOTOR_CURRENT_ro = PACMOD12_MOTOR_CURRENT_ro_toS(_m->MOTOR_CURRENT_phys);
-  _m->SHAFT_POSITION_ro = PACMOD12_SHAFT_POSITION_ro_toS(_m->SHAFT_POSITION_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MOTOR_CURRENT_ro = PACMOD11_MOTOR_CURRENT_ro_toS(_m->MOTOR_CURRENT_phys);
+  _m->SHAFT_POSITION_ro = PACMOD11_SHAFT_POSITION_ro_toS(_m->SHAFT_POSITION_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= ((_m->MOTOR_CURRENT_ro >> 24) & (0xFFU));
   cframe->Data[1] |= ((_m->MOTOR_CURRENT_ro >> 16) & (0xFFU));
@@ -5672,14 +4720,14 @@ uint32_t Pack_BRAKE_MOTOR_RPT_1_pacmod12(BRAKE_MOTOR_RPT_1_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_BRAKE_MOTOR_RPT_1_pacmod12(BRAKE_MOTOR_RPT_1_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_BRAKE_MOTOR_RPT_1_pacmod11(BRAKE_MOTOR_RPT_1_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < BRAKE_MOTOR_RPT_1_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MOTOR_CURRENT_ro = PACMOD12_MOTOR_CURRENT_ro_toS(_m->MOTOR_CURRENT_phys);
-  _m->SHAFT_POSITION_ro = PACMOD12_SHAFT_POSITION_ro_toS(_m->SHAFT_POSITION_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MOTOR_CURRENT_ro = PACMOD11_MOTOR_CURRENT_ro_toS(_m->MOTOR_CURRENT_phys);
+  _m->SHAFT_POSITION_ro = PACMOD11_SHAFT_POSITION_ro_toS(_m->SHAFT_POSITION_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= ((_m->MOTOR_CURRENT_ro >> 24) & (0xFFU));
   _d[1] |= ((_m->MOTOR_CURRENT_ro >> 16) & (0xFFU));
@@ -5695,38 +4743,38 @@ uint32_t Pack_BRAKE_MOTOR_RPT_1_pacmod12(BRAKE_MOTOR_RPT_1_t* _m, uint8_t* _d, u
   return BRAKE_MOTOR_RPT_1_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_BRAKE_MOTOR_RPT_2_pacmod12(BRAKE_MOTOR_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_BRAKE_MOTOR_RPT_2_pacmod11(BRAKE_MOTOR_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENCODER_TEMPERATURE = __ext_sig__(( ((_d[0] & (0xFFU)) << 8) | (_d[1] & (0xFFU)) ), 16);
   _m->MOTOR_TEMPERATURE = __ext_sig__(( ((_d[2] & (0xFFU)) << 8) | (_d[3] & (0xFFU)) ), 16);
   _m->ANGULAR_SPEED_ro = __ext_sig__(( ((_d[4] & (0xFFU)) << 24) | ((_d[5] & (0xFFU)) << 16) | ((_d[6] & (0xFFU)) << 8) | (_d[7] & (0xFFU)) ), 32);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ANGULAR_SPEED_phys = (sigfloat_t)(PACMOD12_ANGULAR_SPEED_ro_fromS(_m->ANGULAR_SPEED_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ANGULAR_SPEED_phys = (sigfloat_t)(PACMOD11_ANGULAR_SPEED_ro_fromS(_m->ANGULAR_SPEED_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < BRAKE_MOTOR_RPT_2_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_BRAKE_MOTOR_RPT_2_pacmod12(&_m->mon1, BRAKE_MOTOR_RPT_2_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_BRAKE_MOTOR_RPT_2_pacmod11(&_m->mon1, BRAKE_MOTOR_RPT_2_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return BRAKE_MOTOR_RPT_2_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_BRAKE_MOTOR_RPT_2_pacmod12(BRAKE_MOTOR_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_BRAKE_MOTOR_RPT_2_pacmod11(BRAKE_MOTOR_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < BRAKE_MOTOR_RPT_2_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ANGULAR_SPEED_ro = PACMOD12_ANGULAR_SPEED_ro_toS(_m->ANGULAR_SPEED_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ANGULAR_SPEED_ro = PACMOD11_ANGULAR_SPEED_ro_toS(_m->ANGULAR_SPEED_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= ((_m->ENCODER_TEMPERATURE >> 8) & (0xFFU));
   cframe->Data[1] |= (_m->ENCODER_TEMPERATURE & (0xFFU));
@@ -5745,13 +4793,13 @@ uint32_t Pack_BRAKE_MOTOR_RPT_2_pacmod12(BRAKE_MOTOR_RPT_2_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_BRAKE_MOTOR_RPT_2_pacmod12(BRAKE_MOTOR_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_BRAKE_MOTOR_RPT_2_pacmod11(BRAKE_MOTOR_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < BRAKE_MOTOR_RPT_2_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ANGULAR_SPEED_ro = PACMOD12_ANGULAR_SPEED_ro_toS(_m->ANGULAR_SPEED_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ANGULAR_SPEED_ro = PACMOD11_ANGULAR_SPEED_ro_toS(_m->ANGULAR_SPEED_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= ((_m->ENCODER_TEMPERATURE >> 8) & (0xFFU));
   _d[1] |= (_m->ENCODER_TEMPERATURE & (0xFFU));
@@ -5767,42 +4815,42 @@ uint32_t Pack_BRAKE_MOTOR_RPT_2_pacmod12(BRAKE_MOTOR_RPT_2_t* _m, uint8_t* _d, u
   return BRAKE_MOTOR_RPT_2_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_BRAKE_MOTOR_RPT_3_pacmod12(BRAKE_MOTOR_RPT_3_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_BRAKE_MOTOR_RPT_3_pacmod11(BRAKE_MOTOR_RPT_3_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->TORQUE_OUTPUT_ro = __ext_sig__(( ((_d[0] & (0xFFU)) << 24) | ((_d[1] & (0xFFU)) << 16) | ((_d[2] & (0xFFU)) << 8) | (_d[3] & (0xFFU)) ), 32);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TORQUE_OUTPUT_phys = (sigfloat_t)(PACMOD12_TORQUE_OUTPUT_ro_fromS(_m->TORQUE_OUTPUT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->TORQUE_OUTPUT_phys = (sigfloat_t)(PACMOD11_TORQUE_OUTPUT_ro_fromS(_m->TORQUE_OUTPUT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->TORQUE_INPUT_ro = __ext_sig__(( ((_d[4] & (0xFFU)) << 24) | ((_d[5] & (0xFFU)) << 16) | ((_d[6] & (0xFFU)) << 8) | (_d[7] & (0xFFU)) ), 32);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TORQUE_INPUT_phys = (sigfloat_t)(PACMOD12_TORQUE_INPUT_ro_fromS(_m->TORQUE_INPUT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->TORQUE_INPUT_phys = (sigfloat_t)(PACMOD11_TORQUE_INPUT_ro_fromS(_m->TORQUE_INPUT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < BRAKE_MOTOR_RPT_3_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_BRAKE_MOTOR_RPT_3_pacmod12(&_m->mon1, BRAKE_MOTOR_RPT_3_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_BRAKE_MOTOR_RPT_3_pacmod11(&_m->mon1, BRAKE_MOTOR_RPT_3_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return BRAKE_MOTOR_RPT_3_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_BRAKE_MOTOR_RPT_3_pacmod12(BRAKE_MOTOR_RPT_3_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_BRAKE_MOTOR_RPT_3_pacmod11(BRAKE_MOTOR_RPT_3_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < BRAKE_MOTOR_RPT_3_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TORQUE_OUTPUT_ro = PACMOD12_TORQUE_OUTPUT_ro_toS(_m->TORQUE_OUTPUT_phys);
-  _m->TORQUE_INPUT_ro = PACMOD12_TORQUE_INPUT_ro_toS(_m->TORQUE_INPUT_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->TORQUE_OUTPUT_ro = PACMOD11_TORQUE_OUTPUT_ro_toS(_m->TORQUE_OUTPUT_phys);
+  _m->TORQUE_INPUT_ro = PACMOD11_TORQUE_INPUT_ro_toS(_m->TORQUE_INPUT_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= ((_m->TORQUE_OUTPUT_ro >> 24) & (0xFFU));
   cframe->Data[1] |= ((_m->TORQUE_OUTPUT_ro >> 16) & (0xFFU));
@@ -5821,14 +4869,14 @@ uint32_t Pack_BRAKE_MOTOR_RPT_3_pacmod12(BRAKE_MOTOR_RPT_3_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_BRAKE_MOTOR_RPT_3_pacmod12(BRAKE_MOTOR_RPT_3_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_BRAKE_MOTOR_RPT_3_pacmod11(BRAKE_MOTOR_RPT_3_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < BRAKE_MOTOR_RPT_3_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TORQUE_OUTPUT_ro = PACMOD12_TORQUE_OUTPUT_ro_toS(_m->TORQUE_OUTPUT_phys);
-  _m->TORQUE_INPUT_ro = PACMOD12_TORQUE_INPUT_ro_toS(_m->TORQUE_INPUT_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->TORQUE_OUTPUT_ro = PACMOD11_TORQUE_OUTPUT_ro_toS(_m->TORQUE_OUTPUT_phys);
+  _m->TORQUE_INPUT_ro = PACMOD11_TORQUE_INPUT_ro_toS(_m->TORQUE_INPUT_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= ((_m->TORQUE_OUTPUT_ro >> 24) & (0xFFU));
   _d[1] |= ((_m->TORQUE_OUTPUT_ro >> 16) & (0xFFU));
@@ -5844,42 +4892,42 @@ uint32_t Pack_BRAKE_MOTOR_RPT_3_pacmod12(BRAKE_MOTOR_RPT_3_t* _m, uint8_t* _d, u
   return BRAKE_MOTOR_RPT_3_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_STEERING_MOTOR_RPT_1_pacmod12(STEERING_MOTOR_RPT_1_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_STEERING_MOTOR_RPT_1_pacmod11(STEERING_MOTOR_RPT_1_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->MOTOR_CURRENT_ro = __ext_sig__(( ((_d[0] & (0xFFU)) << 24) | ((_d[1] & (0xFFU)) << 16) | ((_d[2] & (0xFFU)) << 8) | (_d[3] & (0xFFU)) ), 32);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MOTOR_CURRENT_phys = (sigfloat_t)(PACMOD12_MOTOR_CURRENT_ro_fromS(_m->MOTOR_CURRENT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MOTOR_CURRENT_phys = (sigfloat_t)(PACMOD11_MOTOR_CURRENT_ro_fromS(_m->MOTOR_CURRENT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->SHAFT_POSITION_ro = __ext_sig__(( ((_d[4] & (0xFFU)) << 24) | ((_d[5] & (0xFFU)) << 16) | ((_d[6] & (0xFFU)) << 8) | (_d[7] & (0xFFU)) ), 32);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->SHAFT_POSITION_phys = (sigfloat_t)(PACMOD12_SHAFT_POSITION_ro_fromS(_m->SHAFT_POSITION_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->SHAFT_POSITION_phys = (sigfloat_t)(PACMOD11_SHAFT_POSITION_ro_fromS(_m->SHAFT_POSITION_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < STEERING_MOTOR_RPT_1_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_STEERING_MOTOR_RPT_1_pacmod12(&_m->mon1, STEERING_MOTOR_RPT_1_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_STEERING_MOTOR_RPT_1_pacmod11(&_m->mon1, STEERING_MOTOR_RPT_1_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return STEERING_MOTOR_RPT_1_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_STEERING_MOTOR_RPT_1_pacmod12(STEERING_MOTOR_RPT_1_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_STEERING_MOTOR_RPT_1_pacmod11(STEERING_MOTOR_RPT_1_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < STEERING_MOTOR_RPT_1_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MOTOR_CURRENT_ro = PACMOD12_MOTOR_CURRENT_ro_toS(_m->MOTOR_CURRENT_phys);
-  _m->SHAFT_POSITION_ro = PACMOD12_SHAFT_POSITION_ro_toS(_m->SHAFT_POSITION_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MOTOR_CURRENT_ro = PACMOD11_MOTOR_CURRENT_ro_toS(_m->MOTOR_CURRENT_phys);
+  _m->SHAFT_POSITION_ro = PACMOD11_SHAFT_POSITION_ro_toS(_m->SHAFT_POSITION_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= ((_m->MOTOR_CURRENT_ro >> 24) & (0xFFU));
   cframe->Data[1] |= ((_m->MOTOR_CURRENT_ro >> 16) & (0xFFU));
@@ -5898,14 +4946,14 @@ uint32_t Pack_STEERING_MOTOR_RPT_1_pacmod12(STEERING_MOTOR_RPT_1_t* _m, __CoderD
 
 #else
 
-uint32_t Pack_STEERING_MOTOR_RPT_1_pacmod12(STEERING_MOTOR_RPT_1_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_STEERING_MOTOR_RPT_1_pacmod11(STEERING_MOTOR_RPT_1_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < STEERING_MOTOR_RPT_1_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->MOTOR_CURRENT_ro = PACMOD12_MOTOR_CURRENT_ro_toS(_m->MOTOR_CURRENT_phys);
-  _m->SHAFT_POSITION_ro = PACMOD12_SHAFT_POSITION_ro_toS(_m->SHAFT_POSITION_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->MOTOR_CURRENT_ro = PACMOD11_MOTOR_CURRENT_ro_toS(_m->MOTOR_CURRENT_phys);
+  _m->SHAFT_POSITION_ro = PACMOD11_SHAFT_POSITION_ro_toS(_m->SHAFT_POSITION_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= ((_m->MOTOR_CURRENT_ro >> 24) & (0xFFU));
   _d[1] |= ((_m->MOTOR_CURRENT_ro >> 16) & (0xFFU));
@@ -5921,38 +4969,38 @@ uint32_t Pack_STEERING_MOTOR_RPT_1_pacmod12(STEERING_MOTOR_RPT_1_t* _m, uint8_t*
   return STEERING_MOTOR_RPT_1_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_STEERING_MOTOR_RPT_2_pacmod12(STEERING_MOTOR_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_STEERING_MOTOR_RPT_2_pacmod11(STEERING_MOTOR_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENCODER_TEMPERATURE = __ext_sig__(( ((_d[0] & (0xFFU)) << 8) | (_d[1] & (0xFFU)) ), 16);
   _m->MOTOR_TEMPERATURE = __ext_sig__(( ((_d[2] & (0xFFU)) << 8) | (_d[3] & (0xFFU)) ), 16);
   _m->ANGULAR_SPEED_ro = __ext_sig__(( ((_d[4] & (0xFFU)) << 24) | ((_d[5] & (0xFFU)) << 16) | ((_d[6] & (0xFFU)) << 8) | (_d[7] & (0xFFU)) ), 32);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ANGULAR_SPEED_phys = (sigfloat_t)(PACMOD12_ANGULAR_SPEED_ro_fromS(_m->ANGULAR_SPEED_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ANGULAR_SPEED_phys = (sigfloat_t)(PACMOD11_ANGULAR_SPEED_ro_fromS(_m->ANGULAR_SPEED_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < STEERING_MOTOR_RPT_2_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_STEERING_MOTOR_RPT_2_pacmod12(&_m->mon1, STEERING_MOTOR_RPT_2_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_STEERING_MOTOR_RPT_2_pacmod11(&_m->mon1, STEERING_MOTOR_RPT_2_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return STEERING_MOTOR_RPT_2_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_STEERING_MOTOR_RPT_2_pacmod12(STEERING_MOTOR_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_STEERING_MOTOR_RPT_2_pacmod11(STEERING_MOTOR_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < STEERING_MOTOR_RPT_2_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ANGULAR_SPEED_ro = PACMOD12_ANGULAR_SPEED_ro_toS(_m->ANGULAR_SPEED_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ANGULAR_SPEED_ro = PACMOD11_ANGULAR_SPEED_ro_toS(_m->ANGULAR_SPEED_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= ((_m->ENCODER_TEMPERATURE >> 8) & (0xFFU));
   cframe->Data[1] |= (_m->ENCODER_TEMPERATURE & (0xFFU));
@@ -5971,13 +5019,13 @@ uint32_t Pack_STEERING_MOTOR_RPT_2_pacmod12(STEERING_MOTOR_RPT_2_t* _m, __CoderD
 
 #else
 
-uint32_t Pack_STEERING_MOTOR_RPT_2_pacmod12(STEERING_MOTOR_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_STEERING_MOTOR_RPT_2_pacmod11(STEERING_MOTOR_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < STEERING_MOTOR_RPT_2_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ANGULAR_SPEED_ro = PACMOD12_ANGULAR_SPEED_ro_toS(_m->ANGULAR_SPEED_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ANGULAR_SPEED_ro = PACMOD11_ANGULAR_SPEED_ro_toS(_m->ANGULAR_SPEED_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= ((_m->ENCODER_TEMPERATURE >> 8) & (0xFFU));
   _d[1] |= (_m->ENCODER_TEMPERATURE & (0xFFU));
@@ -5993,42 +5041,42 @@ uint32_t Pack_STEERING_MOTOR_RPT_2_pacmod12(STEERING_MOTOR_RPT_2_t* _m, uint8_t*
   return STEERING_MOTOR_RPT_2_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_STEERING_MOTOR_RPT_3_pacmod12(STEERING_MOTOR_RPT_3_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_STEERING_MOTOR_RPT_3_pacmod11(STEERING_MOTOR_RPT_3_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->TORQUE_OUTPUT_ro = __ext_sig__(( ((_d[0] & (0xFFU)) << 24) | ((_d[1] & (0xFFU)) << 16) | ((_d[2] & (0xFFU)) << 8) | (_d[3] & (0xFFU)) ), 32);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TORQUE_OUTPUT_phys = (sigfloat_t)(PACMOD12_TORQUE_OUTPUT_ro_fromS(_m->TORQUE_OUTPUT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->TORQUE_OUTPUT_phys = (sigfloat_t)(PACMOD11_TORQUE_OUTPUT_ro_fromS(_m->TORQUE_OUTPUT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->TORQUE_INPUT_ro = __ext_sig__(( ((_d[4] & (0xFFU)) << 24) | ((_d[5] & (0xFFU)) << 16) | ((_d[6] & (0xFFU)) << 8) | (_d[7] & (0xFFU)) ), 32);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TORQUE_INPUT_phys = (sigfloat_t)(PACMOD12_TORQUE_INPUT_ro_fromS(_m->TORQUE_INPUT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->TORQUE_INPUT_phys = (sigfloat_t)(PACMOD11_TORQUE_INPUT_ro_fromS(_m->TORQUE_INPUT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < STEERING_MOTOR_RPT_3_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_STEERING_MOTOR_RPT_3_pacmod12(&_m->mon1, STEERING_MOTOR_RPT_3_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_STEERING_MOTOR_RPT_3_pacmod11(&_m->mon1, STEERING_MOTOR_RPT_3_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return STEERING_MOTOR_RPT_3_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_STEERING_MOTOR_RPT_3_pacmod12(STEERING_MOTOR_RPT_3_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_STEERING_MOTOR_RPT_3_pacmod11(STEERING_MOTOR_RPT_3_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < STEERING_MOTOR_RPT_3_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TORQUE_OUTPUT_ro = PACMOD12_TORQUE_OUTPUT_ro_toS(_m->TORQUE_OUTPUT_phys);
-  _m->TORQUE_INPUT_ro = PACMOD12_TORQUE_INPUT_ro_toS(_m->TORQUE_INPUT_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->TORQUE_OUTPUT_ro = PACMOD11_TORQUE_OUTPUT_ro_toS(_m->TORQUE_OUTPUT_phys);
+  _m->TORQUE_INPUT_ro = PACMOD11_TORQUE_INPUT_ro_toS(_m->TORQUE_INPUT_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= ((_m->TORQUE_OUTPUT_ro >> 24) & (0xFFU));
   cframe->Data[1] |= ((_m->TORQUE_OUTPUT_ro >> 16) & (0xFFU));
@@ -6047,14 +5095,14 @@ uint32_t Pack_STEERING_MOTOR_RPT_3_pacmod12(STEERING_MOTOR_RPT_3_t* _m, __CoderD
 
 #else
 
-uint32_t Pack_STEERING_MOTOR_RPT_3_pacmod12(STEERING_MOTOR_RPT_3_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_STEERING_MOTOR_RPT_3_pacmod11(STEERING_MOTOR_RPT_3_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < STEERING_MOTOR_RPT_3_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TORQUE_OUTPUT_ro = PACMOD12_TORQUE_OUTPUT_ro_toS(_m->TORQUE_OUTPUT_phys);
-  _m->TORQUE_INPUT_ro = PACMOD12_TORQUE_INPUT_ro_toS(_m->TORQUE_INPUT_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->TORQUE_OUTPUT_ro = PACMOD11_TORQUE_OUTPUT_ro_toS(_m->TORQUE_OUTPUT_phys);
+  _m->TORQUE_INPUT_ro = PACMOD11_TORQUE_INPUT_ro_toS(_m->TORQUE_INPUT_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= ((_m->TORQUE_OUTPUT_ro >> 24) & (0xFFU));
   _d[1] |= ((_m->TORQUE_OUTPUT_ro >> 16) & (0xFFU));
@@ -6070,63 +5118,63 @@ uint32_t Pack_STEERING_MOTOR_RPT_3_pacmod12(STEERING_MOTOR_RPT_3_t* _m, uint8_t*
   return STEERING_MOTOR_RPT_3_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_WHEEL_SPEED_RPT_pacmod12(WHEEL_SPEED_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_WHEEL_SPEED_RPT_pacmod11(WHEEL_SPEED_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
-  _m->WHEEL_SPD_AXLE_1_LEFT_ro = __ext_sig__(( ((_d[0] & (0xFFU)) << 8) | (_d[1] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->WHEEL_SPD_AXLE_1_LEFT_phys = (sigfloat_t)(PACMOD12_WHEEL_SPD_AXLE_1_LEFT_ro_fromS(_m->WHEEL_SPD_AXLE_1_LEFT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+  _m->WHEEL_SPD_FRONT_LEFT_ro = __ext_sig__(( ((_d[0] & (0xFFU)) << 8) | (_d[1] & (0xFFU)) ), 16);
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->WHEEL_SPD_FRONT_LEFT_phys = (sigfloat_t)(PACMOD11_WHEEL_SPD_FRONT_LEFT_ro_fromS(_m->WHEEL_SPD_FRONT_LEFT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-  _m->WHEEL_SPD_AXLE_1_RIGHT_ro = __ext_sig__(( ((_d[2] & (0xFFU)) << 8) | (_d[3] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->WHEEL_SPD_AXLE_1_RIGHT_phys = (sigfloat_t)(PACMOD12_WHEEL_SPD_AXLE_1_RIGHT_ro_fromS(_m->WHEEL_SPD_AXLE_1_RIGHT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+  _m->WHEEL_SPD_FRONT_RIGHT_ro = __ext_sig__(( ((_d[2] & (0xFFU)) << 8) | (_d[3] & (0xFFU)) ), 16);
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->WHEEL_SPD_FRONT_RIGHT_phys = (sigfloat_t)(PACMOD11_WHEEL_SPD_FRONT_RIGHT_ro_fromS(_m->WHEEL_SPD_FRONT_RIGHT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-  _m->WHEEL_SPD_AXLE_2_LEFT_ro = __ext_sig__(( ((_d[4] & (0xFFU)) << 8) | (_d[5] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->WHEEL_SPD_AXLE_2_LEFT_phys = (sigfloat_t)(PACMOD12_WHEEL_SPD_AXLE_2_LEFT_ro_fromS(_m->WHEEL_SPD_AXLE_2_LEFT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+  _m->WHEEL_SPD_REAR_LEFT_ro = __ext_sig__(( ((_d[4] & (0xFFU)) << 8) | (_d[5] & (0xFFU)) ), 16);
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->WHEEL_SPD_REAR_LEFT_phys = (sigfloat_t)(PACMOD11_WHEEL_SPD_REAR_LEFT_ro_fromS(_m->WHEEL_SPD_REAR_LEFT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-  _m->WHEEL_SPD_AXLE_2_RIGHT_ro = __ext_sig__(( ((_d[6] & (0xFFU)) << 8) | (_d[7] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->WHEEL_SPD_AXLE_2_RIGHT_phys = (sigfloat_t)(PACMOD12_WHEEL_SPD_AXLE_2_RIGHT_ro_fromS(_m->WHEEL_SPD_AXLE_2_RIGHT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+  _m->WHEEL_SPD_REAR_RIGHT_ro = __ext_sig__(( ((_d[6] & (0xFFU)) << 8) | (_d[7] & (0xFFU)) ), 16);
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->WHEEL_SPD_REAR_RIGHT_phys = (sigfloat_t)(PACMOD11_WHEEL_SPD_REAR_RIGHT_ro_fromS(_m->WHEEL_SPD_REAR_RIGHT_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < WHEEL_SPEED_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_WHEEL_SPEED_RPT_pacmod12(&_m->mon1, WHEEL_SPEED_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_WHEEL_SPEED_RPT_pacmod11(&_m->mon1, WHEEL_SPEED_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return WHEEL_SPEED_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_WHEEL_SPEED_RPT_pacmod12(WHEEL_SPEED_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_WHEEL_SPEED_RPT_pacmod11(WHEEL_SPEED_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < WHEEL_SPEED_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->WHEEL_SPD_AXLE_1_LEFT_ro = PACMOD12_WHEEL_SPD_AXLE_1_LEFT_ro_toS(_m->WHEEL_SPD_AXLE_1_LEFT_phys);
-  _m->WHEEL_SPD_AXLE_1_RIGHT_ro = PACMOD12_WHEEL_SPD_AXLE_1_RIGHT_ro_toS(_m->WHEEL_SPD_AXLE_1_RIGHT_phys);
-  _m->WHEEL_SPD_AXLE_2_LEFT_ro = PACMOD12_WHEEL_SPD_AXLE_2_LEFT_ro_toS(_m->WHEEL_SPD_AXLE_2_LEFT_phys);
-  _m->WHEEL_SPD_AXLE_2_RIGHT_ro = PACMOD12_WHEEL_SPD_AXLE_2_RIGHT_ro_toS(_m->WHEEL_SPD_AXLE_2_RIGHT_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->WHEEL_SPD_FRONT_LEFT_ro = PACMOD11_WHEEL_SPD_FRONT_LEFT_ro_toS(_m->WHEEL_SPD_FRONT_LEFT_phys);
+  _m->WHEEL_SPD_FRONT_RIGHT_ro = PACMOD11_WHEEL_SPD_FRONT_RIGHT_ro_toS(_m->WHEEL_SPD_FRONT_RIGHT_phys);
+  _m->WHEEL_SPD_REAR_LEFT_ro = PACMOD11_WHEEL_SPD_REAR_LEFT_ro_toS(_m->WHEEL_SPD_REAR_LEFT_phys);
+  _m->WHEEL_SPD_REAR_RIGHT_ro = PACMOD11_WHEEL_SPD_REAR_RIGHT_ro_toS(_m->WHEEL_SPD_REAR_RIGHT_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
-  cframe->Data[0] |= ((_m->WHEEL_SPD_AXLE_1_LEFT_ro >> 8) & (0xFFU));
-  cframe->Data[1] |= (_m->WHEEL_SPD_AXLE_1_LEFT_ro & (0xFFU));
-  cframe->Data[2] |= ((_m->WHEEL_SPD_AXLE_1_RIGHT_ro >> 8) & (0xFFU));
-  cframe->Data[3] |= (_m->WHEEL_SPD_AXLE_1_RIGHT_ro & (0xFFU));
-  cframe->Data[4] |= ((_m->WHEEL_SPD_AXLE_2_LEFT_ro >> 8) & (0xFFU));
-  cframe->Data[5] |= (_m->WHEEL_SPD_AXLE_2_LEFT_ro & (0xFFU));
-  cframe->Data[6] |= ((_m->WHEEL_SPD_AXLE_2_RIGHT_ro >> 8) & (0xFFU));
-  cframe->Data[7] |= (_m->WHEEL_SPD_AXLE_2_RIGHT_ro & (0xFFU));
+  cframe->Data[0] |= ((_m->WHEEL_SPD_FRONT_LEFT_ro >> 8) & (0xFFU));
+  cframe->Data[1] |= (_m->WHEEL_SPD_FRONT_LEFT_ro & (0xFFU));
+  cframe->Data[2] |= ((_m->WHEEL_SPD_FRONT_RIGHT_ro >> 8) & (0xFFU));
+  cframe->Data[3] |= (_m->WHEEL_SPD_FRONT_RIGHT_ro & (0xFFU));
+  cframe->Data[4] |= ((_m->WHEEL_SPD_REAR_LEFT_ro >> 8) & (0xFFU));
+  cframe->Data[5] |= (_m->WHEEL_SPD_REAR_LEFT_ro & (0xFFU));
+  cframe->Data[6] |= ((_m->WHEEL_SPD_REAR_RIGHT_ro >> 8) & (0xFFU));
+  cframe->Data[7] |= (_m->WHEEL_SPD_REAR_RIGHT_ro & (0xFFU));
 
   cframe->MsgId = WHEEL_SPEED_RPT_CANID;
   cframe->DLC = WHEEL_SPEED_RPT_DLC;
@@ -6136,34 +5184,34 @@ uint32_t Pack_WHEEL_SPEED_RPT_pacmod12(WHEEL_SPEED_RPT_t* _m, __CoderDbcCanFrame
 
 #else
 
-uint32_t Pack_WHEEL_SPEED_RPT_pacmod12(WHEEL_SPEED_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_WHEEL_SPEED_RPT_pacmod11(WHEEL_SPEED_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < WHEEL_SPEED_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->WHEEL_SPD_AXLE_1_LEFT_ro = PACMOD12_WHEEL_SPD_AXLE_1_LEFT_ro_toS(_m->WHEEL_SPD_AXLE_1_LEFT_phys);
-  _m->WHEEL_SPD_AXLE_1_RIGHT_ro = PACMOD12_WHEEL_SPD_AXLE_1_RIGHT_ro_toS(_m->WHEEL_SPD_AXLE_1_RIGHT_phys);
-  _m->WHEEL_SPD_AXLE_2_LEFT_ro = PACMOD12_WHEEL_SPD_AXLE_2_LEFT_ro_toS(_m->WHEEL_SPD_AXLE_2_LEFT_phys);
-  _m->WHEEL_SPD_AXLE_2_RIGHT_ro = PACMOD12_WHEEL_SPD_AXLE_2_RIGHT_ro_toS(_m->WHEEL_SPD_AXLE_2_RIGHT_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->WHEEL_SPD_FRONT_LEFT_ro = PACMOD11_WHEEL_SPD_FRONT_LEFT_ro_toS(_m->WHEEL_SPD_FRONT_LEFT_phys);
+  _m->WHEEL_SPD_FRONT_RIGHT_ro = PACMOD11_WHEEL_SPD_FRONT_RIGHT_ro_toS(_m->WHEEL_SPD_FRONT_RIGHT_phys);
+  _m->WHEEL_SPD_REAR_LEFT_ro = PACMOD11_WHEEL_SPD_REAR_LEFT_ro_toS(_m->WHEEL_SPD_REAR_LEFT_phys);
+  _m->WHEEL_SPD_REAR_RIGHT_ro = PACMOD11_WHEEL_SPD_REAR_RIGHT_ro_toS(_m->WHEEL_SPD_REAR_RIGHT_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
-  _d[0] |= ((_m->WHEEL_SPD_AXLE_1_LEFT_ro >> 8) & (0xFFU));
-  _d[1] |= (_m->WHEEL_SPD_AXLE_1_LEFT_ro & (0xFFU));
-  _d[2] |= ((_m->WHEEL_SPD_AXLE_1_RIGHT_ro >> 8) & (0xFFU));
-  _d[3] |= (_m->WHEEL_SPD_AXLE_1_RIGHT_ro & (0xFFU));
-  _d[4] |= ((_m->WHEEL_SPD_AXLE_2_LEFT_ro >> 8) & (0xFFU));
-  _d[5] |= (_m->WHEEL_SPD_AXLE_2_LEFT_ro & (0xFFU));
-  _d[6] |= ((_m->WHEEL_SPD_AXLE_2_RIGHT_ro >> 8) & (0xFFU));
-  _d[7] |= (_m->WHEEL_SPD_AXLE_2_RIGHT_ro & (0xFFU));
+  _d[0] |= ((_m->WHEEL_SPD_FRONT_LEFT_ro >> 8) & (0xFFU));
+  _d[1] |= (_m->WHEEL_SPD_FRONT_LEFT_ro & (0xFFU));
+  _d[2] |= ((_m->WHEEL_SPD_FRONT_RIGHT_ro >> 8) & (0xFFU));
+  _d[3] |= (_m->WHEEL_SPD_FRONT_RIGHT_ro & (0xFFU));
+  _d[4] |= ((_m->WHEEL_SPD_REAR_LEFT_ro >> 8) & (0xFFU));
+  _d[5] |= (_m->WHEEL_SPD_REAR_LEFT_ro & (0xFFU));
+  _d[6] |= ((_m->WHEEL_SPD_REAR_RIGHT_ro >> 8) & (0xFFU));
+  _d[7] |= (_m->WHEEL_SPD_REAR_RIGHT_ro & (0xFFU));
 
   *_len = WHEEL_SPEED_RPT_DLC;
   *_ide = WHEEL_SPEED_RPT_IDE;
   return WHEEL_SPEED_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SOFTWARE_VERSION_RPT_00_pacmod12(SOFTWARE_VERSION_RPT_00_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SOFTWARE_VERSION_RPT_00_pacmod11(SOFTWARE_VERSION_RPT_00_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->MAJOR = (_d[0] & (0xFFU));
@@ -6174,20 +5222,20 @@ uint32_t Unpack_SOFTWARE_VERSION_RPT_00_pacmod12(SOFTWARE_VERSION_RPT_00_t* _m, 
   _m->BUILD2 = (_d[5] & (0xFFU));
   _m->BUILD3 = (_d[6] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SOFTWARE_VERSION_RPT_00_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SOFTWARE_VERSION_RPT_00_pacmod12(&_m->mon1, SOFTWARE_VERSION_RPT_00_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SOFTWARE_VERSION_RPT_00_pacmod11(&_m->mon1, SOFTWARE_VERSION_RPT_00_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SOFTWARE_VERSION_RPT_00_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SOFTWARE_VERSION_RPT_00_pacmod12(SOFTWARE_VERSION_RPT_00_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SOFTWARE_VERSION_RPT_00_pacmod11(SOFTWARE_VERSION_RPT_00_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SOFTWARE_VERSION_RPT_00_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -6207,7 +5255,7 @@ uint32_t Pack_SOFTWARE_VERSION_RPT_00_pacmod12(SOFTWARE_VERSION_RPT_00_t* _m, __
 
 #else
 
-uint32_t Pack_SOFTWARE_VERSION_RPT_00_pacmod12(SOFTWARE_VERSION_RPT_00_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SOFTWARE_VERSION_RPT_00_pacmod11(SOFTWARE_VERSION_RPT_00_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SOFTWARE_VERSION_RPT_00_DLC) && (i < 8); _d[i++] = 0);
 
@@ -6224,9 +5272,9 @@ uint32_t Pack_SOFTWARE_VERSION_RPT_00_pacmod12(SOFTWARE_VERSION_RPT_00_t* _m, ui
   return SOFTWARE_VERSION_RPT_00_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SOFTWARE_VERSION_RPT_01_pacmod12(SOFTWARE_VERSION_RPT_01_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SOFTWARE_VERSION_RPT_01_pacmod11(SOFTWARE_VERSION_RPT_01_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->MAJOR = (_d[0] & (0xFFU));
@@ -6237,20 +5285,20 @@ uint32_t Unpack_SOFTWARE_VERSION_RPT_01_pacmod12(SOFTWARE_VERSION_RPT_01_t* _m, 
   _m->BUILD2 = (_d[5] & (0xFFU));
   _m->BUILD3 = (_d[6] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SOFTWARE_VERSION_RPT_01_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SOFTWARE_VERSION_RPT_01_pacmod12(&_m->mon1, SOFTWARE_VERSION_RPT_01_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SOFTWARE_VERSION_RPT_01_pacmod11(&_m->mon1, SOFTWARE_VERSION_RPT_01_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SOFTWARE_VERSION_RPT_01_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SOFTWARE_VERSION_RPT_01_pacmod12(SOFTWARE_VERSION_RPT_01_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SOFTWARE_VERSION_RPT_01_pacmod11(SOFTWARE_VERSION_RPT_01_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SOFTWARE_VERSION_RPT_01_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -6270,7 +5318,7 @@ uint32_t Pack_SOFTWARE_VERSION_RPT_01_pacmod12(SOFTWARE_VERSION_RPT_01_t* _m, __
 
 #else
 
-uint32_t Pack_SOFTWARE_VERSION_RPT_01_pacmod12(SOFTWARE_VERSION_RPT_01_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SOFTWARE_VERSION_RPT_01_pacmod11(SOFTWARE_VERSION_RPT_01_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SOFTWARE_VERSION_RPT_01_DLC) && (i < 8); _d[i++] = 0);
 
@@ -6287,9 +5335,9 @@ uint32_t Pack_SOFTWARE_VERSION_RPT_01_pacmod12(SOFTWARE_VERSION_RPT_01_t* _m, ui
   return SOFTWARE_VERSION_RPT_01_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SOFTWARE_VERSION_RPT_02_pacmod12(SOFTWARE_VERSION_RPT_02_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SOFTWARE_VERSION_RPT_02_pacmod11(SOFTWARE_VERSION_RPT_02_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->MAJOR = (_d[0] & (0xFFU));
@@ -6300,20 +5348,20 @@ uint32_t Unpack_SOFTWARE_VERSION_RPT_02_pacmod12(SOFTWARE_VERSION_RPT_02_t* _m, 
   _m->BUILD2 = (_d[5] & (0xFFU));
   _m->BUILD3 = (_d[6] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SOFTWARE_VERSION_RPT_02_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SOFTWARE_VERSION_RPT_02_pacmod12(&_m->mon1, SOFTWARE_VERSION_RPT_02_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SOFTWARE_VERSION_RPT_02_pacmod11(&_m->mon1, SOFTWARE_VERSION_RPT_02_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SOFTWARE_VERSION_RPT_02_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SOFTWARE_VERSION_RPT_02_pacmod12(SOFTWARE_VERSION_RPT_02_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SOFTWARE_VERSION_RPT_02_pacmod11(SOFTWARE_VERSION_RPT_02_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SOFTWARE_VERSION_RPT_02_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -6333,7 +5381,7 @@ uint32_t Pack_SOFTWARE_VERSION_RPT_02_pacmod12(SOFTWARE_VERSION_RPT_02_t* _m, __
 
 #else
 
-uint32_t Pack_SOFTWARE_VERSION_RPT_02_pacmod12(SOFTWARE_VERSION_RPT_02_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SOFTWARE_VERSION_RPT_02_pacmod11(SOFTWARE_VERSION_RPT_02_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SOFTWARE_VERSION_RPT_02_DLC) && (i < 8); _d[i++] = 0);
 
@@ -6350,9 +5398,9 @@ uint32_t Pack_SOFTWARE_VERSION_RPT_02_pacmod12(SOFTWARE_VERSION_RPT_02_t* _m, ui
   return SOFTWARE_VERSION_RPT_02_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SOFTWARE_VERSION_RPT_03_pacmod12(SOFTWARE_VERSION_RPT_03_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SOFTWARE_VERSION_RPT_03_pacmod11(SOFTWARE_VERSION_RPT_03_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->MAJOR = (_d[0] & (0xFFU));
@@ -6363,20 +5411,20 @@ uint32_t Unpack_SOFTWARE_VERSION_RPT_03_pacmod12(SOFTWARE_VERSION_RPT_03_t* _m, 
   _m->BUILD2 = (_d[5] & (0xFFU));
   _m->BUILD3 = (_d[6] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SOFTWARE_VERSION_RPT_03_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SOFTWARE_VERSION_RPT_03_pacmod12(&_m->mon1, SOFTWARE_VERSION_RPT_03_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SOFTWARE_VERSION_RPT_03_pacmod11(&_m->mon1, SOFTWARE_VERSION_RPT_03_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SOFTWARE_VERSION_RPT_03_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SOFTWARE_VERSION_RPT_03_pacmod12(SOFTWARE_VERSION_RPT_03_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SOFTWARE_VERSION_RPT_03_pacmod11(SOFTWARE_VERSION_RPT_03_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SOFTWARE_VERSION_RPT_03_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -6396,7 +5444,7 @@ uint32_t Pack_SOFTWARE_VERSION_RPT_03_pacmod12(SOFTWARE_VERSION_RPT_03_t* _m, __
 
 #else
 
-uint32_t Pack_SOFTWARE_VERSION_RPT_03_pacmod12(SOFTWARE_VERSION_RPT_03_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SOFTWARE_VERSION_RPT_03_pacmod11(SOFTWARE_VERSION_RPT_03_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SOFTWARE_VERSION_RPT_03_DLC) && (i < 8); _d[i++] = 0);
 
@@ -6413,9 +5461,9 @@ uint32_t Pack_SOFTWARE_VERSION_RPT_03_pacmod12(SOFTWARE_VERSION_RPT_03_t* _m, ui
   return SOFTWARE_VERSION_RPT_03_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SOFTWARE_VERSION_RPT_04_pacmod12(SOFTWARE_VERSION_RPT_04_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SOFTWARE_VERSION_RPT_04_pacmod11(SOFTWARE_VERSION_RPT_04_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->MAJOR = (_d[0] & (0xFFU));
@@ -6426,20 +5474,20 @@ uint32_t Unpack_SOFTWARE_VERSION_RPT_04_pacmod12(SOFTWARE_VERSION_RPT_04_t* _m, 
   _m->BUILD2 = (_d[5] & (0xFFU));
   _m->BUILD3 = (_d[6] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SOFTWARE_VERSION_RPT_04_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SOFTWARE_VERSION_RPT_04_pacmod12(&_m->mon1, SOFTWARE_VERSION_RPT_04_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SOFTWARE_VERSION_RPT_04_pacmod11(&_m->mon1, SOFTWARE_VERSION_RPT_04_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SOFTWARE_VERSION_RPT_04_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SOFTWARE_VERSION_RPT_04_pacmod12(SOFTWARE_VERSION_RPT_04_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SOFTWARE_VERSION_RPT_04_pacmod11(SOFTWARE_VERSION_RPT_04_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SOFTWARE_VERSION_RPT_04_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -6459,7 +5507,7 @@ uint32_t Pack_SOFTWARE_VERSION_RPT_04_pacmod12(SOFTWARE_VERSION_RPT_04_t* _m, __
 
 #else
 
-uint32_t Pack_SOFTWARE_VERSION_RPT_04_pacmod12(SOFTWARE_VERSION_RPT_04_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SOFTWARE_VERSION_RPT_04_pacmod11(SOFTWARE_VERSION_RPT_04_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SOFTWARE_VERSION_RPT_04_DLC) && (i < 8); _d[i++] = 0);
 
@@ -6476,36 +5524,36 @@ uint32_t Pack_SOFTWARE_VERSION_RPT_04_pacmod12(SOFTWARE_VERSION_RPT_04_t* _m, ui
   return SOFTWARE_VERSION_RPT_04_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_YAW_RATE_RPT_pacmod12(YAW_RATE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_YAW_RATE_RPT_pacmod11(YAW_RATE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->YAW_RATE_ro = __ext_sig__(( ((_d[0] & (0xFFU)) << 8) | (_d[1] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->YAW_RATE_phys = (sigfloat_t)(PACMOD12_YAW_RATE_ro_fromS(_m->YAW_RATE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->YAW_RATE_phys = (sigfloat_t)(PACMOD11_YAW_RATE_ro_fromS(_m->YAW_RATE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < YAW_RATE_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_YAW_RATE_RPT_pacmod12(&_m->mon1, YAW_RATE_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_YAW_RATE_RPT_pacmod11(&_m->mon1, YAW_RATE_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return YAW_RATE_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_YAW_RATE_RPT_pacmod12(YAW_RATE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_YAW_RATE_RPT_pacmod11(YAW_RATE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < YAW_RATE_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->YAW_RATE_ro = PACMOD12_YAW_RATE_ro_toS(_m->YAW_RATE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->YAW_RATE_ro = PACMOD11_YAW_RATE_ro_toS(_m->YAW_RATE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= ((_m->YAW_RATE_ro >> 8) & (0xFFU));
   cframe->Data[1] |= (_m->YAW_RATE_ro & (0xFFU));
@@ -6518,13 +5566,13 @@ uint32_t Pack_YAW_RATE_RPT_pacmod12(YAW_RATE_RPT_t* _m, __CoderDbcCanFrame_t__* 
 
 #else
 
-uint32_t Pack_YAW_RATE_RPT_pacmod12(YAW_RATE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_YAW_RATE_RPT_pacmod11(YAW_RATE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < YAW_RATE_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->YAW_RATE_ro = PACMOD12_YAW_RATE_ro_toS(_m->YAW_RATE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->YAW_RATE_ro = PACMOD11_YAW_RATE_ro_toS(_m->YAW_RATE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= ((_m->YAW_RATE_ro >> 8) & (0xFFU));
   _d[1] |= (_m->YAW_RATE_ro & (0xFFU));
@@ -6534,9 +5582,9 @@ uint32_t Pack_YAW_RATE_RPT_pacmod12(YAW_RATE_RPT_t* _m, uint8_t* _d, uint8_t* _l
   return YAW_RATE_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_LAT_LON_HEADING_RPT_pacmod12(LAT_LON_HEADING_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_LAT_LON_HEADING_RPT_pacmod11(LAT_LON_HEADING_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->LATITUDE_DEGREES = __ext_sig__(( (_d[0] & (0xFFU)) ), 8);
@@ -6546,30 +5594,30 @@ uint32_t Unpack_LAT_LON_HEADING_RPT_pacmod12(LAT_LON_HEADING_RPT_t* _m, const ui
   _m->LONGITUDE_MINUTES = __ext_sig__(( (_d[4] & (0xFFU)) ), 8);
   _m->LONGITUDE_SECONDS = __ext_sig__(( (_d[5] & (0xFFU)) ), 8);
   _m->HEADING_ro = __ext_sig__(( ((_d[6] & (0xFFU)) << 8) | (_d[7] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->HEADING_phys = (sigfloat_t)(PACMOD12_HEADING_ro_fromS(_m->HEADING_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->HEADING_phys = (sigfloat_t)(PACMOD11_HEADING_ro_fromS(_m->HEADING_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < LAT_LON_HEADING_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_LAT_LON_HEADING_RPT_pacmod12(&_m->mon1, LAT_LON_HEADING_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_LAT_LON_HEADING_RPT_pacmod11(&_m->mon1, LAT_LON_HEADING_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return LAT_LON_HEADING_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_LAT_LON_HEADING_RPT_pacmod12(LAT_LON_HEADING_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_LAT_LON_HEADING_RPT_pacmod11(LAT_LON_HEADING_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < LAT_LON_HEADING_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->HEADING_ro = PACMOD12_HEADING_ro_toS(_m->HEADING_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->HEADING_ro = PACMOD11_HEADING_ro_toS(_m->HEADING_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->LATITUDE_DEGREES & (0xFFU));
   cframe->Data[1] |= (_m->LATITUDE_MINUTES & (0xFFU));
@@ -6588,13 +5636,13 @@ uint32_t Pack_LAT_LON_HEADING_RPT_pacmod12(LAT_LON_HEADING_RPT_t* _m, __CoderDbc
 
 #else
 
-uint32_t Pack_LAT_LON_HEADING_RPT_pacmod12(LAT_LON_HEADING_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_LAT_LON_HEADING_RPT_pacmod11(LAT_LON_HEADING_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < LAT_LON_HEADING_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->HEADING_ro = PACMOD12_HEADING_ro_toS(_m->HEADING_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->HEADING_ro = PACMOD11_HEADING_ro_toS(_m->HEADING_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->LATITUDE_DEGREES & (0xFFU));
   _d[1] |= (_m->LATITUDE_MINUTES & (0xFFU));
@@ -6610,52 +5658,52 @@ uint32_t Pack_LAT_LON_HEADING_RPT_pacmod12(LAT_LON_HEADING_RPT_t* _m, uint8_t* _
   return LAT_LON_HEADING_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_DATE_TIME_RPT_pacmod12(DATE_TIME_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_DATE_TIME_RPT_pacmod11(DATE_TIME_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->DATE_YEAR_ro = (_d[0] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->DATE_YEAR_phys = PACMOD12_DATE_YEAR_ro_fromS(_m->DATE_YEAR_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->DATE_YEAR_phys = PACMOD11_DATE_YEAR_ro_fromS(_m->DATE_YEAR_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->DATE_MONTH_ro = (_d[1] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->DATE_MONTH_phys = PACMOD12_DATE_MONTH_ro_fromS(_m->DATE_MONTH_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->DATE_MONTH_phys = PACMOD11_DATE_MONTH_ro_fromS(_m->DATE_MONTH_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->DATE_DAY_ro = (_d[2] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->DATE_DAY_phys = PACMOD12_DATE_DAY_ro_fromS(_m->DATE_DAY_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->DATE_DAY_phys = PACMOD11_DATE_DAY_ro_fromS(_m->DATE_DAY_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->TIME_HOUR = (_d[3] & (0xFFU));
   _m->TIME_MINUTE = (_d[4] & (0xFFU));
   _m->TIME_SECOND = (_d[5] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < DATE_TIME_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_DATE_TIME_RPT_pacmod12(&_m->mon1, DATE_TIME_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_DATE_TIME_RPT_pacmod11(&_m->mon1, DATE_TIME_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return DATE_TIME_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_DATE_TIME_RPT_pacmod12(DATE_TIME_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_DATE_TIME_RPT_pacmod11(DATE_TIME_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < DATE_TIME_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->DATE_YEAR_ro = PACMOD12_DATE_YEAR_ro_toS(_m->DATE_YEAR_phys);
-  _m->DATE_MONTH_ro = PACMOD12_DATE_MONTH_ro_toS(_m->DATE_MONTH_phys);
-  _m->DATE_DAY_ro = PACMOD12_DATE_DAY_ro_toS(_m->DATE_DAY_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->DATE_YEAR_ro = PACMOD11_DATE_YEAR_ro_toS(_m->DATE_YEAR_phys);
+  _m->DATE_MONTH_ro = PACMOD11_DATE_MONTH_ro_toS(_m->DATE_MONTH_phys);
+  _m->DATE_DAY_ro = PACMOD11_DATE_DAY_ro_toS(_m->DATE_DAY_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->DATE_YEAR_ro & (0xFFU));
   cframe->Data[1] |= (_m->DATE_MONTH_ro & (0xFFU));
@@ -6672,15 +5720,15 @@ uint32_t Pack_DATE_TIME_RPT_pacmod12(DATE_TIME_RPT_t* _m, __CoderDbcCanFrame_t__
 
 #else
 
-uint32_t Pack_DATE_TIME_RPT_pacmod12(DATE_TIME_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_DATE_TIME_RPT_pacmod11(DATE_TIME_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < DATE_TIME_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->DATE_YEAR_ro = PACMOD12_DATE_YEAR_ro_toS(_m->DATE_YEAR_phys);
-  _m->DATE_MONTH_ro = PACMOD12_DATE_MONTH_ro_toS(_m->DATE_MONTH_phys);
-  _m->DATE_DAY_ro = PACMOD12_DATE_DAY_ro_toS(_m->DATE_DAY_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->DATE_YEAR_ro = PACMOD11_DATE_YEAR_ro_toS(_m->DATE_YEAR_phys);
+  _m->DATE_MONTH_ro = PACMOD11_DATE_MONTH_ro_toS(_m->DATE_MONTH_phys);
+  _m->DATE_DAY_ro = PACMOD11_DATE_DAY_ro_toS(_m->DATE_DAY_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->DATE_YEAR_ro & (0xFFU));
   _d[1] |= (_m->DATE_MONTH_ro & (0xFFU));
@@ -6694,145 +5742,135 @@ uint32_t Pack_DATE_TIME_RPT_pacmod12(DATE_TIME_RPT_t* _m, uint8_t* _d, uint8_t* 
   return DATE_TIME_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_ENGINE_AUX_RPT_pacmod12(ENGINE_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_ENGINE_RPT_pacmod11(ENGINE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ENGINE_SPEED_ro = ((_d[0] & (0xFFU)) << 8) | (_d[1] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ENGINE_SPEED_phys = (sigfloat_t)(PACMOD12_ENGINE_SPEED_ro_fromS(_m->ENGINE_SPEED_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ENGINE_SPEED_phys = (sigfloat_t)(PACMOD11_ENGINE_SPEED_ro_fromS(_m->ENGINE_SPEED_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->ENGINE_TORQUE_ro = ((_d[2] & (0xFFU)) << 8) | (_d[3] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ENGINE_TORQUE_phys = (sigfloat_t)(PACMOD12_ENGINE_TORQUE_ro_fromS(_m->ENGINE_TORQUE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ENGINE_TORQUE_phys = (sigfloat_t)(PACMOD11_ENGINE_TORQUE_ro_fromS(_m->ENGINE_TORQUE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->ENGINE_COOLANT_TEMP_ro = (_d[4] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ENGINE_COOLANT_TEMP_phys = PACMOD12_ENGINE_COOLANT_TEMP_ro_fromS(_m->ENGINE_COOLANT_TEMP_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ENGINE_COOLANT_TEMP_phys = PACMOD11_ENGINE_COOLANT_TEMP_ro_fromS(_m->ENGINE_COOLANT_TEMP_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->ENGINE_SPEED_AVAIL = (_d[5] & (0x01U));
   _m->ENGINE_TORQUE_AVAIL = ((_d[5] >> 1) & (0x01U));
   _m->ENGINE_COOLANT_TEMP_AVAIL = ((_d[5] >> 2) & (0x01U));
   _m->FUEL_LEVEL_AVAIL = ((_d[5] >> 3) & (0x01U));
-  _m->DIESEL_EXHAUST_FLUID_LEVEL_AVAIL = ((_d[5] >> 4) & (0x01U));
   _m->FUEL_LEVEL_ro = (_d[6] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->FUEL_LEVEL_phys = (sigfloat_t)(PACMOD12_FUEL_LEVEL_ro_fromS(_m->FUEL_LEVEL_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->FUEL_LEVEL_phys = (sigfloat_t)(PACMOD11_FUEL_LEVEL_ro_fromS(_m->FUEL_LEVEL_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-  _m->DIESEL_EXHAUST_FLUID_LEVEL_ro = (_d[7] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->DIESEL_EXHAUST_FLUID_LEVEL_phys = (sigfloat_t)(PACMOD12_DIESEL_EXHAUST_FLUID_LEVEL_ro_fromS(_m->DIESEL_EXHAUST_FLUID_LEVEL_ro));
-#endif // PACMOD12_USE_SIGFLOAT
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < ENGINE_AUX_RPT_DLC);
+#ifdef PACMOD11_USE_DIAG_MONITORS
+  _m->mon1.dlc_error = (dlc_ < ENGINE_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_ENGINE_AUX_RPT_pacmod12(&_m->mon1, ENGINE_AUX_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_ENGINE_RPT_pacmod11(&_m->mon1, ENGINE_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
-  return ENGINE_AUX_RPT_CANID;
+  return ENGINE_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_ENGINE_AUX_RPT_pacmod12(ENGINE_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_ENGINE_RPT_pacmod11(ENGINE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
-  uint8_t i; for (i = 0; (i < ENGINE_AUX_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
+  uint8_t i; for (i = 0; (i < ENGINE_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ENGINE_SPEED_ro = PACMOD12_ENGINE_SPEED_ro_toS(_m->ENGINE_SPEED_phys);
-  _m->ENGINE_TORQUE_ro = PACMOD12_ENGINE_TORQUE_ro_toS(_m->ENGINE_TORQUE_phys);
-  _m->ENGINE_COOLANT_TEMP_ro = PACMOD12_ENGINE_COOLANT_TEMP_ro_toS(_m->ENGINE_COOLANT_TEMP_phys);
-  _m->FUEL_LEVEL_ro = PACMOD12_FUEL_LEVEL_ro_toS(_m->FUEL_LEVEL_phys);
-  _m->DIESEL_EXHAUST_FLUID_LEVEL_ro = PACMOD12_DIESEL_EXHAUST_FLUID_LEVEL_ro_toS(_m->DIESEL_EXHAUST_FLUID_LEVEL_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ENGINE_SPEED_ro = PACMOD11_ENGINE_SPEED_ro_toS(_m->ENGINE_SPEED_phys);
+  _m->ENGINE_TORQUE_ro = PACMOD11_ENGINE_TORQUE_ro_toS(_m->ENGINE_TORQUE_phys);
+  _m->ENGINE_COOLANT_TEMP_ro = PACMOD11_ENGINE_COOLANT_TEMP_ro_toS(_m->ENGINE_COOLANT_TEMP_phys);
+  _m->FUEL_LEVEL_ro = PACMOD11_FUEL_LEVEL_ro_toS(_m->FUEL_LEVEL_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= ((_m->ENGINE_SPEED_ro >> 8) & (0xFFU));
   cframe->Data[1] |= (_m->ENGINE_SPEED_ro & (0xFFU));
   cframe->Data[2] |= ((_m->ENGINE_TORQUE_ro >> 8) & (0xFFU));
   cframe->Data[3] |= (_m->ENGINE_TORQUE_ro & (0xFFU));
   cframe->Data[4] |= (_m->ENGINE_COOLANT_TEMP_ro & (0xFFU));
-  cframe->Data[5] |= (_m->ENGINE_SPEED_AVAIL & (0x01U)) | ((_m->ENGINE_TORQUE_AVAIL & (0x01U)) << 1) | ((_m->ENGINE_COOLANT_TEMP_AVAIL & (0x01U)) << 2) | ((_m->FUEL_LEVEL_AVAIL & (0x01U)) << 3) | ((_m->DIESEL_EXHAUST_FLUID_LEVEL_AVAIL & (0x01U)) << 4);
+  cframe->Data[5] |= (_m->ENGINE_SPEED_AVAIL & (0x01U)) | ((_m->ENGINE_TORQUE_AVAIL & (0x01U)) << 1) | ((_m->ENGINE_COOLANT_TEMP_AVAIL & (0x01U)) << 2) | ((_m->FUEL_LEVEL_AVAIL & (0x01U)) << 3);
   cframe->Data[6] |= (_m->FUEL_LEVEL_ro & (0xFFU));
-  cframe->Data[7] |= (_m->DIESEL_EXHAUST_FLUID_LEVEL_ro & (0xFFU));
 
-  cframe->MsgId = ENGINE_AUX_RPT_CANID;
-  cframe->DLC = ENGINE_AUX_RPT_DLC;
-  cframe->IDE = ENGINE_AUX_RPT_IDE;
-  return ENGINE_AUX_RPT_CANID;
+  cframe->MsgId = ENGINE_RPT_CANID;
+  cframe->DLC = ENGINE_RPT_DLC;
+  cframe->IDE = ENGINE_RPT_IDE;
+  return ENGINE_RPT_CANID;
 }
 
 #else
 
-uint32_t Pack_ENGINE_AUX_RPT_pacmod12(ENGINE_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_ENGINE_RPT_pacmod11(ENGINE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
-  uint8_t i; for (i = 0; (i < ENGINE_AUX_RPT_DLC) && (i < 8); _d[i++] = 0);
+  uint8_t i; for (i = 0; (i < ENGINE_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ENGINE_SPEED_ro = PACMOD12_ENGINE_SPEED_ro_toS(_m->ENGINE_SPEED_phys);
-  _m->ENGINE_TORQUE_ro = PACMOD12_ENGINE_TORQUE_ro_toS(_m->ENGINE_TORQUE_phys);
-  _m->ENGINE_COOLANT_TEMP_ro = PACMOD12_ENGINE_COOLANT_TEMP_ro_toS(_m->ENGINE_COOLANT_TEMP_phys);
-  _m->FUEL_LEVEL_ro = PACMOD12_FUEL_LEVEL_ro_toS(_m->FUEL_LEVEL_phys);
-  _m->DIESEL_EXHAUST_FLUID_LEVEL_ro = PACMOD12_DIESEL_EXHAUST_FLUID_LEVEL_ro_toS(_m->DIESEL_EXHAUST_FLUID_LEVEL_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ENGINE_SPEED_ro = PACMOD11_ENGINE_SPEED_ro_toS(_m->ENGINE_SPEED_phys);
+  _m->ENGINE_TORQUE_ro = PACMOD11_ENGINE_TORQUE_ro_toS(_m->ENGINE_TORQUE_phys);
+  _m->ENGINE_COOLANT_TEMP_ro = PACMOD11_ENGINE_COOLANT_TEMP_ro_toS(_m->ENGINE_COOLANT_TEMP_phys);
+  _m->FUEL_LEVEL_ro = PACMOD11_FUEL_LEVEL_ro_toS(_m->FUEL_LEVEL_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= ((_m->ENGINE_SPEED_ro >> 8) & (0xFFU));
   _d[1] |= (_m->ENGINE_SPEED_ro & (0xFFU));
   _d[2] |= ((_m->ENGINE_TORQUE_ro >> 8) & (0xFFU));
   _d[3] |= (_m->ENGINE_TORQUE_ro & (0xFFU));
   _d[4] |= (_m->ENGINE_COOLANT_TEMP_ro & (0xFFU));
-  _d[5] |= (_m->ENGINE_SPEED_AVAIL & (0x01U)) | ((_m->ENGINE_TORQUE_AVAIL & (0x01U)) << 1) | ((_m->ENGINE_COOLANT_TEMP_AVAIL & (0x01U)) << 2) | ((_m->FUEL_LEVEL_AVAIL & (0x01U)) << 3) | ((_m->DIESEL_EXHAUST_FLUID_LEVEL_AVAIL & (0x01U)) << 4);
+  _d[5] |= (_m->ENGINE_SPEED_AVAIL & (0x01U)) | ((_m->ENGINE_TORQUE_AVAIL & (0x01U)) << 1) | ((_m->ENGINE_COOLANT_TEMP_AVAIL & (0x01U)) << 2) | ((_m->FUEL_LEVEL_AVAIL & (0x01U)) << 3);
   _d[6] |= (_m->FUEL_LEVEL_ro & (0xFFU));
-  _d[7] |= (_m->DIESEL_EXHAUST_FLUID_LEVEL_ro & (0xFFU));
 
-  *_len = ENGINE_AUX_RPT_DLC;
-  *_ide = ENGINE_AUX_RPT_IDE;
-  return ENGINE_AUX_RPT_CANID;
+  *_len = ENGINE_RPT_DLC;
+  *_ide = ENGINE_RPT_IDE;
+  return ENGINE_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_DETECTED_OBJECT_RPT_pacmod12(DETECTED_OBJECT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_DETECTED_OBJECT_RPT_pacmod11(DETECTED_OBJECT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->FRONT_OBJECT_DISTANCE_LOW_RES_ro = ((_d[0] & (0xFFU)) << 16) | ((_d[1] & (0xFFU)) << 8) | (_d[2] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->FRONT_OBJECT_DISTANCE_LOW_RES_phys = (sigfloat_t)(PACMOD12_FRONT_OBJECT_DISTANCE_LOW_RES_ro_fromS(_m->FRONT_OBJECT_DISTANCE_LOW_RES_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->FRONT_OBJECT_DISTANCE_LOW_RES_phys = (sigfloat_t)(PACMOD11_FRONT_OBJECT_DISTANCE_LOW_RES_ro_fromS(_m->FRONT_OBJECT_DISTANCE_LOW_RES_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->FRONT_OBJECT_DISTANCE_HIGH_RES_ro = ((_d[3] & (0xFFU)) << 16) | ((_d[4] & (0xFFU)) << 8) | (_d[5] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->FRONT_OBJECT_DISTANCE_HIGH_RES_phys = (sigfloat_t)(PACMOD12_FRONT_OBJECT_DISTANCE_HIGH_RES_ro_fromS(_m->FRONT_OBJECT_DISTANCE_HIGH_RES_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->FRONT_OBJECT_DISTANCE_HIGH_RES_phys = (sigfloat_t)(PACMOD11_FRONT_OBJECT_DISTANCE_HIGH_RES_ro_fromS(_m->FRONT_OBJECT_DISTANCE_HIGH_RES_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < DETECTED_OBJECT_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_DETECTED_OBJECT_RPT_pacmod12(&_m->mon1, DETECTED_OBJECT_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_DETECTED_OBJECT_RPT_pacmod11(&_m->mon1, DETECTED_OBJECT_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return DETECTED_OBJECT_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_DETECTED_OBJECT_RPT_pacmod12(DETECTED_OBJECT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_DETECTED_OBJECT_RPT_pacmod11(DETECTED_OBJECT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < DETECTED_OBJECT_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->FRONT_OBJECT_DISTANCE_LOW_RES_ro = PACMOD12_FRONT_OBJECT_DISTANCE_LOW_RES_ro_toS(_m->FRONT_OBJECT_DISTANCE_LOW_RES_phys);
-  _m->FRONT_OBJECT_DISTANCE_HIGH_RES_ro = PACMOD12_FRONT_OBJECT_DISTANCE_HIGH_RES_ro_toS(_m->FRONT_OBJECT_DISTANCE_HIGH_RES_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->FRONT_OBJECT_DISTANCE_LOW_RES_ro = PACMOD11_FRONT_OBJECT_DISTANCE_LOW_RES_ro_toS(_m->FRONT_OBJECT_DISTANCE_LOW_RES_phys);
+  _m->FRONT_OBJECT_DISTANCE_HIGH_RES_ro = PACMOD11_FRONT_OBJECT_DISTANCE_HIGH_RES_ro_toS(_m->FRONT_OBJECT_DISTANCE_HIGH_RES_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= ((_m->FRONT_OBJECT_DISTANCE_LOW_RES_ro >> 16) & (0xFFU));
   cframe->Data[1] |= ((_m->FRONT_OBJECT_DISTANCE_LOW_RES_ro >> 8) & (0xFFU));
@@ -6849,14 +5887,14 @@ uint32_t Pack_DETECTED_OBJECT_RPT_pacmod12(DETECTED_OBJECT_RPT_t* _m, __CoderDbc
 
 #else
 
-uint32_t Pack_DETECTED_OBJECT_RPT_pacmod12(DETECTED_OBJECT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_DETECTED_OBJECT_RPT_pacmod11(DETECTED_OBJECT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < DETECTED_OBJECT_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->FRONT_OBJECT_DISTANCE_LOW_RES_ro = PACMOD12_FRONT_OBJECT_DISTANCE_LOW_RES_ro_toS(_m->FRONT_OBJECT_DISTANCE_LOW_RES_phys);
-  _m->FRONT_OBJECT_DISTANCE_HIGH_RES_ro = PACMOD12_FRONT_OBJECT_DISTANCE_HIGH_RES_ro_toS(_m->FRONT_OBJECT_DISTANCE_HIGH_RES_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->FRONT_OBJECT_DISTANCE_LOW_RES_ro = PACMOD11_FRONT_OBJECT_DISTANCE_LOW_RES_ro_toS(_m->FRONT_OBJECT_DISTANCE_LOW_RES_phys);
+  _m->FRONT_OBJECT_DISTANCE_HIGH_RES_ro = PACMOD11_FRONT_OBJECT_DISTANCE_HIGH_RES_ro_toS(_m->FRONT_OBJECT_DISTANCE_HIGH_RES_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= ((_m->FRONT_OBJECT_DISTANCE_LOW_RES_ro >> 16) & (0xFFU));
   _d[1] |= ((_m->FRONT_OBJECT_DISTANCE_LOW_RES_ro >> 8) & (0xFFU));
@@ -6870,81 +5908,36 @@ uint32_t Pack_DETECTED_OBJECT_RPT_pacmod12(DETECTED_OBJECT_RPT_t* _m, uint8_t* _
   return DETECTED_OBJECT_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_FIRE_SUPPRESSION_RPT_pacmod12(FIRE_SUPPRESSION_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->FIRE_SUPPRESSION_ALARM_STATUS = (_d[0] & (0x0FU));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < FIRE_SUPPRESSION_RPT_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_FIRE_SUPPRESSION_RPT_pacmod12(&_m->mon1, FIRE_SUPPRESSION_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return FIRE_SUPPRESSION_RPT_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_FIRE_SUPPRESSION_RPT_pacmod12(FIRE_SUPPRESSION_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < FIRE_SUPPRESSION_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->FIRE_SUPPRESSION_ALARM_STATUS & (0x0FU));
-
-  cframe->MsgId = FIRE_SUPPRESSION_RPT_CANID;
-  cframe->DLC = FIRE_SUPPRESSION_RPT_DLC;
-  cframe->IDE = FIRE_SUPPRESSION_RPT_IDE;
-  return FIRE_SUPPRESSION_RPT_CANID;
-}
-
-#else
-
-uint32_t Pack_FIRE_SUPPRESSION_RPT_pacmod12(FIRE_SUPPRESSION_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < FIRE_SUPPRESSION_RPT_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->FIRE_SUPPRESSION_ALARM_STATUS & (0x0FU));
-
-  *_len = FIRE_SUPPRESSION_RPT_DLC;
-  *_ide = FIRE_SUPPRESSION_RPT_IDE;
-  return FIRE_SUPPRESSION_RPT_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_VEH_DYNAMICS_RPT_pacmod12(VEH_DYNAMICS_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_VEH_DYNAMICS_RPT_pacmod11(VEH_DYNAMICS_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->VEH_G_FORCES_ro = (_d[0] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->VEH_G_FORCES_phys = (sigfloat_t)(PACMOD12_VEH_G_FORCES_ro_fromS(_m->VEH_G_FORCES_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->VEH_G_FORCES_phys = (sigfloat_t)(PACMOD11_VEH_G_FORCES_ro_fromS(_m->VEH_G_FORCES_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < VEH_DYNAMICS_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_VEH_DYNAMICS_RPT_pacmod12(&_m->mon1, VEH_DYNAMICS_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_VEH_DYNAMICS_RPT_pacmod11(&_m->mon1, VEH_DYNAMICS_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return VEH_DYNAMICS_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_VEH_DYNAMICS_RPT_pacmod12(VEH_DYNAMICS_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_VEH_DYNAMICS_RPT_pacmod11(VEH_DYNAMICS_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < VEH_DYNAMICS_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->VEH_G_FORCES_ro = PACMOD12_VEH_G_FORCES_ro_toS(_m->VEH_G_FORCES_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->VEH_G_FORCES_ro = PACMOD11_VEH_G_FORCES_ro_toS(_m->VEH_G_FORCES_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->VEH_G_FORCES_ro & (0xFFU));
 
@@ -6956,13 +5949,13 @@ uint32_t Pack_VEH_DYNAMICS_RPT_pacmod12(VEH_DYNAMICS_RPT_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_VEH_DYNAMICS_RPT_pacmod12(VEH_DYNAMICS_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_VEH_DYNAMICS_RPT_pacmod11(VEH_DYNAMICS_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < VEH_DYNAMICS_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->VEH_G_FORCES_ro = PACMOD12_VEH_G_FORCES_ro_toS(_m->VEH_G_FORCES_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->VEH_G_FORCES_ro = PACMOD11_VEH_G_FORCES_ro_toS(_m->VEH_G_FORCES_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->VEH_G_FORCES_ro & (0xFFU));
 
@@ -6971,29 +5964,29 @@ uint32_t Pack_VEH_DYNAMICS_RPT_pacmod12(VEH_DYNAMICS_RPT_t* _m, uint8_t* _d, uin
   return VEH_DYNAMICS_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_VIN_RPT_pacmod12(VIN_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_VIN_RPT_pacmod11(VIN_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->VEH_MFG_CODE = ((_d[0] & (0xFFU)) << 16) | ((_d[1] & (0xFFU)) << 8) | (_d[2] & (0xFFU));
   _m->VEH_MY_CODE = (_d[3] & (0xFFU));
   _m->VEH_SERIAL = ((_d[4] & (0xFFU)) << 16) | ((_d[5] & (0xFFU)) << 8) | (_d[6] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < VIN_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_VIN_RPT_pacmod12(&_m->mon1, VIN_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_VIN_RPT_pacmod11(&_m->mon1, VIN_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return VIN_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_VIN_RPT_pacmod12(VIN_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_VIN_RPT_pacmod11(VIN_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < VIN_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -7013,7 +6006,7 @@ uint32_t Pack_VIN_RPT_pacmod12(VIN_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 
 #else
 
-uint32_t Pack_VIN_RPT_pacmod12(VIN_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_VIN_RPT_pacmod11(VIN_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < VIN_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -7030,9 +6023,9 @@ uint32_t Pack_VIN_RPT_pacmod12(VIN_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_
   return VIN_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_OCCUPANCY_RPT_pacmod12(OCCUPANCY_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_OCCUPANCY_RPT_pacmod11(OCCUPANCY_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->DRIVER_SEAT_OCCUPIED = (_d[0] & (0x01U));
@@ -7052,20 +6045,20 @@ uint32_t Unpack_OCCUPANCY_RPT_pacmod12(OCCUPANCY_RPT_t* _m, const uint8_t* _d, u
   _m->PASS_REAR_SEATBELT_BUCKLED_AVAIL = ((_d[1] >> 6) & (0x01U));
   _m->CTR_REAR_SEATBELT_BUCKLED_AVAIL = ((_d[1] >> 7) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < OCCUPANCY_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_OCCUPANCY_RPT_pacmod12(&_m->mon1, OCCUPANCY_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_OCCUPANCY_RPT_pacmod11(&_m->mon1, OCCUPANCY_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return OCCUPANCY_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_OCCUPANCY_RPT_pacmod12(OCCUPANCY_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_OCCUPANCY_RPT_pacmod11(OCCUPANCY_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < OCCUPANCY_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -7080,7 +6073,7 @@ uint32_t Pack_OCCUPANCY_RPT_pacmod12(OCCUPANCY_RPT_t* _m, __CoderDbcCanFrame_t__
 
 #else
 
-uint32_t Pack_OCCUPANCY_RPT_pacmod12(OCCUPANCY_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_OCCUPANCY_RPT_pacmod11(OCCUPANCY_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < OCCUPANCY_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -7092,9 +6085,9 @@ uint32_t Pack_OCCUPANCY_RPT_pacmod12(OCCUPANCY_RPT_t* _m, uint8_t* _d, uint8_t* 
   return OCCUPANCY_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_INTERIOR_LIGHTS_RPT_pacmod12(INTERIOR_LIGHTS_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_INTERIOR_LIGHTS_RPT_pacmod11(INTERIOR_LIGHTS_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->FRONT_DOME_LIGHTS_ON = (_d[0] & (0x01U));
@@ -7108,20 +6101,20 @@ uint32_t Unpack_INTERIOR_LIGHTS_RPT_pacmod12(INTERIOR_LIGHTS_RPT_t* _m, const ui
   _m->DIM_LEVEL_AVAIL = ((_d[2] >> 3) & (0x01U));
   _m->AMBIENT_LIGHT_SENSOR_AVAIL = ((_d[2] >> 4) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < INTERIOR_LIGHTS_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_INTERIOR_LIGHTS_RPT_pacmod12(&_m->mon1, INTERIOR_LIGHTS_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_INTERIOR_LIGHTS_RPT_pacmod11(&_m->mon1, INTERIOR_LIGHTS_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return INTERIOR_LIGHTS_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_INTERIOR_LIGHTS_RPT_pacmod12(INTERIOR_LIGHTS_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_INTERIOR_LIGHTS_RPT_pacmod11(INTERIOR_LIGHTS_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < INTERIOR_LIGHTS_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -7137,7 +6130,7 @@ uint32_t Pack_INTERIOR_LIGHTS_RPT_pacmod12(INTERIOR_LIGHTS_RPT_t* _m, __CoderDbc
 
 #else
 
-uint32_t Pack_INTERIOR_LIGHTS_RPT_pacmod12(INTERIOR_LIGHTS_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_INTERIOR_LIGHTS_RPT_pacmod11(INTERIOR_LIGHTS_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < INTERIOR_LIGHTS_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -7150,9 +6143,9 @@ uint32_t Pack_INTERIOR_LIGHTS_RPT_pacmod12(INTERIOR_LIGHTS_RPT_t* _m, uint8_t* _
   return INTERIOR_LIGHTS_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_DOOR_RPT_pacmod12(DOOR_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_DOOR_RPT_pacmod11(DOOR_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->DRIVER_DOOR_OPEN = (_d[0] & (0x01U));
@@ -7162,7 +6155,6 @@ uint32_t Unpack_DOOR_RPT_pacmod12(DOOR_RPT_t* _m, const uint8_t* _d, uint8_t dlc
   _m->HOOD_OPEN = ((_d[0] >> 4) & (0x01U));
   _m->TRUNK_OPEN = ((_d[0] >> 5) & (0x01U));
   _m->FUEL_DOOR_OPEN = ((_d[0] >> 6) & (0x01U));
-  _m->CARGO_DOOR_OPEN = ((_d[0] >> 7) & (0x01U));
   _m->DRIVER_DOOR_OPEN_AVAIL = (_d[1] & (0x01U));
   _m->PASS_DOOR_OPEN_AVAIL = ((_d[1] >> 1) & (0x01U));
   _m->REAR_DRIVER_DOOR_OPEN_AVAIL = ((_d[1] >> 2) & (0x01U));
@@ -7170,27 +6162,26 @@ uint32_t Unpack_DOOR_RPT_pacmod12(DOOR_RPT_t* _m, const uint8_t* _d, uint8_t dlc
   _m->HOOD_OPEN_AVAIL = ((_d[1] >> 4) & (0x01U));
   _m->TRUNK_OPEN_AVAIL = ((_d[1] >> 5) & (0x01U));
   _m->FUEL_DOOR_OPEN_AVAIL = ((_d[1] >> 6) & (0x01U));
-  _m->CARGO_DOOR_OPEN_AVAIL = ((_d[1] >> 7) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < DOOR_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_DOOR_RPT_pacmod12(&_m->mon1, DOOR_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_DOOR_RPT_pacmod11(&_m->mon1, DOOR_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return DOOR_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_DOOR_RPT_pacmod12(DOOR_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_DOOR_RPT_pacmod11(DOOR_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < DOOR_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-  cframe->Data[0] |= (_m->DRIVER_DOOR_OPEN & (0x01U)) | ((_m->PASS_DOOR_OPEN & (0x01U)) << 1) | ((_m->REAR_DRIVER_DOOR_OPEN & (0x01U)) << 2) | ((_m->REAR_PASS_DOOR_OPEN & (0x01U)) << 3) | ((_m->HOOD_OPEN & (0x01U)) << 4) | ((_m->TRUNK_OPEN & (0x01U)) << 5) | ((_m->FUEL_DOOR_OPEN & (0x01U)) << 6) | ((_m->CARGO_DOOR_OPEN & (0x01U)) << 7);
-  cframe->Data[1] |= (_m->DRIVER_DOOR_OPEN_AVAIL & (0x01U)) | ((_m->PASS_DOOR_OPEN_AVAIL & (0x01U)) << 1) | ((_m->REAR_DRIVER_DOOR_OPEN_AVAIL & (0x01U)) << 2) | ((_m->REAR_PASS_DOOR_OPEN_AVAIL & (0x01U)) << 3) | ((_m->HOOD_OPEN_AVAIL & (0x01U)) << 4) | ((_m->TRUNK_OPEN_AVAIL & (0x01U)) << 5) | ((_m->FUEL_DOOR_OPEN_AVAIL & (0x01U)) << 6) | ((_m->CARGO_DOOR_OPEN_AVAIL & (0x01U)) << 7);
+  cframe->Data[0] |= (_m->DRIVER_DOOR_OPEN & (0x01U)) | ((_m->PASS_DOOR_OPEN & (0x01U)) << 1) | ((_m->REAR_DRIVER_DOOR_OPEN & (0x01U)) << 2) | ((_m->REAR_PASS_DOOR_OPEN & (0x01U)) << 3) | ((_m->HOOD_OPEN & (0x01U)) << 4) | ((_m->TRUNK_OPEN & (0x01U)) << 5) | ((_m->FUEL_DOOR_OPEN & (0x01U)) << 6);
+  cframe->Data[1] |= (_m->DRIVER_DOOR_OPEN_AVAIL & (0x01U)) | ((_m->PASS_DOOR_OPEN_AVAIL & (0x01U)) << 1) | ((_m->REAR_DRIVER_DOOR_OPEN_AVAIL & (0x01U)) << 2) | ((_m->REAR_PASS_DOOR_OPEN_AVAIL & (0x01U)) << 3) | ((_m->HOOD_OPEN_AVAIL & (0x01U)) << 4) | ((_m->TRUNK_OPEN_AVAIL & (0x01U)) << 5) | ((_m->FUEL_DOOR_OPEN_AVAIL & (0x01U)) << 6);
 
   cframe->MsgId = DOOR_RPT_CANID;
   cframe->DLC = DOOR_RPT_DLC;
@@ -7200,21 +6191,21 @@ uint32_t Pack_DOOR_RPT_pacmod12(DOOR_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 
 #else
 
-uint32_t Pack_DOOR_RPT_pacmod12(DOOR_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_DOOR_RPT_pacmod11(DOOR_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < DOOR_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-  _d[0] |= (_m->DRIVER_DOOR_OPEN & (0x01U)) | ((_m->PASS_DOOR_OPEN & (0x01U)) << 1) | ((_m->REAR_DRIVER_DOOR_OPEN & (0x01U)) << 2) | ((_m->REAR_PASS_DOOR_OPEN & (0x01U)) << 3) | ((_m->HOOD_OPEN & (0x01U)) << 4) | ((_m->TRUNK_OPEN & (0x01U)) << 5) | ((_m->FUEL_DOOR_OPEN & (0x01U)) << 6) | ((_m->CARGO_DOOR_OPEN & (0x01U)) << 7);
-  _d[1] |= (_m->DRIVER_DOOR_OPEN_AVAIL & (0x01U)) | ((_m->PASS_DOOR_OPEN_AVAIL & (0x01U)) << 1) | ((_m->REAR_DRIVER_DOOR_OPEN_AVAIL & (0x01U)) << 2) | ((_m->REAR_PASS_DOOR_OPEN_AVAIL & (0x01U)) << 3) | ((_m->HOOD_OPEN_AVAIL & (0x01U)) << 4) | ((_m->TRUNK_OPEN_AVAIL & (0x01U)) << 5) | ((_m->FUEL_DOOR_OPEN_AVAIL & (0x01U)) << 6) | ((_m->CARGO_DOOR_OPEN_AVAIL & (0x01U)) << 7);
+  _d[0] |= (_m->DRIVER_DOOR_OPEN & (0x01U)) | ((_m->PASS_DOOR_OPEN & (0x01U)) << 1) | ((_m->REAR_DRIVER_DOOR_OPEN & (0x01U)) << 2) | ((_m->REAR_PASS_DOOR_OPEN & (0x01U)) << 3) | ((_m->HOOD_OPEN & (0x01U)) << 4) | ((_m->TRUNK_OPEN & (0x01U)) << 5) | ((_m->FUEL_DOOR_OPEN & (0x01U)) << 6);
+  _d[1] |= (_m->DRIVER_DOOR_OPEN_AVAIL & (0x01U)) | ((_m->PASS_DOOR_OPEN_AVAIL & (0x01U)) << 1) | ((_m->REAR_DRIVER_DOOR_OPEN_AVAIL & (0x01U)) << 2) | ((_m->REAR_PASS_DOOR_OPEN_AVAIL & (0x01U)) << 3) | ((_m->HOOD_OPEN_AVAIL & (0x01U)) << 4) | ((_m->TRUNK_OPEN_AVAIL & (0x01U)) << 5) | ((_m->FUEL_DOOR_OPEN_AVAIL & (0x01U)) << 6);
 
   *_len = DOOR_RPT_DLC;
   *_ide = DOOR_RPT_IDE;
   return DOOR_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_REAR_LIGHTS_RPT_pacmod12(REAR_LIGHTS_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_REAR_LIGHTS_RPT_pacmod11(REAR_LIGHTS_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->BRAKE_LIGHTS_ON = (_d[0] & (0x01U));
@@ -7222,20 +6213,20 @@ uint32_t Unpack_REAR_LIGHTS_RPT_pacmod12(REAR_LIGHTS_RPT_t* _m, const uint8_t* _
   _m->BRAKE_LIGHTS_ON_AVAIL = (_d[1] & (0x01U));
   _m->REVERSE_LIGHTS_ON_AVAIL = ((_d[1] >> 1) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < REAR_LIGHTS_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_REAR_LIGHTS_RPT_pacmod12(&_m->mon1, REAR_LIGHTS_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_REAR_LIGHTS_RPT_pacmod11(&_m->mon1, REAR_LIGHTS_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return REAR_LIGHTS_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_REAR_LIGHTS_RPT_pacmod12(REAR_LIGHTS_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_REAR_LIGHTS_RPT_pacmod11(REAR_LIGHTS_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < REAR_LIGHTS_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -7250,7 +6241,7 @@ uint32_t Pack_REAR_LIGHTS_RPT_pacmod12(REAR_LIGHTS_RPT_t* _m, __CoderDbcCanFrame
 
 #else
 
-uint32_t Pack_REAR_LIGHTS_RPT_pacmod12(REAR_LIGHTS_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_REAR_LIGHTS_RPT_pacmod11(REAR_LIGHTS_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < REAR_LIGHTS_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -7262,9 +6253,9 @@ uint32_t Pack_REAR_LIGHTS_RPT_pacmod12(REAR_LIGHTS_RPT_t* _m, uint8_t* _d, uint8
   return REAR_LIGHTS_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_LINEAR_ACCEL_RPT_pacmod12(LINEAR_ACCEL_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_LINEAR_ACCEL_RPT_pacmod11(LINEAR_ACCEL_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->LATERAL_NEW_DATA_RX = (_d[0] & (0x01U));
@@ -7274,42 +6265,42 @@ uint32_t Unpack_LINEAR_ACCEL_RPT_pacmod12(LINEAR_ACCEL_RPT_t* _m, const uint8_t*
   _m->LONGITUDINAL_VALID = ((_d[0] >> 4) & (0x01U));
   _m->VERTICAL_VALID = ((_d[0] >> 5) & (0x01U));
   _m->LATERAL_ACCEL_ro = __ext_sig__(( ((_d[1] & (0xFFU)) << 8) | (_d[2] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->LATERAL_ACCEL_phys = (sigfloat_t)(PACMOD12_LATERAL_ACCEL_ro_fromS(_m->LATERAL_ACCEL_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->LATERAL_ACCEL_phys = (sigfloat_t)(PACMOD11_LATERAL_ACCEL_ro_fromS(_m->LATERAL_ACCEL_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->LONGITUDINAL_ACCEL_ro = __ext_sig__(( ((_d[3] & (0xFFU)) << 8) | (_d[4] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->LONGITUDINAL_ACCEL_phys = (sigfloat_t)(PACMOD12_LONGITUDINAL_ACCEL_ro_fromS(_m->LONGITUDINAL_ACCEL_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->LONGITUDINAL_ACCEL_phys = (sigfloat_t)(PACMOD11_LONGITUDINAL_ACCEL_ro_fromS(_m->LONGITUDINAL_ACCEL_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->VERTICAL_ACCEL_ro = __ext_sig__(( ((_d[5] & (0xFFU)) << 8) | (_d[6] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->VERTICAL_ACCEL_phys = (sigfloat_t)(PACMOD12_VERTICAL_ACCEL_ro_fromS(_m->VERTICAL_ACCEL_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->VERTICAL_ACCEL_phys = (sigfloat_t)(PACMOD11_VERTICAL_ACCEL_ro_fromS(_m->VERTICAL_ACCEL_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < LINEAR_ACCEL_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_LINEAR_ACCEL_RPT_pacmod12(&_m->mon1, LINEAR_ACCEL_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_LINEAR_ACCEL_RPT_pacmod11(&_m->mon1, LINEAR_ACCEL_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return LINEAR_ACCEL_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_LINEAR_ACCEL_RPT_pacmod12(LINEAR_ACCEL_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_LINEAR_ACCEL_RPT_pacmod11(LINEAR_ACCEL_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < LINEAR_ACCEL_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->LATERAL_ACCEL_ro = PACMOD12_LATERAL_ACCEL_ro_toS(_m->LATERAL_ACCEL_phys);
-  _m->LONGITUDINAL_ACCEL_ro = PACMOD12_LONGITUDINAL_ACCEL_ro_toS(_m->LONGITUDINAL_ACCEL_phys);
-  _m->VERTICAL_ACCEL_ro = PACMOD12_VERTICAL_ACCEL_ro_toS(_m->VERTICAL_ACCEL_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->LATERAL_ACCEL_ro = PACMOD11_LATERAL_ACCEL_ro_toS(_m->LATERAL_ACCEL_phys);
+  _m->LONGITUDINAL_ACCEL_ro = PACMOD11_LONGITUDINAL_ACCEL_ro_toS(_m->LONGITUDINAL_ACCEL_phys);
+  _m->VERTICAL_ACCEL_ro = PACMOD11_VERTICAL_ACCEL_ro_toS(_m->VERTICAL_ACCEL_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->LATERAL_NEW_DATA_RX & (0x01U)) | ((_m->LONGITUDINAL_NEW_DATA_RX & (0x01U)) << 1) | ((_m->VERTICAL_NEW_DATA_RX & (0x01U)) << 2) | ((_m->LATERAL_VALID & (0x01U)) << 3) | ((_m->LONGITUDINAL_VALID & (0x01U)) << 4) | ((_m->VERTICAL_VALID & (0x01U)) << 5);
   cframe->Data[1] |= ((_m->LATERAL_ACCEL_ro >> 8) & (0xFFU));
@@ -7327,15 +6318,15 @@ uint32_t Pack_LINEAR_ACCEL_RPT_pacmod12(LINEAR_ACCEL_RPT_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_LINEAR_ACCEL_RPT_pacmod12(LINEAR_ACCEL_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_LINEAR_ACCEL_RPT_pacmod11(LINEAR_ACCEL_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < LINEAR_ACCEL_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->LATERAL_ACCEL_ro = PACMOD12_LATERAL_ACCEL_ro_toS(_m->LATERAL_ACCEL_phys);
-  _m->LONGITUDINAL_ACCEL_ro = PACMOD12_LONGITUDINAL_ACCEL_ro_toS(_m->LONGITUDINAL_ACCEL_phys);
-  _m->VERTICAL_ACCEL_ro = PACMOD12_VERTICAL_ACCEL_ro_toS(_m->VERTICAL_ACCEL_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->LATERAL_ACCEL_ro = PACMOD11_LATERAL_ACCEL_ro_toS(_m->LATERAL_ACCEL_phys);
+  _m->LONGITUDINAL_ACCEL_ro = PACMOD11_LONGITUDINAL_ACCEL_ro_toS(_m->LONGITUDINAL_ACCEL_phys);
+  _m->VERTICAL_ACCEL_ro = PACMOD11_VERTICAL_ACCEL_ro_toS(_m->VERTICAL_ACCEL_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->LATERAL_NEW_DATA_RX & (0x01U)) | ((_m->LONGITUDINAL_NEW_DATA_RX & (0x01U)) << 1) | ((_m->VERTICAL_NEW_DATA_RX & (0x01U)) << 2) | ((_m->LATERAL_VALID & (0x01U)) << 3) | ((_m->LONGITUDINAL_VALID & (0x01U)) << 4) | ((_m->VERTICAL_VALID & (0x01U)) << 5);
   _d[1] |= ((_m->LATERAL_ACCEL_ro >> 8) & (0xFFU));
@@ -7350,9 +6341,9 @@ uint32_t Pack_LINEAR_ACCEL_RPT_pacmod12(LINEAR_ACCEL_RPT_t* _m, uint8_t* _d, uin
   return LINEAR_ACCEL_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_ANG_VEL_RPT_pacmod12(ANG_VEL_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_ANG_VEL_RPT_pacmod11(ANG_VEL_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->PITCH_NEW_DATA_RX = (_d[0] & (0x01U));
@@ -7362,42 +6353,42 @@ uint32_t Unpack_ANG_VEL_RPT_pacmod12(ANG_VEL_RPT_t* _m, const uint8_t* _d, uint8
   _m->ROLL_VALID = ((_d[0] >> 4) & (0x01U));
   _m->YAW_VALID = ((_d[0] >> 5) & (0x01U));
   _m->PITCH_VEL_ro = __ext_sig__(( ((_d[1] & (0xFFU)) << 8) | (_d[2] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->PITCH_VEL_phys = (sigfloat_t)(PACMOD12_PITCH_VEL_ro_fromS(_m->PITCH_VEL_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->PITCH_VEL_phys = (sigfloat_t)(PACMOD11_PITCH_VEL_ro_fromS(_m->PITCH_VEL_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->ROLL_VEL_ro = __ext_sig__(( ((_d[3] & (0xFFU)) << 8) | (_d[4] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ROLL_VEL_phys = (sigfloat_t)(PACMOD12_ROLL_VEL_ro_fromS(_m->ROLL_VEL_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->ROLL_VEL_phys = (sigfloat_t)(PACMOD11_ROLL_VEL_ro_fromS(_m->ROLL_VEL_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->YAW_VEL_ro = __ext_sig__(( ((_d[5] & (0xFFU)) << 8) | (_d[6] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->YAW_VEL_phys = (sigfloat_t)(PACMOD12_YAW_VEL_ro_fromS(_m->YAW_VEL_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->YAW_VEL_phys = (sigfloat_t)(PACMOD11_YAW_VEL_ro_fromS(_m->YAW_VEL_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < ANG_VEL_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_ANG_VEL_RPT_pacmod12(&_m->mon1, ANG_VEL_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_ANG_VEL_RPT_pacmod11(&_m->mon1, ANG_VEL_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return ANG_VEL_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_ANG_VEL_RPT_pacmod12(ANG_VEL_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_ANG_VEL_RPT_pacmod11(ANG_VEL_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < ANG_VEL_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->PITCH_VEL_ro = PACMOD12_PITCH_VEL_ro_toS(_m->PITCH_VEL_phys);
-  _m->ROLL_VEL_ro = PACMOD12_ROLL_VEL_ro_toS(_m->ROLL_VEL_phys);
-  _m->YAW_VEL_ro = PACMOD12_YAW_VEL_ro_toS(_m->YAW_VEL_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->PITCH_VEL_ro = PACMOD11_PITCH_VEL_ro_toS(_m->PITCH_VEL_phys);
+  _m->ROLL_VEL_ro = PACMOD11_ROLL_VEL_ro_toS(_m->ROLL_VEL_phys);
+  _m->YAW_VEL_ro = PACMOD11_YAW_VEL_ro_toS(_m->YAW_VEL_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->PITCH_NEW_DATA_RX & (0x01U)) | ((_m->ROLL_NEW_DATA_RX & (0x01U)) << 1) | ((_m->YAW_NEW_DATA_RX & (0x01U)) << 2) | ((_m->PITCH_VALID & (0x01U)) << 3) | ((_m->ROLL_VALID & (0x01U)) << 4) | ((_m->YAW_VALID & (0x01U)) << 5);
   cframe->Data[1] |= ((_m->PITCH_VEL_ro >> 8) & (0xFFU));
@@ -7415,15 +6406,15 @@ uint32_t Pack_ANG_VEL_RPT_pacmod12(ANG_VEL_RPT_t* _m, __CoderDbcCanFrame_t__* cf
 
 #else
 
-uint32_t Pack_ANG_VEL_RPT_pacmod12(ANG_VEL_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_ANG_VEL_RPT_pacmod11(ANG_VEL_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < ANG_VEL_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->PITCH_VEL_ro = PACMOD12_PITCH_VEL_ro_toS(_m->PITCH_VEL_phys);
-  _m->ROLL_VEL_ro = PACMOD12_ROLL_VEL_ro_toS(_m->ROLL_VEL_phys);
-  _m->YAW_VEL_ro = PACMOD12_YAW_VEL_ro_toS(_m->YAW_VEL_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->PITCH_VEL_ro = PACMOD11_PITCH_VEL_ro_toS(_m->PITCH_VEL_phys);
+  _m->ROLL_VEL_ro = PACMOD11_ROLL_VEL_ro_toS(_m->ROLL_VEL_phys);
+  _m->YAW_VEL_ro = PACMOD11_YAW_VEL_ro_toS(_m->YAW_VEL_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->PITCH_NEW_DATA_RX & (0x01U)) | ((_m->ROLL_NEW_DATA_RX & (0x01U)) << 1) | ((_m->YAW_NEW_DATA_RX & (0x01U)) << 2) | ((_m->PITCH_VALID & (0x01U)) << 3) | ((_m->ROLL_VALID & (0x01U)) << 4) | ((_m->YAW_VALID & (0x01U)) << 5);
   _d[1] |= ((_m->PITCH_VEL_ro >> 8) & (0xFFU));
@@ -7438,28 +6429,28 @@ uint32_t Pack_ANG_VEL_RPT_pacmod12(ANG_VEL_RPT_t* _m, uint8_t* _d, uint8_t* _len
   return ANG_VEL_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_NOTIFICATION_CMD_pacmod12(NOTIFICATION_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_NOTIFICATION_CMD_pacmod11(NOTIFICATION_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->BUZZER_MUTE = (_d[0] & (0x01U));
   _m->UNDERDASH_LIGHTS_WHITE = ((_d[0] >> 1) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < NOTIFICATION_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_NOTIFICATION_CMD_pacmod12(&_m->mon1, NOTIFICATION_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_NOTIFICATION_CMD_pacmod11(&_m->mon1, NOTIFICATION_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return NOTIFICATION_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_NOTIFICATION_CMD_pacmod12(NOTIFICATION_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_NOTIFICATION_CMD_pacmod11(NOTIFICATION_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < NOTIFICATION_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -7473,7 +6464,7 @@ uint32_t Pack_NOTIFICATION_CMD_pacmod12(NOTIFICATION_CMD_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_NOTIFICATION_CMD_pacmod12(NOTIFICATION_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_NOTIFICATION_CMD_pacmod11(NOTIFICATION_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < NOTIFICATION_CMD_DLC) && (i < 8); _d[i++] = 0);
 
@@ -7484,28 +6475,28 @@ uint32_t Pack_NOTIFICATION_CMD_pacmod12(NOTIFICATION_CMD_t* _m, uint8_t* _d, uin
   return NOTIFICATION_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_ESTOP_RPT_pacmod12(ESTOP_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_ESTOP_RPT_pacmod11(ESTOP_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ESTOP = (_d[0] & (0x01U));
   _m->ESTOP_FAULT = ((_d[0] >> 1) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < ESTOP_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_ESTOP_RPT_pacmod12(&_m->mon1, ESTOP_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_ESTOP_RPT_pacmod11(&_m->mon1, ESTOP_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return ESTOP_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_ESTOP_RPT_pacmod12(ESTOP_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_ESTOP_RPT_pacmod11(ESTOP_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < ESTOP_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -7519,7 +6510,7 @@ uint32_t Pack_ESTOP_RPT_pacmod12(ESTOP_RPT_t* _m, __CoderDbcCanFrame_t__* cframe
 
 #else
 
-uint32_t Pack_ESTOP_RPT_pacmod12(ESTOP_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_ESTOP_RPT_pacmod11(ESTOP_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < ESTOP_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -7530,9 +6521,9 @@ uint32_t Pack_ESTOP_RPT_pacmod12(ESTOP_RPT_t* _m, uint8_t* _d, uint8_t* _len, ui
   return ESTOP_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_USER_NOTIFICATION_CMD_pacmod12(USER_NOTIFICATION_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_USER_NOTIFICATION_CMD_pacmod11(USER_NOTIFICATION_CMD_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->BUZZER_MUTE = (_d[0] & (0x01U));
@@ -7540,29 +6531,26 @@ uint32_t Unpack_USER_NOTIFICATION_CMD_pacmod12(USER_NOTIFICATION_CMD_t* _m, cons
   _m->BUZZER_ON = ((_d[0] >> 5) & (0x01U));
   _m->BUZZER_MUTE_INDICATOR = ((_d[0] >> 6) & (0x03U));
   _m->LED_BRIGHTNESS = (_d[1] & (0x0FU));
-  _m->LIGHT_STATUS_COMMAND = ((_d[1] >> 4) & (0x03U));
-  _m->LIGHT_COMMAND_ALTERNATE = (_d[2] & (0x0FU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < USER_NOTIFICATION_CMD_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_USER_NOTIFICATION_CMD_pacmod12(&_m->mon1, USER_NOTIFICATION_CMD_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_USER_NOTIFICATION_CMD_pacmod11(&_m->mon1, USER_NOTIFICATION_CMD_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return USER_NOTIFICATION_CMD_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_USER_NOTIFICATION_CMD_pacmod12(USER_NOTIFICATION_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_USER_NOTIFICATION_CMD_pacmod11(USER_NOTIFICATION_CMD_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < USER_NOTIFICATION_CMD_DLC) && (i < 8); cframe->Data[i++] = 0);
 
   cframe->Data[0] |= (_m->BUZZER_MUTE & (0x01U)) | ((_m->LIGHT_COMMAND & (0x0FU)) << 1) | ((_m->BUZZER_ON & (0x01U)) << 5) | ((_m->BUZZER_MUTE_INDICATOR & (0x03U)) << 6);
-  cframe->Data[1] |= (_m->LED_BRIGHTNESS & (0x0FU)) | ((_m->LIGHT_STATUS_COMMAND & (0x03U)) << 4);
-  cframe->Data[2] |= (_m->LIGHT_COMMAND_ALTERNATE & (0x0FU));
+  cframe->Data[1] |= (_m->LED_BRIGHTNESS & (0x0FU));
 
   cframe->MsgId = USER_NOTIFICATION_CMD_CANID;
   cframe->DLC = USER_NOTIFICATION_CMD_DLC;
@@ -7572,67 +6560,66 @@ uint32_t Pack_USER_NOTIFICATION_CMD_pacmod12(USER_NOTIFICATION_CMD_t* _m, __Code
 
 #else
 
-uint32_t Pack_USER_NOTIFICATION_CMD_pacmod12(USER_NOTIFICATION_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_USER_NOTIFICATION_CMD_pacmod11(USER_NOTIFICATION_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < USER_NOTIFICATION_CMD_DLC) && (i < 8); _d[i++] = 0);
 
   _d[0] |= (_m->BUZZER_MUTE & (0x01U)) | ((_m->LIGHT_COMMAND & (0x0FU)) << 1) | ((_m->BUZZER_ON & (0x01U)) << 5) | ((_m->BUZZER_MUTE_INDICATOR & (0x03U)) << 6);
-  _d[1] |= (_m->LED_BRIGHTNESS & (0x0FU)) | ((_m->LIGHT_STATUS_COMMAND & (0x03U)) << 4);
-  _d[2] |= (_m->LIGHT_COMMAND_ALTERNATE & (0x0FU));
+  _d[1] |= (_m->LED_BRIGHTNESS & (0x0FU));
 
   *_len = USER_NOTIFICATION_CMD_DLC;
   *_ide = USER_NOTIFICATION_CMD_IDE;
   return USER_NOTIFICATION_CMD_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_TIRE_PRESSURE_RPT_pacmod12(TIRE_PRESSURE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_TIRE_PRESSURE_RPT_pacmod11(TIRE_PRESSURE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->FRONT_LEFT_TIRE_PRESSURE_ro = (_d[0] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->FRONT_LEFT_TIRE_PRESSURE_phys = PACMOD12_FRONT_LEFT_TIRE_PRESSURE_ro_fromS(_m->FRONT_LEFT_TIRE_PRESSURE_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->FRONT_LEFT_TIRE_PRESSURE_phys = PACMOD11_FRONT_LEFT_TIRE_PRESSURE_ro_fromS(_m->FRONT_LEFT_TIRE_PRESSURE_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->FRONT_RIGHT_TIRE_PRESSURE_ro = (_d[1] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->FRONT_RIGHT_TIRE_PRESSURE_phys = PACMOD12_FRONT_RIGHT_TIRE_PRESSURE_ro_fromS(_m->FRONT_RIGHT_TIRE_PRESSURE_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->FRONT_RIGHT_TIRE_PRESSURE_phys = PACMOD11_FRONT_RIGHT_TIRE_PRESSURE_ro_fromS(_m->FRONT_RIGHT_TIRE_PRESSURE_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->REAR_LEFT_TIRE_PRESSURE_ro = (_d[2] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->REAR_LEFT_TIRE_PRESSURE_phys = PACMOD12_REAR_LEFT_TIRE_PRESSURE_ro_fromS(_m->REAR_LEFT_TIRE_PRESSURE_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->REAR_LEFT_TIRE_PRESSURE_phys = PACMOD11_REAR_LEFT_TIRE_PRESSURE_ro_fromS(_m->REAR_LEFT_TIRE_PRESSURE_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->REAR_RIGHT_TIRE_PRESSURE_ro = (_d[3] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->REAR_RIGHT_TIRE_PRESSURE_phys = PACMOD12_REAR_RIGHT_TIRE_PRESSURE_ro_fromS(_m->REAR_RIGHT_TIRE_PRESSURE_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->REAR_RIGHT_TIRE_PRESSURE_phys = PACMOD11_REAR_RIGHT_TIRE_PRESSURE_ro_fromS(_m->REAR_RIGHT_TIRE_PRESSURE_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < TIRE_PRESSURE_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_TIRE_PRESSURE_RPT_pacmod12(&_m->mon1, TIRE_PRESSURE_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_TIRE_PRESSURE_RPT_pacmod11(&_m->mon1, TIRE_PRESSURE_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return TIRE_PRESSURE_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_TIRE_PRESSURE_RPT_pacmod12(TIRE_PRESSURE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_TIRE_PRESSURE_RPT_pacmod11(TIRE_PRESSURE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < TIRE_PRESSURE_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->FRONT_LEFT_TIRE_PRESSURE_ro = PACMOD12_FRONT_LEFT_TIRE_PRESSURE_ro_toS(_m->FRONT_LEFT_TIRE_PRESSURE_phys);
-  _m->FRONT_RIGHT_TIRE_PRESSURE_ro = PACMOD12_FRONT_RIGHT_TIRE_PRESSURE_ro_toS(_m->FRONT_RIGHT_TIRE_PRESSURE_phys);
-  _m->REAR_LEFT_TIRE_PRESSURE_ro = PACMOD12_REAR_LEFT_TIRE_PRESSURE_ro_toS(_m->REAR_LEFT_TIRE_PRESSURE_phys);
-  _m->REAR_RIGHT_TIRE_PRESSURE_ro = PACMOD12_REAR_RIGHT_TIRE_PRESSURE_ro_toS(_m->REAR_RIGHT_TIRE_PRESSURE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->FRONT_LEFT_TIRE_PRESSURE_ro = PACMOD11_FRONT_LEFT_TIRE_PRESSURE_ro_toS(_m->FRONT_LEFT_TIRE_PRESSURE_phys);
+  _m->FRONT_RIGHT_TIRE_PRESSURE_ro = PACMOD11_FRONT_RIGHT_TIRE_PRESSURE_ro_toS(_m->FRONT_RIGHT_TIRE_PRESSURE_phys);
+  _m->REAR_LEFT_TIRE_PRESSURE_ro = PACMOD11_REAR_LEFT_TIRE_PRESSURE_ro_toS(_m->REAR_LEFT_TIRE_PRESSURE_phys);
+  _m->REAR_RIGHT_TIRE_PRESSURE_ro = PACMOD11_REAR_RIGHT_TIRE_PRESSURE_ro_toS(_m->REAR_RIGHT_TIRE_PRESSURE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->FRONT_LEFT_TIRE_PRESSURE_ro & (0xFFU));
   cframe->Data[1] |= (_m->FRONT_RIGHT_TIRE_PRESSURE_ro & (0xFFU));
@@ -7647,16 +6634,16 @@ uint32_t Pack_TIRE_PRESSURE_RPT_pacmod12(TIRE_PRESSURE_RPT_t* _m, __CoderDbcCanF
 
 #else
 
-uint32_t Pack_TIRE_PRESSURE_RPT_pacmod12(TIRE_PRESSURE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_TIRE_PRESSURE_RPT_pacmod11(TIRE_PRESSURE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < TIRE_PRESSURE_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->FRONT_LEFT_TIRE_PRESSURE_ro = PACMOD12_FRONT_LEFT_TIRE_PRESSURE_ro_toS(_m->FRONT_LEFT_TIRE_PRESSURE_phys);
-  _m->FRONT_RIGHT_TIRE_PRESSURE_ro = PACMOD12_FRONT_RIGHT_TIRE_PRESSURE_ro_toS(_m->FRONT_RIGHT_TIRE_PRESSURE_phys);
-  _m->REAR_LEFT_TIRE_PRESSURE_ro = PACMOD12_REAR_LEFT_TIRE_PRESSURE_ro_toS(_m->REAR_LEFT_TIRE_PRESSURE_phys);
-  _m->REAR_RIGHT_TIRE_PRESSURE_ro = PACMOD12_REAR_RIGHT_TIRE_PRESSURE_ro_toS(_m->REAR_RIGHT_TIRE_PRESSURE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->FRONT_LEFT_TIRE_PRESSURE_ro = PACMOD11_FRONT_LEFT_TIRE_PRESSURE_ro_toS(_m->FRONT_LEFT_TIRE_PRESSURE_phys);
+  _m->FRONT_RIGHT_TIRE_PRESSURE_ro = PACMOD11_FRONT_RIGHT_TIRE_PRESSURE_ro_toS(_m->FRONT_RIGHT_TIRE_PRESSURE_phys);
+  _m->REAR_LEFT_TIRE_PRESSURE_ro = PACMOD11_REAR_LEFT_TIRE_PRESSURE_ro_toS(_m->REAR_LEFT_TIRE_PRESSURE_phys);
+  _m->REAR_RIGHT_TIRE_PRESSURE_ro = PACMOD11_REAR_RIGHT_TIRE_PRESSURE_ro_toS(_m->REAR_RIGHT_TIRE_PRESSURE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->FRONT_LEFT_TIRE_PRESSURE_ro & (0xFFU));
   _d[1] |= (_m->FRONT_RIGHT_TIRE_PRESSURE_ro & (0xFFU));
@@ -7668,43 +6655,39 @@ uint32_t Pack_TIRE_PRESSURE_RPT_pacmod12(TIRE_PRESSURE_RPT_t* _m, uint8_t* _d, u
   return TIRE_PRESSURE_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_DRIVE_TRAIN_FEATURE_RPT_pacmod12(DRIVE_TRAIN_FEATURE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_DRIVE_TRAIN_FEATURE_RPT_pacmod11(DRIVE_TRAIN_FEATURE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ANTILOCK_BRAKE_ACTIVE = (_d[0] & (0x01U));
   _m->TRACTION_CONTROL_ACTIVE = ((_d[0] >> 1) & (0x01U));
   _m->FOUR_WHEEL_DRIVE_ACTIVE = ((_d[0] >> 2) & (0x01U));
-  _m->ANTILOCK_BRAKE_DISABLED = ((_d[0] >> 3) & (0x01U));
   _m->ANTILOCK_BRAKE_ACTIVE_AVAIL = ((_d[0] >> 4) & (0x01U));
   _m->TRACTION_CONTROL_ACTIVE_AVAIL = ((_d[0] >> 5) & (0x01U));
   _m->FOUR_WHEEL_DRIVE_ACTIVE_AVAIL = ((_d[0] >> 6) & (0x01U));
-  _m->ANTILOCK_BRAKE_DISABLED_AVAIL = ((_d[0] >> 7) & (0x01U));
   _m->DRIVE_MODE = (_d[1] & (0x0FU));
   _m->DRIVE_MODE_AVAIL = ((_d[1] >> 4) & (0x01U));
-  _m->TRACTION_CONTROL_DISABLED = ((_d[1] >> 5) & (0x01U));
-  _m->TRACTION_CONTROL_DISABLED_AVAIL = ((_d[1] >> 6) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < DRIVE_TRAIN_FEATURE_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_DRIVE_TRAIN_FEATURE_RPT_pacmod12(&_m->mon1, DRIVE_TRAIN_FEATURE_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_DRIVE_TRAIN_FEATURE_RPT_pacmod11(&_m->mon1, DRIVE_TRAIN_FEATURE_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return DRIVE_TRAIN_FEATURE_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_DRIVE_TRAIN_FEATURE_RPT_pacmod12(DRIVE_TRAIN_FEATURE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_DRIVE_TRAIN_FEATURE_RPT_pacmod11(DRIVE_TRAIN_FEATURE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < DRIVE_TRAIN_FEATURE_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-  cframe->Data[0] |= (_m->ANTILOCK_BRAKE_ACTIVE & (0x01U)) | ((_m->TRACTION_CONTROL_ACTIVE & (0x01U)) << 1) | ((_m->FOUR_WHEEL_DRIVE_ACTIVE & (0x01U)) << 2) | ((_m->ANTILOCK_BRAKE_DISABLED & (0x01U)) << 3) | ((_m->ANTILOCK_BRAKE_ACTIVE_AVAIL & (0x01U)) << 4) | ((_m->TRACTION_CONTROL_ACTIVE_AVAIL & (0x01U)) << 5) | ((_m->FOUR_WHEEL_DRIVE_ACTIVE_AVAIL & (0x01U)) << 6) | ((_m->ANTILOCK_BRAKE_DISABLED_AVAIL & (0x01U)) << 7);
-  cframe->Data[1] |= (_m->DRIVE_MODE & (0x0FU)) | ((_m->DRIVE_MODE_AVAIL & (0x01U)) << 4) | ((_m->TRACTION_CONTROL_DISABLED & (0x01U)) << 5) | ((_m->TRACTION_CONTROL_DISABLED_AVAIL & (0x01U)) << 6);
+  cframe->Data[0] |= (_m->ANTILOCK_BRAKE_ACTIVE & (0x01U)) | ((_m->TRACTION_CONTROL_ACTIVE & (0x01U)) << 1) | ((_m->FOUR_WHEEL_DRIVE_ACTIVE & (0x01U)) << 2) | ((_m->ANTILOCK_BRAKE_ACTIVE_AVAIL & (0x01U)) << 4) | ((_m->TRACTION_CONTROL_ACTIVE_AVAIL & (0x01U)) << 5) | ((_m->FOUR_WHEEL_DRIVE_ACTIVE_AVAIL & (0x01U)) << 6);
+  cframe->Data[1] |= (_m->DRIVE_MODE & (0x0FU)) | ((_m->DRIVE_MODE_AVAIL & (0x01U)) << 4);
 
   cframe->MsgId = DRIVE_TRAIN_FEATURE_RPT_CANID;
   cframe->DLC = DRIVE_TRAIN_FEATURE_RPT_DLC;
@@ -7714,24 +6697,24 @@ uint32_t Pack_DRIVE_TRAIN_FEATURE_RPT_pacmod12(DRIVE_TRAIN_FEATURE_RPT_t* _m, __
 
 #else
 
-uint32_t Pack_DRIVE_TRAIN_FEATURE_RPT_pacmod12(DRIVE_TRAIN_FEATURE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_DRIVE_TRAIN_FEATURE_RPT_pacmod11(DRIVE_TRAIN_FEATURE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < DRIVE_TRAIN_FEATURE_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-  _d[0] |= (_m->ANTILOCK_BRAKE_ACTIVE & (0x01U)) | ((_m->TRACTION_CONTROL_ACTIVE & (0x01U)) << 1) | ((_m->FOUR_WHEEL_DRIVE_ACTIVE & (0x01U)) << 2) | ((_m->ANTILOCK_BRAKE_DISABLED & (0x01U)) << 3) | ((_m->ANTILOCK_BRAKE_ACTIVE_AVAIL & (0x01U)) << 4) | ((_m->TRACTION_CONTROL_ACTIVE_AVAIL & (0x01U)) << 5) | ((_m->FOUR_WHEEL_DRIVE_ACTIVE_AVAIL & (0x01U)) << 6) | ((_m->ANTILOCK_BRAKE_DISABLED_AVAIL & (0x01U)) << 7);
-  _d[1] |= (_m->DRIVE_MODE & (0x0FU)) | ((_m->DRIVE_MODE_AVAIL & (0x01U)) << 4) | ((_m->TRACTION_CONTROL_DISABLED & (0x01U)) << 5) | ((_m->TRACTION_CONTROL_DISABLED_AVAIL & (0x01U)) << 6);
+  _d[0] |= (_m->ANTILOCK_BRAKE_ACTIVE & (0x01U)) | ((_m->TRACTION_CONTROL_ACTIVE & (0x01U)) << 1) | ((_m->FOUR_WHEEL_DRIVE_ACTIVE & (0x01U)) << 2) | ((_m->ANTILOCK_BRAKE_ACTIVE_AVAIL & (0x01U)) << 4) | ((_m->TRACTION_CONTROL_ACTIVE_AVAIL & (0x01U)) << 5) | ((_m->FOUR_WHEEL_DRIVE_ACTIVE_AVAIL & (0x01U)) << 6);
+  _d[1] |= (_m->DRIVE_MODE & (0x0FU)) | ((_m->DRIVE_MODE_AVAIL & (0x01U)) << 4);
 
   *_len = DRIVE_TRAIN_FEATURE_RPT_DLC;
   *_ide = DRIVE_TRAIN_FEATURE_RPT_IDE;
   return DRIVE_TRAIN_FEATURE_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_SAFETY_FUNC_CRITICAL_STOP_RPT_pacmod12(SAFETY_FUNC_CRITICAL_STOP_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_SAFETY_FUNC_CRITICAL_STOP_RPT_pacmod11(SAFETY_FUNC_CRITICAL_STOP_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
-  _m->AUTOMS_MAN_OPCTRL_FAULT = (_d[0] & (0x01U));
+  _m->AUTOMSMAN_OPCTRL_FAULT = (_d[0] & (0x01U));
   _m->REMOTE_STOP_FAULT = ((_d[0] >> 1) & (0x01U));
   _m->SAFETY_BRAKE_OPCTRL_OFF = ((_d[0] >> 2) & (0x01U));
   _m->SAFETY_BRAKE_CMD_TIMEOUT = ((_d[0] >> 3) & (0x01U));
@@ -7754,24 +6737,24 @@ uint32_t Unpack_SAFETY_FUNC_CRITICAL_STOP_RPT_pacmod12(SAFETY_FUNC_CRITICAL_STOP
   _m->REMOTE_STOP_CMD = ((_d[2] >> 4) & (0x01U));
   _m->PRI_SAFETY_BRAKE_PRESSURE_FAULT = ((_d[2] >> 5) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < SAFETY_FUNC_CRITICAL_STOP_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_SAFETY_FUNC_CRITICAL_STOP_RPT_pacmod12(&_m->mon1, SAFETY_FUNC_CRITICAL_STOP_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_SAFETY_FUNC_CRITICAL_STOP_RPT_pacmod11(&_m->mon1, SAFETY_FUNC_CRITICAL_STOP_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return SAFETY_FUNC_CRITICAL_STOP_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_SAFETY_FUNC_CRITICAL_STOP_RPT_pacmod12(SAFETY_FUNC_CRITICAL_STOP_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_SAFETY_FUNC_CRITICAL_STOP_RPT_pacmod11(SAFETY_FUNC_CRITICAL_STOP_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < SAFETY_FUNC_CRITICAL_STOP_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-  cframe->Data[0] |= (_m->AUTOMS_MAN_OPCTRL_FAULT & (0x01U)) | ((_m->REMOTE_STOP_FAULT & (0x01U)) << 1) | ((_m->SAFETY_BRAKE_OPCTRL_OFF & (0x01U)) << 2) | ((_m->SAFETY_BRAKE_CMD_TIMEOUT & (0x01U)) << 3) | ((_m->SAFETY_FUNC_CMD_TIMEOUT & (0x01U)) << 4) | ((_m->SAFETY_FUNC_CRITICAL_STOP_1_CMD & (0x01U)) << 5) | ((_m->SAFETY_FUNC_CRITICAL_STOP_2_CMD & (0x01U)) << 6) | ((_m->SAFETY_FUNC_NONE_CMD & (0x01U)) << 7);
+  cframe->Data[0] |= (_m->AUTOMSMAN_OPCTRL_FAULT & (0x01U)) | ((_m->REMOTE_STOP_FAULT & (0x01U)) << 1) | ((_m->SAFETY_BRAKE_OPCTRL_OFF & (0x01U)) << 2) | ((_m->SAFETY_BRAKE_CMD_TIMEOUT & (0x01U)) << 3) | ((_m->SAFETY_FUNC_CMD_TIMEOUT & (0x01U)) << 4) | ((_m->SAFETY_FUNC_CRITICAL_STOP_1_CMD & (0x01U)) << 5) | ((_m->SAFETY_FUNC_CRITICAL_STOP_2_CMD & (0x01U)) << 6) | ((_m->SAFETY_FUNC_NONE_CMD & (0x01U)) << 7);
   cframe->Data[1] |= (_m->PACMOD_SYSTEM_TIMEOUT & (0x01U)) | ((_m->PACMOD_SYSTEM_FAULT & (0x01U)) << 1) | ((_m->PACMOD_SYSTEM_NOT_ACTIVE & (0x01U)) << 2) | ((_m->VEHICLE_REPORT_TIMEOUT & (0x01U)) << 3) | ((_m->VEHICLE_REPORT_FAULT & (0x01U)) << 4) | ((_m->LOW_ENGINE_RPM & (0x01U)) << 5) | ((_m->PRI_SAFETY_BRAKE_SIGNAL_1_FAULT & (0x01U)) << 6) | ((_m->PRI_SAFETY_BRAKE_SIGNAL_2_FAULT & (0x01U)) << 7);
   cframe->Data[2] |= (_m->SEC_SAFETY_BRAKE_SIGNAL_1_FAULT & (0x01U)) | ((_m->SEC_SAFETY_BRAKE_SIGNAL_2_FAULT & (0x01U)) << 1) | ((_m->PRIMARY_PROCESSOR_FAULT & (0x01U)) << 2) | ((_m->SECONDARY_PROCESSOR_FAULT & (0x01U)) << 3) | ((_m->REMOTE_STOP_CMD & (0x01U)) << 4) | ((_m->PRI_SAFETY_BRAKE_PRESSURE_FAULT & (0x01U)) << 5);
 
@@ -7783,11 +6766,11 @@ uint32_t Pack_SAFETY_FUNC_CRITICAL_STOP_RPT_pacmod12(SAFETY_FUNC_CRITICAL_STOP_R
 
 #else
 
-uint32_t Pack_SAFETY_FUNC_CRITICAL_STOP_RPT_pacmod12(SAFETY_FUNC_CRITICAL_STOP_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_SAFETY_FUNC_CRITICAL_STOP_RPT_pacmod11(SAFETY_FUNC_CRITICAL_STOP_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < SAFETY_FUNC_CRITICAL_STOP_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-  _d[0] |= (_m->AUTOMS_MAN_OPCTRL_FAULT & (0x01U)) | ((_m->REMOTE_STOP_FAULT & (0x01U)) << 1) | ((_m->SAFETY_BRAKE_OPCTRL_OFF & (0x01U)) << 2) | ((_m->SAFETY_BRAKE_CMD_TIMEOUT & (0x01U)) << 3) | ((_m->SAFETY_FUNC_CMD_TIMEOUT & (0x01U)) << 4) | ((_m->SAFETY_FUNC_CRITICAL_STOP_1_CMD & (0x01U)) << 5) | ((_m->SAFETY_FUNC_CRITICAL_STOP_2_CMD & (0x01U)) << 6) | ((_m->SAFETY_FUNC_NONE_CMD & (0x01U)) << 7);
+  _d[0] |= (_m->AUTOMSMAN_OPCTRL_FAULT & (0x01U)) | ((_m->REMOTE_STOP_FAULT & (0x01U)) << 1) | ((_m->SAFETY_BRAKE_OPCTRL_OFF & (0x01U)) << 2) | ((_m->SAFETY_BRAKE_CMD_TIMEOUT & (0x01U)) << 3) | ((_m->SAFETY_FUNC_CMD_TIMEOUT & (0x01U)) << 4) | ((_m->SAFETY_FUNC_CRITICAL_STOP_1_CMD & (0x01U)) << 5) | ((_m->SAFETY_FUNC_CRITICAL_STOP_2_CMD & (0x01U)) << 6) | ((_m->SAFETY_FUNC_NONE_CMD & (0x01U)) << 7);
   _d[1] |= (_m->PACMOD_SYSTEM_TIMEOUT & (0x01U)) | ((_m->PACMOD_SYSTEM_FAULT & (0x01U)) << 1) | ((_m->PACMOD_SYSTEM_NOT_ACTIVE & (0x01U)) << 2) | ((_m->VEHICLE_REPORT_TIMEOUT & (0x01U)) << 3) | ((_m->VEHICLE_REPORT_FAULT & (0x01U)) << 4) | ((_m->LOW_ENGINE_RPM & (0x01U)) << 5) | ((_m->PRI_SAFETY_BRAKE_SIGNAL_1_FAULT & (0x01U)) << 6) | ((_m->PRI_SAFETY_BRAKE_SIGNAL_2_FAULT & (0x01U)) << 7);
   _d[2] |= (_m->SEC_SAFETY_BRAKE_SIGNAL_1_FAULT & (0x01U)) | ((_m->SEC_SAFETY_BRAKE_SIGNAL_2_FAULT & (0x01U)) << 1) | ((_m->PRIMARY_PROCESSOR_FAULT & (0x01U)) << 2) | ((_m->SECONDARY_PROCESSOR_FAULT & (0x01U)) << 3) | ((_m->REMOTE_STOP_CMD & (0x01U)) << 4) | ((_m->PRI_SAFETY_BRAKE_PRESSURE_FAULT & (0x01U)) << 5);
 
@@ -7796,9 +6779,9 @@ uint32_t Pack_SAFETY_FUNC_CRITICAL_STOP_RPT_pacmod12(SAFETY_FUNC_CRITICAL_STOP_R
   return SAFETY_FUNC_CRITICAL_STOP_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_WATCHDOG_RPT_2_pacmod12(WATCHDOG_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_WATCHDOG_RPT_2_pacmod11(WATCHDOG_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->ACCEL_RPT_TIMEOUT = (_d[0] & (0x01U));
@@ -7845,28 +6828,21 @@ uint32_t Unpack_WATCHDOG_RPT_2_pacmod12(WATCHDOG_RPT_2_t* _m, const uint8_t* _d,
   _m->GLOBAL_CMD_SANITY_FAULT = ((_d[5] >> 1) & (0x01U));
   _m->GLOBAL_CMD_TIMEOUT = ((_d[5] >> 2) & (0x01U));
   _m->EXHAUST_BRAKE_RPT_TIMEOUT = ((_d[5] >> 3) & (0x01U));
-  _m->POWER_TAKE_OFF_RPT_TIMEOUT = ((_d[5] >> 4) & (0x01U));
-  _m->TIPPER_BODY_00_RPT_TIMEOUT = ((_d[5] >> 5) & (0x01U));
-  _m->TRAILER_AIR_SUPPLY_RPT_TIMEOUT = ((_d[5] >> 6) & (0x01U));
-  _m->TRAILER_BRAKE_RPT_TIMEOUT = ((_d[5] >> 7) & (0x01U));
-  _m->ENGINE_RPT_TIMEOUT = (_d[6] & (0x01U));
-  _m->TIPPER_BODY_01_RPT_TIMEOUT = ((_d[6] >> 1) & (0x01U));
-  _m->TIPPER_BODY_02_RPT_TIMEOUT = ((_d[6] >> 2) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < WATCHDOG_RPT_2_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_WATCHDOG_RPT_2_pacmod12(&_m->mon1, WATCHDOG_RPT_2_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_WATCHDOG_RPT_2_pacmod11(&_m->mon1, WATCHDOG_RPT_2_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return WATCHDOG_RPT_2_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_WATCHDOG_RPT_2_pacmod12(WATCHDOG_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_WATCHDOG_RPT_2_pacmod11(WATCHDOG_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < WATCHDOG_RPT_2_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -7875,8 +6851,7 @@ uint32_t Pack_WATCHDOG_RPT_2_pacmod12(WATCHDOG_RPT_2_t* _m, __CoderDbcCanFrame_t
   cframe->Data[2] |= (_m->REAR_PASS_DOOR_RPT_TIMEOUT & (0x01U)) | ((_m->SHIFT_RPT_TIMEOUT & (0x01U)) << 1) | ((_m->SPRAYER_RPT_TIMEOUT & (0x01U)) << 2) | ((_m->STEERING_RPT_TIMEOUT & (0x01U)) << 3) | ((_m->TURN_RPT_TIMEOUT & (0x01U)) << 4) | ((_m->WIPER_RPT_TIMEOUT & (0x01U)) << 5) | ((_m->PACMOD1_SANITY_FAULT & (0x01U)) << 6) | ((_m->PACMOD2_SANITY_FAULT & (0x01U)) << 7);
   cframe->Data[3] |= (_m->PACMOD3_SANITY_FAULT & (0x01U)) | ((_m->PACMINI1_SANITY_FAULT & (0x01U)) << 1) | ((_m->PACMINI2_SANITY_FAULT & (0x01U)) << 2) | ((_m->PACMINI3_SANITY_FAULT & (0x01U)) << 3) | ((_m->PACMOD1_COMPONENT_RPT_TIMEOUT & (0x01U)) << 4) | ((_m->PACMOD2_COMPONENT_RPT_TIMEOUT & (0x01U)) << 5) | ((_m->PACMOD3_COMPONENT_RPT_TIMEOUT & (0x01U)) << 6) | ((_m->PACMINI1_COMPONENT_RPT_TIMEOUT & (0x01U)) << 7);
   cframe->Data[4] |= (_m->PACMINI2_COMPONENT_RPT_TIMEOUT & (0x01U)) | ((_m->PACMINI3_COMPONENT_RPT_TIMEOUT & (0x01U)) << 1) | ((_m->PACMOD1_SYSTEM_PRESENT_FAULT & (0x01U)) << 2) | ((_m->PACMOD2_SYSTEM_PRESENT_FAULT & (0x01U)) << 3) | ((_m->PACMOD3_SYSTEM_PRESENT_FAULT & (0x01U)) << 4) | ((_m->PACMINI1_SYSTEM_PRESENT_FAULT & (0x01U)) << 5) | ((_m->PACMINI2_SYSTEM_PRESENT_FAULT & (0x01U)) << 6) | ((_m->PACMINI3_SYSTEM_PRESENT_FAULT & (0x01U)) << 7);
-  cframe->Data[5] |= (_m->DRIVE_MODE_INVALID & (0x01U)) | ((_m->GLOBAL_CMD_SANITY_FAULT & (0x01U)) << 1) | ((_m->GLOBAL_CMD_TIMEOUT & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE_RPT_TIMEOUT & (0x01U)) << 3) | ((_m->POWER_TAKE_OFF_RPT_TIMEOUT & (0x01U)) << 4) | ((_m->TIPPER_BODY_00_RPT_TIMEOUT & (0x01U)) << 5) | ((_m->TRAILER_AIR_SUPPLY_RPT_TIMEOUT & (0x01U)) << 6) | ((_m->TRAILER_BRAKE_RPT_TIMEOUT & (0x01U)) << 7);
-  cframe->Data[6] |= (_m->ENGINE_RPT_TIMEOUT & (0x01U)) | ((_m->TIPPER_BODY_01_RPT_TIMEOUT & (0x01U)) << 1) | ((_m->TIPPER_BODY_02_RPT_TIMEOUT & (0x01U)) << 2);
+  cframe->Data[5] |= (_m->DRIVE_MODE_INVALID & (0x01U)) | ((_m->GLOBAL_CMD_SANITY_FAULT & (0x01U)) << 1) | ((_m->GLOBAL_CMD_TIMEOUT & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE_RPT_TIMEOUT & (0x01U)) << 3);
 
   cframe->MsgId = WATCHDOG_RPT_2_CANID;
   cframe->DLC = WATCHDOG_RPT_2_DLC;
@@ -7886,7 +6861,7 @@ uint32_t Pack_WATCHDOG_RPT_2_pacmod12(WATCHDOG_RPT_2_t* _m, __CoderDbcCanFrame_t
 
 #else
 
-uint32_t Pack_WATCHDOG_RPT_2_pacmod12(WATCHDOG_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_WATCHDOG_RPT_2_pacmod11(WATCHDOG_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < WATCHDOG_RPT_2_DLC) && (i < 8); _d[i++] = 0);
 
@@ -7895,17 +6870,16 @@ uint32_t Pack_WATCHDOG_RPT_2_pacmod12(WATCHDOG_RPT_2_t* _m, uint8_t* _d, uint8_t
   _d[2] |= (_m->REAR_PASS_DOOR_RPT_TIMEOUT & (0x01U)) | ((_m->SHIFT_RPT_TIMEOUT & (0x01U)) << 1) | ((_m->SPRAYER_RPT_TIMEOUT & (0x01U)) << 2) | ((_m->STEERING_RPT_TIMEOUT & (0x01U)) << 3) | ((_m->TURN_RPT_TIMEOUT & (0x01U)) << 4) | ((_m->WIPER_RPT_TIMEOUT & (0x01U)) << 5) | ((_m->PACMOD1_SANITY_FAULT & (0x01U)) << 6) | ((_m->PACMOD2_SANITY_FAULT & (0x01U)) << 7);
   _d[3] |= (_m->PACMOD3_SANITY_FAULT & (0x01U)) | ((_m->PACMINI1_SANITY_FAULT & (0x01U)) << 1) | ((_m->PACMINI2_SANITY_FAULT & (0x01U)) << 2) | ((_m->PACMINI3_SANITY_FAULT & (0x01U)) << 3) | ((_m->PACMOD1_COMPONENT_RPT_TIMEOUT & (0x01U)) << 4) | ((_m->PACMOD2_COMPONENT_RPT_TIMEOUT & (0x01U)) << 5) | ((_m->PACMOD3_COMPONENT_RPT_TIMEOUT & (0x01U)) << 6) | ((_m->PACMINI1_COMPONENT_RPT_TIMEOUT & (0x01U)) << 7);
   _d[4] |= (_m->PACMINI2_COMPONENT_RPT_TIMEOUT & (0x01U)) | ((_m->PACMINI3_COMPONENT_RPT_TIMEOUT & (0x01U)) << 1) | ((_m->PACMOD1_SYSTEM_PRESENT_FAULT & (0x01U)) << 2) | ((_m->PACMOD2_SYSTEM_PRESENT_FAULT & (0x01U)) << 3) | ((_m->PACMOD3_SYSTEM_PRESENT_FAULT & (0x01U)) << 4) | ((_m->PACMINI1_SYSTEM_PRESENT_FAULT & (0x01U)) << 5) | ((_m->PACMINI2_SYSTEM_PRESENT_FAULT & (0x01U)) << 6) | ((_m->PACMINI3_SYSTEM_PRESENT_FAULT & (0x01U)) << 7);
-  _d[5] |= (_m->DRIVE_MODE_INVALID & (0x01U)) | ((_m->GLOBAL_CMD_SANITY_FAULT & (0x01U)) << 1) | ((_m->GLOBAL_CMD_TIMEOUT & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE_RPT_TIMEOUT & (0x01U)) << 3) | ((_m->POWER_TAKE_OFF_RPT_TIMEOUT & (0x01U)) << 4) | ((_m->TIPPER_BODY_00_RPT_TIMEOUT & (0x01U)) << 5) | ((_m->TRAILER_AIR_SUPPLY_RPT_TIMEOUT & (0x01U)) << 6) | ((_m->TRAILER_BRAKE_RPT_TIMEOUT & (0x01U)) << 7);
-  _d[6] |= (_m->ENGINE_RPT_TIMEOUT & (0x01U)) | ((_m->TIPPER_BODY_01_RPT_TIMEOUT & (0x01U)) << 1) | ((_m->TIPPER_BODY_02_RPT_TIMEOUT & (0x01U)) << 2);
+  _d[5] |= (_m->DRIVE_MODE_INVALID & (0x01U)) | ((_m->GLOBAL_CMD_SANITY_FAULT & (0x01U)) << 1) | ((_m->GLOBAL_CMD_TIMEOUT & (0x01U)) << 2) | ((_m->EXHAUST_BRAKE_RPT_TIMEOUT & (0x01U)) << 3);
 
   *_len = WATCHDOG_RPT_2_DLC;
   *_ide = WATCHDOG_RPT_2_IDE;
   return WATCHDOG_RPT_2_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_VIN_RPT_2_pacmod12(VIN_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_VIN_RPT_2_pacmod11(VIN_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->VEHICLE_IDENTIFIER_SECTION_10 = (_d[0] & (0xFFU));
@@ -7917,20 +6891,20 @@ uint32_t Unpack_VIN_RPT_2_pacmod12(VIN_RPT_2_t* _m, const uint8_t* _d, uint8_t d
   _m->VEHICLE_IDENTIFIER_SECTION_16 = (_d[6] & (0xFFU));
   _m->VEHICLE_IDENTIFIER_SECTION_17 = (_d[7] & (0xFFU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < VIN_RPT_2_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_VIN_RPT_2_pacmod12(&_m->mon1, VIN_RPT_2_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_VIN_RPT_2_pacmod11(&_m->mon1, VIN_RPT_2_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return VIN_RPT_2_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_VIN_RPT_2_pacmod12(VIN_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_VIN_RPT_2_pacmod11(VIN_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < VIN_RPT_2_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -7951,7 +6925,7 @@ uint32_t Pack_VIN_RPT_2_pacmod12(VIN_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe
 
 #else
 
-uint32_t Pack_VIN_RPT_2_pacmod12(VIN_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_VIN_RPT_2_pacmod11(VIN_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < VIN_RPT_2_DLC) && (i < 8); _d[i++] = 0);
 
@@ -7969,29 +6943,29 @@ uint32_t Pack_VIN_RPT_2_pacmod12(VIN_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, ui
   return VIN_RPT_2_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_NOTIFICATION_RPT_pacmod12(NOTIFICATION_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_NOTIFICATION_RPT_pacmod11(NOTIFICATION_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->BUZZER_STATUS = (_d[0] & (0x03U));
   _m->LIGHT_STATUS = ((_d[0] >> 2) & (0x03U));
   _m->LIGHT_COLOR = ((_d[0] >> 4) & (0x0FU));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < NOTIFICATION_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_NOTIFICATION_RPT_pacmod12(&_m->mon1, NOTIFICATION_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_NOTIFICATION_RPT_pacmod11(&_m->mon1, NOTIFICATION_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return NOTIFICATION_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_NOTIFICATION_RPT_pacmod12(NOTIFICATION_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_NOTIFICATION_RPT_pacmod11(NOTIFICATION_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < NOTIFICATION_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -8005,7 +6979,7 @@ uint32_t Pack_NOTIFICATION_RPT_pacmod12(NOTIFICATION_RPT_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_NOTIFICATION_RPT_pacmod12(NOTIFICATION_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_NOTIFICATION_RPT_pacmod11(NOTIFICATION_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < NOTIFICATION_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -8016,35 +6990,35 @@ uint32_t Pack_NOTIFICATION_RPT_pacmod12(NOTIFICATION_RPT_t* _m, uint8_t* _d, uin
   return NOTIFICATION_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_AIR_PRESSURE_RPT_pacmod12(AIR_PRESSURE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_AIR_PRESSURE_RPT_pacmod11(AIR_PRESSURE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->PNEUMATIC_SUPPLY_PRESSURE_ro = (_d[0] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->PNEUMATIC_SUPPLY_PRESSURE_phys = PACMOD12_PNEUMATIC_SUPPLY_PRESSURE_ro_fromS(_m->PNEUMATIC_SUPPLY_PRESSURE_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->PNEUMATIC_SUPPLY_PRESSURE_phys = PACMOD11_PNEUMATIC_SUPPLY_PRESSURE_ro_fromS(_m->PNEUMATIC_SUPPLY_PRESSURE_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->BRAKE_CIRCUIT_1_PRESSURE_ro = (_d[1] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->BRAKE_CIRCUIT_1_PRESSURE_phys = PACMOD12_BRAKE_CIRCUIT_1_PRESSURE_ro_fromS(_m->BRAKE_CIRCUIT_1_PRESSURE_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->BRAKE_CIRCUIT_1_PRESSURE_phys = PACMOD11_BRAKE_CIRCUIT_1_PRESSURE_ro_fromS(_m->BRAKE_CIRCUIT_1_PRESSURE_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->BRAKE_CIRCUIT_2_PRESSURE_ro = (_d[2] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->BRAKE_CIRCUIT_2_PRESSURE_phys = PACMOD12_BRAKE_CIRCUIT_2_PRESSURE_ro_fromS(_m->BRAKE_CIRCUIT_2_PRESSURE_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->BRAKE_CIRCUIT_2_PRESSURE_phys = PACMOD11_BRAKE_CIRCUIT_2_PRESSURE_ro_fromS(_m->BRAKE_CIRCUIT_2_PRESSURE_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->PARK_TRAILER_AIR_PRESSURE_ro = (_d[3] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->PARK_TRAILER_AIR_PRESSURE_phys = PACMOD12_PARK_TRAILER_AIR_PRESSURE_ro_fromS(_m->PARK_TRAILER_AIR_PRESSURE_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->PARK_TRAILER_AIR_PRESSURE_phys = PACMOD11_PARK_TRAILER_AIR_PRESSURE_ro_fromS(_m->PARK_TRAILER_AIR_PRESSURE_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->POWERTRAIN_AIR_PRESSURE_ro = (_d[4] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->POWERTRAIN_AIR_PRESSURE_phys = PACMOD12_POWERTRAIN_AIR_PRESSURE_ro_fromS(_m->POWERTRAIN_AIR_PRESSURE_ro);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->POWERTRAIN_AIR_PRESSURE_phys = PACMOD11_POWERTRAIN_AIR_PRESSURE_ro_fromS(_m->POWERTRAIN_AIR_PRESSURE_ro);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->AIR_COMPRESSOR_STATUS = (_d[5] & (0x03U));
   _m->PNEUMATIC_SUPPLY_PRESSURE_AVAIL = (_d[6] & (0x01U));
@@ -8054,30 +7028,30 @@ uint32_t Unpack_AIR_PRESSURE_RPT_pacmod12(AIR_PRESSURE_RPT_t* _m, const uint8_t*
   _m->POWERTRAIN_AIR_PRESSURE_AVAIL = ((_d[6] >> 4) & (0x01U));
   _m->AIR_COMPRESSOR_STATUS_AVAIL = ((_d[6] >> 5) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < AIR_PRESSURE_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_AIR_PRESSURE_RPT_pacmod12(&_m->mon1, AIR_PRESSURE_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_AIR_PRESSURE_RPT_pacmod11(&_m->mon1, AIR_PRESSURE_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return AIR_PRESSURE_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_AIR_PRESSURE_RPT_pacmod12(AIR_PRESSURE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_AIR_PRESSURE_RPT_pacmod11(AIR_PRESSURE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < AIR_PRESSURE_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->PNEUMATIC_SUPPLY_PRESSURE_ro = PACMOD12_PNEUMATIC_SUPPLY_PRESSURE_ro_toS(_m->PNEUMATIC_SUPPLY_PRESSURE_phys);
-  _m->BRAKE_CIRCUIT_1_PRESSURE_ro = PACMOD12_BRAKE_CIRCUIT_1_PRESSURE_ro_toS(_m->BRAKE_CIRCUIT_1_PRESSURE_phys);
-  _m->BRAKE_CIRCUIT_2_PRESSURE_ro = PACMOD12_BRAKE_CIRCUIT_2_PRESSURE_ro_toS(_m->BRAKE_CIRCUIT_2_PRESSURE_phys);
-  _m->PARK_TRAILER_AIR_PRESSURE_ro = PACMOD12_PARK_TRAILER_AIR_PRESSURE_ro_toS(_m->PARK_TRAILER_AIR_PRESSURE_phys);
-  _m->POWERTRAIN_AIR_PRESSURE_ro = PACMOD12_POWERTRAIN_AIR_PRESSURE_ro_toS(_m->POWERTRAIN_AIR_PRESSURE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->PNEUMATIC_SUPPLY_PRESSURE_ro = PACMOD11_PNEUMATIC_SUPPLY_PRESSURE_ro_toS(_m->PNEUMATIC_SUPPLY_PRESSURE_phys);
+  _m->BRAKE_CIRCUIT_1_PRESSURE_ro = PACMOD11_BRAKE_CIRCUIT_1_PRESSURE_ro_toS(_m->BRAKE_CIRCUIT_1_PRESSURE_phys);
+  _m->BRAKE_CIRCUIT_2_PRESSURE_ro = PACMOD11_BRAKE_CIRCUIT_2_PRESSURE_ro_toS(_m->BRAKE_CIRCUIT_2_PRESSURE_phys);
+  _m->PARK_TRAILER_AIR_PRESSURE_ro = PACMOD11_PARK_TRAILER_AIR_PRESSURE_ro_toS(_m->PARK_TRAILER_AIR_PRESSURE_phys);
+  _m->POWERTRAIN_AIR_PRESSURE_ro = PACMOD11_POWERTRAIN_AIR_PRESSURE_ro_toS(_m->POWERTRAIN_AIR_PRESSURE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= (_m->PNEUMATIC_SUPPLY_PRESSURE_ro & (0xFFU));
   cframe->Data[1] |= (_m->BRAKE_CIRCUIT_1_PRESSURE_ro & (0xFFU));
@@ -8095,17 +7069,17 @@ uint32_t Pack_AIR_PRESSURE_RPT_pacmod12(AIR_PRESSURE_RPT_t* _m, __CoderDbcCanFra
 
 #else
 
-uint32_t Pack_AIR_PRESSURE_RPT_pacmod12(AIR_PRESSURE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_AIR_PRESSURE_RPT_pacmod11(AIR_PRESSURE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < AIR_PRESSURE_RPT_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->PNEUMATIC_SUPPLY_PRESSURE_ro = PACMOD12_PNEUMATIC_SUPPLY_PRESSURE_ro_toS(_m->PNEUMATIC_SUPPLY_PRESSURE_phys);
-  _m->BRAKE_CIRCUIT_1_PRESSURE_ro = PACMOD12_BRAKE_CIRCUIT_1_PRESSURE_ro_toS(_m->BRAKE_CIRCUIT_1_PRESSURE_phys);
-  _m->BRAKE_CIRCUIT_2_PRESSURE_ro = PACMOD12_BRAKE_CIRCUIT_2_PRESSURE_ro_toS(_m->BRAKE_CIRCUIT_2_PRESSURE_phys);
-  _m->PARK_TRAILER_AIR_PRESSURE_ro = PACMOD12_PARK_TRAILER_AIR_PRESSURE_ro_toS(_m->PARK_TRAILER_AIR_PRESSURE_phys);
-  _m->POWERTRAIN_AIR_PRESSURE_ro = PACMOD12_POWERTRAIN_AIR_PRESSURE_ro_toS(_m->POWERTRAIN_AIR_PRESSURE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->PNEUMATIC_SUPPLY_PRESSURE_ro = PACMOD11_PNEUMATIC_SUPPLY_PRESSURE_ro_toS(_m->PNEUMATIC_SUPPLY_PRESSURE_phys);
+  _m->BRAKE_CIRCUIT_1_PRESSURE_ro = PACMOD11_BRAKE_CIRCUIT_1_PRESSURE_ro_toS(_m->BRAKE_CIRCUIT_1_PRESSURE_phys);
+  _m->BRAKE_CIRCUIT_2_PRESSURE_ro = PACMOD11_BRAKE_CIRCUIT_2_PRESSURE_ro_toS(_m->BRAKE_CIRCUIT_2_PRESSURE_phys);
+  _m->PARK_TRAILER_AIR_PRESSURE_ro = PACMOD11_PARK_TRAILER_AIR_PRESSURE_ro_toS(_m->PARK_TRAILER_AIR_PRESSURE_phys);
+  _m->POWERTRAIN_AIR_PRESSURE_ro = PACMOD11_POWERTRAIN_AIR_PRESSURE_ro_toS(_m->POWERTRAIN_AIR_PRESSURE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= (_m->PNEUMATIC_SUPPLY_PRESSURE_ro & (0xFFU));
   _d[1] |= (_m->BRAKE_CIRCUIT_1_PRESSURE_ro & (0xFFU));
@@ -8120,681 +7094,71 @@ uint32_t Pack_AIR_PRESSURE_RPT_pacmod12(AIR_PRESSURE_RPT_t* _m, uint8_t* _d, uin
   return AIR_PRESSURE_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_ENGINE_AUX_RPT_2_pacmod12(ENGINE_AUX_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_ENGINE_RPT_2_pacmod11(ENGINE_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->FUEL_RATE_ro = ((_d[0] & (0xFFU)) << 8) | (_d[1] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->FUEL_RATE_phys = (sigfloat_t)(PACMOD12_FUEL_RATE_ro_fromS(_m->FUEL_RATE_ro));
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->FUEL_RATE_phys = (sigfloat_t)(PACMOD11_FUEL_RATE_ro_fromS(_m->FUEL_RATE_ro));
+#endif // PACMOD11_USE_SIGFLOAT
 
   _m->FUEL_RATE_AVAIL = (_d[2] & (0x01U));
-  _m->OIL_LEVEL_AVAIL = ((_d[2] >> 1) & (0x01U));
-  _m->OIL_PRESSURE_AVAIL = ((_d[2] >> 2) & (0x01U));
-  _m->OIL_LEVEL_ro = (_d[3] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->OIL_LEVEL_phys = (sigfloat_t)(PACMOD12_OIL_LEVEL_ro_fromS(_m->OIL_LEVEL_ro));
-#endif // PACMOD12_USE_SIGFLOAT
 
-  _m->OIL_PRESSURE_ro = (_d[4] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->OIL_PRESSURE_phys = PACMOD12_OIL_PRESSURE_ro_fromS(_m->OIL_PRESSURE_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < ENGINE_AUX_RPT_2_DLC);
+#ifdef PACMOD11_USE_DIAG_MONITORS
+  _m->mon1.dlc_error = (dlc_ < ENGINE_RPT_2_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_ENGINE_AUX_RPT_2_pacmod12(&_m->mon1, ENGINE_AUX_RPT_2_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_ENGINE_RPT_2_pacmod11(&_m->mon1, ENGINE_RPT_2_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
-  return ENGINE_AUX_RPT_2_CANID;
+  return ENGINE_RPT_2_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_ENGINE_AUX_RPT_2_pacmod12(ENGINE_AUX_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_ENGINE_RPT_2_pacmod11(ENGINE_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
-  uint8_t i; for (i = 0; (i < ENGINE_AUX_RPT_2_DLC) && (i < 8); cframe->Data[i++] = 0);
+  uint8_t i; for (i = 0; (i < ENGINE_RPT_2_DLC) && (i < 8); cframe->Data[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->FUEL_RATE_ro = PACMOD12_FUEL_RATE_ro_toS(_m->FUEL_RATE_phys);
-  _m->OIL_LEVEL_ro = PACMOD12_OIL_LEVEL_ro_toS(_m->OIL_LEVEL_phys);
-  _m->OIL_PRESSURE_ro = PACMOD12_OIL_PRESSURE_ro_toS(_m->OIL_PRESSURE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->FUEL_RATE_ro = PACMOD11_FUEL_RATE_ro_toS(_m->FUEL_RATE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   cframe->Data[0] |= ((_m->FUEL_RATE_ro >> 8) & (0xFFU));
   cframe->Data[1] |= (_m->FUEL_RATE_ro & (0xFFU));
-  cframe->Data[2] |= (_m->FUEL_RATE_AVAIL & (0x01U)) | ((_m->OIL_LEVEL_AVAIL & (0x01U)) << 1) | ((_m->OIL_PRESSURE_AVAIL & (0x01U)) << 2);
-  cframe->Data[3] |= (_m->OIL_LEVEL_ro & (0xFFU));
-  cframe->Data[4] |= (_m->OIL_PRESSURE_ro & (0xFFU));
+  cframe->Data[2] |= (_m->FUEL_RATE_AVAIL & (0x01U));
 
-  cframe->MsgId = ENGINE_AUX_RPT_2_CANID;
-  cframe->DLC = ENGINE_AUX_RPT_2_DLC;
-  cframe->IDE = ENGINE_AUX_RPT_2_IDE;
-  return ENGINE_AUX_RPT_2_CANID;
+  cframe->MsgId = ENGINE_RPT_2_CANID;
+  cframe->DLC = ENGINE_RPT_2_DLC;
+  cframe->IDE = ENGINE_RPT_2_IDE;
+  return ENGINE_RPT_2_CANID;
 }
 
 #else
 
-uint32_t Pack_ENGINE_AUX_RPT_2_pacmod12(ENGINE_AUX_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_ENGINE_RPT_2_pacmod11(ENGINE_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
-  uint8_t i; for (i = 0; (i < ENGINE_AUX_RPT_2_DLC) && (i < 8); _d[i++] = 0);
+  uint8_t i; for (i = 0; (i < ENGINE_RPT_2_DLC) && (i < 8); _d[i++] = 0);
 
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->FUEL_RATE_ro = PACMOD12_FUEL_RATE_ro_toS(_m->FUEL_RATE_phys);
-  _m->OIL_LEVEL_ro = PACMOD12_OIL_LEVEL_ro_toS(_m->OIL_LEVEL_phys);
-  _m->OIL_PRESSURE_ro = PACMOD12_OIL_PRESSURE_ro_toS(_m->OIL_PRESSURE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
+#ifdef PACMOD11_USE_SIGFLOAT
+  _m->FUEL_RATE_ro = PACMOD11_FUEL_RATE_ro_toS(_m->FUEL_RATE_phys);
+#endif // PACMOD11_USE_SIGFLOAT
 
   _d[0] |= ((_m->FUEL_RATE_ro >> 8) & (0xFFU));
   _d[1] |= (_m->FUEL_RATE_ro & (0xFFU));
-  _d[2] |= (_m->FUEL_RATE_AVAIL & (0x01U)) | ((_m->OIL_LEVEL_AVAIL & (0x01U)) << 1) | ((_m->OIL_PRESSURE_AVAIL & (0x01U)) << 2);
-  _d[3] |= (_m->OIL_LEVEL_ro & (0xFFU));
-  _d[4] |= (_m->OIL_PRESSURE_ro & (0xFFU));
+  _d[2] |= (_m->FUEL_RATE_AVAIL & (0x01U));
 
-  *_len = ENGINE_AUX_RPT_2_DLC;
-  *_ide = ENGINE_AUX_RPT_2_IDE;
-  return ENGINE_AUX_RPT_2_CANID;
+  *_len = ENGINE_RPT_2_DLC;
+  *_ide = ENGINE_RPT_2_IDE;
+  return ENGINE_RPT_2_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 
-uint32_t Unpack_WHEEL_SPEED_RPT_2_pacmod12(WHEEL_SPEED_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->WHEEL_SPD_AXLE_3_LEFT_ro = __ext_sig__(( ((_d[0] & (0xFFU)) << 8) | (_d[1] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->WHEEL_SPD_AXLE_3_LEFT_phys = (sigfloat_t)(PACMOD12_WHEEL_SPD_AXLE_3_LEFT_ro_fromS(_m->WHEEL_SPD_AXLE_3_LEFT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->WHEEL_SPD_AXLE_3_RIGHT_ro = __ext_sig__(( ((_d[2] & (0xFFU)) << 8) | (_d[3] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->WHEEL_SPD_AXLE_3_RIGHT_phys = (sigfloat_t)(PACMOD12_WHEEL_SPD_AXLE_3_RIGHT_ro_fromS(_m->WHEEL_SPD_AXLE_3_RIGHT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->WHEEL_SPD_AXLE_4_LEFT_ro = __ext_sig__(( ((_d[4] & (0xFFU)) << 8) | (_d[5] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->WHEEL_SPD_AXLE_4_LEFT_phys = (sigfloat_t)(PACMOD12_WHEEL_SPD_AXLE_4_LEFT_ro_fromS(_m->WHEEL_SPD_AXLE_4_LEFT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->WHEEL_SPD_AXLE_4_RIGHT_ro = __ext_sig__(( ((_d[6] & (0xFFU)) << 8) | (_d[7] & (0xFFU)) ), 16);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->WHEEL_SPD_AXLE_4_RIGHT_phys = (sigfloat_t)(PACMOD12_WHEEL_SPD_AXLE_4_RIGHT_ro_fromS(_m->WHEEL_SPD_AXLE_4_RIGHT_ro));
-#endif // PACMOD12_USE_SIGFLOAT
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < WHEEL_SPEED_RPT_2_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_WHEEL_SPEED_RPT_2_pacmod12(&_m->mon1, WHEEL_SPEED_RPT_2_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return WHEEL_SPEED_RPT_2_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_WHEEL_SPEED_RPT_2_pacmod12(WHEEL_SPEED_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < WHEEL_SPEED_RPT_2_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->WHEEL_SPD_AXLE_3_LEFT_ro = PACMOD12_WHEEL_SPD_AXLE_3_LEFT_ro_toS(_m->WHEEL_SPD_AXLE_3_LEFT_phys);
-  _m->WHEEL_SPD_AXLE_3_RIGHT_ro = PACMOD12_WHEEL_SPD_AXLE_3_RIGHT_ro_toS(_m->WHEEL_SPD_AXLE_3_RIGHT_phys);
-  _m->WHEEL_SPD_AXLE_4_LEFT_ro = PACMOD12_WHEEL_SPD_AXLE_4_LEFT_ro_toS(_m->WHEEL_SPD_AXLE_4_LEFT_phys);
-  _m->WHEEL_SPD_AXLE_4_RIGHT_ro = PACMOD12_WHEEL_SPD_AXLE_4_RIGHT_ro_toS(_m->WHEEL_SPD_AXLE_4_RIGHT_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  cframe->Data[0] |= ((_m->WHEEL_SPD_AXLE_3_LEFT_ro >> 8) & (0xFFU));
-  cframe->Data[1] |= (_m->WHEEL_SPD_AXLE_3_LEFT_ro & (0xFFU));
-  cframe->Data[2] |= ((_m->WHEEL_SPD_AXLE_3_RIGHT_ro >> 8) & (0xFFU));
-  cframe->Data[3] |= (_m->WHEEL_SPD_AXLE_3_RIGHT_ro & (0xFFU));
-  cframe->Data[4] |= ((_m->WHEEL_SPD_AXLE_4_LEFT_ro >> 8) & (0xFFU));
-  cframe->Data[5] |= (_m->WHEEL_SPD_AXLE_4_LEFT_ro & (0xFFU));
-  cframe->Data[6] |= ((_m->WHEEL_SPD_AXLE_4_RIGHT_ro >> 8) & (0xFFU));
-  cframe->Data[7] |= (_m->WHEEL_SPD_AXLE_4_RIGHT_ro & (0xFFU));
-
-  cframe->MsgId = WHEEL_SPEED_RPT_2_CANID;
-  cframe->DLC = WHEEL_SPEED_RPT_2_DLC;
-  cframe->IDE = WHEEL_SPEED_RPT_2_IDE;
-  return WHEEL_SPEED_RPT_2_CANID;
-}
-
-#else
-
-uint32_t Pack_WHEEL_SPEED_RPT_2_pacmod12(WHEEL_SPEED_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < WHEEL_SPEED_RPT_2_DLC) && (i < 8); _d[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->WHEEL_SPD_AXLE_3_LEFT_ro = PACMOD12_WHEEL_SPD_AXLE_3_LEFT_ro_toS(_m->WHEEL_SPD_AXLE_3_LEFT_phys);
-  _m->WHEEL_SPD_AXLE_3_RIGHT_ro = PACMOD12_WHEEL_SPD_AXLE_3_RIGHT_ro_toS(_m->WHEEL_SPD_AXLE_3_RIGHT_phys);
-  _m->WHEEL_SPD_AXLE_4_LEFT_ro = PACMOD12_WHEEL_SPD_AXLE_4_LEFT_ro_toS(_m->WHEEL_SPD_AXLE_4_LEFT_phys);
-  _m->WHEEL_SPD_AXLE_4_RIGHT_ro = PACMOD12_WHEEL_SPD_AXLE_4_RIGHT_ro_toS(_m->WHEEL_SPD_AXLE_4_RIGHT_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _d[0] |= ((_m->WHEEL_SPD_AXLE_3_LEFT_ro >> 8) & (0xFFU));
-  _d[1] |= (_m->WHEEL_SPD_AXLE_3_LEFT_ro & (0xFFU));
-  _d[2] |= ((_m->WHEEL_SPD_AXLE_3_RIGHT_ro >> 8) & (0xFFU));
-  _d[3] |= (_m->WHEEL_SPD_AXLE_3_RIGHT_ro & (0xFFU));
-  _d[4] |= ((_m->WHEEL_SPD_AXLE_4_LEFT_ro >> 8) & (0xFFU));
-  _d[5] |= (_m->WHEEL_SPD_AXLE_4_LEFT_ro & (0xFFU));
-  _d[6] |= ((_m->WHEEL_SPD_AXLE_4_RIGHT_ro >> 8) & (0xFFU));
-  _d[7] |= (_m->WHEEL_SPD_AXLE_4_RIGHT_ro & (0xFFU));
-
-  *_len = WHEEL_SPEED_RPT_2_DLC;
-  *_ide = WHEEL_SPEED_RPT_2_IDE;
-  return WHEEL_SPEED_RPT_2_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_ENGINE_LOAD_FACTOR_RPT_pacmod12(ENGINE_LOAD_FACTOR_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->DRVR_DEMANDED_ENG_TORQUE_ro = __ext_sig__(( (_d[0] & (0xFFU)) ), 8);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->DRVR_DEMANDED_ENG_TORQUE_phys = PACMOD12_DRVR_DEMANDED_ENG_TORQUE_ro_fromS(_m->DRVR_DEMANDED_ENG_TORQUE_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->ACTUAL_ENGINE_TORQUE_ro = __ext_sig__(( (_d[1] & (0xFFU)) ), 8);
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->ACTUAL_ENGINE_TORQUE_phys = PACMOD12_ACTUAL_ENGINE_TORQUE_ro_fromS(_m->ACTUAL_ENGINE_TORQUE_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->ENG_LOAD_AT_CURRENT_SPEED = (_d[2] & (0xFFU));
-  _m->REFERENCE_ENGINE_TORQUE = ((_d[3] & (0xFFU)) << 8) | (_d[4] & (0xFFU));
-  _m->DRVR_DEMANDED_ENG_TORQUE_AVAIL = (_d[5] & (0x01U));
-  _m->ACTUAL_ENGINE_TORQUE_AVAIL = ((_d[5] >> 1) & (0x01U));
-  _m->ENG_LOAD_AT_CURRENT_SPEED_AVAIL = ((_d[5] >> 2) & (0x01U));
-  _m->REFERENCE_ENGINE_TORQUE_AVAIL = ((_d[5] >> 3) & (0x01U));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < ENGINE_LOAD_FACTOR_RPT_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_ENGINE_LOAD_FACTOR_RPT_pacmod12(&_m->mon1, ENGINE_LOAD_FACTOR_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return ENGINE_LOAD_FACTOR_RPT_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_ENGINE_LOAD_FACTOR_RPT_pacmod12(ENGINE_LOAD_FACTOR_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < ENGINE_LOAD_FACTOR_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->DRVR_DEMANDED_ENG_TORQUE_ro = PACMOD12_DRVR_DEMANDED_ENG_TORQUE_ro_toS(_m->DRVR_DEMANDED_ENG_TORQUE_phys);
-  _m->ACTUAL_ENGINE_TORQUE_ro = PACMOD12_ACTUAL_ENGINE_TORQUE_ro_toS(_m->ACTUAL_ENGINE_TORQUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  cframe->Data[0] |= (_m->DRVR_DEMANDED_ENG_TORQUE_ro & (0xFFU));
-  cframe->Data[1] |= (_m->ACTUAL_ENGINE_TORQUE_ro & (0xFFU));
-  cframe->Data[2] |= (_m->ENG_LOAD_AT_CURRENT_SPEED & (0xFFU));
-  cframe->Data[3] |= ((_m->REFERENCE_ENGINE_TORQUE >> 8) & (0xFFU));
-  cframe->Data[4] |= (_m->REFERENCE_ENGINE_TORQUE & (0xFFU));
-  cframe->Data[5] |= (_m->DRVR_DEMANDED_ENG_TORQUE_AVAIL & (0x01U)) | ((_m->ACTUAL_ENGINE_TORQUE_AVAIL & (0x01U)) << 1) | ((_m->ENG_LOAD_AT_CURRENT_SPEED_AVAIL & (0x01U)) << 2) | ((_m->REFERENCE_ENGINE_TORQUE_AVAIL & (0x01U)) << 3);
-
-  cframe->MsgId = ENGINE_LOAD_FACTOR_RPT_CANID;
-  cframe->DLC = ENGINE_LOAD_FACTOR_RPT_DLC;
-  cframe->IDE = ENGINE_LOAD_FACTOR_RPT_IDE;
-  return ENGINE_LOAD_FACTOR_RPT_CANID;
-}
-
-#else
-
-uint32_t Pack_ENGINE_LOAD_FACTOR_RPT_pacmod12(ENGINE_LOAD_FACTOR_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < ENGINE_LOAD_FACTOR_RPT_DLC) && (i < 8); _d[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->DRVR_DEMANDED_ENG_TORQUE_ro = PACMOD12_DRVR_DEMANDED_ENG_TORQUE_ro_toS(_m->DRVR_DEMANDED_ENG_TORQUE_phys);
-  _m->ACTUAL_ENGINE_TORQUE_ro = PACMOD12_ACTUAL_ENGINE_TORQUE_ro_toS(_m->ACTUAL_ENGINE_TORQUE_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _d[0] |= (_m->DRVR_DEMANDED_ENG_TORQUE_ro & (0xFFU));
-  _d[1] |= (_m->ACTUAL_ENGINE_TORQUE_ro & (0xFFU));
-  _d[2] |= (_m->ENG_LOAD_AT_CURRENT_SPEED & (0xFFU));
-  _d[3] |= ((_m->REFERENCE_ENGINE_TORQUE >> 8) & (0xFFU));
-  _d[4] |= (_m->REFERENCE_ENGINE_TORQUE & (0xFFU));
-  _d[5] |= (_m->DRVR_DEMANDED_ENG_TORQUE_AVAIL & (0x01U)) | ((_m->ACTUAL_ENGINE_TORQUE_AVAIL & (0x01U)) << 1) | ((_m->ENG_LOAD_AT_CURRENT_SPEED_AVAIL & (0x01U)) << 2) | ((_m->REFERENCE_ENGINE_TORQUE_AVAIL & (0x01U)) << 3);
-
-  *_len = ENGINE_LOAD_FACTOR_RPT_DLC;
-  *_ide = ENGINE_LOAD_FACTOR_RPT_IDE;
-  return ENGINE_LOAD_FACTOR_RPT_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_TIRE_PRESSURE_EXTENDED_RPT_pacmod12(TIRE_PRESSURE_EXTENDED_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->TIRE_CHASSIS_INDEX_1 = (_d[0] & (0x0FU));
-  _m->TIRE_CHASSIS_INDEX_2 = ((_d[0] >> 4) & (0x0FU));
-  _m->TIRE_CHASSIS_INDEX_3 = ((_d[1] >> 4) & (0x0FU));
-  _m->TIRE_AXLE_1 = ((_d[2] >> 2) & (0x07U));
-  _m->TIRE_AXLE_2 = ((_d[2] >> 5) & (0x07U));
-  _m->TIRE_AXLE_3 = ((_d[3] >> 2) & (0x07U));
-  _m->TIRE_POSITION_1 = ((_d[3] >> 5) & (0x07U));
-  _m->TIRE_POSITION_2 = ((_d[4] >> 2) & (0x07U));
-  _m->TIRE_POSITION_3 = ((_d[4] >> 5) & (0x07U));
-  _m->TIRE_PRESSURE_1_ro = (_d[5] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_PRESSURE_1_phys = PACMOD12_TIRE_PRESSURE_1_ro_fromS(_m->TIRE_PRESSURE_1_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->TIRE_PRESSURE_2_ro = (_d[6] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_PRESSURE_2_phys = PACMOD12_TIRE_PRESSURE_2_ro_fromS(_m->TIRE_PRESSURE_2_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->TIRE_PRESSURE_3_ro = (_d[7] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_PRESSURE_3_phys = PACMOD12_TIRE_PRESSURE_3_ro_fromS(_m->TIRE_PRESSURE_3_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < TIRE_PRESSURE_EXTENDED_RPT_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_TIRE_PRESSURE_EXTENDED_RPT_pacmod12(&_m->mon1, TIRE_PRESSURE_EXTENDED_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return TIRE_PRESSURE_EXTENDED_RPT_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_TIRE_PRESSURE_EXTENDED_RPT_pacmod12(TIRE_PRESSURE_EXTENDED_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < TIRE_PRESSURE_EXTENDED_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_PRESSURE_1_ro = PACMOD12_TIRE_PRESSURE_1_ro_toS(_m->TIRE_PRESSURE_1_phys);
-  _m->TIRE_PRESSURE_2_ro = PACMOD12_TIRE_PRESSURE_2_ro_toS(_m->TIRE_PRESSURE_2_phys);
-  _m->TIRE_PRESSURE_3_ro = PACMOD12_TIRE_PRESSURE_3_ro_toS(_m->TIRE_PRESSURE_3_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  cframe->Data[0] |= (_m->TIRE_CHASSIS_INDEX_1 & (0x0FU)) | ((_m->TIRE_CHASSIS_INDEX_2 & (0x0FU)) << 4);
-  cframe->Data[1] |= ((_m->TIRE_CHASSIS_INDEX_3 & (0x0FU)) << 4);
-  cframe->Data[2] |= ((_m->TIRE_AXLE_1 & (0x07U)) << 2) | ((_m->TIRE_AXLE_2 & (0x07U)) << 5);
-  cframe->Data[3] |= ((_m->TIRE_AXLE_3 & (0x07U)) << 2) | ((_m->TIRE_POSITION_1 & (0x07U)) << 5);
-  cframe->Data[4] |= ((_m->TIRE_POSITION_2 & (0x07U)) << 2) | ((_m->TIRE_POSITION_3 & (0x07U)) << 5);
-  cframe->Data[5] |= (_m->TIRE_PRESSURE_1_ro & (0xFFU));
-  cframe->Data[6] |= (_m->TIRE_PRESSURE_2_ro & (0xFFU));
-  cframe->Data[7] |= (_m->TIRE_PRESSURE_3_ro & (0xFFU));
-
-  cframe->MsgId = TIRE_PRESSURE_EXTENDED_RPT_CANID;
-  cframe->DLC = TIRE_PRESSURE_EXTENDED_RPT_DLC;
-  cframe->IDE = TIRE_PRESSURE_EXTENDED_RPT_IDE;
-  return TIRE_PRESSURE_EXTENDED_RPT_CANID;
-}
-
-#else
-
-uint32_t Pack_TIRE_PRESSURE_EXTENDED_RPT_pacmod12(TIRE_PRESSURE_EXTENDED_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < TIRE_PRESSURE_EXTENDED_RPT_DLC) && (i < 8); _d[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_PRESSURE_1_ro = PACMOD12_TIRE_PRESSURE_1_ro_toS(_m->TIRE_PRESSURE_1_phys);
-  _m->TIRE_PRESSURE_2_ro = PACMOD12_TIRE_PRESSURE_2_ro_toS(_m->TIRE_PRESSURE_2_phys);
-  _m->TIRE_PRESSURE_3_ro = PACMOD12_TIRE_PRESSURE_3_ro_toS(_m->TIRE_PRESSURE_3_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _d[0] |= (_m->TIRE_CHASSIS_INDEX_1 & (0x0FU)) | ((_m->TIRE_CHASSIS_INDEX_2 & (0x0FU)) << 4);
-  _d[1] |= ((_m->TIRE_CHASSIS_INDEX_3 & (0x0FU)) << 4);
-  _d[2] |= ((_m->TIRE_AXLE_1 & (0x07U)) << 2) | ((_m->TIRE_AXLE_2 & (0x07U)) << 5);
-  _d[3] |= ((_m->TIRE_AXLE_3 & (0x07U)) << 2) | ((_m->TIRE_POSITION_1 & (0x07U)) << 5);
-  _d[4] |= ((_m->TIRE_POSITION_2 & (0x07U)) << 2) | ((_m->TIRE_POSITION_3 & (0x07U)) << 5);
-  _d[5] |= (_m->TIRE_PRESSURE_1_ro & (0xFFU));
-  _d[6] |= (_m->TIRE_PRESSURE_2_ro & (0xFFU));
-  _d[7] |= (_m->TIRE_PRESSURE_3_ro & (0xFFU));
-
-  *_len = TIRE_PRESSURE_EXTENDED_RPT_DLC;
-  *_ide = TIRE_PRESSURE_EXTENDED_RPT_IDE;
-  return TIRE_PRESSURE_EXTENDED_RPT_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_TIRE_PRESSURE_EXTENDED_RPT_2_pacmod12(TIRE_PRESSURE_EXTENDED_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->TIRE_CHASSIS_INDEX_1 = (_d[0] & (0x0FU));
-  _m->TIRE_CHASSIS_INDEX_2 = ((_d[0] >> 4) & (0x0FU));
-  _m->TIRE_CHASSIS_INDEX_3 = ((_d[1] >> 4) & (0x0FU));
-  _m->TIRE_AXLE_1 = ((_d[2] >> 2) & (0x07U));
-  _m->TIRE_AXLE_2 = ((_d[2] >> 5) & (0x07U));
-  _m->TIRE_AXLE_3 = ((_d[3] >> 2) & (0x07U));
-  _m->TIRE_POSITION_1 = ((_d[3] >> 5) & (0x07U));
-  _m->TIRE_POSITION_2 = ((_d[4] >> 2) & (0x07U));
-  _m->TIRE_POSITION_3 = ((_d[4] >> 5) & (0x07U));
-  _m->TIRE_PRESSURE_1_ro = (_d[5] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_PRESSURE_1_phys = PACMOD12_TIRE_PRESSURE_1_ro_fromS(_m->TIRE_PRESSURE_1_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->TIRE_PRESSURE_2_ro = (_d[6] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_PRESSURE_2_phys = PACMOD12_TIRE_PRESSURE_2_ro_fromS(_m->TIRE_PRESSURE_2_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->TIRE_PRESSURE_3_ro = (_d[7] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_PRESSURE_3_phys = PACMOD12_TIRE_PRESSURE_3_ro_fromS(_m->TIRE_PRESSURE_3_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < TIRE_PRESSURE_EXTENDED_RPT_2_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_TIRE_PRESSURE_EXTENDED_RPT_2_pacmod12(&_m->mon1, TIRE_PRESSURE_EXTENDED_RPT_2_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return TIRE_PRESSURE_EXTENDED_RPT_2_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_TIRE_PRESSURE_EXTENDED_RPT_2_pacmod12(TIRE_PRESSURE_EXTENDED_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < TIRE_PRESSURE_EXTENDED_RPT_2_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_PRESSURE_1_ro = PACMOD12_TIRE_PRESSURE_1_ro_toS(_m->TIRE_PRESSURE_1_phys);
-  _m->TIRE_PRESSURE_2_ro = PACMOD12_TIRE_PRESSURE_2_ro_toS(_m->TIRE_PRESSURE_2_phys);
-  _m->TIRE_PRESSURE_3_ro = PACMOD12_TIRE_PRESSURE_3_ro_toS(_m->TIRE_PRESSURE_3_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  cframe->Data[0] |= (_m->TIRE_CHASSIS_INDEX_1 & (0x0FU)) | ((_m->TIRE_CHASSIS_INDEX_2 & (0x0FU)) << 4);
-  cframe->Data[1] |= ((_m->TIRE_CHASSIS_INDEX_3 & (0x0FU)) << 4);
-  cframe->Data[2] |= ((_m->TIRE_AXLE_1 & (0x07U)) << 2) | ((_m->TIRE_AXLE_2 & (0x07U)) << 5);
-  cframe->Data[3] |= ((_m->TIRE_AXLE_3 & (0x07U)) << 2) | ((_m->TIRE_POSITION_1 & (0x07U)) << 5);
-  cframe->Data[4] |= ((_m->TIRE_POSITION_2 & (0x07U)) << 2) | ((_m->TIRE_POSITION_3 & (0x07U)) << 5);
-  cframe->Data[5] |= (_m->TIRE_PRESSURE_1_ro & (0xFFU));
-  cframe->Data[6] |= (_m->TIRE_PRESSURE_2_ro & (0xFFU));
-  cframe->Data[7] |= (_m->TIRE_PRESSURE_3_ro & (0xFFU));
-
-  cframe->MsgId = TIRE_PRESSURE_EXTENDED_RPT_2_CANID;
-  cframe->DLC = TIRE_PRESSURE_EXTENDED_RPT_2_DLC;
-  cframe->IDE = TIRE_PRESSURE_EXTENDED_RPT_2_IDE;
-  return TIRE_PRESSURE_EXTENDED_RPT_2_CANID;
-}
-
-#else
-
-uint32_t Pack_TIRE_PRESSURE_EXTENDED_RPT_2_pacmod12(TIRE_PRESSURE_EXTENDED_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < TIRE_PRESSURE_EXTENDED_RPT_2_DLC) && (i < 8); _d[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_PRESSURE_1_ro = PACMOD12_TIRE_PRESSURE_1_ro_toS(_m->TIRE_PRESSURE_1_phys);
-  _m->TIRE_PRESSURE_2_ro = PACMOD12_TIRE_PRESSURE_2_ro_toS(_m->TIRE_PRESSURE_2_phys);
-  _m->TIRE_PRESSURE_3_ro = PACMOD12_TIRE_PRESSURE_3_ro_toS(_m->TIRE_PRESSURE_3_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _d[0] |= (_m->TIRE_CHASSIS_INDEX_1 & (0x0FU)) | ((_m->TIRE_CHASSIS_INDEX_2 & (0x0FU)) << 4);
-  _d[1] |= ((_m->TIRE_CHASSIS_INDEX_3 & (0x0FU)) << 4);
-  _d[2] |= ((_m->TIRE_AXLE_1 & (0x07U)) << 2) | ((_m->TIRE_AXLE_2 & (0x07U)) << 5);
-  _d[3] |= ((_m->TIRE_AXLE_3 & (0x07U)) << 2) | ((_m->TIRE_POSITION_1 & (0x07U)) << 5);
-  _d[4] |= ((_m->TIRE_POSITION_2 & (0x07U)) << 2) | ((_m->TIRE_POSITION_3 & (0x07U)) << 5);
-  _d[5] |= (_m->TIRE_PRESSURE_1_ro & (0xFFU));
-  _d[6] |= (_m->TIRE_PRESSURE_2_ro & (0xFFU));
-  _d[7] |= (_m->TIRE_PRESSURE_3_ro & (0xFFU));
-
-  *_len = TIRE_PRESSURE_EXTENDED_RPT_2_DLC;
-  *_ide = TIRE_PRESSURE_EXTENDED_RPT_2_IDE;
-  return TIRE_PRESSURE_EXTENDED_RPT_2_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_TIRE_TEMPERATURE_EXTENDED_RPT_pacmod12(TIRE_TEMPERATURE_EXTENDED_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->TIRE_CHASSIS_INDEX_1 = (_d[0] & (0x0FU));
-  _m->TIRE_CHASSIS_INDEX_2 = ((_d[0] >> 4) & (0x0FU));
-  _m->TIRE_CHASSIS_INDEX_3 = ((_d[1] >> 4) & (0x0FU));
-  _m->TIRE_AXLE_1 = ((_d[2] >> 2) & (0x07U));
-  _m->TIRE_AXLE_2 = ((_d[2] >> 5) & (0x07U));
-  _m->TIRE_AXLE_3 = ((_d[3] >> 2) & (0x07U));
-  _m->TIRE_POSITION_1 = ((_d[3] >> 5) & (0x07U));
-  _m->TIRE_POSITION_2 = ((_d[4] >> 2) & (0x07U));
-  _m->TIRE_POSITION_3 = ((_d[4] >> 5) & (0x07U));
-  _m->TIRE_TEMPERATURE_1_ro = (_d[5] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_TEMPERATURE_1_phys = PACMOD12_TIRE_TEMPERATURE_1_ro_fromS(_m->TIRE_TEMPERATURE_1_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->TIRE_TEMPERATURE_2_ro = (_d[6] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_TEMPERATURE_2_phys = PACMOD12_TIRE_TEMPERATURE_2_ro_fromS(_m->TIRE_TEMPERATURE_2_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->TIRE_TEMPERATURE_3_ro = (_d[7] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_TEMPERATURE_3_phys = PACMOD12_TIRE_TEMPERATURE_3_ro_fromS(_m->TIRE_TEMPERATURE_3_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < TIRE_TEMPERATURE_EXTENDED_RPT_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_TIRE_TEMPERATURE_EXTENDED_RPT_pacmod12(&_m->mon1, TIRE_TEMPERATURE_EXTENDED_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return TIRE_TEMPERATURE_EXTENDED_RPT_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_TIRE_TEMPERATURE_EXTENDED_RPT_pacmod12(TIRE_TEMPERATURE_EXTENDED_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < TIRE_TEMPERATURE_EXTENDED_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_TEMPERATURE_1_ro = PACMOD12_TIRE_TEMPERATURE_1_ro_toS(_m->TIRE_TEMPERATURE_1_phys);
-  _m->TIRE_TEMPERATURE_2_ro = PACMOD12_TIRE_TEMPERATURE_2_ro_toS(_m->TIRE_TEMPERATURE_2_phys);
-  _m->TIRE_TEMPERATURE_3_ro = PACMOD12_TIRE_TEMPERATURE_3_ro_toS(_m->TIRE_TEMPERATURE_3_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  cframe->Data[0] |= (_m->TIRE_CHASSIS_INDEX_1 & (0x0FU)) | ((_m->TIRE_CHASSIS_INDEX_2 & (0x0FU)) << 4);
-  cframe->Data[1] |= ((_m->TIRE_CHASSIS_INDEX_3 & (0x0FU)) << 4);
-  cframe->Data[2] |= ((_m->TIRE_AXLE_1 & (0x07U)) << 2) | ((_m->TIRE_AXLE_2 & (0x07U)) << 5);
-  cframe->Data[3] |= ((_m->TIRE_AXLE_3 & (0x07U)) << 2) | ((_m->TIRE_POSITION_1 & (0x07U)) << 5);
-  cframe->Data[4] |= ((_m->TIRE_POSITION_2 & (0x07U)) << 2) | ((_m->TIRE_POSITION_3 & (0x07U)) << 5);
-  cframe->Data[5] |= (_m->TIRE_TEMPERATURE_1_ro & (0xFFU));
-  cframe->Data[6] |= (_m->TIRE_TEMPERATURE_2_ro & (0xFFU));
-  cframe->Data[7] |= (_m->TIRE_TEMPERATURE_3_ro & (0xFFU));
-
-  cframe->MsgId = TIRE_TEMPERATURE_EXTENDED_RPT_CANID;
-  cframe->DLC = TIRE_TEMPERATURE_EXTENDED_RPT_DLC;
-  cframe->IDE = TIRE_TEMPERATURE_EXTENDED_RPT_IDE;
-  return TIRE_TEMPERATURE_EXTENDED_RPT_CANID;
-}
-
-#else
-
-uint32_t Pack_TIRE_TEMPERATURE_EXTENDED_RPT_pacmod12(TIRE_TEMPERATURE_EXTENDED_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < TIRE_TEMPERATURE_EXTENDED_RPT_DLC) && (i < 8); _d[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_TEMPERATURE_1_ro = PACMOD12_TIRE_TEMPERATURE_1_ro_toS(_m->TIRE_TEMPERATURE_1_phys);
-  _m->TIRE_TEMPERATURE_2_ro = PACMOD12_TIRE_TEMPERATURE_2_ro_toS(_m->TIRE_TEMPERATURE_2_phys);
-  _m->TIRE_TEMPERATURE_3_ro = PACMOD12_TIRE_TEMPERATURE_3_ro_toS(_m->TIRE_TEMPERATURE_3_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _d[0] |= (_m->TIRE_CHASSIS_INDEX_1 & (0x0FU)) | ((_m->TIRE_CHASSIS_INDEX_2 & (0x0FU)) << 4);
-  _d[1] |= ((_m->TIRE_CHASSIS_INDEX_3 & (0x0FU)) << 4);
-  _d[2] |= ((_m->TIRE_AXLE_1 & (0x07U)) << 2) | ((_m->TIRE_AXLE_2 & (0x07U)) << 5);
-  _d[3] |= ((_m->TIRE_AXLE_3 & (0x07U)) << 2) | ((_m->TIRE_POSITION_1 & (0x07U)) << 5);
-  _d[4] |= ((_m->TIRE_POSITION_2 & (0x07U)) << 2) | ((_m->TIRE_POSITION_3 & (0x07U)) << 5);
-  _d[5] |= (_m->TIRE_TEMPERATURE_1_ro & (0xFFU));
-  _d[6] |= (_m->TIRE_TEMPERATURE_2_ro & (0xFFU));
-  _d[7] |= (_m->TIRE_TEMPERATURE_3_ro & (0xFFU));
-
-  *_len = TIRE_TEMPERATURE_EXTENDED_RPT_DLC;
-  *_ide = TIRE_TEMPERATURE_EXTENDED_RPT_IDE;
-  return TIRE_TEMPERATURE_EXTENDED_RPT_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_TIRE_TEMPERATURE_EXTENDED_RPT_2_pacmod12(TIRE_TEMPERATURE_EXTENDED_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->TIRE_CHASSIS_INDEX_1 = (_d[0] & (0x0FU));
-  _m->TIRE_CHASSIS_INDEX_2 = ((_d[0] >> 4) & (0x0FU));
-  _m->TIRE_CHASSIS_INDEX_3 = ((_d[1] >> 4) & (0x0FU));
-  _m->TIRE_AXLE_1 = ((_d[2] >> 2) & (0x07U));
-  _m->TIRE_AXLE_2 = ((_d[2] >> 5) & (0x07U));
-  _m->TIRE_AXLE_3 = ((_d[3] >> 2) & (0x07U));
-  _m->TIRE_POSITION_1 = ((_d[3] >> 5) & (0x07U));
-  _m->TIRE_POSITION_2 = ((_d[4] >> 2) & (0x07U));
-  _m->TIRE_POSITION_3 = ((_d[4] >> 5) & (0x07U));
-  _m->TIRE_TEMPERATURE_1_ro = (_d[5] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_TEMPERATURE_1_phys = PACMOD12_TIRE_TEMPERATURE_1_ro_fromS(_m->TIRE_TEMPERATURE_1_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->TIRE_TEMPERATURE_2_ro = (_d[6] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_TEMPERATURE_2_phys = PACMOD12_TIRE_TEMPERATURE_2_ro_fromS(_m->TIRE_TEMPERATURE_2_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _m->TIRE_TEMPERATURE_3_ro = (_d[7] & (0xFFU));
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_TEMPERATURE_3_phys = PACMOD12_TIRE_TEMPERATURE_3_ro_fromS(_m->TIRE_TEMPERATURE_3_ro);
-#endif // PACMOD12_USE_SIGFLOAT
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < TIRE_TEMPERATURE_EXTENDED_RPT_2_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_TIRE_TEMPERATURE_EXTENDED_RPT_2_pacmod12(&_m->mon1, TIRE_TEMPERATURE_EXTENDED_RPT_2_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return TIRE_TEMPERATURE_EXTENDED_RPT_2_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_TIRE_TEMPERATURE_EXTENDED_RPT_2_pacmod12(TIRE_TEMPERATURE_EXTENDED_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < TIRE_TEMPERATURE_EXTENDED_RPT_2_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_TEMPERATURE_1_ro = PACMOD12_TIRE_TEMPERATURE_1_ro_toS(_m->TIRE_TEMPERATURE_1_phys);
-  _m->TIRE_TEMPERATURE_2_ro = PACMOD12_TIRE_TEMPERATURE_2_ro_toS(_m->TIRE_TEMPERATURE_2_phys);
-  _m->TIRE_TEMPERATURE_3_ro = PACMOD12_TIRE_TEMPERATURE_3_ro_toS(_m->TIRE_TEMPERATURE_3_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  cframe->Data[0] |= (_m->TIRE_CHASSIS_INDEX_1 & (0x0FU)) | ((_m->TIRE_CHASSIS_INDEX_2 & (0x0FU)) << 4);
-  cframe->Data[1] |= ((_m->TIRE_CHASSIS_INDEX_3 & (0x0FU)) << 4);
-  cframe->Data[2] |= ((_m->TIRE_AXLE_1 & (0x07U)) << 2) | ((_m->TIRE_AXLE_2 & (0x07U)) << 5);
-  cframe->Data[3] |= ((_m->TIRE_AXLE_3 & (0x07U)) << 2) | ((_m->TIRE_POSITION_1 & (0x07U)) << 5);
-  cframe->Data[4] |= ((_m->TIRE_POSITION_2 & (0x07U)) << 2) | ((_m->TIRE_POSITION_3 & (0x07U)) << 5);
-  cframe->Data[5] |= (_m->TIRE_TEMPERATURE_1_ro & (0xFFU));
-  cframe->Data[6] |= (_m->TIRE_TEMPERATURE_2_ro & (0xFFU));
-  cframe->Data[7] |= (_m->TIRE_TEMPERATURE_3_ro & (0xFFU));
-
-  cframe->MsgId = TIRE_TEMPERATURE_EXTENDED_RPT_2_CANID;
-  cframe->DLC = TIRE_TEMPERATURE_EXTENDED_RPT_2_DLC;
-  cframe->IDE = TIRE_TEMPERATURE_EXTENDED_RPT_2_IDE;
-  return TIRE_TEMPERATURE_EXTENDED_RPT_2_CANID;
-}
-
-#else
-
-uint32_t Pack_TIRE_TEMPERATURE_EXTENDED_RPT_2_pacmod12(TIRE_TEMPERATURE_EXTENDED_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < TIRE_TEMPERATURE_EXTENDED_RPT_2_DLC) && (i < 8); _d[i++] = 0);
-
-#ifdef PACMOD12_USE_SIGFLOAT
-  _m->TIRE_TEMPERATURE_1_ro = PACMOD12_TIRE_TEMPERATURE_1_ro_toS(_m->TIRE_TEMPERATURE_1_phys);
-  _m->TIRE_TEMPERATURE_2_ro = PACMOD12_TIRE_TEMPERATURE_2_ro_toS(_m->TIRE_TEMPERATURE_2_phys);
-  _m->TIRE_TEMPERATURE_3_ro = PACMOD12_TIRE_TEMPERATURE_3_ro_toS(_m->TIRE_TEMPERATURE_3_phys);
-#endif // PACMOD12_USE_SIGFLOAT
-
-  _d[0] |= (_m->TIRE_CHASSIS_INDEX_1 & (0x0FU)) | ((_m->TIRE_CHASSIS_INDEX_2 & (0x0FU)) << 4);
-  _d[1] |= ((_m->TIRE_CHASSIS_INDEX_3 & (0x0FU)) << 4);
-  _d[2] |= ((_m->TIRE_AXLE_1 & (0x07U)) << 2) | ((_m->TIRE_AXLE_2 & (0x07U)) << 5);
-  _d[3] |= ((_m->TIRE_AXLE_3 & (0x07U)) << 2) | ((_m->TIRE_POSITION_1 & (0x07U)) << 5);
-  _d[4] |= ((_m->TIRE_POSITION_2 & (0x07U)) << 2) | ((_m->TIRE_POSITION_3 & (0x07U)) << 5);
-  _d[5] |= (_m->TIRE_TEMPERATURE_1_ro & (0xFFU));
-  _d[6] |= (_m->TIRE_TEMPERATURE_2_ro & (0xFFU));
-  _d[7] |= (_m->TIRE_TEMPERATURE_3_ro & (0xFFU));
-
-  *_len = TIRE_TEMPERATURE_EXTENDED_RPT_2_DLC;
-  *_ide = TIRE_TEMPERATURE_EXTENDED_RPT_2_IDE;
-  return TIRE_TEMPERATURE_EXTENDED_RPT_2_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_AUTOMS_MAN_SWITCH_RPT_pacmod12(AUTOMS_MAN_SWITCH_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
-{
-  (void)dlc_;
-  _m->AUTOMS_MAN_OPCTRL = (_d[0] & (0x03U));
-  _m->AUTOMS_MAN_EXTCTRL = ((_d[0] >> 2) & (0x03U));
-  _m->AUTOMS_MAN_OPCTRL_AVAIL = ((_d[0] >> 4) & (0x01U));
-  _m->AUTOMS_MAN_EXTCTRL_AVAIL = ((_d[0] >> 5) & (0x01U));
-
-#ifdef PACMOD12_USE_DIAG_MONITORS
-  _m->mon1.dlc_error = (dlc_ < AUTOMS_MAN_SWITCH_RPT_DLC);
-  _m->mon1.last_cycle = GetSystemTick();
-  _m->mon1.frame_cnt++;
-
-  FMon_AUTOMS_MAN_SWITCH_RPT_pacmod12(&_m->mon1, AUTOMS_MAN_SWITCH_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
-
-  return AUTOMS_MAN_SWITCH_RPT_CANID;
-}
-
-#ifdef PACMOD12_USE_CANSTRUCT
-
-uint32_t Pack_AUTOMS_MAN_SWITCH_RPT_pacmod12(AUTOMS_MAN_SWITCH_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
-{
-  uint8_t i; for (i = 0; (i < AUTOMS_MAN_SWITCH_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
-
-  cframe->Data[0] |= (_m->AUTOMS_MAN_OPCTRL & (0x03U)) | ((_m->AUTOMS_MAN_EXTCTRL & (0x03U)) << 2) | ((_m->AUTOMS_MAN_OPCTRL_AVAIL & (0x01U)) << 4) | ((_m->AUTOMS_MAN_EXTCTRL_AVAIL & (0x01U)) << 5);
-
-  cframe->MsgId = AUTOMS_MAN_SWITCH_RPT_CANID;
-  cframe->DLC = AUTOMS_MAN_SWITCH_RPT_DLC;
-  cframe->IDE = AUTOMS_MAN_SWITCH_RPT_IDE;
-  return AUTOMS_MAN_SWITCH_RPT_CANID;
-}
-
-#else
-
-uint32_t Pack_AUTOMS_MAN_SWITCH_RPT_pacmod12(AUTOMS_MAN_SWITCH_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
-{
-  uint8_t i; for (i = 0; (i < AUTOMS_MAN_SWITCH_RPT_DLC) && (i < 8); _d[i++] = 0);
-
-  _d[0] |= (_m->AUTOMS_MAN_OPCTRL & (0x03U)) | ((_m->AUTOMS_MAN_EXTCTRL & (0x03U)) << 2) | ((_m->AUTOMS_MAN_OPCTRL_AVAIL & (0x01U)) << 4) | ((_m->AUTOMS_MAN_EXTCTRL_AVAIL & (0x01U)) << 5);
-
-  *_len = AUTOMS_MAN_SWITCH_RPT_DLC;
-  *_ide = AUTOMS_MAN_SWITCH_RPT_IDE;
-  return AUTOMS_MAN_SWITCH_RPT_CANID;
-}
-
-#endif // PACMOD12_USE_CANSTRUCT
-
-uint32_t Unpack_WATCHDOG_RPT_pacmod12(WATCHDOG_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
+uint32_t Unpack_WATCHDOG_RPT_pacmod11(WATCHDOG_RPT_t* _m, const uint8_t* _d, uint8_t dlc_)
 {
   (void)dlc_;
   _m->GLOBAL_ENABLE_FLAG = (_d[0] & (0x01U));
@@ -8862,20 +7226,20 @@ uint32_t Unpack_WATCHDOG_RPT_pacmod12(WATCHDOG_RPT_t* _m, const uint8_t* _d, uin
   _m->PACMINI_SYSTEM_PRESENT_FAULT = ((_d[7] >> 6) & (0x01U));
   _m->GLOBAL_INT_POWER_SUPPLY_FAULT = ((_d[7] >> 7) & (0x01U));
 
-#ifdef PACMOD12_USE_DIAG_MONITORS
+#ifdef PACMOD11_USE_DIAG_MONITORS
   _m->mon1.dlc_error = (dlc_ < WATCHDOG_RPT_DLC);
   _m->mon1.last_cycle = GetSystemTick();
   _m->mon1.frame_cnt++;
 
-  FMon_WATCHDOG_RPT_pacmod12(&_m->mon1, WATCHDOG_RPT_CANID);
-#endif // PACMOD12_USE_DIAG_MONITORS
+  FMon_WATCHDOG_RPT_pacmod11(&_m->mon1, WATCHDOG_RPT_CANID);
+#endif // PACMOD11_USE_DIAG_MONITORS
 
   return WATCHDOG_RPT_CANID;
 }
 
-#ifdef PACMOD12_USE_CANSTRUCT
+#ifdef PACMOD11_USE_CANSTRUCT
 
-uint32_t Pack_WATCHDOG_RPT_pacmod12(WATCHDOG_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
+uint32_t Pack_WATCHDOG_RPT_pacmod11(WATCHDOG_RPT_t* _m, __CoderDbcCanFrame_t__* cframe)
 {
   uint8_t i; for (i = 0; (i < WATCHDOG_RPT_DLC) && (i < 8); cframe->Data[i++] = 0);
 
@@ -8896,7 +7260,7 @@ uint32_t Pack_WATCHDOG_RPT_pacmod12(WATCHDOG_RPT_t* _m, __CoderDbcCanFrame_t__* 
 
 #else
 
-uint32_t Pack_WATCHDOG_RPT_pacmod12(WATCHDOG_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
+uint32_t Pack_WATCHDOG_RPT_pacmod11(WATCHDOG_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide)
 {
   uint8_t i; for (i = 0; (i < WATCHDOG_RPT_DLC) && (i < 8); _d[i++] = 0);
 
@@ -8914,5 +7278,5 @@ uint32_t Pack_WATCHDOG_RPT_pacmod12(WATCHDOG_RPT_t* _m, uint8_t* _d, uint8_t* _l
   return WATCHDOG_RPT_CANID;
 }
 
-#endif // PACMOD12_USE_CANSTRUCT
+#endif // PACMOD11_USE_CANSTRUCT
 

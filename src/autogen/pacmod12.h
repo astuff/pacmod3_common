@@ -7,8 +7,8 @@ extern "C" {
 #include <stdint.h>
 
 // DBC file version
-#define VER_PACMOD12_MAJ (0U)
-#define VER_PACMOD12_MIN (0U)
+#define VER_PACMOD12_MAJ (12U)
+#define VER_PACMOD12_MIN (2U)
 
 // include current dbc-driver compilation config
 #include "pacmod12-config.h"
@@ -35,53 +35,43 @@ typedef struct
 
   //  0 : "CONTROL_DISABLED"
   //  1 : "CONTROL_ENABLED"
-  // 
   uint8_t PACMOD_SYSTEM_ENABLED : 1;           //      Bits= 1
 
   //  0 : "NOT_OVERRIDDEN"
   //  1 : "OVERRIDDEN"
-  // 
   uint8_t PACMOD_SYSTEM_OVERRIDE_ACTIVE : 1;   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t USR_CAN_TIMEOUT : 1;                 //      Bits= 1
 
   //  0 : "NO_ACTIVE_CAN_TIMEOUT"
   //  1 : "ACTIVE_CAN_TIMEOUT"
-  // 
   uint8_t STR_CAN_TIMEOUT : 1;                 //      Bits= 1
 
   //  0 : "NO_ACTIVE_CAN_TIMEOUT"
   //  1 : "ACTIVE_CAN_TIMEOUT"
-  // 
   uint8_t BRK_CAN_TIMEOUT : 1;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD_SUBSYSTEM_TIMEOUT : 1;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t VEH_CAN_TIMEOUT : 1;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD_SYSTEM_FAULT_ACTIVE : 1;      //      Bits= 1
 
   // Supervisory Enablement Rules apply when SUPERVISORY_ENABLE_REQUIRED is REQUIRED.  It provides backward compatibility with prior versions of this specification that did not have the SUPERVISORY_CTRL message.
   //  0 : "NOT_REQUIRED"
   //  1 : "REQUIRED"
-  // 
   uint8_t SUPERVISORY_ENABLE_REQUIRED : 1;     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CONFIG_FAULT_ACTIVE : 1;             //      Bits= 1
 
   uint16_t USR_CAN_READ_ERRORS;                //      Bits=16
@@ -90,53 +80,43 @@ typedef struct
 
   //  0 : "CONTROL_DISABLED"
   //  1 : "CONTROL_ENABLED"
-  // 
   uint8_t PACMOD_SYSTEM_ENABLED;               //      Bits= 1
 
   //  0 : "NOT_OVERRIDDEN"
   //  1 : "OVERRIDDEN"
-  // 
   uint8_t PACMOD_SYSTEM_OVERRIDE_ACTIVE;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t USR_CAN_TIMEOUT;                     //      Bits= 1
 
   //  0 : "NO_ACTIVE_CAN_TIMEOUT"
   //  1 : "ACTIVE_CAN_TIMEOUT"
-  // 
   uint8_t STR_CAN_TIMEOUT;                     //      Bits= 1
 
   //  0 : "NO_ACTIVE_CAN_TIMEOUT"
   //  1 : "ACTIVE_CAN_TIMEOUT"
-  // 
   uint8_t BRK_CAN_TIMEOUT;                     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD_SUBSYSTEM_TIMEOUT;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t VEH_CAN_TIMEOUT;                     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD_SYSTEM_FAULT_ACTIVE;          //      Bits= 1
 
   // Supervisory Enablement Rules apply when SUPERVISORY_ENABLE_REQUIRED is REQUIRED.  It provides backward compatibility with prior versions of this specification that did not have the SUPERVISORY_CTRL message.
   //  0 : "NOT_REQUIRED"
   //  1 : "REQUIRED"
-  // 
   uint8_t SUPERVISORY_ENABLE_REQUIRED;         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CONFIG_FAULT_ACTIVE;                 //      Bits= 1
 
   uint16_t USR_CAN_READ_ERRORS;                //      Bits=16
@@ -163,74 +143,72 @@ typedef struct
   // One or more systems are enabled.
   //  0 : "CONTROL_DISABLED"
   //  1 : "CONTROL_ENABLED"
-  // 
   uint8_t SYSTEM_ENABLED : 1;                //      Bits= 1
 
   //  0 : "NOT_OVERRIDDEN"
   //  1 : "OVERRIDDEN"
-  // 
   uint8_t SYSTEM_OVERRIDE_ACTIVE : 1;        //      Bits= 1
 
   // One or more faults are active.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SYSTEM_FAULT_ACTIVE : 1;           //      Bits= 1
 
   // Supervisory Enablement Rules apply when SUPERVISORY_ENABLE_REQUIRED is REQUIRED.  It provides backward compatibility with prior versions of this specification that did not have the SUPERVISORY_CTRL message.
   //  0 : "NOT_REQUIRED"
   //  1 : "REQUIRED"
-  // 
   uint8_t SUPERVISORY_ENABLE_REQUIRED : 1;   //      Bits= 1
 
   // Global Command Sanity Check Rules and System Global Disable Rules apply when SANITY_CHECK_REQUIRED is REQUIRED.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t DISABLE_ALL_SYSTEMS : 1;           //      Bits= 1
 
   // System Ready Rules apply at all times.
   //  0 : "NOT_READY"
   //  1 : "READY"
-  // 
   uint8_t SYSTEM_READY : 1;                  //      Bits= 1
+
+  // This value reports which enable method is used. The file user_can_protocol.md lists the available enable methods.
+  //  0 : "INDIVIDUAL_SYSTEM_ENABLE"
+  //  1 : "GLOBAL_SYSTEM_ENABLE"
+  uint8_t ENABLE_METHOD : 2;                 //      Bits= 2
 
 #else
 
   // One or more systems are enabled.
   //  0 : "CONTROL_DISABLED"
   //  1 : "CONTROL_ENABLED"
-  // 
   uint8_t SYSTEM_ENABLED;                    //      Bits= 1
 
   //  0 : "NOT_OVERRIDDEN"
   //  1 : "OVERRIDDEN"
-  // 
   uint8_t SYSTEM_OVERRIDE_ACTIVE;            //      Bits= 1
 
   // One or more faults are active.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SYSTEM_FAULT_ACTIVE;               //      Bits= 1
 
   // Supervisory Enablement Rules apply when SUPERVISORY_ENABLE_REQUIRED is REQUIRED.  It provides backward compatibility with prior versions of this specification that did not have the SUPERVISORY_CTRL message.
   //  0 : "NOT_REQUIRED"
   //  1 : "REQUIRED"
-  // 
   uint8_t SUPERVISORY_ENABLE_REQUIRED;       //      Bits= 1
 
   // Global Command Sanity Check Rules and System Global Disable Rules apply when SANITY_CHECK_REQUIRED is REQUIRED.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t DISABLE_ALL_SYSTEMS;               //      Bits= 1
 
   // System Ready Rules apply at all times.
   //  0 : "NOT_READY"
   //  1 : "READY"
-  // 
   uint8_t SYSTEM_READY;                      //      Bits= 1
+
+  // This value reports which enable method is used. The file user_can_protocol.md lists the available enable methods.
+  //  0 : "INDIVIDUAL_SYSTEM_ENABLE"
+  //  1 : "GLOBAL_SYSTEM_ENABLE"
+  uint8_t ENABLE_METHOD;                     //      Bits= 2
 
 #endif // PACMOD12_USE_BITS_SIGNAL
 
@@ -244,7 +222,7 @@ typedef struct
 
 // def @COMPONENT_RPT_00 CAN Message (32   0x20)
 #define COMPONENT_RPT_00_IDE (0U)
-#define COMPONENT_RPT_00_DLC (6U)
+#define COMPONENT_RPT_00_DLC (7U)
 #define COMPONENT_RPT_00_CANID (0x20)
 
 typedef struct
@@ -254,128 +232,119 @@ typedef struct
   //  0 : "PACMOD"
   //  1 : "PACMINI"
   //  2 : "PACMICRO"
-  // 
   uint8_t COMPONENT_TYPE : 4;                  //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS : 1;          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT : 1;              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT : 1;             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT : 1;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN : 1;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS : 1;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SPRAYER : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING : 1;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN : 1;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG : 1;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE_DECEL : 1;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t REAR_PASS_DOOR : 1;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ENGINE_BRAKE : 1;                    //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MARKER_LAMP : 1;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_CLIMATE : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_FAN_SPEED : 1;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_TEMP : 1;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t EXHAUST_BRAKE : 1;                   //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t POWER_TAKE_OFF : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_00 : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_AIR_SUPPLY : 1;              //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_BRAKE : 1;                   //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
   uint8_t COUNTER : 4;                         //      Bits= 4
@@ -385,175 +354,170 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT : 1;                    //      Bits= 1
 
   // This value relates to message specific or general CAN timeouts.  It includes the watchdog component report timeout.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INTERNAL_SUPPLY_VOLTAGE_FAULT : 1;   //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t SUPERVISORY_TIMEOUT : 1;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t SUPERVISORY_SANITY_FAULT : 1;        //      Bits= 1
 
   // This value relates to problems with the COUNTER and COMPLIMENT signals in the component report received from the watchdog component.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SANITY_FAULT : 1;           //      Bits= 1
 
   // This value shall be TRUE when the WATCHDOG system present signal in the component report received from the watchdog component is FALSE or any other system present signal is TRUE.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SYSTEM_PRESENT_FAULT : 1;   //      Bits= 1
 
   // This value will indicate whether this component is ready for by-wire control.
   //  0 : "NOT_READY"
   //  1 : "READY"
-  // 
   uint8_t COMPONENT_READY : 1;                 //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t ENGINE : 1;                          //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_01 : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_02 : 1;                  //      Bits= 1
 
 #else
 
   //  0 : "PACMOD"
   //  1 : "PACMINI"
   //  2 : "PACMICRO"
-  // 
   uint8_t COMPONENT_TYPE;                      //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS;              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN;                                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SPRAYER;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN;                                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE_DECEL;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t REAR_PASS_DOOR;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ENGINE_BRAKE;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MARKER_LAMP;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_CLIMATE;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_FAN_SPEED;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_TEMP;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t EXHAUST_BRAKE;                       //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t POWER_TAKE_OFF;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_00;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_AIR_SUPPLY;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_BRAKE;                       //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
   uint8_t COUNTER;                             //      Bits= 4
@@ -563,47 +527,51 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT;                        //      Bits= 1
 
   // This value relates to message specific or general CAN timeouts.  It includes the watchdog component report timeout.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INTERNAL_SUPPLY_VOLTAGE_FAULT;       //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t SUPERVISORY_TIMEOUT;                 //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t SUPERVISORY_SANITY_FAULT;            //      Bits= 1
 
   // This value relates to problems with the COUNTER and COMPLIMENT signals in the component report received from the watchdog component.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SANITY_FAULT;               //      Bits= 1
 
   // This value shall be TRUE when the WATCHDOG system present signal in the component report received from the watchdog component is FALSE or any other system present signal is TRUE.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SYSTEM_PRESENT_FAULT;       //      Bits= 1
 
   // This value will indicate whether this component is ready for by-wire control.
   //  0 : "NOT_READY"
   //  1 : "READY"
-  // 
   uint8_t COMPONENT_READY;                     //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t ENGINE;                              //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_01;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_02;                      //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
 
@@ -617,7 +585,7 @@ typedef struct
 
 // def @COMPONENT_RPT_01 CAN Message (33   0x21)
 #define COMPONENT_RPT_01_IDE (0U)
-#define COMPONENT_RPT_01_DLC (6U)
+#define COMPONENT_RPT_01_DLC (7U)
 #define COMPONENT_RPT_01_CANID (0x21)
 
 typedef struct
@@ -627,128 +595,119 @@ typedef struct
   //  0 : "PACMOD"
   //  1 : "PACMINI"
   //  2 : "PACMICRO"
-  // 
   uint8_t COMPONENT_TYPE : 4;                  //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS : 1;          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT : 1;              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT : 1;             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT : 1;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN : 1;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS : 1;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SPRAYER : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING : 1;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN : 1;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG : 1;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE_DECEL : 1;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t REAR_PASS_DOOR : 1;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ENGINE_BRAKE : 1;                    //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MARKER_LAMP : 1;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_CLIMATE : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_FAN_SPEED : 1;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_TEMP : 1;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t EXHAUST_BRAKE : 1;                   //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t POWER_TAKE_OFF : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_00 : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_AIR_SUPPLY : 1;              //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_BRAKE : 1;                   //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
   uint8_t COUNTER : 4;                         //      Bits= 4
@@ -758,175 +717,170 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT : 1;                    //      Bits= 1
 
   // This value relates to message specific or general CAN timeouts.  It includes the watchdog component report timeout.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INTERNAL_SUPPLY_VOLTAGE_FAULT : 1;   //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t SUPERVISORY_TIMEOUT : 1;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t SUPERVISORY_SANITY_FAULT : 1;        //      Bits= 1
 
   // This value relates to problems with the COUNTER and COMPLIMENT signals in the component report received from the watchdog component.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SANITY_FAULT : 1;           //      Bits= 1
 
   // This value shall be TRUE when the WATCHDOG system present signal in the component report received from the watchdog component is FALSE or any other system present signal is TRUE.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SYSTEM_PRESENT_FAULT : 1;   //      Bits= 1
 
   // This value will indicate whether this component is ready for by-wire control.
   //  0 : "NOT_READY"
   //  1 : "READY"
-  // 
   uint8_t COMPONENT_READY : 1;                 //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t ENGINE : 1;                          //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_01 : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_02 : 1;                  //      Bits= 1
 
 #else
 
   //  0 : "PACMOD"
   //  1 : "PACMINI"
   //  2 : "PACMICRO"
-  // 
   uint8_t COMPONENT_TYPE;                      //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS;              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN;                                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SPRAYER;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN;                                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE_DECEL;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t REAR_PASS_DOOR;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ENGINE_BRAKE;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MARKER_LAMP;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_CLIMATE;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_FAN_SPEED;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_TEMP;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t EXHAUST_BRAKE;                       //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t POWER_TAKE_OFF;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_00;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_AIR_SUPPLY;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_BRAKE;                       //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
   uint8_t COUNTER;                             //      Bits= 4
@@ -936,47 +890,51 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT;                        //      Bits= 1
 
   // This value relates to message specific or general CAN timeouts.  It includes the watchdog component report timeout.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INTERNAL_SUPPLY_VOLTAGE_FAULT;       //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t SUPERVISORY_TIMEOUT;                 //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t SUPERVISORY_SANITY_FAULT;            //      Bits= 1
 
   // This value relates to problems with the COUNTER and COMPLIMENT signals in the component report received from the watchdog component.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SANITY_FAULT;               //      Bits= 1
 
   // This value shall be TRUE when the WATCHDOG system present signal in the component report received from the watchdog component is FALSE or any other system present signal is TRUE.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SYSTEM_PRESENT_FAULT;       //      Bits= 1
 
   // This value will indicate whether this component is ready for by-wire control.
   //  0 : "NOT_READY"
   //  1 : "READY"
-  // 
   uint8_t COMPONENT_READY;                     //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t ENGINE;                              //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_01;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_02;                      //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
 
@@ -990,7 +948,7 @@ typedef struct
 
 // def @COMPONENT_RPT_02 CAN Message (34   0x22)
 #define COMPONENT_RPT_02_IDE (0U)
-#define COMPONENT_RPT_02_DLC (6U)
+#define COMPONENT_RPT_02_DLC (7U)
 #define COMPONENT_RPT_02_CANID (0x22)
 
 typedef struct
@@ -1000,128 +958,119 @@ typedef struct
   //  0 : "PACMOD"
   //  1 : "PACMINI"
   //  2 : "PACMICRO"
-  // 
   uint8_t COMPONENT_TYPE : 4;                  //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS : 1;          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT : 1;              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT : 1;             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT : 1;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN : 1;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS : 1;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SPRAYER : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING : 1;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN : 1;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG : 1;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE_DECEL : 1;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t REAR_PASS_DOOR : 1;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ENGINE_BRAKE : 1;                    //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MARKER_LAMP : 1;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_CLIMATE : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_FAN_SPEED : 1;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_TEMP : 1;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t EXHAUST_BRAKE : 1;                   //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t POWER_TAKE_OFF : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_00 : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_AIR_SUPPLY : 1;              //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_BRAKE : 1;                   //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
   uint8_t COUNTER : 4;                         //      Bits= 4
@@ -1131,175 +1080,170 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT : 1;                    //      Bits= 1
 
   // This value relates to message specific or general CAN timeouts.  It includes the watchdog component report timeout.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INTERNAL_SUPPLY_VOLTAGE_FAULT : 1;   //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t SUPERVISORY_TIMEOUT : 1;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t SUPERVISORY_SANITY_FAULT : 1;        //      Bits= 1
 
   // This value relates to problems with the COUNTER and COMPLIMENT signals in the component report received from the watchdog component.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SANITY_FAULT : 1;           //      Bits= 1
 
   // This value shall be TRUE when the WATCHDOG system present signal in the component report received from the watchdog component is FALSE or any other system present signal is TRUE.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SYSTEM_PRESENT_FAULT : 1;   //      Bits= 1
 
   // This value will indicate whether this component is ready for by-wire control.
   //  0 : "NOT_READY"
   //  1 : "READY"
-  // 
   uint8_t COMPONENT_READY : 1;                 //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t ENGINE : 1;                          //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_01 : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_02 : 1;                  //      Bits= 1
 
 #else
 
   //  0 : "PACMOD"
   //  1 : "PACMINI"
   //  2 : "PACMICRO"
-  // 
   uint8_t COMPONENT_TYPE;                      //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS;              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN;                                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SPRAYER;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN;                                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE_DECEL;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t REAR_PASS_DOOR;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ENGINE_BRAKE;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MARKER_LAMP;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_CLIMATE;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_FAN_SPEED;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_TEMP;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t EXHAUST_BRAKE;                       //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t POWER_TAKE_OFF;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_00;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_AIR_SUPPLY;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_BRAKE;                       //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
   uint8_t COUNTER;                             //      Bits= 4
@@ -1309,47 +1253,51 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT;                        //      Bits= 1
 
   // This value relates to message specific or general CAN timeouts.  It includes the watchdog component report timeout.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INTERNAL_SUPPLY_VOLTAGE_FAULT;       //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t SUPERVISORY_TIMEOUT;                 //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t SUPERVISORY_SANITY_FAULT;            //      Bits= 1
 
   // This value relates to problems with the COUNTER and COMPLIMENT signals in the component report received from the watchdog component.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SANITY_FAULT;               //      Bits= 1
 
   // This value shall be TRUE when the WATCHDOG system present signal in the component report received from the watchdog component is FALSE or any other system present signal is TRUE.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SYSTEM_PRESENT_FAULT;       //      Bits= 1
 
   // This value will indicate whether this component is ready for by-wire control.
   //  0 : "NOT_READY"
   //  1 : "READY"
-  // 
   uint8_t COMPONENT_READY;                     //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t ENGINE;                              //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_01;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_02;                      //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
 
@@ -1363,7 +1311,7 @@ typedef struct
 
 // def @COMPONENT_RPT_03 CAN Message (35   0x23)
 #define COMPONENT_RPT_03_IDE (0U)
-#define COMPONENT_RPT_03_DLC (6U)
+#define COMPONENT_RPT_03_DLC (7U)
 #define COMPONENT_RPT_03_CANID (0x23)
 
 typedef struct
@@ -1373,128 +1321,119 @@ typedef struct
   //  0 : "PACMOD"
   //  1 : "PACMINI"
   //  2 : "PACMICRO"
-  // 
   uint8_t COMPONENT_TYPE : 4;                  //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS : 1;          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT : 1;              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT : 1;             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT : 1;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN : 1;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS : 1;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SPRAYER : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING : 1;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN : 1;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG : 1;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE_DECEL : 1;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t REAR_PASS_DOOR : 1;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ENGINE_BRAKE : 1;                    //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MARKER_LAMP : 1;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_CLIMATE : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_FAN_SPEED : 1;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_TEMP : 1;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t EXHAUST_BRAKE : 1;                   //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t POWER_TAKE_OFF : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_00 : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_AIR_SUPPLY : 1;              //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_BRAKE : 1;                   //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
   uint8_t COUNTER : 4;                         //      Bits= 4
@@ -1504,175 +1443,170 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT : 1;                    //      Bits= 1
 
   // This value relates to message specific or general CAN timeouts.  It includes the watchdog component report timeout.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INTERNAL_SUPPLY_VOLTAGE_FAULT : 1;   //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t SUPERVISORY_TIMEOUT : 1;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t SUPERVISORY_SANITY_FAULT : 1;        //      Bits= 1
 
   // This value relates to problems with the COUNTER and COMPLIMENT signals in the component report received from the watchdog component.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SANITY_FAULT : 1;           //      Bits= 1
 
   // This value shall be TRUE when the WATCHDOG system present signal in the component report received from the watchdog component is FALSE or any other system present signal is TRUE.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SYSTEM_PRESENT_FAULT : 1;   //      Bits= 1
 
   // This value will indicate whether this component is ready for by-wire control.
   //  0 : "NOT_READY"
   //  1 : "READY"
-  // 
   uint8_t COMPONENT_READY : 1;                 //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t ENGINE : 1;                          //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_01 : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_02 : 1;                  //      Bits= 1
 
 #else
 
   //  0 : "PACMOD"
   //  1 : "PACMINI"
   //  2 : "PACMICRO"
-  // 
   uint8_t COMPONENT_TYPE;                      //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS;              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN;                                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SPRAYER;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN;                                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE_DECEL;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t REAR_PASS_DOOR;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ENGINE_BRAKE;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MARKER_LAMP;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_CLIMATE;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_FAN_SPEED;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_TEMP;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t EXHAUST_BRAKE;                       //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t POWER_TAKE_OFF;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_00;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_AIR_SUPPLY;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_BRAKE;                       //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
   uint8_t COUNTER;                             //      Bits= 4
@@ -1682,47 +1616,51 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT;                        //      Bits= 1
 
   // This value relates to message specific or general CAN timeouts.  It includes the watchdog component report timeout.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INTERNAL_SUPPLY_VOLTAGE_FAULT;       //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t SUPERVISORY_TIMEOUT;                 //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t SUPERVISORY_SANITY_FAULT;            //      Bits= 1
 
   // This value relates to problems with the COUNTER and COMPLIMENT signals in the component report received from the watchdog component.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SANITY_FAULT;               //      Bits= 1
 
   // This value shall be TRUE when the WATCHDOG system present signal in the component report received from the watchdog component is FALSE or any other system present signal is TRUE.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SYSTEM_PRESENT_FAULT;       //      Bits= 1
 
   // This value will indicate whether this component is ready for by-wire control.
   //  0 : "NOT_READY"
   //  1 : "READY"
-  // 
   uint8_t COMPONENT_READY;                     //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t ENGINE;                              //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_01;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_02;                      //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
 
@@ -1736,7 +1674,7 @@ typedef struct
 
 // def @COMPONENT_RPT_04 CAN Message (36   0x24)
 #define COMPONENT_RPT_04_IDE (0U)
-#define COMPONENT_RPT_04_DLC (6U)
+#define COMPONENT_RPT_04_DLC (7U)
 #define COMPONENT_RPT_04_CANID (0x24)
 
 typedef struct
@@ -1746,128 +1684,119 @@ typedef struct
   //  0 : "PACMOD"
   //  1 : "PACMINI"
   //  2 : "PACMICRO"
-  // 
   uint8_t COMPONENT_TYPE : 4;                  //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS : 1;          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT : 1;              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT : 1;             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT : 1;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN : 1;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS : 1;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SPRAYER : 1;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING : 1;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN : 1;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER : 1;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG : 1;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE_DECEL : 1;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t REAR_PASS_DOOR : 1;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ENGINE_BRAKE : 1;                    //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MARKER_LAMP : 1;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_CLIMATE : 1;                   //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_FAN_SPEED : 1;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_TEMP : 1;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t EXHAUST_BRAKE : 1;                   //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t POWER_TAKE_OFF : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_00 : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_AIR_SUPPLY : 1;              //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_BRAKE : 1;                   //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
   uint8_t COUNTER : 4;                         //      Bits= 4
@@ -1877,175 +1806,170 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT : 1;                    //      Bits= 1
 
   // This value relates to message specific or general CAN timeouts.  It includes the watchdog component report timeout.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INTERNAL_SUPPLY_VOLTAGE_FAULT : 1;   //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t SUPERVISORY_TIMEOUT : 1;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t SUPERVISORY_SANITY_FAULT : 1;        //      Bits= 1
 
   // This value relates to problems with the COUNTER and COMPLIMENT signals in the component report received from the watchdog component.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SANITY_FAULT : 1;           //      Bits= 1
 
   // This value shall be TRUE when the WATCHDOG system present signal in the component report received from the watchdog component is FALSE or any other system present signal is TRUE.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SYSTEM_PRESENT_FAULT : 1;   //      Bits= 1
 
   // This value will indicate whether this component is ready for by-wire control.
   //  0 : "NOT_READY"
   //  1 : "READY"
-  // 
   uint8_t COMPONENT_READY : 1;                 //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t ENGINE : 1;                          //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_01 : 1;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_02 : 1;                  //      Bits= 1
 
 #else
 
   //  0 : "PACMOD"
   //  1 : "PACMINI"
   //  2 : "PACMICRO"
-  // 
   uint8_t COMPONENT_TYPE;                      //      Bits= 4
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ACCEL;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CRUISE_CONTROL_BUTTONS;              //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_LEFT;                  //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t DASH_CONTROLS_RIGHT;                 //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HAZARD_LIGHTS;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HEADLIGHT;                           //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t HORN;                                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MEDIA_CONTROLS;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t PARKING_BRAKE;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SHIFT;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t SPRAYER;                             //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t STEERING;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t TURN;                                //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WIPER;                               //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t WATCHDOG;                            //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t BRAKE_DECEL;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t REAR_PASS_DOOR;                      //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t ENGINE_BRAKE;                        //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t MARKER_LAMP;                         //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_CLIMATE;                       //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_FAN_SPEED;                     //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t CABIN_TEMP;                          //      Bits= 1
 
   //  0 : "ABSENT"
   //  1 : "PRESENT"
-  // 
   uint8_t EXHAUST_BRAKE;                       //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t POWER_TAKE_OFF;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_00;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_AIR_SUPPLY;                  //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TRAILER_BRAKE;                       //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
   uint8_t COUNTER;                             //      Bits= 4
@@ -2055,47 +1979,51 @@ typedef struct
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CONFIG_FAULT;                        //      Bits= 1
 
   // This value relates to message specific or general CAN timeouts.  It includes the watchdog component report timeout.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t CAN_TIMEOUT_FAULT;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INTERNAL_SUPPLY_VOLTAGE_FAULT;       //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t SUPERVISORY_TIMEOUT;                 //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t SUPERVISORY_SANITY_FAULT;            //      Bits= 1
 
   // This value relates to problems with the COUNTER and COMPLIMENT signals in the component report received from the watchdog component.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SANITY_FAULT;               //      Bits= 1
 
   // This value shall be TRUE when the WATCHDOG system present signal in the component report received from the watchdog component is FALSE or any other system present signal is TRUE.
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t WATCHDOG_SYSTEM_PRESENT_FAULT;       //      Bits= 1
 
   // This value will indicate whether this component is ready for by-wire control.
   //  0 : "NOT_READY"
   //  1 : "READY"
-  // 
   uint8_t COMPONENT_READY;                     //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t ENGINE;                              //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_01;                      //      Bits= 1
+
+  //  0 : "ABSENT"
+  //  1 : "PRESENT"
+  uint8_t TIPPER_BODY_02;                      //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
 
@@ -2122,7 +2050,6 @@ typedef struct
   //  3 : "MANUAL_READY"
   //  4 : "CRITICAL_STOP1"
   //  5 : "CRITICAL_STOP2"
-  // 
   uint8_t COMMANDED_VALUE : 4;                   //      Bits= 4
 
   //  0 : "MANUAL_BRAKED"
@@ -2135,77 +2062,63 @@ typedef struct
   //  7 : "CRITICAL_STOP1"
   //  8 : "CRITICAL_STOP2"
   //  9 : "STARTUP"
-  // 
   uint8_t STATE : 4;                             //      Bits= 4
 
   //  0 : "INVALID"
   //  1 : "MANUAL"
   //  2 : "AUTOMS"
-  // 
-  uint8_t AUTOMSMAN_OPCTRL : 2;                  //      Bits= 2
+  uint8_t AUTOMS_MAN_OPCTRL : 2;                 //      Bits= 2
 
   //  0 : "INVALID"
   //  1 : "APPLIED"
   //  2 : "UNAPPLIED"
-  // 
   uint8_t CABIN_SAFETY_BRAKE_OPCTRL : 2;         //      Bits= 2
 
   //  0 : "INVALID"
   //  1 : "GO"
   //  2 : "STOP"
-  // 
   uint8_t REMOTE_STOP_STATUS : 2;                //      Bits= 2
 
   //  0 : "NOT_RUNNING"
   //  1 : "RUNNING"
-  // 
   uint8_t ENGINE_STATUS : 1;                     //      Bits= 1
 
   //  0 : "DISABLED"
   //  1 : "ENABLED"
-  // 
   uint8_t PACMOD_SYSTEM_STATUS : 1;              //      Bits= 1
 
   //  0 : "OKAY"
   //  1 : "FAULT"
   //  2 : "TIMEOUT"
-  // 
   uint8_t USER_PC_FAULT : 2;                     //      Bits= 2
 
   //  0 : "OKAY"
   //  1 : "FAULT"
   //  2 : "TIMEOUT"
-  // 
   uint8_t PACMOD_SYSTEM_FAULT : 2;               //      Bits= 2
 
   //  0 : "NOT_OBTAINABLE"
   //  1 : "OBTAINABLE"
-  // 
   uint8_t MANUAL_STATE_OBTAINABLE : 1;           //      Bits= 1
 
   //  0 : "NOT_OBTAINABLE"
   //  1 : "OBTAINABLE"
-  // 
   uint8_t AUTOMS_READY_STATE_OBTAINABLE : 1;     //      Bits= 1
 
   //  0 : "NOT_OBTAINABLE"
   //  1 : "OBTAINABLE"
-  // 
   uint8_t AUTOMS_STATE_OBTAINABLE : 1;           //      Bits= 1
 
   //  0 : "NOT_OBTAINABLE"
   //  1 : "OBTAINABLE"
-  // 
   uint8_t MANUAL_READY_STATE_OBTAINABLE : 1;     //      Bits= 1
 
   //  0 : "NOT_OBTAINABLE"
   //  1 : "OBTAINABLE"
-  // 
   uint8_t CRITICAL_STOP1_STATE_OBTAINABLE : 1;   //      Bits= 1
 
   //  0 : "NOT_OBTAINABLE"
   //  1 : "OBTAINABLE"
-  // 
   uint8_t CRITICAL_STOP2_STATE_OBTAINABLE : 1;   //      Bits= 1
 
 #else
@@ -2216,7 +2129,6 @@ typedef struct
   //  3 : "MANUAL_READY"
   //  4 : "CRITICAL_STOP1"
   //  5 : "CRITICAL_STOP2"
-  // 
   uint8_t COMMANDED_VALUE;                       //      Bits= 4
 
   //  0 : "MANUAL_BRAKED"
@@ -2229,77 +2141,63 @@ typedef struct
   //  7 : "CRITICAL_STOP1"
   //  8 : "CRITICAL_STOP2"
   //  9 : "STARTUP"
-  // 
   uint8_t STATE;                                 //      Bits= 4
 
   //  0 : "INVALID"
   //  1 : "MANUAL"
   //  2 : "AUTOMS"
-  // 
-  uint8_t AUTOMSMAN_OPCTRL;                      //      Bits= 2
+  uint8_t AUTOMS_MAN_OPCTRL;                     //      Bits= 2
 
   //  0 : "INVALID"
   //  1 : "APPLIED"
   //  2 : "UNAPPLIED"
-  // 
   uint8_t CABIN_SAFETY_BRAKE_OPCTRL;             //      Bits= 2
 
   //  0 : "INVALID"
   //  1 : "GO"
   //  2 : "STOP"
-  // 
   uint8_t REMOTE_STOP_STATUS;                    //      Bits= 2
 
   //  0 : "NOT_RUNNING"
   //  1 : "RUNNING"
-  // 
   uint8_t ENGINE_STATUS;                         //      Bits= 1
 
   //  0 : "DISABLED"
   //  1 : "ENABLED"
-  // 
   uint8_t PACMOD_SYSTEM_STATUS;                  //      Bits= 1
 
   //  0 : "OKAY"
   //  1 : "FAULT"
   //  2 : "TIMEOUT"
-  // 
   uint8_t USER_PC_FAULT;                         //      Bits= 2
 
   //  0 : "OKAY"
   //  1 : "FAULT"
   //  2 : "TIMEOUT"
-  // 
   uint8_t PACMOD_SYSTEM_FAULT;                   //      Bits= 2
 
   //  0 : "NOT_OBTAINABLE"
   //  1 : "OBTAINABLE"
-  // 
   uint8_t MANUAL_STATE_OBTAINABLE;               //      Bits= 1
 
   //  0 : "NOT_OBTAINABLE"
   //  1 : "OBTAINABLE"
-  // 
   uint8_t AUTOMS_READY_STATE_OBTAINABLE;         //      Bits= 1
 
   //  0 : "NOT_OBTAINABLE"
   //  1 : "OBTAINABLE"
-  // 
   uint8_t AUTOMS_STATE_OBTAINABLE;               //      Bits= 1
 
   //  0 : "NOT_OBTAINABLE"
   //  1 : "OBTAINABLE"
-  // 
   uint8_t MANUAL_READY_STATE_OBTAINABLE;         //      Bits= 1
 
   //  0 : "NOT_OBTAINABLE"
   //  1 : "OBTAINABLE"
-  // 
   uint8_t CRITICAL_STOP1_STATE_OBTAINABLE;       //      Bits= 1
 
   //  0 : "NOT_OBTAINABLE"
   //  1 : "OBTAINABLE"
-  // 
   uint8_t CRITICAL_STOP2_STATE_OBTAINABLE;       //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -2323,68 +2221,56 @@ typedef struct
 
   //  0 : "APPLY_BRAKE"
   //  1 : "RELEASE_BRAKE"
-  // 
   uint8_t COMMANDED_VALUE : 1;               //      Bits= 1
 
   //  0 : "BRAKE_APPLIED"
   //  1 : "BRAKE_RELEASED"
   //  2 : "BETWEEN"
   //  3 : "OUT_OF_RANGE"
-  // 
   uint8_t OUTPUT_VALUE : 2;                  //      Bits= 2
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_REPORTED_FAULT : 1;        //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "COMMAND_NOT_PERMITTED"
   //  1 : "COMMAND_PERMITTED"
-  // 
   uint8_t COMMAND_PERMITTED : 1;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t REPORTED_FAULT : 1;                //      Bits= 1
 
 #else
 
   //  0 : "APPLY_BRAKE"
   //  1 : "RELEASE_BRAKE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 1
 
   //  0 : "BRAKE_APPLIED"
   //  1 : "BRAKE_RELEASED"
   //  2 : "BETWEEN"
   //  3 : "OUT_OF_RANGE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 2
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_REPORTED_FAULT;            //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  0 : "COMMAND_NOT_PERMITTED"
   //  1 : "COMMAND_PERMITTED"
-  // 
   uint8_t COMMAND_PERMITTED;                 //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t REPORTED_FAULT;                    //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -2408,334 +2294,274 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENGINE_CHECK_LIGHT : 1;                 //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t ENGINE_CHECK_LIGHT_AVAIL : 1;           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t TRC_FAULT_LIGHT : 1;                    //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t TRC_FAULT_LIGHT_AVAIL : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t TRC_OFF_FAULT_LIGHT : 1;                //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t TRC_OFF_FAULT_LIGHT_AVAIL : 1;          //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ANTILOCK_BRAKE_FAULT_LIGHT : 1;         //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t ANTILOCK_BRAKE_FAULT_LIGHT_AVAIL : 1;   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t TIRE_FAULT_LIGHT : 1;                   //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t TIRE_FAULT_LIGHT_AVAIL : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t AIR_BAGS_FAULT_LIGHT : 1;               //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t AIR_BAGS_FAULT_LIGHT_AVAIL : 1;         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t LOW_ENGINE_OIL_PRESSURE : 1;            //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t LOW_ENGINE_OIL_PRESSURE_AVAIL : 1;      //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_FAULT : 1;                        //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_FAULT_AVAIL : 1;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRK_APPLIED_POWER_REDUCED : 1;          //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRK_APPLIED_POWER_REDUCED_AVAIL : 1;    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEERING_LOSS_STOP_SAFELY : 1;          //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t STEERING_LOSS_STOP_SAFELY_AVAIL : 1;    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEERING_FAULT_SERVICE_NOW : 1;         //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t STEERING_FAULT_SERVICE_NOW_AVAIL : 1;   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t XMSN_FAULT_SERVICE_NOW : 1;             //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t XMSN_FAULT_SERVICE_NOW_AVAIL : 1;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t XMSN_OVER_TEMP_STOP_SAFELY : 1;         //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t XMSN_OVER_TEMP_STOP_SAFELY_AVAIL : 1;   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t LOW_BATTERY_FEATURES_OFF : 1;           //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t LOW_BATTERY_FEATURES_OFF_AVAIL : 1;     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CHARGING_SYSTEM_FAULT : 1;              //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t CHARGING_SYSTEM_FAULT_AVAIL : 1;        //      Bits= 1
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENGINE_CHECK_LIGHT;                     //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t ENGINE_CHECK_LIGHT_AVAIL;               //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t TRC_FAULT_LIGHT;                        //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t TRC_FAULT_LIGHT_AVAIL;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t TRC_OFF_FAULT_LIGHT;                    //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t TRC_OFF_FAULT_LIGHT_AVAIL;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ANTILOCK_BRAKE_FAULT_LIGHT;             //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t ANTILOCK_BRAKE_FAULT_LIGHT_AVAIL;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t TIRE_FAULT_LIGHT;                       //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t TIRE_FAULT_LIGHT_AVAIL;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t AIR_BAGS_FAULT_LIGHT;                   //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t AIR_BAGS_FAULT_LIGHT_AVAIL;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t LOW_ENGINE_OIL_PRESSURE;                //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t LOW_ENGINE_OIL_PRESSURE_AVAIL;          //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_FAULT;                            //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_FAULT_AVAIL;                      //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRK_APPLIED_POWER_REDUCED;              //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRK_APPLIED_POWER_REDUCED_AVAIL;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEERING_LOSS_STOP_SAFELY;              //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t STEERING_LOSS_STOP_SAFELY_AVAIL;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEERING_FAULT_SERVICE_NOW;             //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t STEERING_FAULT_SERVICE_NOW_AVAIL;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t XMSN_FAULT_SERVICE_NOW;                 //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t XMSN_FAULT_SERVICE_NOW_AVAIL;           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t XMSN_OVER_TEMP_STOP_SAFELY;             //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t XMSN_OVER_TEMP_STOP_SAFELY_AVAIL;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t LOW_BATTERY_FEATURES_OFF;               //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t LOW_BATTERY_FEATURES_OFF_AVAIL;         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CHARGING_SYSTEM_FAULT;                  //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t CHARGING_SYSTEM_FAULT_AVAIL;            //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -2748,6 +2574,85 @@ typedef struct
 
 } VEHICLE_FAULT_RPT_t;
 
+// def @SAFETY_FUNC_RPT_2 CAN Message (67   0x43)
+#define SAFETY_FUNC_RPT_2_IDE (0U)
+#define SAFETY_FUNC_RPT_2_DLC (2U)
+#define SAFETY_FUNC_RPT_2_CANID (0x43)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "NONE"
+  //  1 : "AUTOMS_READY"
+  //  2 : "AUTOMS"
+  //  3 : "MANUAL_READY"
+  uint8_t COMMANDED_STATE : 4;                 //      Bits= 4
+
+  //  0 : "NONE"
+  //  1 : "AUTOMS_READY"
+  //  2 : "AUTOMS"
+  //  3 : "MANUAL_READY"
+  //  4 : "MANUAL"
+  uint8_t STATE : 4;                           //      Bits= 4
+
+  //  0 : "NOT_OBTAINABLE"
+  //  1 : "OBTAINABLE"
+  uint8_t MANUAL_STATE_OBTAINABLE : 1;         //      Bits= 1
+
+  //  0 : "NOT_OBTAINABLE"
+  //  1 : "OBTAINABLE"
+  uint8_t AUTOMS_READY_STATE_OBTAINABLE : 1;   //      Bits= 1
+
+  //  0 : "NOT_OBTAINABLE"
+  //  1 : "OBTAINABLE"
+  uint8_t AUTOMS_STATE_OBTAINABLE : 1;         //      Bits= 1
+
+  //  0 : "NOT_OBTAINABLE"
+  //  1 : "OBTAINABLE"
+  uint8_t MANUAL_READY_STATE_OBTAINABLE : 1;   //      Bits= 1
+
+#else
+
+  //  0 : "NONE"
+  //  1 : "AUTOMS_READY"
+  //  2 : "AUTOMS"
+  //  3 : "MANUAL_READY"
+  uint8_t COMMANDED_STATE;                     //      Bits= 4
+
+  //  0 : "NONE"
+  //  1 : "AUTOMS_READY"
+  //  2 : "AUTOMS"
+  //  3 : "MANUAL_READY"
+  //  4 : "MANUAL"
+  uint8_t STATE;                               //      Bits= 4
+
+  //  0 : "NOT_OBTAINABLE"
+  //  1 : "OBTAINABLE"
+  uint8_t MANUAL_STATE_OBTAINABLE;             //      Bits= 1
+
+  //  0 : "NOT_OBTAINABLE"
+  //  1 : "OBTAINABLE"
+  uint8_t AUTOMS_READY_STATE_OBTAINABLE;       //      Bits= 1
+
+  //  0 : "NOT_OBTAINABLE"
+  //  1 : "OBTAINABLE"
+  uint8_t AUTOMS_STATE_OBTAINABLE;             //      Bits= 1
+
+  //  0 : "NOT_OBTAINABLE"
+  //  1 : "OBTAINABLE"
+  uint8_t MANUAL_READY_STATE_OBTAINABLE;       //      Bits= 1
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} SAFETY_FUNC_RPT_2_t;
+
 // def @GLOBAL_CMD CAN Message (128  0x80)
 #define GLOBAL_CMD_IDE (0U)
 #define GLOBAL_CMD_DLC (2U)
@@ -2759,14 +2664,16 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_FAULTS : 1;                  //      Bits= 1
 
   // When this value is REQUIRED, the COUNTER and COMPLEMENT values must be set to enable the PACMod System.
   //  0 : "NOT_REQUIRED"
   //  1 : "REQUIRED"
-  // 
   uint8_t SANITY_CHECK_REQUIRED : 1;         //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDES : 1;               //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
   uint8_t COUNTER : 4;                       //      Bits= 4
@@ -2778,14 +2685,16 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_FAULTS;                      //      Bits= 1
 
   // When this value is REQUIRED, the COUNTER and COMPLEMENT values must be set to enable the PACMod System.
   //  0 : "NOT_REQUIRED"
   //  1 : "REQUIRED"
-  // 
   uint8_t SANITY_CHECK_REQUIRED;             //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDES;                   //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
   uint8_t COUNTER;                           //      Bits= 4
@@ -2815,7 +2724,6 @@ typedef struct
   // A system shall enable only if the supervisory enablement rules are met.  See user_can_protocol.md.
   //  0 : "DISABLE_ALL_SYSTEMS"
   //  1 : "ALLOW_ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
@@ -2829,7 +2737,6 @@ typedef struct
   // A system shall enable only if the supervisory enablement rules are met.  See user_can_protocol.md.
   //  0 : "DISABLE_ALL_SYSTEMS"
   //  1 : "ALLOW_ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   // Counter shall have the value of 0 with the first message transmission.  It shall increase by 1 with each subsequent message transmission up to and including the value of 0xF.  The next message transmission shall be 0, and this pattern shall repeat.
@@ -2863,7 +2770,6 @@ typedef struct
   //  3 : "MANUAL_READY"
   //  4 : "CRITICAL_STOP1"
   //  5 : "CRITICAL_STOP2"
-  // 
   uint8_t COMMAND : 4;                       //      Bits= 4
 
 #else
@@ -2874,7 +2780,6 @@ typedef struct
   //  3 : "MANUAL_READY"
   //  4 : "CRITICAL_STOP1"
   //  5 : "CRITICAL_STOP2"
-  // 
   uint8_t COMMAND;                           //      Bits= 4
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -2898,14 +2803,12 @@ typedef struct
 
   //  0 : "APPLY_BRAKE"
   //  1 : "RELEASE_BRAKE"
-  // 
   uint8_t SAFETY_BRAKE_CMD : 1;              //      Bits= 1
 
 #else
 
   //  0 : "APPLY_BRAKE"
   //  1 : "RELEASE_BRAKE"
-  // 
   uint8_t SAFETY_BRAKE_CMD;                  //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -2933,17 +2836,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   uint16_t ACCEL_CMD_ro;                     //      Bits=16 Factor= 0.001000        Unit:'%'
@@ -2956,17 +2856,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   uint16_t ACCEL_CMD_ro;                     //      Bits=16 Factor= 0.001000        Unit:'%'
@@ -3000,17 +2897,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   uint16_t BRAKE_CMD_ro;                     //      Bits=16 Factor= 0.001000        Unit:'%'
@@ -3023,17 +2917,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   uint16_t BRAKE_CMD_ro;                     //      Bits=16 Factor= 0.001000        Unit:'%'
@@ -3064,17 +2955,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   // NONE = no button pressed, CNCL = Cancel, FURTHER* or CLOSER* = Change follow distance, SET_DEC* = set/decrement, RES_INC* = resume/increment, ON_OFF = Cruise On/Off, LIM* = Speed limiter On/Off. *Exact function varies across vehicles - See platform guide.
@@ -3086,24 +2974,20 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t CRUISE_CONTROL_BUTTON;             //      Bits= 8
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   // NONE = no button pressed, CNCL = Cancel, FURTHER* or CLOSER* = Change follow distance, SET_DEC* = set/decrement, RES_INC* = resume/increment, ON_OFF = Cruise On/Off, LIM* = Speed limiter On/Off. *Exact function varies across vehicles - See platform guide.
@@ -3115,7 +2999,6 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t CRUISE_CONTROL_BUTTON;             //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -3140,17 +3023,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -3159,24 +3039,20 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t DASH_CONTROLS_BUTTON;              //      Bits= 8
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -3185,7 +3061,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t DASH_CONTROLS_BUTTON;              //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -3210,17 +3085,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -3229,24 +3101,20 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t DASH_CONTROLS_BUTTON;              //      Bits= 8
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -3255,7 +3123,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t DASH_CONTROLS_BUTTON;              //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -3280,44 +3147,36 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t HAZARD_LIGHTS_CMD : 1;             //      Bits= 1
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t HAZARD_LIGHTS_CMD;                 //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -3342,46 +3201,38 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  2 : "HIGH_BEAMS"
   //  1 : "LOW_BEAMS"
   //  0 : "HEADLIGHTS_OFF"
-  // 
   uint8_t HEADLIGHT_CMD;                     //      Bits= 8
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  2 : "HIGH_BEAMS"
   //  1 : "LOW_BEAMS"
   //  0 : "HEADLIGHTS_OFF"
-  // 
   uint8_t HEADLIGHT_CMD;                     //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -3406,44 +3257,36 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t HORN_CMD : 1;                      //      Bits= 1
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t HORN_CMD;                          //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -3468,17 +3311,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  6 : "MEDIA_CONTROL_VOL_DOWN"
@@ -3488,24 +3328,20 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t MEDIA_CONTROLS_CMD;                //      Bits= 8
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  6 : "MEDIA_CONTROL_VOL_DOWN"
@@ -3515,7 +3351,6 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t MEDIA_CONTROLS_CMD;                //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -3540,44 +3375,36 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t PARKING_BRAKE_CMD : 1;             //      Bits= 1
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t PARKING_BRAKE_CMD;                 //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -3601,17 +3428,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   // FORWARD is also HIGH on vehicles with LOW/HIGH, PARK and LOW only available on certain Vehicles.
@@ -3621,24 +3445,20 @@ typedef struct
   //  3 : "FORWARD/HIGH"
   //  4 : "LOW"
   //  7 : "NONE"
-  // 
   uint8_t SHIFT_CMD;                         //      Bits= 8
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   // FORWARD is also HIGH on vehicles with LOW/HIGH, PARK and LOW only available on certain Vehicles.
@@ -3648,7 +3468,6 @@ typedef struct
   //  3 : "FORWARD/HIGH"
   //  4 : "LOW"
   //  7 : "NONE"
-  // 
   uint8_t SHIFT_CMD;                         //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -3680,17 +3499,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   int16_t POSITION_ro;                       //  [-] Bits=16 Factor= 0.001000        Unit:'rad'
@@ -3709,17 +3525,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   int16_t POSITION_ro;                       //  [-] Bits=16 Factor= 0.001000        Unit:'rad'
@@ -3756,48 +3569,40 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  0 : "RIGHT"
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t TURN_SIGNAL_CMD;                   //      Bits= 8
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  0 : "RIGHT"
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t TURN_SIGNAL_CMD;                   //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -3822,17 +3627,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  255 : "HIGH"
@@ -3849,24 +3651,20 @@ typedef struct
   //  2 : "INTERMITTENT_2"
   //  1 : "INTERMITTENT_1"
   //  0 : "WIPERS_OFF"
-  // 
   uint8_t WIPER_CMD;                         //      Bits= 8
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  255 : "HIGH"
@@ -3883,7 +3681,6 @@ typedef struct
   //  2 : "INTERMITTENT_2"
   //  1 : "INTERMITTENT_1"
   //  0 : "WIPERS_OFF"
-  // 
   uint8_t WIPER_CMD;                         //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -3908,44 +3705,36 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  0 : "NOT_SPRAYING"
   //  1 : "SPRAYING"
-  // 
   uint8_t SPRAYER_CMD : 1;                   //      Bits= 1
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  0 : "NOT_SPRAYING"
   //  1 : "SPRAYING"
-  // 
   uint8_t SPRAYER_CMD;                       //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -3973,17 +3762,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   uint16_t BRAKE_DECEL_CMD_ro;               //      Bits=16 Factor= 0.001000        Unit:'m/s^2'
@@ -3995,37 +3781,31 @@ typedef struct
   //  0 : "NO_ENDURANCE_BRK_INTGN_ALLOWED"
   //  1 : "ONLY_ENDURANCE_BRAKES_ALLOWED"
   //  2 : "ENDURANCE_BRK_INTGRN_ALLOWED"
-  // 
   uint8_t XBR_EBI_MODE : 2;                  //      Bits= 2
 
   //  0 : "HIGHEST_PRIORITY"
   //  1 : "HIGH_PRIORITY"
   //  2 : "MEDIUM_PRIORITY"
   //  3 : "LOW_PRIORITY"
-  // 
   uint8_t XBR_PRIORITY : 2;                  //      Bits= 2
 
   //  0 : "OVERRIDE_DISABLE"
   //  1 : "ACCEL_CONTROL_WITH_ADDITION_MODE"
   //  2 : "ACCEL_CONTROL_WITH_MAXIMUM_MODE"
-  // 
   uint8_t XBR_CONTROL_MODE : 2;              //      Bits= 2
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   uint16_t BRAKE_DECEL_CMD_ro;               //      Bits=16 Factor= 0.001000        Unit:'m/s^2'
@@ -4037,20 +3817,17 @@ typedef struct
   //  0 : "NO_ENDURANCE_BRK_INTGN_ALLOWED"
   //  1 : "ONLY_ENDURANCE_BRAKES_ALLOWED"
   //  2 : "ENDURANCE_BRK_INTGRN_ALLOWED"
-  // 
   uint8_t XBR_EBI_MODE;                      //      Bits= 2
 
   //  0 : "HIGHEST_PRIORITY"
   //  1 : "HIGH_PRIORITY"
   //  2 : "MEDIUM_PRIORITY"
   //  3 : "LOW_PRIORITY"
-  // 
   uint8_t XBR_PRIORITY;                      //      Bits= 2
 
   //  0 : "OVERRIDE_DISABLE"
   //  1 : "ACCEL_CONTROL_WITH_ADDITION_MODE"
   //  2 : "ACCEL_CONTROL_WITH_MAXIMUM_MODE"
-  // 
   uint8_t XBR_CONTROL_MODE;                  //      Bits= 2
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -4075,46 +3852,38 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  0 : "NEUTRAL"
   //  1 : "OPEN"
   //  2 : "CLOSE"
-  // 
   uint8_t REAR_PASS_DOOR_CMD;                //      Bits= 8
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  0 : "NEUTRAL"
   //  1 : "OPEN"
   //  2 : "CLOSE"
-  // 
   uint8_t REAR_PASS_DOOR_CMD;                //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -4138,17 +3907,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   // Brake aggressiveness increases with increasing numerical values. Each operator control setting maps one-to-one with each LEVEL, starting with 1. Higher LEVELs with no match map to maximum.
@@ -4158,30 +3924,25 @@ typedef struct
   //  3 : "LEVEL_3"
   //  4 : "LEVEL_4"
   //  5 : "LEVEL_5"
-  // 
   uint8_t ENGINE_BRAKE_CMD;                  //      Bits= 8
 
   // Braking aggressivness automatic while AUTO_ON.
   //  0 : "AUTO_OFF"
   //  1 : "AUTO_ON"
-  // 
   uint8_t AUTO_CMD : 2;                      //      Bits= 2
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   // Brake aggressiveness increases with increasing numerical values. Each operator control setting maps one-to-one with each LEVEL, starting with 1. Higher LEVELs with no match map to maximum.
@@ -4191,13 +3952,11 @@ typedef struct
   //  3 : "LEVEL_3"
   //  4 : "LEVEL_4"
   //  5 : "LEVEL_5"
-  // 
   uint8_t ENGINE_BRAKE_CMD;                  //      Bits= 8
 
   // Braking aggressivness automatic while AUTO_ON.
   //  0 : "AUTO_OFF"
   //  1 : "AUTO_ON"
-  // 
   uint8_t AUTO_CMD;                          //      Bits= 2
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -4222,44 +3981,36 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t EXHAUST_BRAKE_CMD;                 //      Bits= 8
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t EXHAUST_BRAKE_CMD;                 //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -4284,44 +4035,36 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MARKER_LAMP_CMD : 1;               //      Bits= 1
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MARKER_LAMP_CMD;                   //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -4350,17 +4093,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   uint8_t CABIN_TEMP_CMD_ro;                 //      Bits= 8 Offset= 10.000000          Factor= 0.100000        Unit:'deg_C'
@@ -4373,17 +4113,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   uint8_t CABIN_TEMP_CMD_ro;                 //      Bits= 8 Offset= 10.000000          Factor= 0.100000        Unit:'deg_C'
@@ -4414,17 +4151,14 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  0 : "FAN_OFF"
@@ -4438,24 +4172,20 @@ typedef struct
   //  8 : "FAN_SPEED_8"
   //  9 : "FAN_SPEED_9"
   //  10 : "FAN_SPEED_10"
-  // 
   uint8_t CABIN_FAN_SPEED_CMD;               //      Bits= 8
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  0 : "FAN_OFF"
@@ -4469,7 +4199,6 @@ typedef struct
   //  8 : "FAN_SPEED_8"
   //  9 : "FAN_SPEED_9"
   //  10 : "FAN_SPEED_10"
-  // 
   uint8_t CABIN_FAN_SPEED_CMD;               //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -4494,94 +4223,76 @@ typedef struct
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE : 1;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_AC_OFF_ON : 2;                 //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_MAX_AC_OFF_ON : 2;             //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_DEFROST_OFF_ON : 2;            //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_MAX_DEFROST_OFF_ON : 2;        //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_DIR_UP_OFF_ON : 2;             //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_DIR_DOWN_OFF_ON : 2;           //      Bits= 2
 
 #else
 
   //  0 : "DISABLE"
   //  1 : "ENABLE"
-  // 
   uint8_t ENABLE;                            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_AC_OFF_ON;                     //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_MAX_AC_OFF_ON;                 //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_DEFROST_OFF_ON;                //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_MAX_DEFROST_OFF_ON;            //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_DIR_UP_OFF_ON;                 //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_DIR_DOWN_OFF_ON;               //      Bits= 2
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -4593,6 +4304,402 @@ typedef struct
 #endif // PACMOD12_USE_DIAG_MONITORS
 
 } CABIN_CLIMATE_CMD_t;
+
+// def @TIPPER_BODY_CMD_00 CAN Message (344  0x158)
+#define TIPPER_BODY_CMD_00_IDE (0U)
+#define TIPPER_BODY_CMD_00_DLC (2U)
+#define TIPPER_BODY_CMD_00_CANID (0x158)
+#define TIPPER_BODY_CMD_00_CYC (100U)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "DISABLE"
+  //  1 : "ENABLE"
+  uint8_t ENABLE : 1;                        //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t TIPPER_CONTROL_CMD;                //      Bits= 8
+
+#else
+
+  //  0 : "DISABLE"
+  //  1 : "ENABLE"
+  uint8_t ENABLE;                            //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t TIPPER_CONTROL_CMD;                //      Bits= 8
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} TIPPER_BODY_CMD_00_t;
+
+// def @POWER_TAKE_OFF_CMD CAN Message (348  0x15c)
+#define POWER_TAKE_OFF_CMD_IDE (0U)
+#define POWER_TAKE_OFF_CMD_DLC (2U)
+#define POWER_TAKE_OFF_CMD_CANID (0x15c)
+#define POWER_TAKE_OFF_CMD_CYC (100U)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "DISABLE"
+  //  1 : "ENABLE"
+  uint8_t ENABLE : 1;                        //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t POWER_TAKE_OFF_CMD;                //      Bits= 8
+
+#else
+
+  //  0 : "DISABLE"
+  //  1 : "ENABLE"
+  uint8_t ENABLE;                            //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t POWER_TAKE_OFF_CMD;                //      Bits= 8
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} POWER_TAKE_OFF_CMD_t;
+
+// def @TRAILER_BRAKE_CMD CAN Message (352  0x160)
+#define TRAILER_BRAKE_CMD_IDE (0U)
+#define TRAILER_BRAKE_CMD_DLC (3U)
+#define TRAILER_BRAKE_CMD_CANID (0x160)
+// signal: @TRAILER_BRAKE_CMD_ro
+#define PACMOD12_TRAILER_BRAKE_CMD_ro_CovFactor (0.001000)
+#define PACMOD12_TRAILER_BRAKE_CMD_ro_toS(x) ( (uint16_t) (((x) - (0.000000)) / (0.001000)) )
+#define PACMOD12_TRAILER_BRAKE_CMD_ro_fromS(x) ( (((x) * (0.001000)) + (0.000000)) )
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "DISABLE"
+  //  1 : "ENABLE"
+  uint8_t ENABLE : 1;                        //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
+
+  uint16_t TRAILER_BRAKE_CMD_ro;             //      Bits=16 Factor= 0.001000        Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  sigfloat_t TRAILER_BRAKE_CMD_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+#else
+
+  //  0 : "DISABLE"
+  //  1 : "ENABLE"
+  uint8_t ENABLE;                            //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
+
+  uint16_t TRAILER_BRAKE_CMD_ro;             //      Bits=16 Factor= 0.001000        Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  sigfloat_t TRAILER_BRAKE_CMD_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} TRAILER_BRAKE_CMD_t;
+
+// def @TRAILER_AIR_SUPPLY_CMD CAN Message (356  0x164)
+#define TRAILER_AIR_SUPPLY_CMD_IDE (0U)
+#define TRAILER_AIR_SUPPLY_CMD_DLC (2U)
+#define TRAILER_AIR_SUPPLY_CMD_CANID (0x164)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "DISABLE"
+  //  1 : "ENABLE"
+  uint8_t ENABLE : 1;                        //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t TRAILER_AIR_SUPPLY_CMD : 1;        //      Bits= 1
+
+#else
+
+  //  0 : "DISABLE"
+  //  1 : "ENABLE"
+  uint8_t ENABLE;                            //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t TRAILER_AIR_SUPPLY_CMD;            //      Bits= 1
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} TRAILER_AIR_SUPPLY_CMD_t;
+
+// def @ENGINE_CMD CAN Message (360  0x168)
+#define ENGINE_CMD_IDE (0U)
+#define ENGINE_CMD_DLC (2U)
+#define ENGINE_CMD_CANID (0x168)
+#define ENGINE_CMD_CYC (100U)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "DISABLE"
+  //  1 : "ENABLE"
+  uint8_t ENABLE : 1;                        //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
+
+  //  0 : "NO_ACTION"
+  //  1 : "ENGINE_OFF"
+  uint8_t ENGINE_CMD;                        //      Bits= 8
+
+#else
+
+  //  0 : "DISABLE"
+  //  1 : "ENABLE"
+  uint8_t ENABLE;                            //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
+
+  //  0 : "NO_ACTION"
+  //  1 : "ENGINE_OFF"
+  uint8_t ENGINE_CMD;                        //      Bits= 8
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} ENGINE_CMD_t;
+
+// def @TIPPER_BODY_CMD_01 CAN Message (364  0x16c)
+#define TIPPER_BODY_CMD_01_IDE (0U)
+#define TIPPER_BODY_CMD_01_DLC (2U)
+#define TIPPER_BODY_CMD_01_CANID (0x16c)
+#define TIPPER_BODY_CMD_01_CYC (100U)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "DISABLE"
+  //  1 : "ENABLE"
+  uint8_t ENABLE : 1;                        //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t TIPPER_CONTROL_CMD;                //      Bits= 8
+
+#else
+
+  //  0 : "DISABLE"
+  //  1 : "ENABLE"
+  uint8_t ENABLE;                            //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t TIPPER_CONTROL_CMD;                //      Bits= 8
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} TIPPER_BODY_CMD_01_t;
+
+// def @TIPPER_BODY_CMD_02 CAN Message (368  0x170)
+#define TIPPER_BODY_CMD_02_IDE (0U)
+#define TIPPER_BODY_CMD_02_DLC (2U)
+#define TIPPER_BODY_CMD_02_CANID (0x170)
+#define TIPPER_BODY_CMD_02_CYC (100U)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "DISABLE"
+  //  1 : "ENABLE"
+  uint8_t ENABLE : 1;                        //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t IGNORE_OVERRIDES : 1;              //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDE : 1;                //      Bits= 1
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t TIPPER_CONTROL_CMD;                //      Bits= 8
+
+#else
+
+  //  0 : "DISABLE"
+  //  1 : "ENABLE"
+  uint8_t ENABLE;                            //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t IGNORE_OVERRIDES;                  //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t CLEAR_OVERRIDE;                    //      Bits= 1
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t TIPPER_CONTROL_CMD;                //      Bits= 8
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} TIPPER_BODY_CMD_02_t;
 
 // def @ACCEL_RPT CAN Message (512  0x200)
 #define ACCEL_RPT_IDE (0U)
@@ -4617,42 +4724,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   uint16_t MANUAL_INPUT_ro;                  //      Bits=16 Factor= 0.001000        Unit:'%'
@@ -4677,42 +4776,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   uint16_t MANUAL_INPUT_ro;                  //      Bits=16 Factor= 0.001000        Unit:'%'
@@ -4819,42 +4910,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   uint16_t MANUAL_INPUT_ro;                  //      Bits=16 Factor= 0.001000        Unit:'%'
@@ -4879,42 +4962,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   uint16_t MANUAL_INPUT_ro;                  //      Bits=16 Factor= 0.001000        Unit:'%'
@@ -5010,42 +5085,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   // NONE = no button pressed, CNCL = Cancel, FURTHER* or CLOSER* = Change follow distance, SET_DEC* = set/decrement, RES_INC* = resume/increment, ON_OFF = Cruise On/Off, LIM* = Speed limiter On/Off. *Exact function varies across vehicles - See platform guide.
@@ -5057,7 +5124,6 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   // NONE = no button pressed, CNCL = Cancel, FURTHER* or CLOSER* = Change follow distance, SET_DEC* = set/decrement, RES_INC* = resume/increment, ON_OFF = Cruise On/Off, LIM* = Speed limiter On/Off. *Exact function varies across vehicles - See platform guide.
@@ -5069,7 +5135,6 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   // NONE = no button pressed, CNCL = Cancel, FURTHER* or CLOSER* = Change follow distance, SET_DEC* = set/decrement, RES_INC* = resume/increment, ON_OFF = Cruise On/Off, LIM* = Speed limiter On/Off. *Exact function varies across vehicles - See platform guide.
@@ -5081,49 +5146,40 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   // NONE = no button pressed, CNCL = Cancel, FURTHER* or CLOSER* = Change follow distance, SET_DEC* = set/decrement, RES_INC* = resume/increment, ON_OFF = Cruise On/Off, LIM* = Speed limiter On/Off. *Exact function varies across vehicles - See platform guide.
@@ -5135,7 +5191,6 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   // NONE = no button pressed, CNCL = Cancel, FURTHER* or CLOSER* = Change follow distance, SET_DEC* = set/decrement, RES_INC* = resume/increment, ON_OFF = Cruise On/Off, LIM* = Speed limiter On/Off. *Exact function varies across vehicles - See platform guide.
@@ -5147,7 +5202,6 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   // NONE = no button pressed, CNCL = Cancel, FURTHER* or CLOSER* = Change follow distance, SET_DEC* = set/decrement, RES_INC* = resume/increment, ON_OFF = Cruise On/Off, LIM* = Speed limiter On/Off. *Exact function varies across vehicles - See platform guide.
@@ -5159,7 +5213,6 @@ typedef struct
   //  2 : "CRUISE_CONTROL_ACC_FURTHER"
   //  1 : "CRUISE_CONTROL_CNCL"
   //  0 : "CRUISE_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -5184,42 +5237,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -5228,7 +5273,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -5237,7 +5281,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -5246,49 +5289,40 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -5297,7 +5331,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -5306,7 +5339,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -5315,7 +5347,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -5340,42 +5371,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -5384,7 +5407,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -5393,7 +5415,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -5402,49 +5423,40 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -5453,7 +5465,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -5462,7 +5473,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  5 : "DASH_CONTROL_DOWN"
@@ -5471,7 +5481,6 @@ typedef struct
   //  2 : "DASH_CONTROL_LEFT"
   //  1 : "DASH_CONTROL_OK"
   //  0 : "DASH_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -5496,118 +5505,96 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   // Platforms vary on use of latched or momentary interface, see platform user guide.
   //  0 : "OFF/NOT_PRESSED"
   //  1 : "ON/PRESSED"
-  // 
   uint8_t MANUAL_INPUT : 1;                  //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t COMMANDED_VALUE : 1;               //      Bits= 1
 
   // Platforms vary on use of latched or momentary interface, see platform user guide.
   //  0 : "OFF/NOT_PRESSED"
   //  1 : "ON/PRESSED"
-  // 
   uint8_t OUTPUT_VALUE : 1;                  //      Bits= 1
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   // Platforms vary on use of latched or momentary interface, see platform user guide.
   //  0 : "OFF/NOT_PRESSED"
   //  1 : "ON/PRESSED"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 1
 
   // Platforms vary on use of latched or momentary interface, see platform user guide.
   //  0 : "OFF/NOT_PRESSED"
   //  1 : "ON/PRESSED"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -5632,120 +5619,98 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  2 : "HIGH_BEAMS"
   //  1 : "LOW_BEAMS"
   //  0 : "HEADLIGHTS_OFF"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  2 : "HIGH_BEAMS"
   //  1 : "LOW_BEAMS"
   //  0 : "HEADLIGHTS_OFF"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  2 : "HIGH_BEAMS"
   //  1 : "LOW_BEAMS"
   //  0 : "HEADLIGHTS_OFF"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  2 : "HIGH_BEAMS"
   //  1 : "LOW_BEAMS"
   //  0 : "HEADLIGHTS_OFF"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  2 : "HIGH_BEAMS"
   //  1 : "LOW_BEAMS"
   //  0 : "HEADLIGHTS_OFF"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  2 : "HIGH_BEAMS"
   //  1 : "LOW_BEAMS"
   //  0 : "HEADLIGHTS_OFF"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -5770,114 +5735,92 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -5902,42 +5845,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  6 : "MEDIA_CONTROL_VOL_DOWN"
@@ -5947,7 +5882,6 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  6 : "MEDIA_CONTROL_VOL_DOWN"
@@ -5957,7 +5891,6 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  6 : "MEDIA_CONTROL_VOL_DOWN"
@@ -5967,49 +5900,40 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  6 : "MEDIA_CONTROL_VOL_DOWN"
@@ -6019,7 +5943,6 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  6 : "MEDIA_CONTROL_VOL_DOWN"
@@ -6029,7 +5952,6 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  6 : "MEDIA_CONTROL_VOL_DOWN"
@@ -6039,7 +5961,6 @@ typedef struct
   //  2 : "MEDIA_CONTROL_MUTE"
   //  1 : "MEDIA_CONTROL_VOICE_COMMAND"
   //  0 : "MEDIA_CONTROL_NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -6064,114 +5985,92 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MANUAL_INPUT : 1;                  //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t COMMANDED_VALUE : 1;               //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUTPUT_VALUE : 1;                  //      Bits= 1
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -6195,42 +6094,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "PARK"
@@ -6241,7 +6132,6 @@ typedef struct
   //  5 : "BETWEEN_GEARS"
   //  6 : "ERROR"
   //  7 : "NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "PARK"
@@ -6250,7 +6140,6 @@ typedef struct
   //  3 : "FORWARD/HIGH"
   //  4 : "LOW"
   //  7 : "NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "PARK"
@@ -6261,49 +6150,40 @@ typedef struct
   //  5 : "BETWEEN_GEARS"
   //  6 : "ERROR"
   //  7 : "NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  0 : "PARK"
@@ -6314,7 +6194,6 @@ typedef struct
   //  5 : "BETWEEN_GEARS"
   //  6 : "ERROR"
   //  7 : "NONE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "PARK"
@@ -6323,7 +6202,6 @@ typedef struct
   //  3 : "FORWARD/HIGH"
   //  4 : "LOW"
   //  7 : "NONE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "PARK"
@@ -6334,7 +6212,6 @@ typedef struct
   //  5 : "BETWEEN_GEARS"
   //  6 : "ERROR"
   //  7 : "NONE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -6370,42 +6247,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   int16_t MANUAL_INPUT_ro;                   //  [-] Bits=16 Factor= 0.001000        Unit:'rad'
@@ -6430,42 +6299,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   int16_t MANUAL_INPUT_ro;                   //  [-] Bits=16 Factor= 0.001000        Unit:'rad'
@@ -6593,126 +6454,104 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "RIGHT"
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "RIGHT"
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "RIGHT"
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  0 : "RIGHT"
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "RIGHT"
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "RIGHT"
   //  1 : "NONE"
   //  2 : "LEFT"
   //  3 : "HAZARD"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -6737,42 +6576,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  255 : "HIGH"
@@ -6789,7 +6620,6 @@ typedef struct
   //  2 : "INTERMITTENT_2"
   //  1 : "INTERMITTENT_1"
   //  0 : "WIPERS_OFF"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  255 : "HIGH"
@@ -6806,7 +6636,6 @@ typedef struct
   //  2 : "INTERMITTENT_2"
   //  1 : "INTERMITTENT_1"
   //  0 : "WIPERS_OFF"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  255 : "HIGH"
@@ -6823,49 +6652,40 @@ typedef struct
   //  2 : "INTERMITTENT_2"
   //  1 : "INTERMITTENT_1"
   //  0 : "WIPERS_OFF"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  255 : "HIGH"
@@ -6882,7 +6702,6 @@ typedef struct
   //  2 : "INTERMITTENT_2"
   //  1 : "INTERMITTENT_1"
   //  0 : "WIPERS_OFF"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  255 : "HIGH"
@@ -6899,7 +6718,6 @@ typedef struct
   //  2 : "INTERMITTENT_2"
   //  1 : "INTERMITTENT_1"
   //  0 : "WIPERS_OFF"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  255 : "HIGH"
@@ -6916,7 +6734,6 @@ typedef struct
   //  2 : "INTERMITTENT_2"
   //  1 : "INTERMITTENT_1"
   //  0 : "WIPERS_OFF"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -6941,114 +6758,92 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "NOT_SPRAYING"
   //  1 : "SPRAYING"
-  // 
   uint8_t MANUAL_INPUT : 1;                  //      Bits= 1
 
   //  0 : "NOT_SPRAYING"
   //  1 : "SPRAYING"
-  // 
   uint8_t COMMANDED_VALUE : 1;               //      Bits= 1
 
   //  0 : "NOT_SPRAYING"
   //  1 : "SPRAYING"
-  // 
   uint8_t OUTPUT_VALUE : 1;                  //      Bits= 1
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  0 : "NOT_SPRAYING"
   //  1 : "SPRAYING"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 1
 
   //  0 : "NOT_SPRAYING"
   //  1 : "SPRAYING"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 1
 
   //  0 : "NOT_SPRAYING"
   //  1 : "SPRAYING"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -7084,42 +6879,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   uint16_t MANUAL_INPUT_ro;                  //      Bits=16 Factor= 0.001000        Unit:'m/s^2'
@@ -7144,42 +6931,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   uint16_t MANUAL_INPUT_ro;                  //      Bits=16 Factor= 0.001000        Unit:'m/s^2'
@@ -7222,120 +7001,98 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "NEUTRAL"
   //  1 : "OPEN"
   //  2 : "CLOSE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "NEUTRAL"
   //  1 : "OPEN"
   //  2 : "CLOSE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "NEUTRAL"
   //  1 : "OPEN"
   //  2 : "CLOSE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  0 : "NEUTRAL"
   //  1 : "OPEN"
   //  2 : "CLOSE"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "NEUTRAL"
   //  1 : "OPEN"
   //  2 : "CLOSE"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "NEUTRAL"
   //  1 : "OPEN"
   //  2 : "CLOSE"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -7359,42 +7116,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   // Brake aggressiveness increases with increasing numerical values. Each operator control setting maps one-to-one with each LEVEL, starting with 1. Higher LEVELs with no match map to maximum.
@@ -7404,7 +7153,6 @@ typedef struct
   //  3 : "LEVEL_3"
   //  4 : "LEVEL_4"
   //  5 : "LEVEL_5"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   // Brake aggressiveness increases with increasing numerical values. Each operator control setting maps one-to-one with each LEVEL, starting with 1. Higher LEVELs with no match map to maximum.
@@ -7414,7 +7162,6 @@ typedef struct
   //  3 : "LEVEL_3"
   //  4 : "LEVEL_4"
   //  5 : "LEVEL_5"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   // Brake aggressiveness increases with increasing numerical values. Each operator control setting maps one-to-one with each LEVEL, starting with 1. Higher LEVELs with no match map to maximum.
@@ -7424,67 +7171,55 @@ typedef struct
   //  3 : "LEVEL_3"
   //  4 : "LEVEL_4"
   //  5 : "LEVEL_5"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
   // Braking aggressiveness automatic while AUTO_ON.
   //  0 : "AUTO_OFF"
   //  1 : "AUTO_ON"
-  // 
   uint8_t MAN_AUTO : 2;                      //      Bits= 2
 
   // Braking aggressiveness automatic while AUTO_ON.
   //  0 : "AUTO_OFF"
   //  1 : "AUTO_ON"
-  // 
   uint8_t CMD_AUTO : 2;                      //      Bits= 2
 
   // Braking aggressiveness automatic while AUTO_ON.
   //  0 : "AUTO_OFF"
   //  1 : "AUTO_ON"
-  // 
   uint8_t OUT_AUTO : 2;                      //      Bits= 2
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   // Brake aggressiveness increases with increasing numerical values. Each operator control setting maps one-to-one with each LEVEL, starting with 1. Higher LEVELs with no match map to maximum.
@@ -7494,7 +7229,6 @@ typedef struct
   //  3 : "LEVEL_3"
   //  4 : "LEVEL_4"
   //  5 : "LEVEL_5"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   // Brake aggressiveness increases with increasing numerical values. Each operator control setting maps one-to-one with each LEVEL, starting with 1. Higher LEVELs with no match map to maximum.
@@ -7504,7 +7238,6 @@ typedef struct
   //  3 : "LEVEL_3"
   //  4 : "LEVEL_4"
   //  5 : "LEVEL_5"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   // Brake aggressiveness increases with increasing numerical values. Each operator control setting maps one-to-one with each LEVEL, starting with 1. Higher LEVELs with no match map to maximum.
@@ -7514,25 +7247,21 @@ typedef struct
   //  3 : "LEVEL_3"
   //  4 : "LEVEL_4"
   //  5 : "LEVEL_5"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
   // Braking aggressiveness automatic while AUTO_ON.
   //  0 : "AUTO_OFF"
   //  1 : "AUTO_ON"
-  // 
   uint8_t MAN_AUTO;                          //      Bits= 2
 
   // Braking aggressiveness automatic while AUTO_ON.
   //  0 : "AUTO_OFF"
   //  1 : "AUTO_ON"
-  // 
   uint8_t CMD_AUTO;                          //      Bits= 2
 
   // Braking aggressiveness automatic while AUTO_ON.
   //  0 : "AUTO_OFF"
   //  1 : "AUTO_ON"
-  // 
   uint8_t OUT_AUTO;                          //      Bits= 2
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -7557,114 +7286,92 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -7689,114 +7396,92 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MANUAL_INPUT : 1;                  //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t COMMANDED_VALUE : 1;               //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUTPUT_VALUE : 1;                  //      Bits= 1
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -7833,42 +7518,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   uint8_t MANUAL_INPUT_ro;                   //      Bits= 8 Offset= 10.000000          Factor= 0.100000        Unit:'deg_C'
@@ -7893,42 +7570,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   uint8_t MANUAL_INPUT_ro;                   //      Bits= 8 Offset= 10.000000          Factor= 0.100000        Unit:'deg_C'
@@ -7971,42 +7640,34 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "FAN_OFF"
@@ -8020,7 +7681,6 @@ typedef struct
   //  8 : "FAN_SPEED_8"
   //  9 : "FAN_SPEED_9"
   //  10 : "FAN_SPEED_10"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "FAN_OFF"
@@ -8034,7 +7694,6 @@ typedef struct
   //  8 : "FAN_SPEED_8"
   //  9 : "FAN_SPEED_9"
   //  10 : "FAN_SPEED_10"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "FAN_OFF"
@@ -8048,49 +7707,40 @@ typedef struct
   //  8 : "FAN_SPEED_8"
   //  9 : "FAN_SPEED_9"
   //  10 : "FAN_SPEED_10"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  0 : "FAN_OFF"
@@ -8104,7 +7754,6 @@ typedef struct
   //  8 : "FAN_SPEED_8"
   //  9 : "FAN_SPEED_9"
   //  10 : "FAN_SPEED_10"
-  // 
   uint8_t MANUAL_INPUT;                      //      Bits= 8
 
   //  0 : "FAN_OFF"
@@ -8118,7 +7767,6 @@ typedef struct
   //  8 : "FAN_SPEED_8"
   //  9 : "FAN_SPEED_9"
   //  10 : "FAN_SPEED_10"
-  // 
   uint8_t COMMANDED_VALUE;                   //      Bits= 8
 
   //  0 : "FAN_OFF"
@@ -8132,7 +7780,6 @@ typedef struct
   //  8 : "FAN_SPEED_8"
   //  9 : "FAN_SPEED_9"
   //  10 : "FAN_SPEED_10"
-  // 
   uint8_t OUTPUT_VALUE;                      //      Bits= 8
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -8157,264 +7804,212 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED : 1;                       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MAN_AC_OFF_ON : 2;                 //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MAN_MAX_AC_OFF_ON : 2;             //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MAN_DEFROST_OFF_ON : 2;            //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MAN_MAX_DEFROST_OFF_ON : 2;        //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MAN_DIR_UP_OFF_ON : 2;             //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MAN_DIR_DOWN_OFF_ON : 2;           //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_AC_OFF_ON : 2;                 //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_MAX_AC_OFF_ON : 2;             //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_DEFROST_OFF_ON : 2;            //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_MAX_DEFROST_OFF_ON : 2;        //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_DIR_UP_OFF_ON : 2;             //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_DIR_DOWN_OFF_ON : 2;           //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUT_AC_OFF_ON : 2;                 //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUT_MAX_AC_OFF_ON : 2;             //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUT_DEFROST_OFF_ON : 2;            //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUT_MAX_DEFROST_OFF_ON : 2;        //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUT_DIR_UP_OFF_ON : 2;             //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUT_DIR_DOWN_OFF_ON : 2;           //      Bits= 2
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENABLED;                           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t PACMOD_FAULT;                      //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t VEHICLE_FAULT;                     //      Bits= 1
 
   //  0 : "NO_TIMEOUT"
   //  1 : "TIMEOUT"
-  // 
   uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MAN_AC_OFF_ON;                     //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MAN_MAX_AC_OFF_ON;                 //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MAN_DEFROST_OFF_ON;                //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MAN_MAX_DEFROST_OFF_ON;            //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MAN_DIR_UP_OFF_ON;                 //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MAN_DIR_DOWN_OFF_ON;               //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_AC_OFF_ON;                     //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_MAX_AC_OFF_ON;                 //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_DEFROST_OFF_ON;                //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_MAX_DEFROST_OFF_ON;            //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_DIR_UP_OFF_ON;                 //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t CMD_DIR_DOWN_OFF_ON;               //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUT_AC_OFF_ON;                     //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUT_MAX_AC_OFF_ON;                 //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUT_DEFROST_OFF_ON;                //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUT_MAX_DEFROST_OFF_ON;            //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUT_DIR_UP_OFF_ON;                 //      Bits= 2
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t OUT_DIR_DOWN_OFF_ON;               //      Bits= 2
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -8426,6 +8021,834 @@ typedef struct
 #endif // PACMOD12_USE_DIAG_MONITORS
 
 } CABIN_CLIMATE_RPT_t;
+
+// def @TIPPER_BODY_RPT_00 CAN Message (600  0x258)
+#define TIPPER_BODY_RPT_00_IDE (0U)
+#define TIPPER_BODY_RPT_00_DLC (4U)
+#define TIPPER_BODY_RPT_00_CANID (0x258)
+#define TIPPER_BODY_RPT_00_CYC (100U)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENABLED : 1;                       //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
+
+  //  0 : "NO_TIMEOUT"
+  //  1 : "TIMEOUT"
+  uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t MANUAL_INPUT;                      //      Bits= 8
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t COMMANDED_VALUE;                   //      Bits= 8
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t OUTPUT_VALUE;                      //      Bits= 8
+
+#else
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENABLED;                           //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t PACMOD_FAULT;                      //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t VEHICLE_FAULT;                     //      Bits= 1
+
+  //  0 : "NO_TIMEOUT"
+  //  1 : "TIMEOUT"
+  uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t MANUAL_INPUT;                      //      Bits= 8
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t COMMANDED_VALUE;                   //      Bits= 8
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t OUTPUT_VALUE;                      //      Bits= 8
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} TIPPER_BODY_RPT_00_t;
+
+// def @POWER_TAKE_OFF_RPT CAN Message (604  0x25c)
+#define POWER_TAKE_OFF_RPT_IDE (0U)
+#define POWER_TAKE_OFF_RPT_DLC (4U)
+#define POWER_TAKE_OFF_RPT_CANID (0x25c)
+#define POWER_TAKE_OFF_RPT_CYC (100U)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENABLED : 1;                       //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
+
+  //  0 : "NO_TIMEOUT"
+  //  1 : "TIMEOUT"
+  uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t MANUAL_INPUT;                      //      Bits= 8
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t COMMANDED_VALUE;                   //      Bits= 8
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t OUTPUT_VALUE;                      //      Bits= 8
+
+#else
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENABLED;                           //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t PACMOD_FAULT;                      //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t VEHICLE_FAULT;                     //      Bits= 1
+
+  //  0 : "NO_TIMEOUT"
+  //  1 : "TIMEOUT"
+  uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t MANUAL_INPUT;                      //      Bits= 8
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t COMMANDED_VALUE;                   //      Bits= 8
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t OUTPUT_VALUE;                      //      Bits= 8
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} POWER_TAKE_OFF_RPT_t;
+
+// def @TRAILER_BRAKE_RPT CAN Message (608  0x260)
+#define TRAILER_BRAKE_RPT_IDE (0U)
+#define TRAILER_BRAKE_RPT_DLC (7U)
+#define TRAILER_BRAKE_RPT_CANID (0x260)
+// signal: @MANUAL_INPUT_ro
+#define PACMOD12_MANUAL_INPUT_ro_CovFactor (0.001000)
+#define PACMOD12_MANUAL_INPUT_ro_toS(x) ( (uint16_t) (((x) - (0.000000)) / (0.001000)) )
+#define PACMOD12_MANUAL_INPUT_ro_fromS(x) ( (((x) * (0.001000)) + (0.000000)) )
+// signal: @COMMANDED_VALUE_ro
+#define PACMOD12_COMMANDED_VALUE_ro_CovFactor (0.001000)
+#define PACMOD12_COMMANDED_VALUE_ro_toS(x) ( (uint16_t) (((x) - (0.000000)) / (0.001000)) )
+#define PACMOD12_COMMANDED_VALUE_ro_fromS(x) ( (((x) * (0.001000)) + (0.000000)) )
+// signal: @OUTPUT_VALUE_ro
+#define PACMOD12_OUTPUT_VALUE_ro_CovFactor (0.001000)
+#define PACMOD12_OUTPUT_VALUE_ro_toS(x) ( (uint16_t) (((x) - (0.000000)) / (0.001000)) )
+#define PACMOD12_OUTPUT_VALUE_ro_fromS(x) ( (((x) * (0.001000)) + (0.000000)) )
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENABLED : 1;                       //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
+
+  //  0 : "NO_TIMEOUT"
+  //  1 : "TIMEOUT"
+  uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
+
+  uint16_t MANUAL_INPUT_ro;                  //      Bits=16 Factor= 0.001000        Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  sigfloat_t MANUAL_INPUT_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint16_t COMMANDED_VALUE_ro;               //      Bits=16 Factor= 0.001000        Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  sigfloat_t COMMANDED_VALUE_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint16_t OUTPUT_VALUE_ro;                  //      Bits=16 Factor= 0.001000        Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  sigfloat_t OUTPUT_VALUE_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+#else
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENABLED;                           //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t PACMOD_FAULT;                      //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t VEHICLE_FAULT;                     //      Bits= 1
+
+  //  0 : "NO_TIMEOUT"
+  //  1 : "TIMEOUT"
+  uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
+
+  uint16_t MANUAL_INPUT_ro;                  //      Bits=16 Factor= 0.001000        Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  sigfloat_t MANUAL_INPUT_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint16_t COMMANDED_VALUE_ro;               //      Bits=16 Factor= 0.001000        Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  sigfloat_t COMMANDED_VALUE_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint16_t OUTPUT_VALUE_ro;                  //      Bits=16 Factor= 0.001000        Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  sigfloat_t OUTPUT_VALUE_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} TRAILER_BRAKE_RPT_t;
+
+// def @TRAILER_AIR_SUPPLY_RPT CAN Message (612  0x264)
+#define TRAILER_AIR_SUPPLY_RPT_IDE (0U)
+#define TRAILER_AIR_SUPPLY_RPT_DLC (4U)
+#define TRAILER_AIR_SUPPLY_RPT_CANID (0x264)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENABLED : 1;                       //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
+
+  //  0 : "NO_TIMEOUT"
+  //  1 : "TIMEOUT"
+  uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t MANUAL_INPUT : 1;                  //      Bits= 1
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t COMMANDED_VALUE : 1;               //      Bits= 1
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t OUTPUT_VALUE : 1;                  //      Bits= 1
+
+#else
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENABLED;                           //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t PACMOD_FAULT;                      //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t VEHICLE_FAULT;                     //      Bits= 1
+
+  //  0 : "NO_TIMEOUT"
+  //  1 : "TIMEOUT"
+  uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t MANUAL_INPUT;                      //      Bits= 1
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t COMMANDED_VALUE;                   //      Bits= 1
+
+  //  0 : "OFF"
+  //  1 : "ON"
+  uint8_t OUTPUT_VALUE;                      //      Bits= 1
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} TRAILER_AIR_SUPPLY_RPT_t;
+
+// def @ENGINE_RPT CAN Message (616  0x268)
+#define ENGINE_RPT_IDE (0U)
+#define ENGINE_RPT_DLC (4U)
+#define ENGINE_RPT_CANID (0x268)
+#define ENGINE_RPT_CYC (100U)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENABLED : 1;                       //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
+
+  //  0 : "NO_TIMEOUT"
+  //  1 : "TIMEOUT"
+  uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
+
+  //  0 : "NO_ACTION"
+  //  1 : "ENGINE_OFF"
+  uint8_t MANUAL_INPUT;                      //      Bits= 8
+
+  //  0 : "NO_ACTION"
+  //  1 : "ENGINE_OFF"
+  uint8_t COMMANDED_VALUE;                   //      Bits= 8
+
+  //  0 : "NO_ACTION"
+  //  1 : "ENGINE_OFF"
+  uint8_t OUTPUT_VALUE;                      //      Bits= 8
+
+#else
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENABLED;                           //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t PACMOD_FAULT;                      //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t VEHICLE_FAULT;                     //      Bits= 1
+
+  //  0 : "NO_TIMEOUT"
+  //  1 : "TIMEOUT"
+  uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
+
+  //  0 : "NO_ACTION"
+  //  1 : "ENGINE_OFF"
+  uint8_t MANUAL_INPUT;                      //      Bits= 8
+
+  //  0 : "NO_ACTION"
+  //  1 : "ENGINE_OFF"
+  uint8_t COMMANDED_VALUE;                   //      Bits= 8
+
+  //  0 : "NO_ACTION"
+  //  1 : "ENGINE_OFF"
+  uint8_t OUTPUT_VALUE;                      //      Bits= 8
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} ENGINE_RPT_t;
+
+// def @TIPPER_BODY_RPT_01 CAN Message (620  0x26c)
+#define TIPPER_BODY_RPT_01_IDE (0U)
+#define TIPPER_BODY_RPT_01_DLC (4U)
+#define TIPPER_BODY_RPT_01_CANID (0x26c)
+#define TIPPER_BODY_RPT_01_CYC (100U)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENABLED : 1;                       //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
+
+  //  0 : "NO_TIMEOUT"
+  //  1 : "TIMEOUT"
+  uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t MANUAL_INPUT;                      //      Bits= 8
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t COMMANDED_VALUE;                   //      Bits= 8
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t OUTPUT_VALUE;                      //      Bits= 8
+
+#else
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENABLED;                           //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t PACMOD_FAULT;                      //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t VEHICLE_FAULT;                     //      Bits= 1
+
+  //  0 : "NO_TIMEOUT"
+  //  1 : "TIMEOUT"
+  uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t MANUAL_INPUT;                      //      Bits= 8
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t COMMANDED_VALUE;                   //      Bits= 8
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t OUTPUT_VALUE;                      //      Bits= 8
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} TIPPER_BODY_RPT_01_t;
+
+// def @TIPPER_BODY_RPT_02 CAN Message (624  0x270)
+#define TIPPER_BODY_RPT_02_IDE (0U)
+#define TIPPER_BODY_RPT_02_DLC (4U)
+#define TIPPER_BODY_RPT_02_CANID (0x270)
+#define TIPPER_BODY_RPT_02_CYC (100U)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENABLED : 1;                       //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t OVERRIDE_ACTIVE : 1;               //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t COMMAND_OUTPUT_FAULT : 1;          //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t INPUT_OUTPUT_FAULT : 1;            //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t OUTPUT_REPORTED_FAULT : 1;         //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t PACMOD_FAULT : 1;                  //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t VEHICLE_FAULT : 1;                 //      Bits= 1
+
+  //  0 : "NO_TIMEOUT"
+  //  1 : "TIMEOUT"
+  uint8_t COMMAND_TIMEOUT : 1;               //      Bits= 1
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t MANUAL_INPUT;                      //      Bits= 8
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t COMMANDED_VALUE;                   //      Bits= 8
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t OUTPUT_VALUE;                      //      Bits= 8
+
+#else
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENABLED;                           //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t OVERRIDE_ACTIVE;                   //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t COMMAND_OUTPUT_FAULT;              //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t INPUT_OUTPUT_FAULT;                //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t OUTPUT_REPORTED_FAULT;             //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t PACMOD_FAULT;                      //      Bits= 1
+
+  //  0 : "NO_FAULT"
+  //  1 : "FAULT"
+  uint8_t VEHICLE_FAULT;                     //      Bits= 1
+
+  //  0 : "NO_TIMEOUT"
+  //  1 : "TIMEOUT"
+  uint8_t COMMAND_TIMEOUT;                   //      Bits= 1
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t MANUAL_INPUT;                      //      Bits= 8
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t COMMANDED_VALUE;                   //      Bits= 8
+
+  // RAISE moves towards dump position, LOWER moves towards haul position.
+  //  0 : "NO_ACTION"
+  //  1 : "RAISE"
+  //  2 : "LOWER"
+  uint8_t OUTPUT_VALUE;                      //      Bits= 8
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} TIPPER_BODY_RPT_02_t;
 
 // def @ACCEL_AUX_RPT CAN Message (768  0x300)
 #define ACCEL_AUX_RPT_IDE (0U)
@@ -8439,25 +8862,21 @@ typedef struct
   // OPERATOR_INTERACTION shall have the value of 1 if the driver is moving, changing, or otherwise touching the operator control(s) that relates to this signal to an extent that is detectable. Otherwise, the value shall be 0.
   //  0 : "NO_INTERACTION"
   //  1 : "INTERACTION"
-  // 
   uint8_t OPERATOR_INTERACTION : 1;             //      Bits= 1
 
   // ACCEL_LIMITING_ACTIVE shall have the value of 1 if a limiting function is reducing an excessive command.  Otherwise, the value shall be 0.
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
   uint8_t ACCEL_LIMITING_ACTIVE : 1;            //      Bits= 1
 
   // PARK_BRAKE_INTERLOCK_ACTIVE shall have the value of 1 if an active parking brake prevents or reduces the command. Otherwise, the value shall be 0.
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
   uint8_t PRK_BRK_INTERLOCK_ACTIVE : 1;         //      Bits= 1
 
   // BRAKE_INTERLOCK_ACTIVE shall have the value of 1 if an active brake prevents or reduces the command. Otherwise, the value shall be 0.
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
   uint8_t BRAKE_INTERLOCK_ACTIVE : 1;           //      Bits= 1
 
   // CALIBRATION_STATUS shall indicate the status of a calibration of this system. If this system has more than one calibration, then those calibrations are INACTIVE.
@@ -8465,31 +8884,26 @@ typedef struct
   //  1 : "ACTIVE"
   //  2 : "COMPLETE"
   //  3 : "ERROR"
-  // 
   uint8_t CALIBRATION_STATUS : 3;               //      Bits= 3
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t OPERATOR_INTERACTION_AVAIL : 1;       //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t ACCEL_LIMITING_ACTIVE_AVAIL : 1;      //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PRK_BRK_INTERLOCK_ACTIVE_AVAIL : 1;   //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_INTERLOCK_ACTIVE_AVAIL : 1;     //      Bits= 1
 
 #else
@@ -8497,25 +8911,21 @@ typedef struct
   // OPERATOR_INTERACTION shall have the value of 1 if the driver is moving, changing, or otherwise touching the operator control(s) that relates to this signal to an extent that is detectable. Otherwise, the value shall be 0.
   //  0 : "NO_INTERACTION"
   //  1 : "INTERACTION"
-  // 
   uint8_t OPERATOR_INTERACTION;                 //      Bits= 1
 
   // ACCEL_LIMITING_ACTIVE shall have the value of 1 if a limiting function is reducing an excessive command.  Otherwise, the value shall be 0.
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
   uint8_t ACCEL_LIMITING_ACTIVE;                //      Bits= 1
 
   // PARK_BRAKE_INTERLOCK_ACTIVE shall have the value of 1 if an active parking brake prevents or reduces the command. Otherwise, the value shall be 0.
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
   uint8_t PRK_BRK_INTERLOCK_ACTIVE;             //      Bits= 1
 
   // BRAKE_INTERLOCK_ACTIVE shall have the value of 1 if an active brake prevents or reduces the command. Otherwise, the value shall be 0.
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
   uint8_t BRAKE_INTERLOCK_ACTIVE;               //      Bits= 1
 
   // CALIBRATION_STATUS shall indicate the status of a calibration of this system. If this system has more than one calibration, then those calibrations are INACTIVE.
@@ -8523,31 +8933,26 @@ typedef struct
   //  1 : "ACTIVE"
   //  2 : "COMPLETE"
   //  3 : "ERROR"
-  // 
   uint8_t CALIBRATION_STATUS;                   //      Bits= 3
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t OPERATOR_INTERACTION_AVAIL;           //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t ACCEL_LIMITING_ACTIVE_AVAIL;          //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PRK_BRK_INTERLOCK_ACTIVE_AVAIL;       //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_INTERLOCK_ACTIVE_AVAIL;         //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -8582,24 +8987,20 @@ typedef struct
   // OPERATOR_INTERACTION shall have the value of 1 if the driver is moving, changing, or otherwise touching the operator control(s) that relates to this signal to an extent that is detectable. Otherwise, the value shall be 0.
   //  0 : "NO_INTERACTION"
   //  1 : "INTERACTION"
-  // 
   uint8_t OPERATOR_INTERACTION : 1;          //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t BRAKE_ON_OFF : 1;                  //      Bits= 1
 
   // BRAKE_LIMITING_ACTIVE shall have the value of 1 if a limiting function is reducing an excessive command.  Otherwise, the value shall be 0.
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
   uint8_t BRAKE_LIMITING_ACTIVE : 1;         //      Bits= 1
 
   // BRAKE_REDUCED_ASSIST shall have the value of 1 if Brake System is in a reduced assist mode. Otherwise, the value shall be 0.
   //  0 : "NOT_REDUCED"
   //  1 : "REDUCED"
-  // 
   uint8_t BRAKE_REDUCED_ASSIST : 1;          //      Bits= 1
 
   // CALIBRATION_STATUS shall indicate the status of a calibration of this system. If this system has more than one calibration, then those calibrations are INACTIVE.
@@ -8607,37 +9008,31 @@ typedef struct
   //  1 : "ACTIVE"
   //  2 : "COMPLETE"
   //  3 : "ERROR"
-  // 
   uint8_t CALIBRATION_STATUS : 3;            //      Bits= 3
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_PRESSURE_AVAIL : 1;          //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t OPERATOR_INTERACTION_AVAIL : 1;    //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_ON_OFF_AVAIL : 1;            //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_LIMITING_ACTIVE_AVAIL : 1;   //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_REDUCED_ASSIST_AVAIL : 1;    //      Bits= 1
 
 #else
@@ -8651,24 +9046,20 @@ typedef struct
   // OPERATOR_INTERACTION shall have the value of 1 if the driver is moving, changing, or otherwise touching the operator control(s) that relates to this signal to an extent that is detectable. Otherwise, the value shall be 0.
   //  0 : "NO_INTERACTION"
   //  1 : "INTERACTION"
-  // 
   uint8_t OPERATOR_INTERACTION;              //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t BRAKE_ON_OFF;                      //      Bits= 1
 
   // BRAKE_LIMITING_ACTIVE shall have the value of 1 if a limiting function is reducing an excessive command.  Otherwise, the value shall be 0.
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
   uint8_t BRAKE_LIMITING_ACTIVE;             //      Bits= 1
 
   // BRAKE_REDUCED_ASSIST shall have the value of 1 if Brake System is in a reduced assist mode. Otherwise, the value shall be 0.
   //  0 : "NOT_REDUCED"
   //  1 : "REDUCED"
-  // 
   uint8_t BRAKE_REDUCED_ASSIST;              //      Bits= 1
 
   // CALIBRATION_STATUS shall indicate the status of a calibration of this system. If this system has more than one calibration, then those calibrations are INACTIVE.
@@ -8676,37 +9067,31 @@ typedef struct
   //  1 : "ACTIVE"
   //  2 : "COMPLETE"
   //  3 : "ERROR"
-  // 
   uint8_t CALIBRATION_STATUS;                //      Bits= 3
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_PRESSURE_AVAIL;              //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t OPERATOR_INTERACTION_AVAIL;        //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_ON_OFF_AVAIL;                //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_LIMITING_ACTIVE_AVAIL;       //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_REDUCED_ASSIST_AVAIL;        //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -8731,96 +9116,80 @@ typedef struct
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t HEADLIGHTS_ON : 1;                 //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t HEADLIGHTS_ON_BRIGHT : 1;          //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t FOG_LIGHTS_ON : 1;                 //      Bits= 1
 
   //  3 : "HEADLIGHTS_ON_AUTO_MODE"
   //  2 : "HEADLIGHTS_ON_MANUAL_MODE"
   //  1 : "PARKING_LIGHTS_ONLY"
   //  0 : "HEADLIGHTS_OFF"
-  // 
   uint8_t HEADLIGHTS_MODE;                   //      Bits= 8
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t HEADLIGHTS_ON_AVAIL : 1;           //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t HEADLIGHTS_ON_BRIGHT_AVAIL : 1;    //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t FOG_LIGHTS_ON_AVAIL : 1;           //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t HEADLIGHTS_MODE_AVAIL : 1;         //      Bits= 1
 
 #else
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t HEADLIGHTS_ON;                     //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t HEADLIGHTS_ON_BRIGHT;              //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t FOG_LIGHTS_ON;                     //      Bits= 1
 
   //  3 : "HEADLIGHTS_ON_AUTO_MODE"
   //  2 : "HEADLIGHTS_ON_MANUAL_MODE"
   //  1 : "PARKING_LIGHTS_ONLY"
   //  0 : "HEADLIGHTS_OFF"
-  // 
   uint8_t HEADLIGHTS_MODE;                   //      Bits= 8
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t HEADLIGHTS_ON_AVAIL;               //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t HEADLIGHTS_ON_BRIGHT_AVAIL;        //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t FOG_LIGHTS_ON_AVAIL;               //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t HEADLIGHTS_MODE_AVAIL;             //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -8847,12 +9216,10 @@ typedef struct
   //  1 : "APPLIED"
   //  2 : "BETWEEN"
   //  3 : "ERROR"
-  // 
   uint8_t PARKING_BRAKE_STATUS : 2;          //      Bits= 2
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PARKING_BRAKE_STATUS_AVAIL : 1;    //      Bits= 1
 
 #else
@@ -8861,12 +9228,10 @@ typedef struct
   //  1 : "APPLIED"
   //  2 : "BETWEEN"
   //  3 : "ERROR"
-  // 
   uint8_t PARKING_BRAKE_STATUS;              //      Bits= 2
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PARKING_BRAKE_STATUS_AVAIL;        //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -8881,36 +9246,36 @@ typedef struct
 
 // def @SHIFT_AUX_RPT CAN Message (808  0x328)
 #define SHIFT_AUX_RPT_IDE (0U)
-#define SHIFT_AUX_RPT_DLC (3U)
+#define SHIFT_AUX_RPT_DLC (7U)
 #define SHIFT_AUX_RPT_CANID (0x328)
+// signal: @ACTUAL_GEAR_RATIO_ro
+#define PACMOD12_ACTUAL_GEAR_RATIO_ro_CovFactor (0.001000)
+#define PACMOD12_ACTUAL_GEAR_RATIO_ro_toS(x) ( (uint16_t) (((x) - (0.000000)) / (0.001000)) )
+#define PACMOD12_ACTUAL_GEAR_RATIO_ro_fromS(x) ( (((x) * (0.001000)) + (0.000000)) )
 
 typedef struct
 {
 #ifdef PACMOD12_USE_BITS_SIGNAL
 
+  // Indicates that the operator control interface is not commanding a specific transmission range.
   //  0 : "NOT_BETWEEN_GEARS"
   //  1 : "BETWEEN_GEARS"
-  // 
   uint8_t BETWEEN_GEARS : 1;                  //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t STAY_IN_NEUTRAL_MODE : 1;           //      Bits= 1
 
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
   uint8_t BRAKE_INTERLOCK_ACTIVE : 1;         //      Bits= 1
 
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
   uint8_t SPEED_INTERLOCK_ACTIVE : 1;         //      Bits= 1
 
   //  0 : "SILENT"
   //  1 : "BEEP"
-  // 
   uint8_t WRITE_TO_CONFIG : 1;                //      Bits= 1
 
   // CALIBRATION_STATUS shall indicate the status of a calibration of this system. If this system has more than one calibration, then those calibrations are INACTIVE.
@@ -8918,82 +9283,93 @@ typedef struct
   //  1 : "ACTIVE"
   //  2 : "COMPLETE"
   //  3 : "ERROR"
-  // 
   uint8_t CALIBRATION_STATUS : 3;             //      Bits= 3
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BETWEEN_GEARS_AVAIL : 1;            //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t STAY_IN_NEUTRAL_MODE_AVAIL : 1;     //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_INTERLOCK_ACTIVE_AVAIL : 1;   //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t SPEED_INTERLOCK_ACTIVE_AVAIL : 1;   //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t WRITE_TO_CONFIG_IS_VALID : 1;       //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t GEAR_NUMBER_AVAIL : 1;              //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t SHIFT_MODE_AVAIL : 1;               //      Bits= 1
+
+  uint8_t SHIFT_IN_PROGRESS_AVAIL : 1;        //      Bits= 1
 
   // Gear number is positive for forward gears.
   int8_t GEAR_NUMBER : 6;                     //  [-] Bits= 6
 
   //  0 : "STANDARD"
   //  1 : "SPORT"
-  // 
   uint8_t SHIFT_MODE : 2;                     //      Bits= 2
+
+  // Indicates if the vehicle transmission is in process of shifting from the current gear to the destination gear.
+  //  0 : "SHIFT_NOT_IN_PROGRESS"
+  //  1 : "SHIFT_IN_PROGRESS"
+  //  2 : "ERROR"
+  uint8_t SHIFT_IN_PROGRESS : 2;              //      Bits= 2
+
+  // Indicates the transmission is engaged sufficiently to allow a transfer of torque through the transmission.
+  //  0 : "DRIVELINE_DISENGAGED"
+  //  1 : "DRIVELINE_ENGAGED"
+  //  2 : "ERROR"
+  uint8_t DRIVELINE_ENGAGED : 2;              //      Bits= 2
+
+  uint16_t ACTUAL_GEAR_RATIO_ro;              //      Bits=16 Factor= 0.001000       
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  sigfloat_t ACTUAL_GEAR_RATIO_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t DRIVELINE_ENGAGED_AVAIL : 1;        //      Bits= 1
+
+  uint8_t ACTUAL_GEAR_RATIO_AVAIL : 1;        //      Bits= 1
 
 #else
 
+  // Indicates that the operator control interface is not commanding a specific transmission range.
   //  0 : "NOT_BETWEEN_GEARS"
   //  1 : "BETWEEN_GEARS"
-  // 
   uint8_t BETWEEN_GEARS;                      //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t STAY_IN_NEUTRAL_MODE;               //      Bits= 1
 
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
   uint8_t BRAKE_INTERLOCK_ACTIVE;             //      Bits= 1
 
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
   uint8_t SPEED_INTERLOCK_ACTIVE;             //      Bits= 1
 
   //  0 : "SILENT"
   //  1 : "BEEP"
-  // 
   uint8_t WRITE_TO_CONFIG;                    //      Bits= 1
 
   // CALIBRATION_STATUS shall indicate the status of a calibration of this system. If this system has more than one calibration, then those calibrations are INACTIVE.
@@ -9001,56 +9377,71 @@ typedef struct
   //  1 : "ACTIVE"
   //  2 : "COMPLETE"
   //  3 : "ERROR"
-  // 
   uint8_t CALIBRATION_STATUS;                 //      Bits= 3
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BETWEEN_GEARS_AVAIL;                //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t STAY_IN_NEUTRAL_MODE_AVAIL;         //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_INTERLOCK_ACTIVE_AVAIL;       //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t SPEED_INTERLOCK_ACTIVE_AVAIL;       //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t WRITE_TO_CONFIG_IS_VALID;           //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t GEAR_NUMBER_AVAIL;                  //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t SHIFT_MODE_AVAIL;                   //      Bits= 1
+
+  uint8_t SHIFT_IN_PROGRESS_AVAIL;            //      Bits= 1
 
   // Gear number is positive for forward gears.
   int8_t GEAR_NUMBER;                         //  [-] Bits= 6
 
   //  0 : "STANDARD"
   //  1 : "SPORT"
-  // 
   uint8_t SHIFT_MODE;                         //      Bits= 2
+
+  // Indicates if the vehicle transmission is in process of shifting from the current gear to the destination gear.
+  //  0 : "SHIFT_NOT_IN_PROGRESS"
+  //  1 : "SHIFT_IN_PROGRESS"
+  //  2 : "ERROR"
+  uint8_t SHIFT_IN_PROGRESS;                  //      Bits= 2
+
+  // Indicates the transmission is engaged sufficiently to allow a transfer of torque through the transmission.
+  //  0 : "DRIVELINE_DISENGAGED"
+  //  1 : "DRIVELINE_ENGAGED"
+  //  2 : "ERROR"
+  uint8_t DRIVELINE_ENGAGED;                  //      Bits= 2
+
+  uint16_t ACTUAL_GEAR_RATIO_ro;              //      Bits=16 Factor= 0.001000       
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  sigfloat_t ACTUAL_GEAR_RATIO_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t DRIVELINE_ENGAGED_AVAIL;            //      Bits= 1
+
+  uint8_t ACTUAL_GEAR_RATIO_AVAIL;            //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
 
@@ -9094,24 +9485,20 @@ typedef struct
   // OPERATOR_INTERACTION shall have the value of 1 if the driver is moving, changing, or otherwise touching the operator control(s) that relates to this signal to an extent that is detectable. Otherwise, the value shall be 0.
   //  0 : "NO_INTERACTION"
   //  1 : "INTERACTION"
-  // 
   uint8_t OPERATOR_INTERACTION : 1;               //      Bits= 1
 
   // Counterclockwise rotation is positive according to the right-hand rule.
   //  0 : "POSITIVE"
   //  1 : "NEGATIVE"
-  // 
   uint8_t ROTATION_RATE_SIGN : 1;                 //      Bits= 1
 
   //  0 : "NOT_CALIBRATED"
   //  1 : "CALIBRATED"
-  // 
   uint8_t VEHICLE_ANGLE_CALIB_STATUS : 1;         //      Bits= 1
 
   // STEERING_LIMITING_ACTIVE shall have the value of 1 if a limiting function is reducing an excessive command.  Otherwise, the value shall be 0.
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
   uint8_t STEERING_LIMITING_ACTIVE : 1;           //      Bits= 1
 
   // CALIBRATION_STATUS shall indicate the status of a calibration of this system. If this system has more than one calibration, then those calibrations are INACTIVE.
@@ -9119,42 +9506,35 @@ typedef struct
   //  1 : "ACTIVE"
   //  2 : "COMPLETE"
   //  3 : "ERROR"
-  // 
   uint8_t CALIBRATION_STATUS : 3;                 //      Bits= 3
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t STEERING_TORQUE_AVAIL : 1;              //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t ROTATION_RATE_AVAIL : 1;                //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t OPERATOR_INTERACTION_AVAIL : 1;         //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t ROTATION_RATE_SIGN_AVAIL : 1;           //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t VEHICLE_ANGLE_CALIB_STATUS_AVAIL : 1;   //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t STEERING_LIMITING_ACTIVE_AVAIL : 1;     //      Bits= 1
 
 #else
@@ -9174,24 +9554,20 @@ typedef struct
   // OPERATOR_INTERACTION shall have the value of 1 if the driver is moving, changing, or otherwise touching the operator control(s) that relates to this signal to an extent that is detectable. Otherwise, the value shall be 0.
   //  0 : "NO_INTERACTION"
   //  1 : "INTERACTION"
-  // 
   uint8_t OPERATOR_INTERACTION;                   //      Bits= 1
 
   // Counterclockwise rotation is positive according to the right-hand rule.
   //  0 : "POSITIVE"
   //  1 : "NEGATIVE"
-  // 
   uint8_t ROTATION_RATE_SIGN;                     //      Bits= 1
 
   //  0 : "NOT_CALIBRATED"
   //  1 : "CALIBRATED"
-  // 
   uint8_t VEHICLE_ANGLE_CALIB_STATUS;             //      Bits= 1
 
   // STEERING_LIMITING_ACTIVE shall have the value of 1 if a limiting function is reducing an excessive command.  Otherwise, the value shall be 0.
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
   uint8_t STEERING_LIMITING_ACTIVE;               //      Bits= 1
 
   // CALIBRATION_STATUS shall indicate the status of a calibration of this system. If this system has more than one calibration, then those calibrations are INACTIVE.
@@ -9199,42 +9575,35 @@ typedef struct
   //  1 : "ACTIVE"
   //  2 : "COMPLETE"
   //  3 : "ERROR"
-  // 
   uint8_t CALIBRATION_STATUS;                     //      Bits= 3
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t STEERING_TORQUE_AVAIL;                  //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t ROTATION_RATE_AVAIL;                    //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t OPERATOR_INTERACTION_AVAIL;             //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t ROTATION_RATE_SIGN_AVAIL;               //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t VEHICLE_ANGLE_CALIB_STATUS_AVAIL;       //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t STEERING_LIMITING_ACTIVE_AVAIL;         //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -9259,48 +9628,40 @@ typedef struct
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t DRIVER_BLINKER_BULB_ON : 1;         //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t PASS_BLINKER_BULB_ON : 1;           //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t DRIVER_BLINKER_BULB_ON_AVAIL : 1;   //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PASS_BLINKER_BULB_ON_AVAIL : 1;     //      Bits= 1
 
 #else
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t DRIVER_BLINKER_BULB_ON;             //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t PASS_BLINKER_BULB_ON;               //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t DRIVER_BLINKER_BULB_ON_AVAIL;       //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PASS_BLINKER_BULB_ON_AVAIL;         //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -9325,136 +9686,112 @@ typedef struct
 
   //  0 : "NOT_WIPING"
   //  1 : "WIPING"
-  // 
   uint8_t FRONT_WIPING : 1;                  //      Bits= 1
 
   //  0 : "NOT_SPRAYING"
   //  1 : "SPRAYING"
-  // 
   uint8_t FRONT_SPRAYING : 1;                //      Bits= 1
 
   //  0 : "NOT_WIPING"
   //  1 : "WIPING"
-  // 
   uint8_t REAR_WIPING : 1;                   //      Bits= 1
 
   //  0 : "NOT_SPRAYING"
   //  1 : "SPRAYING"
-  // 
   uint8_t REAR_SPRAYING : 1;                 //      Bits= 1
 
   //  0 : "NOT_NEAR_EMPTY"
   //  1 : "NEAR_EMPTY"
-  // 
   uint8_t SPRAY_NEAR_EMPTY : 1;              //      Bits= 1
 
   //  0 : "NOT_EMPTY"
   //  1 : "EMPTY"
-  // 
   uint8_t SPRAY_EMPTY : 1;                   //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t FRONT_WIPING_AVAIL : 1;            //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t FRONT_SPRAYING_AVAIL : 1;          //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t REAR_WIPING_AVAIL : 1;             //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t REAR_SPRAYING_AVAIL : 1;           //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t SPRAY_NEAR_EMPTY_AVAIL : 1;        //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t SPRAY_EMPTY_AVAIL : 1;             //      Bits= 1
 
 #else
 
   //  0 : "NOT_WIPING"
   //  1 : "WIPING"
-  // 
   uint8_t FRONT_WIPING;                      //      Bits= 1
 
   //  0 : "NOT_SPRAYING"
   //  1 : "SPRAYING"
-  // 
   uint8_t FRONT_SPRAYING;                    //      Bits= 1
 
   //  0 : "NOT_WIPING"
   //  1 : "WIPING"
-  // 
   uint8_t REAR_WIPING;                       //      Bits= 1
 
   //  0 : "NOT_SPRAYING"
   //  1 : "SPRAYING"
-  // 
   uint8_t REAR_SPRAYING;                     //      Bits= 1
 
   //  0 : "NOT_NEAR_EMPTY"
   //  1 : "NEAR_EMPTY"
-  // 
   uint8_t SPRAY_NEAR_EMPTY;                  //      Bits= 1
 
   //  0 : "NOT_EMPTY"
   //  1 : "EMPTY"
-  // 
   uint8_t SPRAY_EMPTY;                       //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t FRONT_WIPING_AVAIL;                //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t FRONT_SPRAYING_AVAIL;              //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t REAR_WIPING_AVAIL;                 //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t REAR_SPRAYING_AVAIL;               //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t SPRAY_NEAR_EMPTY_AVAIL;            //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t SPRAY_EMPTY_AVAIL;                 //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -9480,48 +9817,40 @@ typedef struct
   //  1 : "DRIVERS_BRAKE_DEMAND"
   //  2 : "ADDITION_MODE_OF_XBR_ACCEL_CTRL"
   //  3 : "MAXIMUM_MODE_OF_XBR_ACCEL_CTRL"
-  // 
   uint8_t XBR_ACTIVE_CONTROL_MODE : 4;         //      Bits= 4
 
   //  0 : "ANY_EXT_BRK_DEMAND_WILL_BE_ACPTD"
   //  2 : "NO_EXT_BRK_DEMAND_WILL_BE_ACPTD"
-  // 
   uint8_t XBR_SYSTEM_STATE : 2;                //      Bits= 2
 
   //  0 : "FOUNDATION_BRAKES_NOT_IN_USE"
   //  1 : "FOUNDATION_BRAKES_IN_USE"
-  // 
   uint8_t FOUNDATION_BRAKE_USE : 2;            //      Bits= 2
 
   //  0 : "INACTIVE"
   //  1 : "ACTIVE"
   //  2 : "ACTIVE_BUT_INACTIVE_SOON"
   //  6 : "ERROR"
-  // 
   uint8_t HILL_HOLDER_MODE : 3;                //      Bits= 3
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t XBR_ACTIVE_CONTROL_MODE_AVAIL : 1;   //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t XBR_SYSTEM_STATE_AVAIL : 1;          //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t FOUNDATION_BRAKE_USE_AVAIL : 1;      //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t HILL_HOLDER_MODE_AVAIL : 1;          //      Bits= 1
 
 #else
@@ -9530,48 +9859,40 @@ typedef struct
   //  1 : "DRIVERS_BRAKE_DEMAND"
   //  2 : "ADDITION_MODE_OF_XBR_ACCEL_CTRL"
   //  3 : "MAXIMUM_MODE_OF_XBR_ACCEL_CTRL"
-  // 
   uint8_t XBR_ACTIVE_CONTROL_MODE;             //      Bits= 4
 
   //  0 : "ANY_EXT_BRK_DEMAND_WILL_BE_ACPTD"
   //  2 : "NO_EXT_BRK_DEMAND_WILL_BE_ACPTD"
-  // 
   uint8_t XBR_SYSTEM_STATE;                    //      Bits= 2
 
   //  0 : "FOUNDATION_BRAKES_NOT_IN_USE"
   //  1 : "FOUNDATION_BRAKES_IN_USE"
-  // 
   uint8_t FOUNDATION_BRAKE_USE;                //      Bits= 2
 
   //  0 : "INACTIVE"
   //  1 : "ACTIVE"
   //  2 : "ACTIVE_BUT_INACTIVE_SOON"
   //  6 : "ERROR"
-  // 
   uint8_t HILL_HOLDER_MODE;                    //      Bits= 3
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t XBR_ACTIVE_CONTROL_MODE_AVAIL;       //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t XBR_SYSTEM_STATE_AVAIL;              //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t FOUNDATION_BRAKE_USE_AVAIL;          //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t HILL_HOLDER_MODE_AVAIL;              //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -9590,11 +9911,11 @@ typedef struct
 #define ENGINE_BRAKE_AUX_RPT_CANID (0x344)
 // signal: @ACTUAL_ENGINE_BRK_TORQUE_ro
 #define PACMOD12_ACTUAL_ENGINE_BRK_TORQUE_ro_CovFactor (1)
-#define PACMOD12_ACTUAL_ENGINE_BRK_TORQUE_ro_toS(x) ( (int16_t) ((x) - (-125)) )
+#define PACMOD12_ACTUAL_ENGINE_BRK_TORQUE_ro_toS(x) ( (int8_t) ((x) - (-125)) )
 #define PACMOD12_ACTUAL_ENGINE_BRK_TORQUE_ro_fromS(x) ( ((x) + (-125)) )
 // signal: @INTENDED_ENGINE_BRK_TORQUE_ro
 #define PACMOD12_INTENDED_ENGINE_BRK_TORQUE_ro_CovFactor (1)
-#define PACMOD12_INTENDED_ENGINE_BRK_TORQUE_ro_toS(x) ( (int16_t) ((x) - (-125)) )
+#define PACMOD12_INTENDED_ENGINE_BRK_TORQUE_ro_toS(x) ( (int8_t) ((x) - (-125)) )
 #define PACMOD12_INTENDED_ENGINE_BRK_TORQUE_ro_fromS(x) ( ((x) + (-125)) )
 
 typedef struct
@@ -9603,16 +9924,15 @@ typedef struct
 
   //  0 : "BRAKING_NOT_ACTIVE"
   //  1 : "BRAKING_ACTIVE"
-  // 
   uint8_t ENGINE_BRAKE_STATUS : 2;                //      Bits= 2
 
-  int16_t ACTUAL_ENGINE_BRK_TORQUE_ro;            //  [-] Bits= 8 Offset= -125               Unit:'%'
+  int8_t ACTUAL_ENGINE_BRK_TORQUE_ro;             //  [-] Bits= 8 Offset= -125               Unit:'%'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   int16_t ACTUAL_ENGINE_BRK_TORQUE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  int16_t INTENDED_ENGINE_BRK_TORQUE_ro;          //  [-] Bits= 8 Offset= -125               Unit:'%'
+  int8_t INTENDED_ENGINE_BRK_TORQUE_ro;           //  [-] Bits= 8 Offset= -125               Unit:'%'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   int16_t INTENDED_ENGINE_BRK_TORQUE_phys;
@@ -9621,35 +9941,31 @@ typedef struct
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t ENGINE_BRAKE_STATUS_AVAIL : 1;          //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t ACTUAL_ENGINE_BRK_TORQUE_AVAIL : 1;     //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t INTENDED_ENGINE_BRK_TORQUE_AVAIL : 1;   //      Bits= 1
 
 #else
 
   //  0 : "BRAKING_NOT_ACTIVE"
   //  1 : "BRAKING_ACTIVE"
-  // 
   uint8_t ENGINE_BRAKE_STATUS;                    //      Bits= 2
 
-  int16_t ACTUAL_ENGINE_BRK_TORQUE_ro;            //  [-] Bits= 8 Offset= -125               Unit:'%'
+  int8_t ACTUAL_ENGINE_BRK_TORQUE_ro;             //  [-] Bits= 8 Offset= -125               Unit:'%'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   int16_t ACTUAL_ENGINE_BRK_TORQUE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  int16_t INTENDED_ENGINE_BRK_TORQUE_ro;          //  [-] Bits= 8 Offset= -125               Unit:'%'
+  int8_t INTENDED_ENGINE_BRK_TORQUE_ro;           //  [-] Bits= 8 Offset= -125               Unit:'%'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   int16_t INTENDED_ENGINE_BRK_TORQUE_phys;
@@ -9658,19 +9974,16 @@ typedef struct
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t ENGINE_BRAKE_STATUS_AVAIL;              //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t ACTUAL_ENGINE_BRK_TORQUE_AVAIL;         //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t INTENDED_ENGINE_BRK_TORQUE_AVAIL;       //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -9704,7 +10017,6 @@ typedef struct
 
   //  0 : "INVALID"
   //  1 : "VALID"
-  // 
   uint8_t VEHICLE_SPEED_VALID : 1;           //      Bits= 1
 
 #else
@@ -9717,7 +10029,6 @@ typedef struct
 
   //  0 : "INVALID"
   //  1 : "VALID"
-  // 
   uint8_t VEHICLE_SPEED_VALID;               //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -10543,34 +10854,34 @@ typedef struct
 #define DATE_TIME_RPT_CYC (250U)
 // signal: @DATE_YEAR_ro
 #define PACMOD12_DATE_YEAR_ro_CovFactor (1)
-#define PACMOD12_DATE_YEAR_ro_toS(x) ( (uint16_t) ((x) - (2000)) )
+#define PACMOD12_DATE_YEAR_ro_toS(x) ( (uint8_t) ((x) - (2000)) )
 #define PACMOD12_DATE_YEAR_ro_fromS(x) ( ((x) + (2000)) )
 // signal: @DATE_MONTH_ro
 #define PACMOD12_DATE_MONTH_ro_CovFactor (1)
-#define PACMOD12_DATE_MONTH_ro_toS(x) ( (uint16_t) ((x) - (1)) )
+#define PACMOD12_DATE_MONTH_ro_toS(x) ( (uint8_t) ((x) - (1)) )
 #define PACMOD12_DATE_MONTH_ro_fromS(x) ( ((x) + (1)) )
 // signal: @DATE_DAY_ro
 #define PACMOD12_DATE_DAY_ro_CovFactor (1)
-#define PACMOD12_DATE_DAY_ro_toS(x) ( (uint16_t) ((x) - (1)) )
+#define PACMOD12_DATE_DAY_ro_toS(x) ( (uint8_t) ((x) - (1)) )
 #define PACMOD12_DATE_DAY_ro_fromS(x) ( ((x) + (1)) )
 
 typedef struct
 {
 #ifdef PACMOD12_USE_BITS_SIGNAL
 
-  uint16_t DATE_YEAR_ro;                     //      Bits= 8 Offset= 2000               Unit:'yr'
+  uint8_t DATE_YEAR_ro;                      //      Bits= 8 Offset= 2000               Unit:'yr'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t DATE_YEAR_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t DATE_MONTH_ro;                    //      Bits= 8 Offset= 1                  Unit:'mon'
+  uint8_t DATE_MONTH_ro;                     //      Bits= 8 Offset= 1                  Unit:'mon'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t DATE_MONTH_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t DATE_DAY_ro;                      //      Bits= 8 Offset= 1                  Unit:'dy'
+  uint8_t DATE_DAY_ro;                       //      Bits= 8 Offset= 1                  Unit:'dy'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t DATE_DAY_phys;
@@ -10584,19 +10895,19 @@ typedef struct
 
 #else
 
-  uint16_t DATE_YEAR_ro;                     //      Bits= 8 Offset= 2000               Unit:'yr'
+  uint8_t DATE_YEAR_ro;                      //      Bits= 8 Offset= 2000               Unit:'yr'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t DATE_YEAR_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t DATE_MONTH_ro;                    //      Bits= 8 Offset= 1                  Unit:'mon'
+  uint8_t DATE_MONTH_ro;                     //      Bits= 8 Offset= 1                  Unit:'mon'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t DATE_MONTH_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t DATE_DAY_ro;                      //      Bits= 8 Offset= 1                  Unit:'dy'
+  uint8_t DATE_DAY_ro;                       //      Bits= 8 Offset= 1                  Unit:'dy'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t DATE_DAY_phys;
@@ -10618,10 +10929,10 @@ typedef struct
 
 } DATE_TIME_RPT_t;
 
-// def @ENGINE_RPT CAN Message (1040 0x410)
-#define ENGINE_RPT_IDE (0U)
-#define ENGINE_RPT_DLC (7U)
-#define ENGINE_RPT_CANID (0x410)
+// def @ENGINE_AUX_RPT CAN Message (1040 0x410)
+#define ENGINE_AUX_RPT_IDE (0U)
+#define ENGINE_AUX_RPT_DLC (8U)
+#define ENGINE_AUX_RPT_CANID (0x410)
 // signal: @ENGINE_SPEED_ro
 #define PACMOD12_ENGINE_SPEED_ro_CovFactor (0.250000)
 #define PACMOD12_ENGINE_SPEED_ro_toS(x) ( (uint16_t) (((x) - (0.000000)) / (0.250000)) )
@@ -10632,30 +10943,34 @@ typedef struct
 #define PACMOD12_ENGINE_TORQUE_ro_fromS(x) ( (((x) * (0.062500)) + (0.000000)) )
 // signal: @ENGINE_COOLANT_TEMP_ro
 #define PACMOD12_ENGINE_COOLANT_TEMP_ro_CovFactor (1)
-#define PACMOD12_ENGINE_COOLANT_TEMP_ro_toS(x) ( (int16_t) ((x) - (-40)) )
+#define PACMOD12_ENGINE_COOLANT_TEMP_ro_toS(x) ( (uint8_t) ((x) - (-40)) )
 #define PACMOD12_ENGINE_COOLANT_TEMP_ro_fromS(x) ( ((x) + (-40)) )
 // signal: @FUEL_LEVEL_ro
 #define PACMOD12_FUEL_LEVEL_ro_CovFactor (0.005000)
 #define PACMOD12_FUEL_LEVEL_ro_toS(x) ( (uint8_t) (((x) - (0.000000)) / (0.005000)) )
 #define PACMOD12_FUEL_LEVEL_ro_fromS(x) ( (((x) * (0.005000)) + (0.000000)) )
+// signal: @DIESEL_EXHAUST_FLUID_LEVEL_ro
+#define PACMOD12_DIESEL_EXHAUST_FLUID_LEVEL_ro_CovFactor (0.005000)
+#define PACMOD12_DIESEL_EXHAUST_FLUID_LEVEL_ro_toS(x) ( (uint8_t) (((x) - (0.000000)) / (0.005000)) )
+#define PACMOD12_DIESEL_EXHAUST_FLUID_LEVEL_ro_fromS(x) ( (((x) * (0.005000)) + (0.000000)) )
 
 typedef struct
 {
 #ifdef PACMOD12_USE_BITS_SIGNAL
 
-  uint16_t ENGINE_SPEED_ro;                  //      Bits=16 Factor= 0.250000        Unit:'rpm'
+  uint16_t ENGINE_SPEED_ro;                       //      Bits=16 Factor= 0.250000        Unit:'rpm'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   sigfloat_t ENGINE_SPEED_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t ENGINE_TORQUE_ro;                 //      Bits=16 Factor= 0.062500        Unit:'N-m'
+  uint16_t ENGINE_TORQUE_ro;                      //      Bits=16 Factor= 0.062500        Unit:'N-m'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   sigfloat_t ENGINE_TORQUE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  int16_t ENGINE_COOLANT_TEMP_ro;            //      Bits= 8 Offset= -40                Unit:'deg_C'
+  uint8_t ENGINE_COOLANT_TEMP_ro;                 //      Bits= 8 Offset= -40                Unit:'deg_C'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   int16_t ENGINE_COOLANT_TEMP_phys;
@@ -10664,48 +10979,55 @@ typedef struct
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t ENGINE_SPEED_AVAIL : 1;            //      Bits= 1
+  uint8_t ENGINE_SPEED_AVAIL : 1;                 //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t ENGINE_TORQUE_AVAIL : 1;           //      Bits= 1
+  uint8_t ENGINE_TORQUE_AVAIL : 1;                //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t ENGINE_COOLANT_TEMP_AVAIL : 1;     //      Bits= 1
+  uint8_t ENGINE_COOLANT_TEMP_AVAIL : 1;          //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t FUEL_LEVEL_AVAIL : 1;              //      Bits= 1
+  uint8_t FUEL_LEVEL_AVAIL : 1;                   //      Bits= 1
 
-  uint8_t FUEL_LEVEL_ro;                     //      Bits= 8 Factor= 0.005000        Unit:'%'
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t DIESEL_EXHAUST_FLUID_LEVEL_AVAIL : 1;   //      Bits= 1
+
+  uint8_t FUEL_LEVEL_ro;                          //      Bits= 8 Factor= 0.005000        Unit:'%'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   sigfloat_t FUEL_LEVEL_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t DIESEL_EXHAUST_FLUID_LEVEL_ro;          //      Bits= 8 Factor= 0.005000        Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  sigfloat_t DIESEL_EXHAUST_FLUID_LEVEL_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
 #else
 
-  uint16_t ENGINE_SPEED_ro;                  //      Bits=16 Factor= 0.250000        Unit:'rpm'
+  uint16_t ENGINE_SPEED_ro;                       //      Bits=16 Factor= 0.250000        Unit:'rpm'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   sigfloat_t ENGINE_SPEED_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t ENGINE_TORQUE_ro;                 //      Bits=16 Factor= 0.062500        Unit:'N-m'
+  uint16_t ENGINE_TORQUE_ro;                      //      Bits=16 Factor= 0.062500        Unit:'N-m'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   sigfloat_t ENGINE_TORQUE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  int16_t ENGINE_COOLANT_TEMP_ro;            //      Bits= 8 Offset= -40                Unit:'deg_C'
+  uint8_t ENGINE_COOLANT_TEMP_ro;                 //      Bits= 8 Offset= -40                Unit:'deg_C'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   int16_t ENGINE_COOLANT_TEMP_phys;
@@ -10714,31 +11036,38 @@ typedef struct
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t ENGINE_SPEED_AVAIL;                //      Bits= 1
+  uint8_t ENGINE_SPEED_AVAIL;                     //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t ENGINE_TORQUE_AVAIL;               //      Bits= 1
+  uint8_t ENGINE_TORQUE_AVAIL;                    //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t ENGINE_COOLANT_TEMP_AVAIL;         //      Bits= 1
+  uint8_t ENGINE_COOLANT_TEMP_AVAIL;              //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t FUEL_LEVEL_AVAIL;                  //      Bits= 1
+  uint8_t FUEL_LEVEL_AVAIL;                       //      Bits= 1
 
-  uint8_t FUEL_LEVEL_ro;                     //      Bits= 8 Factor= 0.005000        Unit:'%'
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t DIESEL_EXHAUST_FLUID_LEVEL_AVAIL;       //      Bits= 1
+
+  uint8_t FUEL_LEVEL_ro;                          //      Bits= 8 Factor= 0.005000        Unit:'%'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   sigfloat_t FUEL_LEVEL_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t DIESEL_EXHAUST_FLUID_LEVEL_ro;          //      Bits= 8 Factor= 0.005000        Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  sigfloat_t DIESEL_EXHAUST_FLUID_LEVEL_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -10749,7 +11078,7 @@ typedef struct
 
 #endif // PACMOD12_USE_DIAG_MONITORS
 
-} ENGINE_RPT_t;
+} ENGINE_AUX_RPT_t;
 
 // def @DETECTED_OBJECT_RPT CAN Message (1041 0x411)
 #define DETECTED_OBJECT_RPT_IDE (0U)
@@ -10803,6 +11132,36 @@ typedef struct
 #endif // PACMOD12_USE_DIAG_MONITORS
 
 } DETECTED_OBJECT_RPT_t;
+
+// def @FIRE_SUPPRESSION_RPT CAN Message (1042 0x412)
+#define FIRE_SUPPRESSION_RPT_IDE (0U)
+#define FIRE_SUPPRESSION_RPT_DLC (1U)
+#define FIRE_SUPPRESSION_RPT_CANID (0x412)
+#define FIRE_SUPPRESSION_RPT_CYC (100U)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "NOT_ALARMING"
+  //  1 : "ALARMING"
+  uint8_t FIRE_SUPPRESSION_ALARM_STATUS : 4;   //      Bits= 4
+
+#else
+
+  //  0 : "NOT_ALARMING"
+  //  1 : "ALARMING"
+  uint8_t FIRE_SUPPRESSION_ALARM_STATUS;       //      Bits= 4
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} FIRE_SUPPRESSION_RPT_t;
 
 // def @VEH_DYNAMICS_RPT CAN Message (1043 0x413)
 #define VEH_DYNAMICS_RPT_IDE (0U)
@@ -10888,164 +11247,132 @@ typedef struct
 
   //  0 : "NOT_OCCUPIED"
   //  1 : "OCCUPIED"
-  // 
   uint8_t DRIVER_SEAT_OCCUPIED : 1;               //      Bits= 1
 
   //  0 : "NOT_OCCUPIED"
   //  1 : "OCCUPIED"
-  // 
   uint8_t PASS_SEAT_OCCUPIED : 1;                 //      Bits= 1
 
   //  0 : "NOT_OCCUPIED"
   //  1 : "OCCUPIED"
-  // 
   uint8_t REAR_SEAT_OCCUPIED : 1;                 //      Bits= 1
 
   //  0 : "NOT_BUCKLED"
   //  1 : "BUCKLED"
-  // 
   uint8_t DRIVER_SEATBELT_BUCKLED : 1;            //      Bits= 1
 
   //  0 : "NOT_BUCKLED"
   //  1 : "BUCKLED"
-  // 
   uint8_t PASS_SEATBELT_BUCKLED : 1;              //      Bits= 1
 
   //  0 : "NOT_BUCKLED"
   //  1 : "BUCKLED"
-  // 
   uint8_t DRVR_REAR_SEATBELT_BUCKLED : 1;         //      Bits= 1
 
   //  0 : "NOT_BUCKLED"
   //  1 : "BUCKLED"
-  // 
   uint8_t PASS_REAR_SEATBELT_BUCKLED : 1;         //      Bits= 1
 
   //  0 : "NOT_BUCKLED"
   //  1 : "BUCKLED"
-  // 
   uint8_t CTR_REAR_SEATBELT_BUCKLED : 1;          //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t DRIVER_SEAT_OCCUPIED_AVAIL : 1;         //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PASS_SEAT_OCCUPIED_AVAIL : 1;           //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t REAR_SEAT_OCCUPIED_AVAIL : 1;           //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t DRIVER_SEATBELT_BUCKLED_AVAIL : 1;      //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PASS_SEATBELT_BUCKLED_AVAIL : 1;        //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t DRVR_REAR_SEATBELT_BUCKLED_AVAIL : 1;   //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PASS_REAR_SEATBELT_BUCKLED_AVAIL : 1;   //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t CTR_REAR_SEATBELT_BUCKLED_AVAIL : 1;    //      Bits= 1
 
 #else
 
   //  0 : "NOT_OCCUPIED"
   //  1 : "OCCUPIED"
-  // 
   uint8_t DRIVER_SEAT_OCCUPIED;                   //      Bits= 1
 
   //  0 : "NOT_OCCUPIED"
   //  1 : "OCCUPIED"
-  // 
   uint8_t PASS_SEAT_OCCUPIED;                     //      Bits= 1
 
   //  0 : "NOT_OCCUPIED"
   //  1 : "OCCUPIED"
-  // 
   uint8_t REAR_SEAT_OCCUPIED;                     //      Bits= 1
 
   //  0 : "NOT_BUCKLED"
   //  1 : "BUCKLED"
-  // 
   uint8_t DRIVER_SEATBELT_BUCKLED;                //      Bits= 1
 
   //  0 : "NOT_BUCKLED"
   //  1 : "BUCKLED"
-  // 
   uint8_t PASS_SEATBELT_BUCKLED;                  //      Bits= 1
 
   //  0 : "NOT_BUCKLED"
   //  1 : "BUCKLED"
-  // 
   uint8_t DRVR_REAR_SEATBELT_BUCKLED;             //      Bits= 1
 
   //  0 : "NOT_BUCKLED"
   //  1 : "BUCKLED"
-  // 
   uint8_t PASS_REAR_SEATBELT_BUCKLED;             //      Bits= 1
 
   //  0 : "NOT_BUCKLED"
   //  1 : "BUCKLED"
-  // 
   uint8_t CTR_REAR_SEATBELT_BUCKLED;              //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t DRIVER_SEAT_OCCUPIED_AVAIL;             //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PASS_SEAT_OCCUPIED_AVAIL;               //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t REAR_SEAT_OCCUPIED_AVAIL;               //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t DRIVER_SEATBELT_BUCKLED_AVAIL;          //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PASS_SEATBELT_BUCKLED_AVAIL;            //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t DRVR_REAR_SEATBELT_BUCKLED_AVAIL;       //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PASS_REAR_SEATBELT_BUCKLED_AVAIL;       //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t CTR_REAR_SEATBELT_BUCKLED_AVAIL;        //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -11070,22 +11397,18 @@ typedef struct
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t FRONT_DOME_LIGHTS_ON : 1;          //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t REAR_DOME_LIGHTS_ON : 1;           //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MOOD_LIGHTS_ON : 1;                //      Bits= 1
 
   //  0 : "DARK"
   //  1 : "BRIGHT"
-  // 
   uint8_t AMBIENT_LIGHT_SENSOR : 1;          //      Bits= 1
 
   // Lowest dim level assigned to DIM_LEVEL_MIN, the dimmest light. Highest dim level assigned to DIM_LEVEL_MAX, the brightest light. Dim levels in between start with DIM_LEVEL_1.
@@ -11114,54 +11437,44 @@ typedef struct
   //  2 : "DIM_LEVEL_2"
   //  1 : "DIM_LEVEL_1"
   //  0 : "DIM_LEVEL_MIN"
-  // 
   uint8_t DIM_LEVEL;                         //      Bits= 8
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t FRONT_DOME_LIGHTS_ON_AVAIL : 1;    //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t REAR_DOME_LIGHTS_ON_AVAIL : 1;     //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t MOOD_LIGHTS_ON_AVAIL : 1;          //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t DIM_LEVEL_AVAIL : 1;               //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t AMBIENT_LIGHT_SENSOR_AVAIL : 1;    //      Bits= 1
 
 #else
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t FRONT_DOME_LIGHTS_ON;              //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t REAR_DOME_LIGHTS_ON;               //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t MOOD_LIGHTS_ON;                    //      Bits= 1
 
   //  0 : "DARK"
   //  1 : "BRIGHT"
-  // 
   uint8_t AMBIENT_LIGHT_SENSOR;              //      Bits= 1
 
   // Lowest dim level assigned to DIM_LEVEL_MIN, the dimmest light. Highest dim level assigned to DIM_LEVEL_MAX, the brightest light. Dim levels in between start with DIM_LEVEL_1.
@@ -11190,32 +11503,26 @@ typedef struct
   //  2 : "DIM_LEVEL_2"
   //  1 : "DIM_LEVEL_1"
   //  0 : "DIM_LEVEL_MIN"
-  // 
   uint8_t DIM_LEVEL;                         //      Bits= 8
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t FRONT_DOME_LIGHTS_ON_AVAIL;        //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t REAR_DOME_LIGHTS_ON_AVAIL;         //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t MOOD_LIGHTS_ON_AVAIL;              //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t DIM_LEVEL_AVAIL;                   //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t AMBIENT_LIGHT_SENSOR_AVAIL;        //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -11240,145 +11547,133 @@ typedef struct
 
   //  0 : "CLOSED"
   //  1 : "OPEN"
-  // 
   uint8_t DRIVER_DOOR_OPEN : 1;              //      Bits= 1
 
   //  0 : "CLOSED"
   //  1 : "OPEN"
-  // 
   uint8_t PASS_DOOR_OPEN : 1;                //      Bits= 1
 
   //  0 : "CLOSED"
   //  1 : "OPEN"
-  // 
   uint8_t REAR_DRIVER_DOOR_OPEN : 1;         //      Bits= 1
 
   //  0 : "CLOSED"
   //  1 : "OPEN"
-  // 
   uint8_t REAR_PASS_DOOR_OPEN : 1;           //      Bits= 1
 
   //  0 : "CLOSED"
   //  1 : "OPEN"
-  // 
   uint8_t HOOD_OPEN : 1;                     //      Bits= 1
 
   //  0 : "CLOSED"
   //  1 : "OPEN"
-  // 
   uint8_t TRUNK_OPEN : 1;                    //      Bits= 1
 
   //  0 : "CLOSED"
   //  1 : "OPEN"
-  // 
   uint8_t FUEL_DOOR_OPEN : 1;                //      Bits= 1
+
+  //  0 : "CLOSED"
+  //  1 : "OPEN"
+  uint8_t CARGO_DOOR_OPEN : 1;               //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t DRIVER_DOOR_OPEN_AVAIL : 1;        //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PASS_DOOR_OPEN_AVAIL : 1;          //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t REAR_DRIVER_DOOR_OPEN_AVAIL : 1;   //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t REAR_PASS_DOOR_OPEN_AVAIL : 1;     //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t HOOD_OPEN_AVAIL : 1;               //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t TRUNK_OPEN_AVAIL : 1;              //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t FUEL_DOOR_OPEN_AVAIL : 1;          //      Bits= 1
+
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t CARGO_DOOR_OPEN_AVAIL : 1;         //      Bits= 1
 
 #else
 
   //  0 : "CLOSED"
   //  1 : "OPEN"
-  // 
   uint8_t DRIVER_DOOR_OPEN;                  //      Bits= 1
 
   //  0 : "CLOSED"
   //  1 : "OPEN"
-  // 
   uint8_t PASS_DOOR_OPEN;                    //      Bits= 1
 
   //  0 : "CLOSED"
   //  1 : "OPEN"
-  // 
   uint8_t REAR_DRIVER_DOOR_OPEN;             //      Bits= 1
 
   //  0 : "CLOSED"
   //  1 : "OPEN"
-  // 
   uint8_t REAR_PASS_DOOR_OPEN;               //      Bits= 1
 
   //  0 : "CLOSED"
   //  1 : "OPEN"
-  // 
   uint8_t HOOD_OPEN;                         //      Bits= 1
 
   //  0 : "CLOSED"
   //  1 : "OPEN"
-  // 
   uint8_t TRUNK_OPEN;                        //      Bits= 1
 
   //  0 : "CLOSED"
   //  1 : "OPEN"
-  // 
   uint8_t FUEL_DOOR_OPEN;                    //      Bits= 1
+
+  //  0 : "CLOSED"
+  //  1 : "OPEN"
+  uint8_t CARGO_DOOR_OPEN;                   //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t DRIVER_DOOR_OPEN_AVAIL;            //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PASS_DOOR_OPEN_AVAIL;              //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t REAR_DRIVER_DOOR_OPEN_AVAIL;       //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t REAR_PASS_DOOR_OPEN_AVAIL;         //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t HOOD_OPEN_AVAIL;                   //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t TRUNK_OPEN_AVAIL;                  //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t FUEL_DOOR_OPEN_AVAIL;              //      Bits= 1
+
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t CARGO_DOOR_OPEN_AVAIL;             //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
 
@@ -11402,44 +11697,36 @@ typedef struct
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t BRAKE_LIGHTS_ON : 1;               //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t REVERSE_LIGHTS_ON : 1;             //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_LIGHTS_ON_AVAIL : 1;         //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t REVERSE_LIGHTS_ON_AVAIL : 1;       //      Bits= 1
 
 #else
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t BRAKE_LIGHTS_ON;                   //      Bits= 1
 
   //  0 : "OFF"
   //  1 : "ON"
-  // 
   uint8_t REVERSE_LIGHTS_ON;                 //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_LIGHTS_ON_AVAIL;             //      Bits= 1
 
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t REVERSE_LIGHTS_ON_AVAIL;           //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -11475,32 +11762,26 @@ typedef struct
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t LATERAL_NEW_DATA_RX : 1;           //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t LONGITUDINAL_NEW_DATA_RX : 1;      //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t VERTICAL_NEW_DATA_RX : 1;          //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t LATERAL_VALID : 1;                 //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t LONGITUDINAL_VALID : 1;            //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t VERTICAL_VALID : 1;                //      Bits= 1
 
   int16_t LATERAL_ACCEL_ro;                  //  [-] Bits=16 Factor= 0.010000        Unit:'m/s^2'
@@ -11525,32 +11806,26 @@ typedef struct
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t LATERAL_NEW_DATA_RX;               //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t LONGITUDINAL_NEW_DATA_RX;          //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t VERTICAL_NEW_DATA_RX;              //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t LATERAL_VALID;                     //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t LONGITUDINAL_VALID;                //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t VERTICAL_VALID;                    //      Bits= 1
 
   int16_t LATERAL_ACCEL_ro;                  //  [-] Bits=16 Factor= 0.010000        Unit:'m/s^2'
@@ -11604,32 +11879,26 @@ typedef struct
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t PITCH_NEW_DATA_RX : 1;             //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t ROLL_NEW_DATA_RX : 1;              //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t YAW_NEW_DATA_RX : 1;               //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t PITCH_VALID : 1;                   //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t ROLL_VALID : 1;                    //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t YAW_VALID : 1;                     //      Bits= 1
 
   int16_t PITCH_VEL_ro;                      //  [-] Bits=16 Factor= 0.001000        Unit:'rad/s'
@@ -11654,32 +11923,26 @@ typedef struct
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t PITCH_NEW_DATA_RX;                 //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t ROLL_NEW_DATA_RX;                  //      Bits= 1
 
   //  0 : "NEW_DATA_NOT_RX"
   //  1 : "NEW_DATA_RX"
-  // 
   uint8_t YAW_NEW_DATA_RX;                   //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t PITCH_VALID;                       //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t ROLL_VALID;                        //      Bits= 1
 
   //  0 : "NOT_VALID"
   //  1 : "VALID"
-  // 
   uint8_t YAW_VALID;                         //      Bits= 1
 
   int16_t PITCH_VEL_ro;                      //  [-] Bits=16 Factor= 0.001000        Unit:'rad/s'
@@ -11722,24 +11985,20 @@ typedef struct
 
   //  0 : "NOT_MUTED"
   //  1 : "MUTED"
-  // 
   uint8_t BUZZER_MUTE : 1;                   //      Bits= 1
 
   //  0 : "NO_ACTION"
   //  1 : "WHITE"
-  // 
   uint8_t UNDERDASH_LIGHTS_WHITE : 1;        //      Bits= 1
 
 #else
 
   //  0 : "NOT_MUTED"
   //  1 : "MUTED"
-  // 
   uint8_t BUZZER_MUTE;                       //      Bits= 1
 
   //  0 : "NO_ACTION"
   //  1 : "WHITE"
-  // 
   uint8_t UNDERDASH_LIGHTS_WHITE;            //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -11763,24 +12022,20 @@ typedef struct
 
   //  0 : "RELEASED"
   //  1 : "PRESSED"
-  // 
   uint8_t ESTOP : 1;                         //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t ESTOP_FAULT : 1;                   //      Bits= 1
 
 #else
 
   //  0 : "RELEASED"
   //  1 : "PRESSED"
-  // 
   uint8_t ESTOP;                             //      Bits= 1
 
   //  0 : "NO_FAULT"
   //  1 : "FAULT"
-  // 
   uint8_t ESTOP_FAULT;                       //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -11796,7 +12051,7 @@ typedef struct
 // Commands follow the list of priorities listed in user_can_protocol.md.
 // def @USER_NOTIFICATION_CMD CAN Message (1053 0x41d)
 #define USER_NOTIFICATION_CMD_IDE (0U)
-#define USER_NOTIFICATION_CMD_DLC (2U)
+#define USER_NOTIFICATION_CMD_DLC (3U)
 #define USER_NOTIFICATION_CMD_CANID (0x41d)
 #define USER_NOTIFICATION_CMD_CYC (250U)
 
@@ -11806,7 +12061,6 @@ typedef struct
 
   //  0 : "NOT_MUTED"
   //  1 : "MUTED"
-  // 
   uint8_t BUZZER_MUTE : 1;                   //      Bits= 1
 
   //  0 : "NO_ACTION"
@@ -11820,17 +12074,14 @@ typedef struct
   //  8 : "TEAL"
   //  9 : "PINK"
   //  10 : "OFF"
-  // 
   uint8_t LIGHT_COMMAND : 4;                 //      Bits= 4
 
   //  0 : "NO_ACTION"
   //  1 : "BUZZER_ON"
-  // 
   uint8_t BUZZER_ON : 1;                     //      Bits= 1
 
   //  0 : "ENABLED"
   //  1 : "DISABLED"
-  // 
   uint8_t BUZZER_MUTE_INDICATOR : 2;         //      Bits= 2
 
   //  0 : "NO_ACTION"
@@ -11847,14 +12098,31 @@ typedef struct
   //  11 : "LEVEL_10"
   //  12 : "LEVEL_11"
   //  13 : "MAX_BRIGHTNESS"
-  // 
   uint8_t LED_BRIGHTNESS : 4;                //      Bits= 4
+
+  //  0 : "NO_ACTION"
+  //  1 : "NO_BLINK"
+  //  2 : "BLINK"
+  //  3 : "ALTERNATE"
+  uint8_t LIGHT_STATUS_COMMAND : 2;          //      Bits= 2
+
+  //  0 : "NO_ACTION"
+  //  1 : "WHITE"
+  //  2 : "RED"
+  //  3 : "GREEN"
+  //  4 : "BLUE"
+  //  5 : "PURPLE"
+  //  6 : "ORANGE"
+  //  7 : "YELLOW"
+  //  8 : "TEAL"
+  //  9 : "PINK"
+  //  10 : "OFF"
+  uint8_t LIGHT_COMMAND_ALTERNATE : 4;       //      Bits= 4
 
 #else
 
   //  0 : "NOT_MUTED"
   //  1 : "MUTED"
-  // 
   uint8_t BUZZER_MUTE;                       //      Bits= 1
 
   //  0 : "NO_ACTION"
@@ -11868,17 +12136,14 @@ typedef struct
   //  8 : "TEAL"
   //  9 : "PINK"
   //  10 : "OFF"
-  // 
   uint8_t LIGHT_COMMAND;                     //      Bits= 4
 
   //  0 : "NO_ACTION"
   //  1 : "BUZZER_ON"
-  // 
   uint8_t BUZZER_ON;                         //      Bits= 1
 
   //  0 : "ENABLED"
   //  1 : "DISABLED"
-  // 
   uint8_t BUZZER_MUTE_INDICATOR;             //      Bits= 2
 
   //  0 : "NO_ACTION"
@@ -11895,8 +12160,26 @@ typedef struct
   //  11 : "LEVEL_10"
   //  12 : "LEVEL_11"
   //  13 : "MAX_BRIGHTNESS"
-  // 
   uint8_t LED_BRIGHTNESS;                    //      Bits= 4
+
+  //  0 : "NO_ACTION"
+  //  1 : "NO_BLINK"
+  //  2 : "BLINK"
+  //  3 : "ALTERNATE"
+  uint8_t LIGHT_STATUS_COMMAND;              //      Bits= 2
+
+  //  0 : "NO_ACTION"
+  //  1 : "WHITE"
+  //  2 : "RED"
+  //  3 : "GREEN"
+  //  4 : "BLUE"
+  //  5 : "PURPLE"
+  //  6 : "ORANGE"
+  //  7 : "YELLOW"
+  //  8 : "TEAL"
+  //  9 : "PINK"
+  //  10 : "OFF"
+  uint8_t LIGHT_COMMAND_ALTERNATE;           //      Bits= 4
 
 #endif // PACMOD12_USE_BITS_SIGNAL
 
@@ -11915,44 +12198,44 @@ typedef struct
 #define TIRE_PRESSURE_RPT_CYC (100U)
 // signal: @FRONT_LEFT_TIRE_PRESSURE_ro
 #define PACMOD12_FRONT_LEFT_TIRE_PRESSURE_ro_CovFactor (4)
-#define PACMOD12_FRONT_LEFT_TIRE_PRESSURE_ro_toS(x) ( (uint16_t) ((x) / (4)) )
+#define PACMOD12_FRONT_LEFT_TIRE_PRESSURE_ro_toS(x) ( (uint8_t) ((x) / (4)) )
 #define PACMOD12_FRONT_LEFT_TIRE_PRESSURE_ro_fromS(x) ( ((x) * (4)) )
 // signal: @FRONT_RIGHT_TIRE_PRESSURE_ro
 #define PACMOD12_FRONT_RIGHT_TIRE_PRESSURE_ro_CovFactor (4)
-#define PACMOD12_FRONT_RIGHT_TIRE_PRESSURE_ro_toS(x) ( (uint16_t) ((x) / (4)) )
+#define PACMOD12_FRONT_RIGHT_TIRE_PRESSURE_ro_toS(x) ( (uint8_t) ((x) / (4)) )
 #define PACMOD12_FRONT_RIGHT_TIRE_PRESSURE_ro_fromS(x) ( ((x) * (4)) )
 // signal: @REAR_LEFT_TIRE_PRESSURE_ro
 #define PACMOD12_REAR_LEFT_TIRE_PRESSURE_ro_CovFactor (4)
-#define PACMOD12_REAR_LEFT_TIRE_PRESSURE_ro_toS(x) ( (uint16_t) ((x) / (4)) )
+#define PACMOD12_REAR_LEFT_TIRE_PRESSURE_ro_toS(x) ( (uint8_t) ((x) / (4)) )
 #define PACMOD12_REAR_LEFT_TIRE_PRESSURE_ro_fromS(x) ( ((x) * (4)) )
 // signal: @REAR_RIGHT_TIRE_PRESSURE_ro
 #define PACMOD12_REAR_RIGHT_TIRE_PRESSURE_ro_CovFactor (4)
-#define PACMOD12_REAR_RIGHT_TIRE_PRESSURE_ro_toS(x) ( (uint16_t) ((x) / (4)) )
+#define PACMOD12_REAR_RIGHT_TIRE_PRESSURE_ro_toS(x) ( (uint8_t) ((x) / (4)) )
 #define PACMOD12_REAR_RIGHT_TIRE_PRESSURE_ro_fromS(x) ( ((x) * (4)) )
 
 typedef struct
 {
 #ifdef PACMOD12_USE_BITS_SIGNAL
 
-  uint16_t FRONT_LEFT_TIRE_PRESSURE_ro;       //      Bits= 8 Factor= 4               Unit:'kPa'
+  uint8_t FRONT_LEFT_TIRE_PRESSURE_ro;        //      Bits= 8 Factor= 4               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t FRONT_LEFT_TIRE_PRESSURE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t FRONT_RIGHT_TIRE_PRESSURE_ro;      //      Bits= 8 Factor= 4               Unit:'kPa'
+  uint8_t FRONT_RIGHT_TIRE_PRESSURE_ro;       //      Bits= 8 Factor= 4               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t FRONT_RIGHT_TIRE_PRESSURE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t REAR_LEFT_TIRE_PRESSURE_ro;        //      Bits= 8 Factor= 4               Unit:'kPa'
+  uint8_t REAR_LEFT_TIRE_PRESSURE_ro;         //      Bits= 8 Factor= 4               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t REAR_LEFT_TIRE_PRESSURE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t REAR_RIGHT_TIRE_PRESSURE_ro;       //      Bits= 8 Factor= 4               Unit:'kPa'
+  uint8_t REAR_RIGHT_TIRE_PRESSURE_ro;        //      Bits= 8 Factor= 4               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t REAR_RIGHT_TIRE_PRESSURE_phys;
@@ -11960,25 +12243,25 @@ typedef struct
 
 #else
 
-  uint16_t FRONT_LEFT_TIRE_PRESSURE_ro;       //      Bits= 8 Factor= 4               Unit:'kPa'
+  uint8_t FRONT_LEFT_TIRE_PRESSURE_ro;        //      Bits= 8 Factor= 4               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t FRONT_LEFT_TIRE_PRESSURE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t FRONT_RIGHT_TIRE_PRESSURE_ro;      //      Bits= 8 Factor= 4               Unit:'kPa'
+  uint8_t FRONT_RIGHT_TIRE_PRESSURE_ro;       //      Bits= 8 Factor= 4               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t FRONT_RIGHT_TIRE_PRESSURE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t REAR_LEFT_TIRE_PRESSURE_ro;        //      Bits= 8 Factor= 4               Unit:'kPa'
+  uint8_t REAR_LEFT_TIRE_PRESSURE_ro;         //      Bits= 8 Factor= 4               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t REAR_LEFT_TIRE_PRESSURE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t REAR_RIGHT_TIRE_PRESSURE_ro;       //      Bits= 8 Factor= 4               Unit:'kPa'
+  uint8_t REAR_RIGHT_TIRE_PRESSURE_ro;        //      Bits= 8 Factor= 4               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t REAR_RIGHT_TIRE_PRESSURE_phys;
@@ -12006,95 +12289,115 @@ typedef struct
 
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
-  uint8_t ANTILOCK_BRAKE_ACTIVE : 1;           //      Bits= 1
+  uint8_t ANTILOCK_BRAKE_ACTIVE : 1;             //      Bits= 1
 
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
-  uint8_t TRACTION_CONTROL_ACTIVE : 1;         //      Bits= 1
+  uint8_t TRACTION_CONTROL_ACTIVE : 1;           //      Bits= 1
 
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
-  uint8_t FOUR_WHEEL_DRIVE_ACTIVE : 1;         //      Bits= 1
+  uint8_t FOUR_WHEEL_DRIVE_ACTIVE : 1;           //      Bits= 1
+
+  //  0 : "NOT_DISABLED"
+  //  1 : "DISABLED"
+  uint8_t ANTILOCK_BRAKE_DISABLED : 1;           //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t ANTILOCK_BRAKE_ACTIVE_AVAIL : 1;     //      Bits= 1
+  uint8_t ANTILOCK_BRAKE_ACTIVE_AVAIL : 1;       //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t TRACTION_CONTROL_ACTIVE_AVAIL : 1;   //      Bits= 1
+  uint8_t TRACTION_CONTROL_ACTIVE_AVAIL : 1;     //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t FOUR_WHEEL_DRIVE_ACTIVE_AVAIL : 1;   //      Bits= 1
+  uint8_t FOUR_WHEEL_DRIVE_ACTIVE_AVAIL : 1;     //      Bits= 1
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t ANTILOCK_BRAKE_DISABLED_AVAIL : 1;     //      Bits= 1
 
   //  0 : "NORMAL"
   //  1 : "ECO"
   //  2 : "SPORT"
-  // 
-  uint8_t DRIVE_MODE : 4;                      //      Bits= 4
+  uint8_t DRIVE_MODE : 4;                        //      Bits= 4
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t DRIVE_MODE_AVAIL : 1;                //      Bits= 1
+  uint8_t DRIVE_MODE_AVAIL : 1;                  //      Bits= 1
+
+  //  0 : "NOT_DISABLED"
+  //  1 : "DISABLED"
+  uint8_t TRACTION_CONTROL_DISABLED : 1;         //      Bits= 1
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t TRACTION_CONTROL_DISABLED_AVAIL : 1;   //      Bits= 1
 
 #else
 
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
-  uint8_t ANTILOCK_BRAKE_ACTIVE;               //      Bits= 1
+  uint8_t ANTILOCK_BRAKE_ACTIVE;                 //      Bits= 1
 
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
-  uint8_t TRACTION_CONTROL_ACTIVE;             //      Bits= 1
+  uint8_t TRACTION_CONTROL_ACTIVE;               //      Bits= 1
 
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
-  // 
-  uint8_t FOUR_WHEEL_DRIVE_ACTIVE;             //      Bits= 1
+  uint8_t FOUR_WHEEL_DRIVE_ACTIVE;               //      Bits= 1
+
+  //  0 : "NOT_DISABLED"
+  //  1 : "DISABLED"
+  uint8_t ANTILOCK_BRAKE_DISABLED;               //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t ANTILOCK_BRAKE_ACTIVE_AVAIL;         //      Bits= 1
+  uint8_t ANTILOCK_BRAKE_ACTIVE_AVAIL;           //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t TRACTION_CONTROL_ACTIVE_AVAIL;       //      Bits= 1
+  uint8_t TRACTION_CONTROL_ACTIVE_AVAIL;         //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t FOUR_WHEEL_DRIVE_ACTIVE_AVAIL;       //      Bits= 1
+  uint8_t FOUR_WHEEL_DRIVE_ACTIVE_AVAIL;         //      Bits= 1
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t ANTILOCK_BRAKE_DISABLED_AVAIL;         //      Bits= 1
 
   //  0 : "NORMAL"
   //  1 : "ECO"
   //  2 : "SPORT"
-  // 
-  uint8_t DRIVE_MODE;                          //      Bits= 4
+  uint8_t DRIVE_MODE;                            //      Bits= 4
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
-  uint8_t DRIVE_MODE_AVAIL;                    //      Bits= 1
+  uint8_t DRIVE_MODE_AVAIL;                      //      Bits= 1
+
+  //  0 : "NOT_DISABLED"
+  //  1 : "DISABLED"
+  uint8_t TRACTION_CONTROL_DISABLED;             //      Bits= 1
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t TRACTION_CONTROL_DISABLED_AVAIL;       //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
 
@@ -12119,133 +12422,111 @@ typedef struct
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
-  uint8_t AUTOMSMAN_OPCTRL_FAULT : 1;            //      Bits= 1
+  uint8_t AUTOMS_MAN_OPCTRL_FAULT : 1;           //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t REMOTE_STOP_FAULT : 1;                 //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SAFETY_BRAKE_OPCTRL_OFF : 1;           //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SAFETY_BRAKE_CMD_TIMEOUT : 1;          //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SAFETY_FUNC_CMD_TIMEOUT : 1;           //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SAFETY_FUNC_CRITICAL_STOP_1_CMD : 1;   //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SAFETY_FUNC_CRITICAL_STOP_2_CMD : 1;   //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SAFETY_FUNC_NONE_CMD : 1;              //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD_SYSTEM_TIMEOUT : 1;             //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD_SYSTEM_FAULT : 1;               //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD_SYSTEM_NOT_ACTIVE : 1;          //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t VEHICLE_REPORT_TIMEOUT : 1;            //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t VEHICLE_REPORT_FAULT : 1;              //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t LOW_ENGINE_RPM : 1;                    //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state. It shall be TRUE when the primary microprocessor detects a fault on signal 1.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PRI_SAFETY_BRAKE_SIGNAL_1_FAULT : 1;   //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state. It shall be TRUE when the primary microprocessor detects a fault on signal 2.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PRI_SAFETY_BRAKE_SIGNAL_2_FAULT : 1;   //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state. It shall be TRUE when the secondary microprocessor detects a fault on signal 1.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SEC_SAFETY_BRAKE_SIGNAL_1_FAULT : 1;   //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state. It shall be TRUE when the secondary microprocessor detects a fault on signal 2.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SEC_SAFETY_BRAKE_SIGNAL_2_FAULT : 1;   //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PRIMARY_PROCESSOR_FAULT : 1;           //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SECONDARY_PROCESSOR_FAULT : 1;         //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t REMOTE_STOP_CMD : 1;                   //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state. It shall be TRUE when the primary microprocessor detects disagreement between safety brake command and safety brake response.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PRI_SAFETY_BRAKE_PRESSURE_FAULT : 1;   //      Bits= 1
 
 #else
@@ -12253,133 +12534,111 @@ typedef struct
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
-  uint8_t AUTOMSMAN_OPCTRL_FAULT;                //      Bits= 1
+  uint8_t AUTOMS_MAN_OPCTRL_FAULT;               //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t REMOTE_STOP_FAULT;                     //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SAFETY_BRAKE_OPCTRL_OFF;               //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SAFETY_BRAKE_CMD_TIMEOUT;              //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SAFETY_FUNC_CMD_TIMEOUT;               //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SAFETY_FUNC_CRITICAL_STOP_1_CMD;       //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SAFETY_FUNC_CRITICAL_STOP_2_CMD;       //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SAFETY_FUNC_NONE_CMD;                  //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD_SYSTEM_TIMEOUT;                 //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD_SYSTEM_FAULT;                   //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD_SYSTEM_NOT_ACTIVE;              //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t VEHICLE_REPORT_TIMEOUT;                //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t VEHICLE_REPORT_FAULT;                  //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t LOW_ENGINE_RPM;                        //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state. It shall be TRUE when the primary microprocessor detects a fault on signal 1.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PRI_SAFETY_BRAKE_SIGNAL_1_FAULT;       //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state. It shall be TRUE when the primary microprocessor detects a fault on signal 2.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PRI_SAFETY_BRAKE_SIGNAL_2_FAULT;       //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state. It shall be TRUE when the secondary microprocessor detects a fault on signal 1.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SEC_SAFETY_BRAKE_SIGNAL_1_FAULT;       //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state. It shall be TRUE when the secondary microprocessor detects a fault on signal 2.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SEC_SAFETY_BRAKE_SIGNAL_2_FAULT;       //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PRIMARY_PROCESSOR_FAULT;               //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SECONDARY_PROCESSOR_FAULT;             //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t REMOTE_STOP_CMD;                       //      Bits= 1
 
   // This value shall latch while the safety function is in the critical stop state. It shall be TRUE when the primary microprocessor detects disagreement between safety brake command and safety brake response.
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PRI_SAFETY_BRAKE_PRESSURE_FAULT;       //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -12394,7 +12653,7 @@ typedef struct
 
 // def @WATCHDOG_RPT_2 CAN Message (1057 0x421)
 #define WATCHDOG_RPT_2_IDE (0U)
-#define WATCHDOG_RPT_2_DLC (6U)
+#define WATCHDOG_RPT_2_DLC (7U)
 #define WATCHDOG_RPT_2_CANID (0x421)
 #define WATCHDOG_RPT_2_CYC (1000U)
 
@@ -12404,445 +12663,413 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_RPT_TIMEOUT : 1;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_RPT_TIMEOUT : 1;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_DECEL_RPT_TIMEOUT : 1;          //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CABIN_CLIMATE_RPT_TIMEOUT : 1;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CABIN_FAN_SPEED_RPT_TIMEOUT : 1;      //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CABIN_TEMP_RPT_TIMEOUT : 1;           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CRUISE_CONTROL_RPT_TIMEOUT : 1;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t DASH_LEFT_RPT_TIMEOUT : 1;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t DASH_RIGHT_RPT_TIMEOUT : 1;           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENGINE_BRAKE_RPT_TIMEOUT : 1;         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t HAZARD_LIGHTS_RPT_TIMEOUT : 1;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t HEADLIGHT_RPT_TIMEOUT : 1;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t HORN_RPT_TIMEOUT : 1;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t MARKER_LAMP_RPT_TIMEOUT : 1;          //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t MEDIA_CONTROLS_RPT_TIMEOUT : 1;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PARKING_BRAKE_RPT_TIMEOUT : 1;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t REAR_PASS_DOOR_RPT_TIMEOUT : 1;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_RPT_TIMEOUT : 1;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SPRAYER_RPT_TIMEOUT : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEERING_RPT_TIMEOUT : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t TURN_RPT_TIMEOUT : 1;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t WIPER_RPT_TIMEOUT : 1;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD1_SANITY_FAULT : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD2_SANITY_FAULT : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD3_SANITY_FAULT : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI1_SANITY_FAULT : 1;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI2_SANITY_FAULT : 1;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI3_SANITY_FAULT : 1;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD1_COMPONENT_RPT_TIMEOUT : 1;    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD2_COMPONENT_RPT_TIMEOUT : 1;    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD3_COMPONENT_RPT_TIMEOUT : 1;    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI1_COMPONENT_RPT_TIMEOUT : 1;   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI2_COMPONENT_RPT_TIMEOUT : 1;   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI3_COMPONENT_RPT_TIMEOUT : 1;   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD1_SYSTEM_PRESENT_FAULT : 1;     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD2_SYSTEM_PRESENT_FAULT : 1;     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD3_SYSTEM_PRESENT_FAULT : 1;     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI1_SYSTEM_PRESENT_FAULT : 1;    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI2_SYSTEM_PRESENT_FAULT : 1;    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI3_SYSTEM_PRESENT_FAULT : 1;    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t DRIVE_MODE_INVALID : 1;               //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_CMD_SANITY_FAULT : 1;          //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_CMD_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t EXHAUST_BRAKE_RPT_TIMEOUT : 1;        //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t POWER_TAKE_OFF_RPT_TIMEOUT : 1;       //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t TIPPER_BODY_00_RPT_TIMEOUT : 1;       //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t TRAILER_AIR_SUPPLY_RPT_TIMEOUT : 1;   //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t TRAILER_BRAKE_RPT_TIMEOUT : 1;        //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENGINE_RPT_TIMEOUT : 1;               //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t TIPPER_BODY_01_RPT_TIMEOUT : 1;       //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t TIPPER_BODY_02_RPT_TIMEOUT : 1;       //      Bits= 1
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_RPT_TIMEOUT;                    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_RPT_TIMEOUT;                    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_DECEL_RPT_TIMEOUT;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CABIN_CLIMATE_RPT_TIMEOUT;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CABIN_FAN_SPEED_RPT_TIMEOUT;          //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CABIN_TEMP_RPT_TIMEOUT;               //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t CRUISE_CONTROL_RPT_TIMEOUT;           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t DASH_LEFT_RPT_TIMEOUT;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t DASH_RIGHT_RPT_TIMEOUT;               //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ENGINE_BRAKE_RPT_TIMEOUT;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t HAZARD_LIGHTS_RPT_TIMEOUT;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t HEADLIGHT_RPT_TIMEOUT;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t HORN_RPT_TIMEOUT;                     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t MARKER_LAMP_RPT_TIMEOUT;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t MEDIA_CONTROLS_RPT_TIMEOUT;           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PARKING_BRAKE_RPT_TIMEOUT;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t REAR_PASS_DOOR_RPT_TIMEOUT;           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_RPT_TIMEOUT;                    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SPRAYER_RPT_TIMEOUT;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEERING_RPT_TIMEOUT;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t TURN_RPT_TIMEOUT;                     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t WIPER_RPT_TIMEOUT;                    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD1_SANITY_FAULT;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD2_SANITY_FAULT;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD3_SANITY_FAULT;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI1_SANITY_FAULT;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI2_SANITY_FAULT;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI3_SANITY_FAULT;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD1_COMPONENT_RPT_TIMEOUT;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD2_COMPONENT_RPT_TIMEOUT;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD3_COMPONENT_RPT_TIMEOUT;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI1_COMPONENT_RPT_TIMEOUT;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI2_COMPONENT_RPT_TIMEOUT;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI3_COMPONENT_RPT_TIMEOUT;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD1_SYSTEM_PRESENT_FAULT;         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD2_SYSTEM_PRESENT_FAULT;         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD3_SYSTEM_PRESENT_FAULT;         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI1_SYSTEM_PRESENT_FAULT;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI2_SYSTEM_PRESENT_FAULT;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI3_SYSTEM_PRESENT_FAULT;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t DRIVE_MODE_INVALID;                   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_CMD_SANITY_FAULT;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_CMD_TIMEOUT;                   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t EXHAUST_BRAKE_RPT_TIMEOUT;            //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t POWER_TAKE_OFF_RPT_TIMEOUT;           //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t TIPPER_BODY_00_RPT_TIMEOUT;           //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t TRAILER_AIR_SUPPLY_RPT_TIMEOUT;       //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t TRAILER_BRAKE_RPT_TIMEOUT;            //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t ENGINE_RPT_TIMEOUT;                   //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t TIPPER_BODY_01_RPT_TIMEOUT;           //      Bits= 1
+
+  //  0 : "FALSE"
+  //  1 : "TRUE"
+  uint8_t TIPPER_BODY_02_RPT_TIMEOUT;           //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
 
@@ -12921,12 +13148,10 @@ typedef struct
   //  0 : "OFF"
   //  1 : "ON"
   //  2 : "MUTED"
-  // 
   uint8_t BUZZER_STATUS : 2;                 //      Bits= 2
 
   //  0 : "NO_BLINK"
   //  1 : "BLINK"
-  // 
   uint8_t LIGHT_STATUS : 2;                  //      Bits= 2
 
   //  1 : "WHITE"
@@ -12939,7 +13164,6 @@ typedef struct
   //  8 : "TEAL"
   //  9 : "PINK"
   //  10 : "OFF"
-  // 
   uint8_t LIGHT_COLOR : 4;                   //      Bits= 4
 
 #else
@@ -12947,12 +13171,10 @@ typedef struct
   //  0 : "OFF"
   //  1 : "ON"
   //  2 : "MUTED"
-  // 
   uint8_t BUZZER_STATUS;                     //      Bits= 2
 
   //  0 : "NO_BLINK"
   //  1 : "BLINK"
-  // 
   uint8_t LIGHT_STATUS;                      //      Bits= 2
 
   //  1 : "WHITE"
@@ -12965,7 +13187,6 @@ typedef struct
   //  8 : "TEAL"
   //  9 : "PINK"
   //  10 : "OFF"
-  // 
   uint8_t LIGHT_COLOR;                       //      Bits= 4
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -12985,54 +13206,54 @@ typedef struct
 #define AIR_PRESSURE_RPT_CYC (1000U)
 // signal: @PNEUMATIC_SUPPLY_PRESSURE_ro
 #define PACMOD12_PNEUMATIC_SUPPLY_PRESSURE_ro_CovFactor (8)
-#define PACMOD12_PNEUMATIC_SUPPLY_PRESSURE_ro_toS(x) ( (uint16_t) ((x) / (8)) )
+#define PACMOD12_PNEUMATIC_SUPPLY_PRESSURE_ro_toS(x) ( (uint8_t) ((x) / (8)) )
 #define PACMOD12_PNEUMATIC_SUPPLY_PRESSURE_ro_fromS(x) ( ((x) * (8)) )
 // signal: @BRAKE_CIRCUIT_1_PRESSURE_ro
 #define PACMOD12_BRAKE_CIRCUIT_1_PRESSURE_ro_CovFactor (8)
-#define PACMOD12_BRAKE_CIRCUIT_1_PRESSURE_ro_toS(x) ( (uint16_t) ((x) / (8)) )
+#define PACMOD12_BRAKE_CIRCUIT_1_PRESSURE_ro_toS(x) ( (uint8_t) ((x) / (8)) )
 #define PACMOD12_BRAKE_CIRCUIT_1_PRESSURE_ro_fromS(x) ( ((x) * (8)) )
 // signal: @BRAKE_CIRCUIT_2_PRESSURE_ro
 #define PACMOD12_BRAKE_CIRCUIT_2_PRESSURE_ro_CovFactor (8)
-#define PACMOD12_BRAKE_CIRCUIT_2_PRESSURE_ro_toS(x) ( (uint16_t) ((x) / (8)) )
+#define PACMOD12_BRAKE_CIRCUIT_2_PRESSURE_ro_toS(x) ( (uint8_t) ((x) / (8)) )
 #define PACMOD12_BRAKE_CIRCUIT_2_PRESSURE_ro_fromS(x) ( ((x) * (8)) )
 // signal: @PARK_TRAILER_AIR_PRESSURE_ro
 #define PACMOD12_PARK_TRAILER_AIR_PRESSURE_ro_CovFactor (8)
-#define PACMOD12_PARK_TRAILER_AIR_PRESSURE_ro_toS(x) ( (uint16_t) ((x) / (8)) )
+#define PACMOD12_PARK_TRAILER_AIR_PRESSURE_ro_toS(x) ( (uint8_t) ((x) / (8)) )
 #define PACMOD12_PARK_TRAILER_AIR_PRESSURE_ro_fromS(x) ( ((x) * (8)) )
 // signal: @POWERTRAIN_AIR_PRESSURE_ro
 #define PACMOD12_POWERTRAIN_AIR_PRESSURE_ro_CovFactor (8)
-#define PACMOD12_POWERTRAIN_AIR_PRESSURE_ro_toS(x) ( (uint16_t) ((x) / (8)) )
+#define PACMOD12_POWERTRAIN_AIR_PRESSURE_ro_toS(x) ( (uint8_t) ((x) / (8)) )
 #define PACMOD12_POWERTRAIN_AIR_PRESSURE_ro_fromS(x) ( ((x) * (8)) )
 
 typedef struct
 {
 #ifdef PACMOD12_USE_BITS_SIGNAL
 
-  uint16_t PNEUMATIC_SUPPLY_PRESSURE_ro;         //      Bits= 8 Factor= 8               Unit:'kPa'
+  uint8_t PNEUMATIC_SUPPLY_PRESSURE_ro;          //      Bits= 8 Factor= 8               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t PNEUMATIC_SUPPLY_PRESSURE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t BRAKE_CIRCUIT_1_PRESSURE_ro;          //      Bits= 8 Factor= 8               Unit:'kPa'
+  uint8_t BRAKE_CIRCUIT_1_PRESSURE_ro;           //      Bits= 8 Factor= 8               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t BRAKE_CIRCUIT_1_PRESSURE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t BRAKE_CIRCUIT_2_PRESSURE_ro;          //      Bits= 8 Factor= 8               Unit:'kPa'
+  uint8_t BRAKE_CIRCUIT_2_PRESSURE_ro;           //      Bits= 8 Factor= 8               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t BRAKE_CIRCUIT_2_PRESSURE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t PARK_TRAILER_AIR_PRESSURE_ro;         //      Bits= 8 Factor= 8               Unit:'kPa'
+  uint8_t PARK_TRAILER_AIR_PRESSURE_ro;          //      Bits= 8 Factor= 8               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t PARK_TRAILER_AIR_PRESSURE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t POWERTRAIN_AIR_PRESSURE_ro;           //      Bits= 8 Factor= 8               Unit:'kPa'
+  uint8_t POWERTRAIN_AIR_PRESSURE_ro;            //      Bits= 8 Factor= 8               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t POWERTRAIN_AIR_PRESSURE_phys;
@@ -13041,72 +13262,65 @@ typedef struct
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
   //  2 : "ERROR"
-  // 
   uint8_t AIR_COMPRESSOR_STATUS : 2;             //      Bits= 2
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PNEUMATIC_SUPPLY_PRESSURE_AVAIL : 1;   //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_CIRCUIT_1_PRESSURE_AVAIL : 1;    //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_CIRCUIT_2_PRESSURE_AVAIL : 1;    //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PARK_TRAILER_AIR_PRESSURE_AVAIL : 1;   //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t POWERTRAIN_AIR_PRESSURE_AVAIL : 1;     //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t AIR_COMPRESSOR_STATUS_AVAIL : 1;       //      Bits= 1
 
 #else
 
-  uint16_t PNEUMATIC_SUPPLY_PRESSURE_ro;         //      Bits= 8 Factor= 8               Unit:'kPa'
+  uint8_t PNEUMATIC_SUPPLY_PRESSURE_ro;          //      Bits= 8 Factor= 8               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t PNEUMATIC_SUPPLY_PRESSURE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t BRAKE_CIRCUIT_1_PRESSURE_ro;          //      Bits= 8 Factor= 8               Unit:'kPa'
+  uint8_t BRAKE_CIRCUIT_1_PRESSURE_ro;           //      Bits= 8 Factor= 8               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t BRAKE_CIRCUIT_1_PRESSURE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t BRAKE_CIRCUIT_2_PRESSURE_ro;          //      Bits= 8 Factor= 8               Unit:'kPa'
+  uint8_t BRAKE_CIRCUIT_2_PRESSURE_ro;           //      Bits= 8 Factor= 8               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t BRAKE_CIRCUIT_2_PRESSURE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t PARK_TRAILER_AIR_PRESSURE_ro;         //      Bits= 8 Factor= 8               Unit:'kPa'
+  uint8_t PARK_TRAILER_AIR_PRESSURE_ro;          //      Bits= 8 Factor= 8               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t PARK_TRAILER_AIR_PRESSURE_phys;
 #endif // PACMOD12_USE_SIGFLOAT
 
-  uint16_t POWERTRAIN_AIR_PRESSURE_ro;           //      Bits= 8 Factor= 8               Unit:'kPa'
+  uint8_t POWERTRAIN_AIR_PRESSURE_ro;            //      Bits= 8 Factor= 8               Unit:'kPa'
 
 #ifdef PACMOD12_USE_SIGFLOAT
   uint16_t POWERTRAIN_AIR_PRESSURE_phys;
@@ -13115,43 +13329,36 @@ typedef struct
   //  0 : "NOT_ACTIVE"
   //  1 : "ACTIVE"
   //  2 : "ERROR"
-  // 
   uint8_t AIR_COMPRESSOR_STATUS;                 //      Bits= 2
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PNEUMATIC_SUPPLY_PRESSURE_AVAIL;       //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_CIRCUIT_1_PRESSURE_AVAIL;        //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t BRAKE_CIRCUIT_2_PRESSURE_AVAIL;        //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t PARK_TRAILER_AIR_PRESSURE_AVAIL;       //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t POWERTRAIN_AIR_PRESSURE_AVAIL;         //      Bits= 1
 
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t AIR_COMPRESSOR_STATUS_AVAIL;           //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -13164,14 +13371,22 @@ typedef struct
 
 } AIR_PRESSURE_RPT_t;
 
-// def @ENGINE_RPT_2 CAN Message (1061 0x425)
-#define ENGINE_RPT_2_IDE (0U)
-#define ENGINE_RPT_2_DLC (3U)
-#define ENGINE_RPT_2_CANID (0x425)
+// def @ENGINE_AUX_RPT_2 CAN Message (1061 0x425)
+#define ENGINE_AUX_RPT_2_IDE (0U)
+#define ENGINE_AUX_RPT_2_DLC (5U)
+#define ENGINE_AUX_RPT_2_CANID (0x425)
 // signal: @FUEL_RATE_ro
 #define PACMOD12_FUEL_RATE_ro_CovFactor (0.050000)
 #define PACMOD12_FUEL_RATE_ro_toS(x) ( (uint16_t) (((x) - (0.000000)) / (0.050000)) )
 #define PACMOD12_FUEL_RATE_ro_fromS(x) ( (((x) * (0.050000)) + (0.000000)) )
+// signal: @OIL_LEVEL_ro
+#define PACMOD12_OIL_LEVEL_ro_CovFactor (0.004000)
+#define PACMOD12_OIL_LEVEL_ro_toS(x) ( (uint8_t) (((x) - (0.000000)) / (0.004000)) )
+#define PACMOD12_OIL_LEVEL_ro_fromS(x) ( (((x) * (0.004000)) + (0.000000)) )
+// signal: @OIL_PRESSURE_ro
+#define PACMOD12_OIL_PRESSURE_ro_CovFactor (4)
+#define PACMOD12_OIL_PRESSURE_ro_toS(x) ( (uint8_t) ((x) / (4)) )
+#define PACMOD12_OIL_PRESSURE_ro_fromS(x) ( ((x) * (4)) )
 
 typedef struct
 {
@@ -13186,8 +13401,29 @@ typedef struct
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t FUEL_RATE_AVAIL : 1;               //      Bits= 1
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t OIL_LEVEL_AVAIL : 1;               //      Bits= 1
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t OIL_PRESSURE_AVAIL : 1;            //      Bits= 1
+
+  uint8_t OIL_LEVEL_ro;                      //      Bits= 8 Factor= 0.004000        Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  sigfloat_t OIL_LEVEL_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t OIL_PRESSURE_ro;                   //      Bits= 8 Factor= 4               Unit:'kPa'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  uint16_t OIL_PRESSURE_phys;
+#endif // PACMOD12_USE_SIGFLOAT
 
 #else
 
@@ -13200,8 +13436,29 @@ typedef struct
   // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
   //  0 : "NOT_AVAILABLE"
   //  1 : "AVAILABLE"
-  // 
   uint8_t FUEL_RATE_AVAIL;                   //      Bits= 1
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t OIL_LEVEL_AVAIL;                   //      Bits= 1
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t OIL_PRESSURE_AVAIL;                //      Bits= 1
+
+  uint8_t OIL_LEVEL_ro;                      //      Bits= 8 Factor= 0.004000        Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  sigfloat_t OIL_LEVEL_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t OIL_PRESSURE_ro;                   //      Bits= 8 Factor= 4               Unit:'kPa'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  uint16_t OIL_PRESSURE_phys;
+#endif // PACMOD12_USE_SIGFLOAT
 
 #endif // PACMOD12_USE_BITS_SIGNAL
 
@@ -13211,7 +13468,7 @@ typedef struct
 
 #endif // PACMOD12_USE_DIAG_MONITORS
 
-} ENGINE_RPT_2_t;
+} ENGINE_AUX_RPT_2_t;
 
 // def @WHEEL_SPEED_RPT_2 CAN Message (1062 0x426)
 #define WHEEL_SPEED_RPT_2_IDE (0U)
@@ -13298,6 +13555,665 @@ typedef struct
 
 } WHEEL_SPEED_RPT_2_t;
 
+// def @ENGINE_LOAD_FACTOR_RPT CAN Message (1063 0x427)
+#define ENGINE_LOAD_FACTOR_RPT_IDE (0U)
+#define ENGINE_LOAD_FACTOR_RPT_DLC (6U)
+#define ENGINE_LOAD_FACTOR_RPT_CANID (0x427)
+// signal: @DRVR_DEMANDED_ENG_TORQUE_ro
+#define PACMOD12_DRVR_DEMANDED_ENG_TORQUE_ro_CovFactor (1)
+#define PACMOD12_DRVR_DEMANDED_ENG_TORQUE_ro_toS(x) ( (int8_t) ((x) - (-125)) )
+#define PACMOD12_DRVR_DEMANDED_ENG_TORQUE_ro_fromS(x) ( ((x) + (-125)) )
+// signal: @ACTUAL_ENGINE_TORQUE_ro
+#define PACMOD12_ACTUAL_ENGINE_TORQUE_ro_CovFactor (1)
+#define PACMOD12_ACTUAL_ENGINE_TORQUE_ro_toS(x) ( (int8_t) ((x) - (-125)) )
+#define PACMOD12_ACTUAL_ENGINE_TORQUE_ro_fromS(x) ( ((x) + (-125)) )
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  int8_t DRVR_DEMANDED_ENG_TORQUE_ro;            //  [-] Bits= 8 Offset= -125               Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t DRVR_DEMANDED_ENG_TORQUE_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  int8_t ACTUAL_ENGINE_TORQUE_ro;                //  [-] Bits= 8 Offset= -125               Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t ACTUAL_ENGINE_TORQUE_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  // The ratio of actual engine torque to maximum torque available at the current engine speed, clipped to zero torque during engine braking.
+  uint8_t ENG_LOAD_AT_CURRENT_SPEED;             //      Bits= 8 Unit:'%'
+
+  // 100% reference value for engine torque parameters in the ENGINE_LOAD_FACTOR_RPT.
+  uint16_t REFERENCE_ENGINE_TORQUE;              //      Bits=16 Unit:'Nm'
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t DRVR_DEMANDED_ENG_TORQUE_AVAIL : 1;    //      Bits= 1
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t ACTUAL_ENGINE_TORQUE_AVAIL : 1;        //      Bits= 1
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t ENG_LOAD_AT_CURRENT_SPEED_AVAIL : 1;   //      Bits= 1
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t REFERENCE_ENGINE_TORQUE_AVAIL : 1;     //      Bits= 1
+
+#else
+
+  int8_t DRVR_DEMANDED_ENG_TORQUE_ro;            //  [-] Bits= 8 Offset= -125               Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t DRVR_DEMANDED_ENG_TORQUE_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  int8_t ACTUAL_ENGINE_TORQUE_ro;                //  [-] Bits= 8 Offset= -125               Unit:'%'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t ACTUAL_ENGINE_TORQUE_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  // The ratio of actual engine torque to maximum torque available at the current engine speed, clipped to zero torque during engine braking.
+  uint8_t ENG_LOAD_AT_CURRENT_SPEED;             //      Bits= 8 Unit:'%'
+
+  // 100% reference value for engine torque parameters in the ENGINE_LOAD_FACTOR_RPT.
+  uint16_t REFERENCE_ENGINE_TORQUE;              //      Bits=16 Unit:'Nm'
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t DRVR_DEMANDED_ENG_TORQUE_AVAIL;        //      Bits= 1
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t ACTUAL_ENGINE_TORQUE_AVAIL;            //      Bits= 1
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t ENG_LOAD_AT_CURRENT_SPEED_AVAIL;       //      Bits= 1
+
+  // PACMod sets this value as a function of which vehicle platform is under test and, therefore, this value does not change during operation.
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t REFERENCE_ENGINE_TORQUE_AVAIL;         //      Bits= 1
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} ENGINE_LOAD_FACTOR_RPT_t;
+
+// def @TIRE_PRESSURE_EXTENDED_RPT CAN Message (1072 0x430)
+#define TIRE_PRESSURE_EXTENDED_RPT_IDE (0U)
+#define TIRE_PRESSURE_EXTENDED_RPT_DLC (8U)
+#define TIRE_PRESSURE_EXTENDED_RPT_CANID (0x430)
+#define TIRE_PRESSURE_EXTENDED_RPT_CYC (500U)
+// signal: @TIRE_PRESSURE_1_ro
+#define PACMOD12_TIRE_PRESSURE_1_ro_CovFactor (10)
+#define PACMOD12_TIRE_PRESSURE_1_ro_toS(x) ( (uint8_t) ((x) / (10)) )
+#define PACMOD12_TIRE_PRESSURE_1_ro_fromS(x) ( ((x) * (10)) )
+// signal: @TIRE_PRESSURE_2_ro
+#define PACMOD12_TIRE_PRESSURE_2_ro_CovFactor (10)
+#define PACMOD12_TIRE_PRESSURE_2_ro_toS(x) ( (uint8_t) ((x) / (10)) )
+#define PACMOD12_TIRE_PRESSURE_2_ro_fromS(x) ( ((x) * (10)) )
+// signal: @TIRE_PRESSURE_3_ro
+#define PACMOD12_TIRE_PRESSURE_3_ro_CovFactor (10)
+#define PACMOD12_TIRE_PRESSURE_3_ro_toS(x) ( (uint8_t) ((x) / (10)) )
+#define PACMOD12_TIRE_PRESSURE_3_ro_fromS(x) ( ((x) * (10)) )
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_1 : 4;          //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_2 : 4;          //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_3 : 4;          //      Bits= 4
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_1 : 3;                   //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_2 : 3;                   //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_3 : 3;                   //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_1 : 3;               //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_2 : 3;               //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_3 : 3;               //      Bits= 3
+
+  uint8_t TIRE_PRESSURE_1_ro;                //      Bits= 8 Factor= 10              Unit:'kPa'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  uint16_t TIRE_PRESSURE_1_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_PRESSURE_2_ro;                //      Bits= 8 Factor= 10              Unit:'kPa'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  uint16_t TIRE_PRESSURE_2_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_PRESSURE_3_ro;                //      Bits= 8 Factor= 10              Unit:'kPa'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  uint16_t TIRE_PRESSURE_3_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+#else
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_1;              //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_2;              //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_3;              //      Bits= 4
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_1;                       //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_2;                       //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_3;                       //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_1;                   //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_2;                   //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_3;                   //      Bits= 3
+
+  uint8_t TIRE_PRESSURE_1_ro;                //      Bits= 8 Factor= 10              Unit:'kPa'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  uint16_t TIRE_PRESSURE_1_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_PRESSURE_2_ro;                //      Bits= 8 Factor= 10              Unit:'kPa'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  uint16_t TIRE_PRESSURE_2_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_PRESSURE_3_ro;                //      Bits= 8 Factor= 10              Unit:'kPa'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  uint16_t TIRE_PRESSURE_3_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} TIRE_PRESSURE_EXTENDED_RPT_t;
+
+// def @TIRE_PRESSURE_EXTENDED_RPT_2 CAN Message (1073 0x431)
+#define TIRE_PRESSURE_EXTENDED_RPT_2_IDE (0U)
+#define TIRE_PRESSURE_EXTENDED_RPT_2_DLC (8U)
+#define TIRE_PRESSURE_EXTENDED_RPT_2_CANID (0x431)
+#define TIRE_PRESSURE_EXTENDED_RPT_2_CYC (500U)
+// signal: @TIRE_PRESSURE_1_ro
+#define PACMOD12_TIRE_PRESSURE_1_ro_CovFactor (10)
+#define PACMOD12_TIRE_PRESSURE_1_ro_toS(x) ( (uint8_t) ((x) / (10)) )
+#define PACMOD12_TIRE_PRESSURE_1_ro_fromS(x) ( ((x) * (10)) )
+// signal: @TIRE_PRESSURE_2_ro
+#define PACMOD12_TIRE_PRESSURE_2_ro_CovFactor (10)
+#define PACMOD12_TIRE_PRESSURE_2_ro_toS(x) ( (uint8_t) ((x) / (10)) )
+#define PACMOD12_TIRE_PRESSURE_2_ro_fromS(x) ( ((x) * (10)) )
+// signal: @TIRE_PRESSURE_3_ro
+#define PACMOD12_TIRE_PRESSURE_3_ro_CovFactor (10)
+#define PACMOD12_TIRE_PRESSURE_3_ro_toS(x) ( (uint8_t) ((x) / (10)) )
+#define PACMOD12_TIRE_PRESSURE_3_ro_fromS(x) ( ((x) * (10)) )
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_1 : 4;          //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_2 : 4;          //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_3 : 4;          //      Bits= 4
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_1 : 3;                   //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_2 : 3;                   //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_3 : 3;                   //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_1 : 3;               //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_2 : 3;               //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_3 : 3;               //      Bits= 3
+
+  uint8_t TIRE_PRESSURE_1_ro;                //      Bits= 8 Factor= 10              Unit:'kPa'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  uint16_t TIRE_PRESSURE_1_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_PRESSURE_2_ro;                //      Bits= 8 Factor= 10              Unit:'kPa'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  uint16_t TIRE_PRESSURE_2_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_PRESSURE_3_ro;                //      Bits= 8 Factor= 10              Unit:'kPa'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  uint16_t TIRE_PRESSURE_3_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+#else
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_1;              //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_2;              //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_3;              //      Bits= 4
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_1;                       //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_2;                       //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_3;                       //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_1;                   //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_2;                   //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_3;                   //      Bits= 3
+
+  uint8_t TIRE_PRESSURE_1_ro;                //      Bits= 8 Factor= 10              Unit:'kPa'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  uint16_t TIRE_PRESSURE_1_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_PRESSURE_2_ro;                //      Bits= 8 Factor= 10              Unit:'kPa'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  uint16_t TIRE_PRESSURE_2_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_PRESSURE_3_ro;                //      Bits= 8 Factor= 10              Unit:'kPa'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  uint16_t TIRE_PRESSURE_3_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} TIRE_PRESSURE_EXTENDED_RPT_2_t;
+
+// def @TIRE_TEMPERATURE_EXTENDED_RPT CAN Message (1074 0x432)
+#define TIRE_TEMPERATURE_EXTENDED_RPT_IDE (0U)
+#define TIRE_TEMPERATURE_EXTENDED_RPT_DLC (8U)
+#define TIRE_TEMPERATURE_EXTENDED_RPT_CANID (0x432)
+#define TIRE_TEMPERATURE_EXTENDED_RPT_CYC (500U)
+// signal: @TIRE_TEMPERATURE_1_ro
+#define PACMOD12_TIRE_TEMPERATURE_1_ro_CovFactor (1)
+#define PACMOD12_TIRE_TEMPERATURE_1_ro_toS(x) ( (uint8_t) ((x) - (-50)) )
+#define PACMOD12_TIRE_TEMPERATURE_1_ro_fromS(x) ( ((x) + (-50)) )
+// signal: @TIRE_TEMPERATURE_2_ro
+#define PACMOD12_TIRE_TEMPERATURE_2_ro_CovFactor (1)
+#define PACMOD12_TIRE_TEMPERATURE_2_ro_toS(x) ( (uint8_t) ((x) - (-50)) )
+#define PACMOD12_TIRE_TEMPERATURE_2_ro_fromS(x) ( ((x) + (-50)) )
+// signal: @TIRE_TEMPERATURE_3_ro
+#define PACMOD12_TIRE_TEMPERATURE_3_ro_CovFactor (1)
+#define PACMOD12_TIRE_TEMPERATURE_3_ro_toS(x) ( (uint8_t) ((x) - (-50)) )
+#define PACMOD12_TIRE_TEMPERATURE_3_ro_fromS(x) ( ((x) + (-50)) )
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_1 : 4;          //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_2 : 4;          //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_3 : 4;          //      Bits= 4
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_1 : 3;                   //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_2 : 3;                   //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_3 : 3;                   //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_1 : 3;               //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_2 : 3;               //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_3 : 3;               //      Bits= 3
+
+  uint8_t TIRE_TEMPERATURE_1_ro;             //      Bits= 8 Offset= -50                Unit:'C'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t TIRE_TEMPERATURE_1_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_TEMPERATURE_2_ro;             //      Bits= 8 Offset= -50                Unit:'C'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t TIRE_TEMPERATURE_2_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_TEMPERATURE_3_ro;             //      Bits= 8 Offset= -50                Unit:'C'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t TIRE_TEMPERATURE_3_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+#else
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_1;              //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_2;              //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_3;              //      Bits= 4
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_1;                       //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_2;                       //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_3;                       //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_1;                   //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_2;                   //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_3;                   //      Bits= 3
+
+  uint8_t TIRE_TEMPERATURE_1_ro;             //      Bits= 8 Offset= -50                Unit:'C'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t TIRE_TEMPERATURE_1_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_TEMPERATURE_2_ro;             //      Bits= 8 Offset= -50                Unit:'C'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t TIRE_TEMPERATURE_2_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_TEMPERATURE_3_ro;             //      Bits= 8 Offset= -50                Unit:'C'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t TIRE_TEMPERATURE_3_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} TIRE_TEMPERATURE_EXTENDED_RPT_t;
+
+// def @TIRE_TEMPERATURE_EXTENDED_RPT_2 CAN Message (1075 0x433)
+#define TIRE_TEMPERATURE_EXTENDED_RPT_2_IDE (0U)
+#define TIRE_TEMPERATURE_EXTENDED_RPT_2_DLC (8U)
+#define TIRE_TEMPERATURE_EXTENDED_RPT_2_CANID (0x433)
+#define TIRE_TEMPERATURE_EXTENDED_RPT_2_CYC (500U)
+// signal: @TIRE_TEMPERATURE_1_ro
+#define PACMOD12_TIRE_TEMPERATURE_1_ro_CovFactor (1)
+#define PACMOD12_TIRE_TEMPERATURE_1_ro_toS(x) ( (uint8_t) ((x) - (-50)) )
+#define PACMOD12_TIRE_TEMPERATURE_1_ro_fromS(x) ( ((x) + (-50)) )
+// signal: @TIRE_TEMPERATURE_2_ro
+#define PACMOD12_TIRE_TEMPERATURE_2_ro_CovFactor (1)
+#define PACMOD12_TIRE_TEMPERATURE_2_ro_toS(x) ( (uint8_t) ((x) - (-50)) )
+#define PACMOD12_TIRE_TEMPERATURE_2_ro_fromS(x) ( ((x) + (-50)) )
+// signal: @TIRE_TEMPERATURE_3_ro
+#define PACMOD12_TIRE_TEMPERATURE_3_ro_CovFactor (1)
+#define PACMOD12_TIRE_TEMPERATURE_3_ro_toS(x) ( (uint8_t) ((x) - (-50)) )
+#define PACMOD12_TIRE_TEMPERATURE_3_ro_fromS(x) ( ((x) + (-50)) )
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_1 : 4;          //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_2 : 4;          //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_3 : 4;          //      Bits= 4
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_1 : 3;                   //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_2 : 3;                   //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_3 : 3;                   //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_1 : 3;               //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_2 : 3;               //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_3 : 3;               //      Bits= 3
+
+  uint8_t TIRE_TEMPERATURE_1_ro;             //      Bits= 8 Offset= -50                Unit:'C'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t TIRE_TEMPERATURE_1_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_TEMPERATURE_2_ro;             //      Bits= 8 Offset= -50                Unit:'C'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t TIRE_TEMPERATURE_2_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_TEMPERATURE_3_ro;             //      Bits= 8 Offset= -50                Unit:'C'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t TIRE_TEMPERATURE_3_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+#else
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_1;              //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_2;              //      Bits= 4
+
+  // The value 0 represents the towing vehicle and all subsequent numbers represent their location behind the towing vehicle.
+  uint8_t TIRE_CHASSIS_INDEX_3;              //      Bits= 4
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_1;                       //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_2;                       //      Bits= 3
+
+  // Axle number starting from the front of the respective chassis number (a).
+  uint8_t TIRE_AXLE_3;                       //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_1;                   //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_2;                   //      Bits= 3
+
+  // Tire location starting from the left and moving sequentially to the right.
+  uint8_t TIRE_POSITION_3;                   //      Bits= 3
+
+  uint8_t TIRE_TEMPERATURE_1_ro;             //      Bits= 8 Offset= -50                Unit:'C'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t TIRE_TEMPERATURE_1_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_TEMPERATURE_2_ro;             //      Bits= 8 Offset= -50                Unit:'C'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t TIRE_TEMPERATURE_2_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+  uint8_t TIRE_TEMPERATURE_3_ro;             //      Bits= 8 Offset= -50                Unit:'C'
+
+#ifdef PACMOD12_USE_SIGFLOAT
+  int16_t TIRE_TEMPERATURE_3_phys;
+#endif // PACMOD12_USE_SIGFLOAT
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} TIRE_TEMPERATURE_EXTENDED_RPT_2_t;
+
+// def @AUTOMS_MAN_SWITCH_RPT CAN Message (1077 0x435)
+#define AUTOMS_MAN_SWITCH_RPT_IDE (0U)
+#define AUTOMS_MAN_SWITCH_RPT_DLC (1U)
+#define AUTOMS_MAN_SWITCH_RPT_CANID (0x435)
+#define AUTOMS_MAN_SWITCH_RPT_CYC (500U)
+
+typedef struct
+{
+#ifdef PACMOD12_USE_BITS_SIGNAL
+
+  //  0 : "INVALID"
+  //  1 : "MANUAL"
+  //  2 : "AUTOMS"
+  uint8_t AUTOMS_MAN_OPCTRL : 2;             //      Bits= 2
+
+  //  0 : "INVALID"
+  //  1 : "MANUAL"
+  //  2 : "AUTOMS"
+  uint8_t AUTOMS_MAN_EXTCTRL : 2;            //      Bits= 2
+
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t AUTOMS_MAN_OPCTRL_AVAIL : 1;       //      Bits= 1
+
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t AUTOMS_MAN_EXTCTRL_AVAIL : 1;      //      Bits= 1
+
+#else
+
+  //  0 : "INVALID"
+  //  1 : "MANUAL"
+  //  2 : "AUTOMS"
+  uint8_t AUTOMS_MAN_OPCTRL;                 //      Bits= 2
+
+  //  0 : "INVALID"
+  //  1 : "MANUAL"
+  //  2 : "AUTOMS"
+  uint8_t AUTOMS_MAN_EXTCTRL;                //      Bits= 2
+
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t AUTOMS_MAN_OPCTRL_AVAIL;           //      Bits= 1
+
+  //  0 : "NOT_AVAILABLE"
+  //  1 : "AVAILABLE"
+  uint8_t AUTOMS_MAN_EXTCTRL_AVAIL;          //      Bits= 1
+
+#endif // PACMOD12_USE_BITS_SIGNAL
+
+#ifdef PACMOD12_USE_DIAG_MONITORS
+
+  FrameMonitor_t mon1;
+
+#endif // PACMOD12_USE_DIAG_MONITORS
+
+} AUTOMS_MAN_SWITCH_RPT_t;
+
 // Not for new development.
 // def @WATCHDOG_RPT CAN Message (1536 0x600)
 #define WATCHDOG_RPT_IDE (0U)
@@ -13311,644 +14227,516 @@ typedef struct
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_ENABLE_FLAG : 1;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_OVERRIDE_ACTIVE : 1;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_COMMAND_TIMEOUT_ERROR : 1;      //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_PACMOD_SUBSYSTEM_TIMEOUT : 1;   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_VEHICLE_CAN_TIMEOUT : 1;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_PACMOD_SYS_FAULT_ACTIVE : 1;    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_CONFIG_FAULT_ACTIVE : 1;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_TIMEOUT : 1;                    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_ENABLED : 1;                     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_OVERRIDE_ACTIVE : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_COMMAND_OUTPUT_FAULT : 1;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_INPUT_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_OUTPUT_REPORTED_FAULT : 1;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_PACMOD_FAULT : 1;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_VEHICLE_FAULT : 1;               //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_TIMEOUT : 1;                     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_ENABLED : 1;                     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_OVERRIDE_ACTIVE : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_COMMAND_OUTPUT_FAULT : 1;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_INPUT_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_OUTPUT_REPORTED_FAULT : 1;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_PACMOD_FAULT : 1;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_VEHICLE_FAULT : 1;               //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_TIMEOUT : 1;                     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_ENABLED : 1;                     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_OVERRIDE_ACTIVE : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_COMMAND_OUTPUT_FAULT : 1;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_INPUT_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_OUTPUT_REPORTED_FAULT : 1;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_PACMOD_FAULT : 1;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_VEHICLE_FAULT : 1;               //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_TIMEOUT : 1;                     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_ENABLED : 1;                     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_OVERRIDE_ACTIVE : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_COMMAND_OUTPUT_FAULT : 1;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_INPUT_OUTPUT_FAULT : 1;          //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_OUTPUT_REPORTED_FAULT : 1;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_PACMOD_FAULT : 1;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_VEHICLE_FAULT : 1;               //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_TIMEOUT : 1;                     //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD1_CONFIG_FAULT : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD1_CAN_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD1_COUNTER_FAULT : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD2_CONFIG_FAULT : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD2_CAN_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD2_COUNTER_FAULT : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD3_CONFIG_FAULT : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD3_CAN_TIMEOUT : 1;               //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD3_COUNTER_FAULT : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI1_RPT_TIMEOUT : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI1_CONFIG_FAULT : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI1_CAN_TIMEOUT : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI1_COUNTER_FAULT : 1;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI2_RPT_TIMEOUT : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI2_CONFIG_FAULT : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI2_CAN_TIMEOUT : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI2_COUNTER_FAULT : 1;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI3_RPT_TIMEOUT : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI3_CONFIG_FAULT : 1;             //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI3_CAN_TIMEOUT : 1;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI3_COUNTER_FAULT : 1;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD_SYSTEM_PRESENT_FAULT : 1;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI_SYSTEM_PRESENT_FAULT : 1;      //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_INT_POWER_SUPPLY_FAULT : 1;     //      Bits= 1
 
 #else
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_ENABLE_FLAG;                    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_OVERRIDE_ACTIVE;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_COMMAND_TIMEOUT_ERROR;          //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_PACMOD_SUBSYSTEM_TIMEOUT;       //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_VEHICLE_CAN_TIMEOUT;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_PACMOD_SYS_FAULT_ACTIVE;        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_CONFIG_FAULT_ACTIVE;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_TIMEOUT;                        //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_ENABLED;                         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_OVERRIDE_ACTIVE;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_COMMAND_OUTPUT_FAULT;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_INPUT_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_OUTPUT_REPORTED_FAULT;           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_PACMOD_FAULT;                    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_VEHICLE_FAULT;                   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t ACCEL_TIMEOUT;                         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_ENABLED;                         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_OVERRIDE_ACTIVE;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_COMMAND_OUTPUT_FAULT;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_INPUT_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_OUTPUT_REPORTED_FAULT;           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_PACMOD_FAULT;                    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_VEHICLE_FAULT;                   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t BRAKE_TIMEOUT;                         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_ENABLED;                         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_OVERRIDE_ACTIVE;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_COMMAND_OUTPUT_FAULT;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_INPUT_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_OUTPUT_REPORTED_FAULT;           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_PACMOD_FAULT;                    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_VEHICLE_FAULT;                   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t SHIFT_TIMEOUT;                         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_ENABLED;                         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_OVERRIDE_ACTIVE;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_COMMAND_OUTPUT_FAULT;            //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_INPUT_OUTPUT_FAULT;              //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_OUTPUT_REPORTED_FAULT;           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_PACMOD_FAULT;                    //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_VEHICLE_FAULT;                   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t STEER_TIMEOUT;                         //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD1_CONFIG_FAULT;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD1_CAN_TIMEOUT;                   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD1_COUNTER_FAULT;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD2_CONFIG_FAULT;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD2_CAN_TIMEOUT;                   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD2_COUNTER_FAULT;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD3_CONFIG_FAULT;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD3_CAN_TIMEOUT;                   //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD3_COUNTER_FAULT;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI1_RPT_TIMEOUT;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI1_CONFIG_FAULT;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI1_CAN_TIMEOUT;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI1_COUNTER_FAULT;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI2_RPT_TIMEOUT;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI2_CONFIG_FAULT;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI2_CAN_TIMEOUT;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI2_COUNTER_FAULT;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI3_RPT_TIMEOUT;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI3_CONFIG_FAULT;                 //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI3_CAN_TIMEOUT;                  //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI3_COUNTER_FAULT;                //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMOD_SYSTEM_PRESENT_FAULT;           //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t PACMINI_SYSTEM_PRESENT_FAULT;          //      Bits= 1
 
   //  0 : "FALSE"
   //  1 : "TRUE"
-  // 
   uint8_t GLOBAL_INT_POWER_SUPPLY_FAULT;         //      Bits= 1
 
 #endif // PACMOD12_USE_BITS_SIGNAL
@@ -14031,6 +14819,13 @@ uint32_t Unpack_VEHICLE_FAULT_RPT_pacmod12(VEHICLE_FAULT_RPT_t* _m, const uint8_
 uint32_t Pack_VEHICLE_FAULT_RPT_pacmod12(VEHICLE_FAULT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
 #else
 uint32_t Pack_VEHICLE_FAULT_RPT_pacmod12(VEHICLE_FAULT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_SAFETY_FUNC_RPT_2_pacmod12(SAFETY_FUNC_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_SAFETY_FUNC_RPT_2_pacmod12(SAFETY_FUNC_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_SAFETY_FUNC_RPT_2_pacmod12(SAFETY_FUNC_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
 #endif // PACMOD12_USE_CANSTRUCT
 
 uint32_t Unpack_GLOBAL_CMD_pacmod12(GLOBAL_CMD_t* _m, const uint8_t* _d, uint8_t dlc_);
@@ -14222,6 +15017,55 @@ uint32_t Pack_CABIN_CLIMATE_CMD_pacmod12(CABIN_CLIMATE_CMD_t* _m, __CoderDbcCanF
 uint32_t Pack_CABIN_CLIMATE_CMD_pacmod12(CABIN_CLIMATE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
 #endif // PACMOD12_USE_CANSTRUCT
 
+uint32_t Unpack_TIPPER_BODY_CMD_00_pacmod12(TIPPER_BODY_CMD_00_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_TIPPER_BODY_CMD_00_pacmod12(TIPPER_BODY_CMD_00_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_TIPPER_BODY_CMD_00_pacmod12(TIPPER_BODY_CMD_00_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_POWER_TAKE_OFF_CMD_pacmod12(POWER_TAKE_OFF_CMD_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_POWER_TAKE_OFF_CMD_pacmod12(POWER_TAKE_OFF_CMD_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_POWER_TAKE_OFF_CMD_pacmod12(POWER_TAKE_OFF_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_TRAILER_BRAKE_CMD_pacmod12(TRAILER_BRAKE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_TRAILER_BRAKE_CMD_pacmod12(TRAILER_BRAKE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_TRAILER_BRAKE_CMD_pacmod12(TRAILER_BRAKE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_TRAILER_AIR_SUPPLY_CMD_pacmod12(TRAILER_AIR_SUPPLY_CMD_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_TRAILER_AIR_SUPPLY_CMD_pacmod12(TRAILER_AIR_SUPPLY_CMD_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_TRAILER_AIR_SUPPLY_CMD_pacmod12(TRAILER_AIR_SUPPLY_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_ENGINE_CMD_pacmod12(ENGINE_CMD_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_ENGINE_CMD_pacmod12(ENGINE_CMD_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_ENGINE_CMD_pacmod12(ENGINE_CMD_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_TIPPER_BODY_CMD_01_pacmod12(TIPPER_BODY_CMD_01_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_TIPPER_BODY_CMD_01_pacmod12(TIPPER_BODY_CMD_01_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_TIPPER_BODY_CMD_01_pacmod12(TIPPER_BODY_CMD_01_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_TIPPER_BODY_CMD_02_pacmod12(TIPPER_BODY_CMD_02_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_TIPPER_BODY_CMD_02_pacmod12(TIPPER_BODY_CMD_02_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_TIPPER_BODY_CMD_02_pacmod12(TIPPER_BODY_CMD_02_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
 uint32_t Unpack_ACCEL_RPT_pacmod12(ACCEL_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
 #ifdef PACMOD12_USE_CANSTRUCT
 uint32_t Pack_ACCEL_RPT_pacmod12(ACCEL_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
@@ -14402,6 +15246,55 @@ uint32_t Unpack_CABIN_CLIMATE_RPT_pacmod12(CABIN_CLIMATE_RPT_t* _m, const uint8_
 uint32_t Pack_CABIN_CLIMATE_RPT_pacmod12(CABIN_CLIMATE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
 #else
 uint32_t Pack_CABIN_CLIMATE_RPT_pacmod12(CABIN_CLIMATE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_TIPPER_BODY_RPT_00_pacmod12(TIPPER_BODY_RPT_00_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_TIPPER_BODY_RPT_00_pacmod12(TIPPER_BODY_RPT_00_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_TIPPER_BODY_RPT_00_pacmod12(TIPPER_BODY_RPT_00_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_POWER_TAKE_OFF_RPT_pacmod12(POWER_TAKE_OFF_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_POWER_TAKE_OFF_RPT_pacmod12(POWER_TAKE_OFF_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_POWER_TAKE_OFF_RPT_pacmod12(POWER_TAKE_OFF_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_TRAILER_BRAKE_RPT_pacmod12(TRAILER_BRAKE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_TRAILER_BRAKE_RPT_pacmod12(TRAILER_BRAKE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_TRAILER_BRAKE_RPT_pacmod12(TRAILER_BRAKE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_TRAILER_AIR_SUPPLY_RPT_pacmod12(TRAILER_AIR_SUPPLY_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_TRAILER_AIR_SUPPLY_RPT_pacmod12(TRAILER_AIR_SUPPLY_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_TRAILER_AIR_SUPPLY_RPT_pacmod12(TRAILER_AIR_SUPPLY_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_ENGINE_RPT_pacmod12(ENGINE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_ENGINE_RPT_pacmod12(ENGINE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_ENGINE_RPT_pacmod12(ENGINE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_TIPPER_BODY_RPT_01_pacmod12(TIPPER_BODY_RPT_01_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_TIPPER_BODY_RPT_01_pacmod12(TIPPER_BODY_RPT_01_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_TIPPER_BODY_RPT_01_pacmod12(TIPPER_BODY_RPT_01_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_TIPPER_BODY_RPT_02_pacmod12(TIPPER_BODY_RPT_02_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_TIPPER_BODY_RPT_02_pacmod12(TIPPER_BODY_RPT_02_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_TIPPER_BODY_RPT_02_pacmod12(TIPPER_BODY_RPT_02_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
 #endif // PACMOD12_USE_CANSTRUCT
 
 uint32_t Unpack_ACCEL_AUX_RPT_pacmod12(ACCEL_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
@@ -14586,11 +15479,11 @@ uint32_t Pack_DATE_TIME_RPT_pacmod12(DATE_TIME_RPT_t* _m, __CoderDbcCanFrame_t__
 uint32_t Pack_DATE_TIME_RPT_pacmod12(DATE_TIME_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
 #endif // PACMOD12_USE_CANSTRUCT
 
-uint32_t Unpack_ENGINE_RPT_pacmod12(ENGINE_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
+uint32_t Unpack_ENGINE_AUX_RPT_pacmod12(ENGINE_AUX_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
 #ifdef PACMOD12_USE_CANSTRUCT
-uint32_t Pack_ENGINE_RPT_pacmod12(ENGINE_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
+uint32_t Pack_ENGINE_AUX_RPT_pacmod12(ENGINE_AUX_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
 #else
-uint32_t Pack_ENGINE_RPT_pacmod12(ENGINE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+uint32_t Pack_ENGINE_AUX_RPT_pacmod12(ENGINE_AUX_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
 #endif // PACMOD12_USE_CANSTRUCT
 
 uint32_t Unpack_DETECTED_OBJECT_RPT_pacmod12(DETECTED_OBJECT_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
@@ -14598,6 +15491,13 @@ uint32_t Unpack_DETECTED_OBJECT_RPT_pacmod12(DETECTED_OBJECT_RPT_t* _m, const ui
 uint32_t Pack_DETECTED_OBJECT_RPT_pacmod12(DETECTED_OBJECT_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
 #else
 uint32_t Pack_DETECTED_OBJECT_RPT_pacmod12(DETECTED_OBJECT_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_FIRE_SUPPRESSION_RPT_pacmod12(FIRE_SUPPRESSION_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_FIRE_SUPPRESSION_RPT_pacmod12(FIRE_SUPPRESSION_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_FIRE_SUPPRESSION_RPT_pacmod12(FIRE_SUPPRESSION_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
 #endif // PACMOD12_USE_CANSTRUCT
 
 uint32_t Unpack_VEH_DYNAMICS_RPT_pacmod12(VEH_DYNAMICS_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
@@ -14726,11 +15626,11 @@ uint32_t Pack_AIR_PRESSURE_RPT_pacmod12(AIR_PRESSURE_RPT_t* _m, __CoderDbcCanFra
 uint32_t Pack_AIR_PRESSURE_RPT_pacmod12(AIR_PRESSURE_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
 #endif // PACMOD12_USE_CANSTRUCT
 
-uint32_t Unpack_ENGINE_RPT_2_pacmod12(ENGINE_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_);
+uint32_t Unpack_ENGINE_AUX_RPT_2_pacmod12(ENGINE_AUX_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_);
 #ifdef PACMOD12_USE_CANSTRUCT
-uint32_t Pack_ENGINE_RPT_2_pacmod12(ENGINE_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe);
+uint32_t Pack_ENGINE_AUX_RPT_2_pacmod12(ENGINE_AUX_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe);
 #else
-uint32_t Pack_ENGINE_RPT_2_pacmod12(ENGINE_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+uint32_t Pack_ENGINE_AUX_RPT_2_pacmod12(ENGINE_AUX_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
 #endif // PACMOD12_USE_CANSTRUCT
 
 uint32_t Unpack_WHEEL_SPEED_RPT_2_pacmod12(WHEEL_SPEED_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_);
@@ -14738,6 +15638,48 @@ uint32_t Unpack_WHEEL_SPEED_RPT_2_pacmod12(WHEEL_SPEED_RPT_2_t* _m, const uint8_
 uint32_t Pack_WHEEL_SPEED_RPT_2_pacmod12(WHEEL_SPEED_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe);
 #else
 uint32_t Pack_WHEEL_SPEED_RPT_2_pacmod12(WHEEL_SPEED_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_ENGINE_LOAD_FACTOR_RPT_pacmod12(ENGINE_LOAD_FACTOR_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_ENGINE_LOAD_FACTOR_RPT_pacmod12(ENGINE_LOAD_FACTOR_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_ENGINE_LOAD_FACTOR_RPT_pacmod12(ENGINE_LOAD_FACTOR_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_TIRE_PRESSURE_EXTENDED_RPT_pacmod12(TIRE_PRESSURE_EXTENDED_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_TIRE_PRESSURE_EXTENDED_RPT_pacmod12(TIRE_PRESSURE_EXTENDED_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_TIRE_PRESSURE_EXTENDED_RPT_pacmod12(TIRE_PRESSURE_EXTENDED_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_TIRE_PRESSURE_EXTENDED_RPT_2_pacmod12(TIRE_PRESSURE_EXTENDED_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_TIRE_PRESSURE_EXTENDED_RPT_2_pacmod12(TIRE_PRESSURE_EXTENDED_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_TIRE_PRESSURE_EXTENDED_RPT_2_pacmod12(TIRE_PRESSURE_EXTENDED_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_TIRE_TEMPERATURE_EXTENDED_RPT_pacmod12(TIRE_TEMPERATURE_EXTENDED_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_TIRE_TEMPERATURE_EXTENDED_RPT_pacmod12(TIRE_TEMPERATURE_EXTENDED_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_TIRE_TEMPERATURE_EXTENDED_RPT_pacmod12(TIRE_TEMPERATURE_EXTENDED_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_TIRE_TEMPERATURE_EXTENDED_RPT_2_pacmod12(TIRE_TEMPERATURE_EXTENDED_RPT_2_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_TIRE_TEMPERATURE_EXTENDED_RPT_2_pacmod12(TIRE_TEMPERATURE_EXTENDED_RPT_2_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_TIRE_TEMPERATURE_EXTENDED_RPT_2_pacmod12(TIRE_TEMPERATURE_EXTENDED_RPT_2_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
+#endif // PACMOD12_USE_CANSTRUCT
+
+uint32_t Unpack_AUTOMS_MAN_SWITCH_RPT_pacmod12(AUTOMS_MAN_SWITCH_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
+#ifdef PACMOD12_USE_CANSTRUCT
+uint32_t Pack_AUTOMS_MAN_SWITCH_RPT_pacmod12(AUTOMS_MAN_SWITCH_RPT_t* _m, __CoderDbcCanFrame_t__* cframe);
+#else
+uint32_t Pack_AUTOMS_MAN_SWITCH_RPT_pacmod12(AUTOMS_MAN_SWITCH_RPT_t* _m, uint8_t* _d, uint8_t* _len, uint8_t* _ide);
 #endif // PACMOD12_USE_CANSTRUCT
 
 uint32_t Unpack_WATCHDOG_RPT_pacmod12(WATCHDOG_RPT_t* _m, const uint8_t* _d, uint8_t dlc_);
