@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "pacmod3_dbc9_ros_api.h"
+#include "pacmod3_dbc10_ros_api.h"
 #include "autogen/pacmod10.h"
 
 #include <vector>
