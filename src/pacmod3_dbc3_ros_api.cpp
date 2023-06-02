@@ -229,6 +229,15 @@ std::shared_ptr<void> Dbc3Api::ParseGlobalRpt(const cn_msgs::Frame& can_msg)
   return new_msg;
 }
 
+std::shared_ptr<void> Dbc3Api::ParseGlobalRpt2(const cn_msgs::Frame& can_msg)
+{
+  auto new_msg = std::make_shared<pm_msgs::GlobalRpt2>();
+
+  PrintParseError("GlobalRpt2");
+
+  return new_msg;
+}
+
 std::shared_ptr<void> Dbc3Api::ParseHeadlightAuxRpt(const cn_msgs::Frame& can_msg)
 {
   auto new_msg = std::make_shared<pm_msgs::HeadlightAuxRpt>();
