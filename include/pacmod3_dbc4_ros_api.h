@@ -51,6 +51,7 @@ public:
   cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdBool& msg) override;
   cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdFloat& msg) override;
   cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdInt& msg) override;
+  cn_msgs::Frame EncodeCmd(const pm_msgs::SteeringCmd& msg) override;
 };
 }  // namespace pacmod3_common
 
