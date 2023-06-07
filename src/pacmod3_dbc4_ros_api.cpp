@@ -265,4 +265,21 @@ cn_msgs::Frame Dbc4Api::EncodeCmd(const pm_msgs::SystemCmdFloat& msg)
   return packed_frame;
 }
 
+cn_msgs::Frame Dbc4Api::EncodeCmd(const pm_msgs::SteeringCmd& msg)
+{
+  cn_msgs::Frame packed_frame;
+
+  STEERING_CMD_t unpacked_cmd;
+  unpacked_cmd.ENABLE = msg.enable;
+  unpacked_cmd.IGNORE_OVERRIDES = msg.ignore_overrides;
+  unpacked_cmd.CLEAR_OVERRIDE = msg.clear_override;
+  unpacked_cmd.POSITION_phys = msg.command;
+  unpacked_cmd.ROTATION_RATE_phys = msg.rotation_rate;
+
+  uint8_t unused_ide;
+  Pack_STEERING_CMD_pacmod4(&unpacked_cmd, static_cast<uint8_t*>(&packed_frame.data[0]), static_cast<uint8_t*>(&packed_frame.dlc), &unused_ide);
+
+  return packed_frame;
+}
+
 }  // namespace pacmod3_common
