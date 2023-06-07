@@ -646,8 +646,9 @@ cn_msgs::Frame Dbc3Api::EncodeCmd(const pm_msgs::SteeringCmd& msg)
   unpacked_cmd.ENABLE = msg.enable;
   unpacked_cmd.IGNORE_OVERRIDES = msg.ignore_overrides;
   unpacked_cmd.CLEAR_OVERRIDE = msg.clear_override;
+  unpacked_cmd.CLEAR_FAULTS = 0; // Signal present in dbc3 but not in pm_msgs::SteeringCmd
   unpacked_cmd.POSITION_phys = msg.command;
-  unpacked_cmd.ROTATION_RATE_phys = msg.command;
+  unpacked_cmd.ROTATION_RATE_phys = msg.rotation_rate;
 
   uint8_t unused_ide;
   Pack_STEERING_CMD_pacmod3(&unpacked_cmd, static_cast<uint8_t*>(&packed_frame.data[0]), static_cast<uint8_t*>(&packed_frame.dlc), &unused_ide);
@@ -663,6 +664,7 @@ cn_msgs::Frame Dbc3Api::EncodeCmd(const pm_msgs::SystemCmdBool& msg)
   unpacked_cmd.ENABLE = msg.enable;
   unpacked_cmd.IGNORE_OVERRIDES = msg.ignore_overrides;
   unpacked_cmd.CLEAR_OVERRIDE = msg.clear_override;
+  unpacked_cmd.CLEAR_FAULTS = 0; // Signal present in dbc3 but not in pm_msgs::SystemCmdBool
   unpacked_cmd.HORN_CMD = msg.command;
 
   uint8_t unused_ide;
@@ -679,6 +681,7 @@ cn_msgs::Frame Dbc3Api::EncodeCmd(const pm_msgs::SystemCmdFloat& msg)
   unpacked_cmd.ENABLE = msg.enable;
   unpacked_cmd.IGNORE_OVERRIDES = msg.ignore_overrides;
   unpacked_cmd.CLEAR_OVERRIDE = msg.clear_override;
+  unpacked_cmd.CLEAR_FAULTS = 0; // Signal present in dbc3 but not in pm_msgs::SystemCmdFloat
   unpacked_cmd.ACCEL_CMD_phys = msg.command;
 
   uint8_t unused_ide;
@@ -695,6 +698,7 @@ cn_msgs::Frame Dbc3Api::EncodeCmd(const pm_msgs::SystemCmdInt& msg)
   unpacked_cmd.ENABLE = msg.enable;
   unpacked_cmd.IGNORE_OVERRIDES = msg.ignore_overrides;
   unpacked_cmd.CLEAR_OVERRIDE = msg.clear_override;
+  unpacked_cmd.CLEAR_FAULTS = 0; // Signal present in dbc3 but not in pm_msgs::SystemCmdInt
   unpacked_cmd.SHIFT_CMD = msg.command;
 
   uint8_t unused_ide;
