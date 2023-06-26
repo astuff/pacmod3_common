@@ -487,6 +487,28 @@ std::shared_ptr<void> Dbc3Api::ParseSystemRptFloat(const cn_msgs::Frame& can_msg
   return new_msg;
 }
 
+std::shared_ptr<void> Dbc3Api::ParseSteeringRpt(const cn_msgs::Frame& can_msg)
+{
+  auto new_msg = std::make_shared<pm_msgs::SystemRptFloat>();
+
+  STEERING_RPT_t parsed_rpt;
+  Unpack_STEERING_RPT_pacmod3(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
+
+  new_msg->enabled = parsed_rpt.ENABLED;
+  new_msg->override_active = parsed_rpt.OVERRIDE_ACTIVE;
+  new_msg->command_output_fault = parsed_rpt.COMMAND_OUTPUT_FAULT;
+  new_msg->input_output_fault = parsed_rpt.INPUT_OUTPUT_FAULT;
+  new_msg->output_reported_fault = parsed_rpt.OUTPUT_REPORTED_FAULT;
+  new_msg->pacmod_fault = parsed_rpt.PACMOD_FAULT;
+  new_msg->vehicle_fault = parsed_rpt.VEHICLE_FAULT;
+  new_msg->command_timeout = 0;  // dbc3 doesn't have this field
+  new_msg->manual_input = parsed_rpt.MANUAL_INPUT_phys;
+  new_msg->command = parsed_rpt.COMMANDED_VALUE_phys;
+  new_msg->output = parsed_rpt.OUTPUT_VALUE_phys;
+
+  return new_msg;
+}
+
 std::shared_ptr<void> Dbc3Api::ParseSystemRptInt(const cn_msgs::Frame& can_msg)
 {
   auto new_msg = std::make_shared<pm_msgs::SystemRptInt>();

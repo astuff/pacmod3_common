@@ -170,6 +170,7 @@ public:
   virtual std::shared_ptr<void> ParseSystemRptBool(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseSystemRptFloat(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseSystemRptInt(const cn_msgs::Frame& can_msg) = 0;
+  virtual std::shared_ptr<void> ParseSteeringRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseTurnAuxRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseVehicleDynamicsRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseVehicleSpeedRpt(const cn_msgs::Frame& can_msg) = 0;
