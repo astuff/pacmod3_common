@@ -29,6 +29,66 @@
 namespace pacmod3_common
 {
 
+std::shared_ptr<void> Dbc10Api::ParseComponentRpt(const cn_msgs::Frame& can_msg)
+{
+  auto new_msg = std::make_shared<pm_msgs::ComponentRpt>();
+
+  COMPONENT_RPT_00_t parsed_rpt;
+  Unpack_COMPONENT_RPT_00_pacmod13(&parsed_rpt, static_cast<const uint8_t*>(&can_msg.data[0]), static_cast<uint8_t>(can_msg.dlc));
+
+  new_msg->component_type = parsed_rpt.COMPONENT_TYPE;
+  new_msg->accel = parsed_rpt.ACCEL;
+  new_msg->brake = parsed_rpt.BRAKE;
+  new_msg->cruise_control_buttons = parsed_rpt.CRUISE_CONTROL_BUTTONS;
+  new_msg->dash_controls_left = parsed_rpt.DASH_CONTROLS_LEFT;
+  new_msg->dash_controls_right = parsed_rpt.DASH_CONTROLS_RIGHT;
+  new_msg->hazard_lights = parsed_rpt.HAZARD_LIGHTS;
+  new_msg->headlight = parsed_rpt.HEADLIGHT;
+  new_msg->horn = parsed_rpt.HORN;
+  new_msg->media_controls = parsed_rpt.MEDIA_CONTROLS;
+  new_msg->parking_brake = parsed_rpt.PARKING_BRAKE;
+  new_msg->shift = parsed_rpt.SHIFT;
+  new_msg->sprayer = parsed_rpt.SPRAYER;
+  new_msg->steering = parsed_rpt.STEERING;
+  new_msg->turn = parsed_rpt.TURN;
+  new_msg->wiper = parsed_rpt.WIPER;
+  new_msg->watchdog = parsed_rpt.WATCHDOG;
+  new_msg->brake_deccel = parsed_rpt.BRAKE_DECCEL;
+  new_msg->rear_pass_door = parsed_rpt.REAR_PASS_DOOR;
+  new_msg->engine_brake = parsed_rpt.ENGINE_BRAKE;
+  new_msg->marker_lamp = parsed_rpt.MARKER_LAMP;
+  new_msg->cabin_climate = parsed_rpt.CABIN_CLIMATE;
+  new_msg->cabin_fan_speed = parsed_rpt.CABIN_FAN_SPEED;
+  new_msg->cabin_temp = parsed_rpt.CABIN_TEMP;
+  new_msg->exhaust_brake = parsed_rpt.EXHAUST_BRAKE;
+  new_msg->power_take_off = parsed_rpt.POWER_TAKE_OFF;
+  new_msg->tipper_body_00 = parsed_rpt.TIPPER_BODY_00;
+  new_msg->trailer_air_supply = parsed_rpt.TRAILER_AIR_SUPPLY;
+  new_msg->trailer_brake = parsed_rpt.TRAILER_BRAKE;
+
+  new_msg->counter = parsed_rpt.COUNTER;
+  new_msg->complement = parsed_rpt.COMPLEMENT;
+  new_msg->config_fault = parsed_rpt.CONFIG_FAULT;
+  new_msg->can_timeout_fault = parsed_rpt.CAN_TIMEOUT_FAULT;
+  new_msg->internal_supply_voltage_fault = parsed_rpt.INTERNAL_SUPPLY_VOLTAGE_FAULT;
+  new_msg->supervisory_timeout = parsed_rpt.SUPERVISORY_TIMEOUT;
+  new_msg->supervisory_sanity_fault = parsed_rpt.SUPERVISORY_SANITY_FAULT;
+  new_msg->watchdog_sanity_fault = parsed_rpt.WATCHDOG_SANITY_FAULT;
+  new_msg->watchdog_system_present_fault = parsed_rpt.WATCHDOG_SYSTEM_PRESENT_FAULT;
+  new_msg->component_ready = parsed_rpt.COMPONENT_READY;
+  new_msg->engine = parsed_rpt.ENGINE;
+  new_msg->tipper_body_01 = parsed_rpt.TIPPER_BODY_01;
+  new_msg->tipper_body_02 = parsed_rpt.TIPPER_BODY_02;
+  new_msg->system_enabled = parsed_rpt.SYSTEM_ENABLED;
+  new_msg->system_override_active = parsed_rpt.SYSTEM_OVERRIDE_ACTIVE;
+  new_msg->system_fault_active = parsed_rpt.SYSTEM_FAULT_ACTIVE;
+  new_msg->user_pc_health_fault_00 = parsed_rpt.USER_PC_HEALTH_FAULT_00;
+  new_msg->user_pc_health_fault_01 = parsed_rpt.USER_PC_HEALTH_FAULT_01;
+  new_msg->differential_locks = parsed_rpt.DIFFERENTIAL_LOCKS;
+
+  return new_msg;
+}
+
 std::shared_ptr<void> Dbc13Api::ParseBrakeAuxRpt(const cn_msgs::Frame& can_msg)
 {
   auto new_msg = std::make_shared<pm_msgs::BrakeAuxRpt>();
