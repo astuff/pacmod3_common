@@ -61,8 +61,12 @@
 #include <pacmod3_msgs/MotorRpt3.h>
 #include <pacmod3_msgs/NotificationCmd.h>
 #include <pacmod3_msgs/OccupancyRpt.h>
+#include <pacmod3_msgs/ParkingBrakeRpt.h>
 #include <pacmod3_msgs/RearLightsRpt.h>
+#include <pacmod3_msgs/SafetyFuncCmd.h>
+#include <pacmod3_msgs/SafetyFuncRpt2.h>
 #include <pacmod3_msgs/ShiftAuxRpt.h>
+#include <pacmod3_msgs/ShiftRpt.h>
 #include <pacmod3_msgs/SteeringAuxRpt.h>
 #include <pacmod3_msgs/SteeringCmd.h>
 #include <pacmod3_msgs/SystemCmdBool.h>
@@ -78,6 +82,7 @@
 #include <pacmod3_msgs/WheelSpeedRpt.h>
 #include <pacmod3_msgs/WiperAuxRpt.h>
 #include <pacmod3_msgs/YawRateRpt.h>
+#include <pacmod3_msgs/SafetyFuncCmd.h>
 
 namespace pm_msgs = pacmod3_msgs;
 namespace cn_msgs = can_msgs;
@@ -164,8 +169,11 @@ public:
   virtual std::shared_ptr<void> ParseMotorRpt2(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseMotorRpt3(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseOccupancyRpt(const cn_msgs::Frame& can_msg) = 0;
+  virtual std::shared_ptr<void> ParseParkingBrakeRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseRearLightsRpt(const cn_msgs::Frame& can_msg) = 0;
+  virtual std::shared_ptr<void> ParseSafetyFuncRpt2(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseShiftAuxRpt(const cn_msgs::Frame& can_msg) = 0;
+  virtual std::shared_ptr<void> ParseShiftRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseSteeringAuxRpt(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseSystemRptBool(const cn_msgs::Frame& can_msg) = 0;
   virtual std::shared_ptr<void> ParseSystemRptFloat(const cn_msgs::Frame& can_msg) = 0;
@@ -187,6 +195,7 @@ public:
   virtual cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdBool& msg) = 0;
   virtual cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdFloat& msg) = 0;
   virtual cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdInt& msg) = 0;
+  virtual cn_msgs::Frame EncodeCmd(const pm_msgs::SafetyFuncCmd& msg) = 0;
 
   uint32_t GetDbcVersion();
   void PrintParseError(const std::string& msg_type);

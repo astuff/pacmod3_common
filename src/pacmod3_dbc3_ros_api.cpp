@@ -378,6 +378,13 @@ std::shared_ptr<void> Dbc3Api::ParseOccupancyRpt(const cn_msgs::Frame& can_msg)
   return new_msg;
 }
 
+std::shared_ptr<void> Dbc3Api::ParseParkingBrakeRpt(const cn_msgs::Frame& can_msg)
+{
+  auto new_msg = ParseSystemRptBool(can_msg);
+
+  return new_msg;
+}
+
 std::shared_ptr<void> Dbc3Api::ParseRearLightsRpt(const cn_msgs::Frame& can_msg)
 {
   auto new_msg = std::make_shared<pm_msgs::RearLightsRpt>();
@@ -389,6 +396,15 @@ std::shared_ptr<void> Dbc3Api::ParseRearLightsRpt(const cn_msgs::Frame& can_msg)
   new_msg->brake_lights_on_avail = parsed_rpt.BRAKE_LIGHTS_ON_IS_VALID;
   new_msg->reverse_lights_on = parsed_rpt.REVERSE_LIGHTS_ON;
   new_msg->reverse_lights_on_avail = parsed_rpt.REVERSE_LIGHTS_ON_IS_VALID;
+
+  return new_msg;
+}
+
+std::shared_ptr<void> Dbc3Api::ParseSafetyFuncRpt2(const cn_msgs::Frame& can_msg)
+{
+  auto new_msg = std::make_shared<pm_msgs::SafetyFuncRpt2>();
+
+  PrintParseError("SafetyFuncRpt2");
 
   return new_msg;
 }
@@ -414,6 +430,13 @@ std::shared_ptr<void> Dbc3Api::ParseShiftAuxRpt(const cn_msgs::Frame& can_msg)
   new_msg->gear_number_avail = false;
   new_msg->write_to_config = false;
   new_msg->write_to_config_is_valid = false;
+
+  return new_msg;
+}
+
+std::shared_ptr<void> Dbc3Api::ParseShiftRpt(const cn_msgs::Frame& can_msg)
+{
+  auto new_msg = ParseSystemRptBool(can_msg);
 
   return new_msg;
 }
@@ -641,6 +664,15 @@ std::shared_ptr<void> Dbc3Api::ParseYawRateRpt(const cn_msgs::Frame& can_msg)
 }
 
 // Message Encoding
+
+cn_msgs::Frame Dbc3Api::EncodeCmd(const pm_msgs::SafetyFuncCmd& msg)
+{
+  cn_msgs::Frame packed_frame;
+
+  PrintEncodeError("SafetyFuncCmd");
+
+  return packed_frame;
+}
 
 cn_msgs::Frame Dbc3Api::EncodeCmd(const pm_msgs::GlobalCmd& msg)
 {

@@ -56,8 +56,11 @@ public:
   std::shared_ptr<void> ParseMotorRpt2(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseMotorRpt3(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseOccupancyRpt(const cn_msgs::Frame& can_msg) override;
+  std::shared_ptr<void> ParseParkingBrakeRpt(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseRearLightsRpt(const cn_msgs::Frame& can_msg) override;
+  std::shared_ptr<void> ParseSafetyFuncRpt2(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseShiftAuxRpt(const cn_msgs::Frame& can_msg) override;
+  std::shared_ptr<void> ParseShiftRpt(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseSteeringAuxRpt(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseSystemRptBool(const cn_msgs::Frame& can_msg) override;
   std::shared_ptr<void> ParseSystemRptFloat(const cn_msgs::Frame& can_msg) override;
@@ -77,6 +80,7 @@ public:
   cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdBool& msg) override;
   cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdFloat& msg) override;
   cn_msgs::Frame EncodeCmd(const pm_msgs::SystemCmdInt& msg) override;
+  cn_msgs::Frame EncodeCmd(const pm_msgs::SafetyFuncCmd& msg) override;
 };
 }  // namespace pacmod3_common
 
